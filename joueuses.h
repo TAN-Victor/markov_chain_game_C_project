@@ -1,4 +1,5 @@
-#ifdef
+#ifndef JOUEUSES_H
+#define JOUEUSES_H
 #include "personnages.h"
 #include "cartes.h"
 
@@ -44,7 +45,15 @@ int tour_joueuse();
   @assigns:
   @ensures:
 */
-membre* membre_ecole(joueuse j);
+personnage* membre_ecole(joueuse* j);
+
+
+/*
+  @requires: j est un pointeur vers une joueuse valide
+  @assigns: nothing
+  @ensures: renvoie le nombre de membres de la joueuse j
+*/
+int nb_membre_ecole(joueuse* j);
 
 
 /*
@@ -52,7 +61,7 @@ membre* membre_ecole(joueuse j);
   @assigns:
   @ensures:
 */
-int nb_membre_ecole(joueuse j);
+int tous_manges(joueuse* j);
 
 
 /*
@@ -60,22 +69,21 @@ int nb_membre_ecole(joueuse j);
   @assigns:
   @ensures:
 */
-int tous_manges(joueuse j);
+void reinitialise_capital(joueuse* j);
 
 
 /*
-  @requires:
-  @assigns:
-  @ensures:
+  @requires: j est un pointeur vers une joueuse valide et capital<joueuse.capital
+  @assigns: j.capital
+  @ensures: on retire le capital
 */
-void reinitialise_capital(joueuse j);
-
+void utilise_capital(joueuse* j, int capital);
 
 /*
-  @requires:
-  @assigns:
-  @ensures:
+  @requires: j est un pointeur vers une joueuse valide et c est carte que possède j
+  @assigns: j.main_du_joueur
+  @ensures: c est retirée de la main_du_joueur et on applique les effets de c
 */
-void utilise_capital(joueuse j, int capital);
+void utilise_carte(joueuse* j, carte c);
 
-#ifndef
+#endif
