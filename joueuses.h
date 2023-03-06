@@ -1,27 +1,81 @@
 #ifdef
-#include personnages.h
-#include cartes.h
+#include "personnages.h"
+#include "cartes.h"
+
+
 typedef struct joueuse
 {
     int capital;
-    membre
+    personnage[5] membres;
+    cartes[] main_du_joueur; /*une liste contenant les cartes de la joueuse*/
+    int id; /*on identifie une joueuse par un numéro unique*/
 };
 
+/*
+  @requires: nothing
+  @assigns: nothing
+  @ensures: renvoie un pointeur vers une joueuse :
+            - on initialise le capital à 5
+            - on initialise les 5 membres du joueurs
+            - on initialise la main_du_joueur avec 5 cartes aléatoires
+            - on associe à la joeuse une clée unique (1 ou 2)-> cette clef permet de savoir qui est le joueur n°1
+*/
+joueuse* creation_jouese();
 
-joueuse creation_jouese() {}
 
-void free_joueuse(joueuse j) {}
+/*
+  @requires: j est un pointeur de 
+  @assigns: j
+  @ensures: libère l'espace mémoire de la joueuse j
+*/
+void free_joueuse(joueuse* j);
 
-joueuse tour_joueuse() {}
 
-membre* membre_ecole(joueuse j) {}
+/*
+  @requires:
+  @assigns:
+  @ensures: renvoie la clef de la joeuse dont c'est le tour
+*/
+int tour_joueuse();
 
-int nb_membre_ecole(joueuse j) {}
 
-int tous_manges(joueuse j) {/* return (nb_membre_ecole == 0) */}
+/*
+  @requires:
+  @assigns:
+  @ensures:
+*/
+membre* membre_ecole(joueuse j);
 
-void reinitialise_capital(joueuse j) {}
 
-void utilise_capital(joueuse j, int capital)
+/*
+  @requires:
+  @assigns:
+  @ensures:
+*/
+int nb_membre_ecole(joueuse j);
+
+
+/*
+  @requires:
+  @assigns:
+  @ensures:
+*/
+int tous_manges(joueuse j);
+
+
+/*
+  @requires:
+  @assigns:
+  @ensures:
+*/
+void reinitialise_capital(joueuse j);
+
+
+/*
+  @requires:
+  @assigns:
+  @ensures:
+*/
+void utilise_capital(joueuse j, int capital);
 
 #ifndef
