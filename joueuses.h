@@ -21,7 +21,7 @@ typedef struct joueuse
             - on initialise la main_du_joueur avec 5 cartes aléatoires
             - on associe à la joeuse une clée unique (1 ou 2)-> cette clef permet de savoir qui est le joueur n°1
 */
-joueuse* creation_jouese();
+joueuse* creation_joueuse();
 
 
 /*

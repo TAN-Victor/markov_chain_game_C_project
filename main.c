@@ -15,8 +15,9 @@
 
 int main() {
 
-    joueuse_1 = creation_joueuse();
-    joueuse_2 = creation_joueuse();
+    joueuse joueuse_1 = creation_joueuse();
+    joueuse joueuse_2 = creation_joueuse();
+    joueuse *joueuse_courant;
     fprintf(stderr, "Etape 1: creation des joueuses succes.\n");
 
 
@@ -28,7 +29,7 @@ int main() {
      */
     while(!tous_manges(joueuse_1) || !tous_manges(joueuse_2)) {
 
-        for 
+        for()
 
     }
 
