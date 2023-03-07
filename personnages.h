@@ -11,6 +11,7 @@ struct personnage {
     int status; /* 0 si mort, 1 si en vie */
     zone current_zone; /* zone courrante sur laquelle se trouve le personnage*/
 };
+typedef struct personnage personnage;
 
 /*
 @requires: nothing

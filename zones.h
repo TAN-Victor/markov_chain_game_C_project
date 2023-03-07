@@ -2,8 +2,10 @@ struct zones{
     int tab_zones[10]; /* la case i représente la zone i */
     float tab_proba[10]; /* la case i contient la proba d'aller sur la case i */
 };
+typedef struct zones zones;
 
 struct zone;
+typedef struct zone zone;
 
 /*
 @requires: nothing

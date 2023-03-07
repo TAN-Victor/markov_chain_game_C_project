@@ -1,7 +1,7 @@
 #ifndef JOUEUSES_H
 #define JOUEUSES_H
 #include "personnages.h"
-#include "cartes.h"
+//#include "cartes.h"
 
 
 typedef struct joueuse

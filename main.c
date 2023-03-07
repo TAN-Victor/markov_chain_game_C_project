@@ -32,8 +32,6 @@ int main() {
     
     while(!tous_manges(joueuse_1) || !tous_manges(joueuse_2)) {
 
-        
-
         for (int i = 0; i < 2; i += 1) {
             
         }
