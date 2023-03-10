@@ -17,10 +17,10 @@ int main() {
 
     joueuse joueuse_1 = creation_joueuse();
     joueuse joueuse_2 = creation_joueuse();
-    //personnage monstre = newPersonnage();
+    //personnage monstre = nouveauPersonnage();
     fprintf(stderr, "Etape 1: creation des joueuses succes.\n");
 
-    joueuse liste_joueuses[] = { joueuse_1, joueuse_2 };
+    joueuse liste_joueuses[2] = { joueuse_1, joueuse_2 };
 
     /**
      * @brief Tant qu'aucune des deux joueuses n'a plus de personnages, ...
@@ -56,7 +56,13 @@ int main() {
                 switch (choix) {
                     case 1:
                         printf("Vous avez choisi le choix n° %d.\n", choix);
-                        //utiliser_capital();
+                        int n = demander_capital(liste_joueuse[i]);
+                        int action = 1;
+                        if (n < 0) {
+                            action = 0;
+                            n = -n;
+                        }
+                        modifierZone(n, )
                         break;
                     case 2:
                         printf("Vous avez choisi le choix n° %d.\n", choix);
@@ -73,11 +79,11 @@ int main() {
             }
             //moveTo(&monstre, nextZone);
 
+        }
+
+
+
     }
-
-
-
-
 
 
 }
