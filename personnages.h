@@ -15,6 +15,7 @@
 struct _personnage {
     int type; /* 0 pour monstre et 1 ou 2 pour membre d'école*/
     int statut; /* 0 si mort, 1 si en vie */
+    int id; /* entier compris entre 1 et 5 pour les membres d'école, permettant de les identifier plus facilement */ 
     zone zone_courante; /* zone courante sur laquelle se trouve le personnage*/
     int nb_de_pas_restant; /* nombre de pas restant, initialisé à 1 à chaque tour */
 };
