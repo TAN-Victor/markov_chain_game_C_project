@@ -9,18 +9,24 @@
 
 #include "joueuses.h"
 
+#include <stdio.h>
+#include <stdlib.h>
 
 
 
 
 int main() {
 
-    joueuse joueuse_1 = creation_joueuse();
-    joueuse joueuse_2 = creation_joueuse();
-    //personnage monstre = nouveauPersonnage();
+    joueuse* joueuse_1 = creation_joueuse();
+    joueuse* joueuse_2 = creation_joueuse();
+    personnage* monstre = nouveauPersonnage(0,0);
     fprintf(stderr, "Etape 1: creation des joueuses succes.\n");
 
-    joueuse liste_joueuses[2] = { joueuse_1, joueuse_2 };
+    joueuse* liste_joueuses[2] = { joueuse_1, joueuse_2, monstre };
+
+
+    zones* liste_zones = nouvellesZones();
+
 
     /**
      * @brief Tant qu'aucune des deux joueuses n'a plus de personnages, ...
@@ -29,7 +35,7 @@ int main() {
      * 
      */
     
-    while(!tous_manges(joueuse_1) || !tous_manges(joueuse_2)) {
+    while(!tous_manges(&joueuse_1) || !tous_manges(&joueuse_2)) {
 
         for (int i = 0; i < 2; i += 1) {
 
@@ -45,7 +51,7 @@ int main() {
              */
 
             int choix = -1;
-            printf("Choississez votre action à effectuer: \n \t * 1 : Utiliser du capital \n \t * 2 : Utiliser une carte \n \t * 3 : Directement se déplacer\n");
+            printf("Choississez votre action à effectuer: \n \t * 1 : Utiliser du capital \n \t * 2 : Utiliser une carte \n \t * 3 : Ne rien faire \n");
 
             while (choix < 0) {
                 if (scanf("%d", &choix) != 1) {
@@ -56,17 +62,19 @@ int main() {
                 switch (choix) {
                     case 1:
                         printf("Vous avez choisi le choix n° %d.\n", choix);
-                        int n = demander_capital(liste_joueuse[i]);
-                        int action = 1;
-                        if (n < 0) {
-                            action = 0;
-                            n = -n;
-                        }
-                        modifierZone(n, )
+                        //zone* zones_modifiees = demander_zones(liste_zones);
+                        int n = demander_capital(liste_joueuses[i]);
+                        utilise_capital(liste_joueuses[i], n);
+                        //zones_modifiees[0].proba += n/10;
+                        //zones_modifiees[1].proba -= n/10;
+                        //message_info(zones_modifiees);
                         break;
                     case 2:
                         printf("Vous avez choisi le choix n° %d.\n", choix);
-                        //utiliser_carte();
+                        //carte c = demander_carte();
+                        //utiliser_carte(liste_joueuses[i], c);
+                        //effet_carte();
+                        //message_info(carte);
                         break;
                     case 3:
                         printf("Vous avez choisi le choix n° %d.\n", choix);
@@ -77,7 +85,8 @@ int main() {
                         break;
                 }
             }
-            //moveTo(&monstre, nextZone);
+            //deplacement(&liste_joueuses);
+            //manger(&liste_joueuses);
 
         }
 
@@ -85,5 +94,6 @@ int main() {
 
     }
 
+    return 0;
 
 }
