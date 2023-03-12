@@ -12,18 +12,18 @@
 
 #include "personnages.h"
 #include "cartes.h"
+#include "zones.h"
 
 
  struct joueuse
 {
     int capital;
     personnage[5] membres;
-    cartes[5] main_du_joueur; /*une liste contenant les cartes de la joueuse*/
+    carte* main_du_joueur; /*une liste contenant les cartes de la joueuse*/
     int id; /*on identifie une joueuse par un numéro unique*/
     int tour; /*cette valeur est égale à 0 si c'est le tour de la joueuse et 1 sinon*/
 };
 typedef struct joueuse joueuse;
-
 
 /**
  * @brief renvoie un pointeur vers une joueuse :
@@ -98,4 +98,16 @@ void utilise_capital(joueuse* pj, int capital);
 */
 void utilise_carte(joueuse* pj, carte c);
 
+/**
+ * @brief cette fonction déplace tout le monde
+ * @param liste_joueuses un pointeur vers les deux joueuses et les monstres
+ * @param liste_zones l'ensembles des zones
+*/
+void deplacement_tout_le_monde(joueuse* liste_joueuses, zones liste_zones);
+
+/**
+ * @brief détermine si un personnage est dans la zone d'un monstre et si oui alors il est mangé
+ * @param liste_joueuses pointeur vers les deux joueuses et les monstres
+*/
+void manger(joueuse* liste_joueuses);
 #endif
