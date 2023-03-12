@@ -19,10 +19,10 @@ int main() {
 
     joueuse* joueuse_1 = creation_joueuse();
     joueuse* joueuse_2 = creation_joueuse();
-    personnage* monstre = nouveauPersonnage(0,0);
+    joueuse* monstres = creation_joueuse();
     fprintf(stderr, "Etape 1: creation des joueuses succes.\n");
 
-    joueuse* liste_joueuses[2] = { joueuse_1, joueuse_2, monstre };
+    joueuse* liste_joueuses[3] = { joueuse_1, joueuse_2, monstres };
 
 
     zones* liste_zones = nouvellesZones();
@@ -62,19 +62,19 @@ int main() {
                 switch (choix) {
                     case 1:
                         printf("Vous avez choisi le choix n° %d.\n", choix);
-                        //zone* zones_modifiees = demander_zones(liste_zones);
+                        //int* zones_modifiees = demander_zones(liste_zones);  // à vérifier
                         int n = demander_capital(liste_joueuses[i]);
                         utilise_capital(liste_joueuses[i], n);
-                        //zones_modifiees[0].proba += n/10;
-                        //zones_modifiees[1].proba -= n/10;
-                        //message_info(zones_modifiees);
+                        //modifierZone(zones_modifiees[0], n, 1); // action = 1 pour augmenter la proba
+                        //modifierZone(zones_modifiees[1], n, 0); // action = 0 pour réduire la proba
+                        //message_info(zones_modifiees);  // modifier l'argument
                         break;
                     case 2:
                         printf("Vous avez choisi le choix n° %d.\n", choix);
-                        //carte c = demander_carte();
-                        //utiliser_carte(liste_joueuses[i], c);
-                        //effet_carte();
-                        //message_info(carte);
+                        //carte c = demander_carte();   // à vérifier
+                        //utiliser_carte(liste_joueuses[i], c); // à vérifier
+                        //effet_carte(); // à vérifier
+                        //message_info(carte); // modifier l'argument
                         break;
                     case 3:
                         printf("Vous avez choisi le choix n° %d.\n", choix);
@@ -85,7 +85,7 @@ int main() {
                         break;
                 }
             }
-            //deplacement(&liste_joueuses);
+            //deplacement(&liste_joueuses, liste_zones);
             //manger(&liste_joueuses);
 
         }
