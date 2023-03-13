@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2023-02-28" view-index="0" gantt-divider-location="305" resource-divider-location="300" version="2.8.10" locale="fr">
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2023-02-28" view-index="0" gantt-divider-location="305" resource-divider-location="300" version="2.8.10" locale="fr_FR">
     <description/>
-    <view zooming-state="default:2" id="gantt-chart">
+    <view zooming-state="default:0" id="gantt-chart">
         <field id="tpd3" name="Nom" width="169" order="0"/>
-        <field id="tpd4" name="Date de début" width="66" order="1"/>
-        <field id="tpd5" name="Date de fin" width="66" order="2"/>
+        <field id="tpd4" name="Date de début" width="59" order="1"/>
+        <field id="tpd5" name="Date de fin" width="73" order="2"/>
+        <option id="color.recent"><![CDATA[#ffcccc #ccffcc #ffccff #ccccff]]></option>
     </view>
     <view id="resource-table">
         <field id="0" name="Nom" width="210" order="0"/>
@@ -33,27 +34,42 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="0" name="tâche_A1" color="#8cb6ce" meeting="false" start="2023-03-03" duration="40" complete="0" thirdDate="2023-03-03" thirdDate-constraint="0" priority="4" expand="true">
+        <task id="0" name="tâche_A1" color="#ffcccc" meeting="false" start="2023-03-03" duration="11" complete="0" thirdDate="2023-03-03" thirdDate-constraint="0" priority="4" expand="true">
             <task id="24" name="Création du Git" color="#8cb6ce" meeting="true" start="2023-03-03" duration="0" complete="0" thirdDate="2023-03-03" thirdDate-constraint="0" expand="true">
                 <depend id="19" type="2" difference="0" hardness="Strong"/>
             </task>
             <task id="19" name="Création du Gantt" color="#8cb6ce" meeting="false" start="2023-03-03" duration="1" complete="0" thirdDate="2023-03-03" thirdDate-constraint="0" expand="true"/>
-            <task id="23" name="Création main.c" color="#8cb6ce" meeting="false" start="2023-04-14" duration="10" complete="0" thirdDate="2023-03-03" thirdDate-constraint="0" expand="true">
+            <task id="23" name="Début main.c" color="#8cb6ce" meeting="false" start="2023-03-07" duration="3" complete="0" thirdDate="2023-03-03" thirdDate-constraint="0" expand="true">
+                <depend id="74" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="74" name="Finition main.c" color="#8cb6ce" meeting="false" start="2023-03-10" duration="6" complete="0" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
                 <depend id="47" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="47" name="Compilation main.c" color="#8cb6ce" meeting="true" start="2023-04-28" duration="0" complete="0" thirdDate="2023-03-03" thirdDate-constraint="0" expand="true">
+            <task id="47" name="Compilation main.c" color="#8cb6ce" meeting="true" start="2023-03-20" duration="0" complete="0" thirdDate="2023-03-03" thirdDate-constraint="0" expand="true">
                 <depend id="52" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="52" name="Validation lot_a" color="#8cb6ce" meeting="true" start="2023-04-28" duration="0" complete="0" thirdDate="2023-03-03" thirdDate-constraint="0" expand="true"/>
+            <task id="52" name="Validation lot_a" color="#8cb6ce" meeting="true" start="2023-03-20" duration="0" complete="0" thirdDate="2023-03-03" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="3" name="tâche_A2" color="#8cb6ce" meeting="false" start="2023-03-03" duration="30" complete="0" thirdDate="2023-03-03" thirdDate-constraint="0" expand="true">
-            <depend id="23" type="2" difference="0" hardness="Strong"/>
+        <task id="3" name="tâche_A2" color="#ccccff" meeting="false" start="2023-03-03" duration="11" complete="0" thirdDate="2023-03-03" thirdDate-constraint="0" expand="false">
+            <task id="56" name="Début A2" color="#8cb6ce" meeting="false" start="2023-03-03" duration="2" complete="0" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
+                <depend id="23" type="2" difference="0" hardness="Strong"/>
+                <depend id="75" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="75" name="Finition A2" color="#8cb6ce" meeting="false" start="2023-03-07" duration="9" complete="0" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="7" name="tâche_A3" color="#8cb6ce" meeting="false" start="2023-03-03" duration="30" complete="0" thirdDate="2023-03-03" thirdDate-constraint="0" expand="true">
-            <depend id="23" type="2" difference="0" hardness="Strong"/>
+        <task id="7" name="tâche_A3" color="#ffccff" meeting="false" start="2023-03-03" duration="11" complete="0" thirdDate="2023-03-03" thirdDate-constraint="0" expand="false">
+            <task id="58" name="Début A3" color="#8cb6ce" meeting="false" start="2023-03-03" duration="2" complete="0" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
+                <depend id="23" type="2" difference="0" hardness="Strong"/>
+                <depend id="76" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="76" name="Finition A3" color="#8cb6ce" meeting="false" start="2023-03-07" duration="9" complete="0" thirdDate="2023-03-07" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="8" name="tâche_A4" color="#8cb6ce" meeting="false" start="2023-03-03" duration="30" complete="0" thirdDate="2023-03-03" thirdDate-constraint="0" expand="true">
-            <depend id="23" type="2" difference="0" hardness="Strong"/>
+        <task id="8" name="tâche_A4" color="#ccffcc" meeting="false" start="2023-03-03" duration="11" complete="0" thirdDate="2023-03-03" thirdDate-constraint="0" expand="false">
+            <task id="60" name="Début A4" color="#8cb6ce" meeting="false" start="2023-03-03" duration="2" complete="0" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
+                <depend id="23" type="2" difference="0" hardness="Strong"/>
+                <depend id="77" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="77" name="Finition A4" color="#8cb6ce" meeting="false" start="2023-03-07" duration="9" complete="0" thirdDate="2023-03-07" thirdDate-constraint="0" expand="true"/>
         </task>
     </tasks>
     <resources>
@@ -64,9 +80,18 @@
     </resources>
     <allocations>
         <allocation task-id="0" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="23" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="24" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="19" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="74" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="47" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="3" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="75" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="56" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="7" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="76" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="8" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="77" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
     </allocations>
     <vacations/>
     <previous/>
