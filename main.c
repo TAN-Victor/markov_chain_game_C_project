@@ -62,19 +62,19 @@ int main() {
                 switch (choix) {
                     case 1:
                         printf("Vous avez choisi le choix n° %d.\n", choix);
-                        //int* zones_modifiees = demander_zones(liste_zones);  // à vérifier
+                        int* zones_modifiees = demander_zones(*liste_zones);
                         int n = demander_capital(liste_joueuses[i]);
                         utilise_capital(liste_joueuses[i], n);
-                        //modifierZone(zones_modifiees[0], n, 1); // action = 1 pour augmenter la proba
-                        //modifierZone(zones_modifiees[1], n, 0); // action = 0 pour réduire la proba
-                        //message_info(zones_modifiees);  // modifier l'argument
+                        modifierZone(zones_modifiees[0], zones_modifiees[1], n, 1); // action = 1 pour augmenter la proba
+                        modifierZone(zones_modifiees[0], zones_modifiees[2], n, 0); // action = 0 pour réduire la proba
+                        //message_generique(//int des modifs de zones, //peu importe, //0); // voir avec le interface.c, pas très important pour l'instant
                         break;
                     case 2:
                         printf("Vous avez choisi le choix n° %d.\n", choix);
-                        //carte c = demander_carte();   // à vérifier
+                        carte c = demander_carte(liste_joueuses[i]);   // à vérifier
                         //utiliser_carte(liste_joueuses[i], c); // à vérifier
                         //effet_carte(); // à vérifier
-                        //message_info(carte); // modifier l'argument
+                        //message_generique(//int modifs carte, liste_joueuses[i], //un numéro); // voir avec le interface.c, pas très important pour l'instant
                         break;
                     case 3:
                         printf("Vous avez choisi le choix n° %d.\n", choix);
@@ -85,8 +85,8 @@ int main() {
                         break;
                 }
             }
-            //deplacement(&liste_joueuses, liste_zones);
-            //manger(&liste_joueuses);
+            //deplacement_tout_le_monde(liste_joueuses, *liste_zones);
+            //manger(liste_joueuses);
 
         }
 
