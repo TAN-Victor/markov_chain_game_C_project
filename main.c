@@ -72,7 +72,7 @@ int main() {
                     case 2:
                         printf("Vous avez choisi le choix n° %d.\n", choix);
                         carte c = demander_carte(liste_joueuses[i]);   // à vérifier
-                        //utiliser_carte(liste_joueuses[i], c); // à vérifier
+                        utiliser_carte(liste_joueuses[i], c);
                         //effet_carte(); // à vérifier
                         //message_generique(//int modifs carte, liste_joueuses[i], //un numéro); // voir avec le interface.c, pas très important pour l'instant
                         break;
@@ -85,8 +85,8 @@ int main() {
                         break;
                 }
             }
-            //deplacement_tout_le_monde(liste_joueuses, *liste_zones);
-            //manger(liste_joueuses);
+            deplacement_tout_le_monde(liste_joueuses, *liste_zones);
+            manger(liste_joueuses);
 
         }
 
