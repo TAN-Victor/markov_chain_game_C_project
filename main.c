@@ -21,9 +21,9 @@ int main() {
      * @brief Création de 3 "joueuses" car l'ensemble des monstres correspondra à une joueuse 
      * 
      */
-    joueuse* joueuse_1 = creation_joueuse();
-    joueuse* joueuse_2 = creation_joueuse();
-    joueuse* monstres = creation_joueuse();
+    joueuse* joueuse_1 = creation_joueuse(1); // 1 pour dire que l'on crée une joueuse jouable
+    joueuse* joueuse_2 = creation_joueuse(1); // 1 pour dire que l'on crée une joueuse jouable
+    joueuse* monstres = creation_joueuse(0); // 1 pour dire que l'on crée une liste de monstres, il n'y aura qu'un seul monstre au début
     fprintf(stderr, "Etape 1: creation des joueuses succes.\n"); // debug
 
     joueuse* liste_joueuses[3] = { joueuse_1, joueuse_2, monstres };
@@ -42,7 +42,7 @@ int main() {
      * 
      */
     
-    while(!tous_manges(liste_joueuses[0]) || !tous_manges(liste_joueuses[1])) {
+        do {
 
         /**
          * @brief Alternance entre les 2 joueuses
@@ -79,7 +79,7 @@ int main() {
 
 
 
-    }
+    } while(!tous_manges(liste_joueuses[0]) || !tous_manges(liste_joueuses[1]));
 
     message_fin_du_jeu(*liste_joueuses[0], *liste_joueuses[1]);
     free_joueuse(liste_joueuses[0]);
