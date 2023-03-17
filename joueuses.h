@@ -95,7 +95,7 @@ int tous_manges(joueuse* pj);
 
 
 /**reinitialise
- * @brief on réinitialise le capital de la joueuse choisie (on le remet à 5)
+ * @brief on réinitialise le capital de la joueuse choisie (on le remet à 5) on gère en meme temps les bonus dans cette fonction (tours_restants)
  * @param pj pointeur vers la joueuse dont le capital va être réinitialisé
 */
 void reinitialise_capital(joueuse* pj);
