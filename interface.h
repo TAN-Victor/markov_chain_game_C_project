@@ -30,11 +30,11 @@ void afficher_toute_info(joueuse,joueuse,zones);
 int demander_capital(joueuse);
 
 /**
- * \brief Demande à une joueuse si elle veut jouer une carte et si oui, laquelle
+ * \brief Demande à une joueuse si elle veut jouer une carte qu'elle possède et si oui, laquelle
  * \param joueuse afin de savoir à quelle joueuse demander (les cartes associées sont déjà dans les fonctions de joueuses.h)
- * \return la carte correspondante, NULL sinon
+ * \return le numéro de la carte correspondante, -1 sinon
 */
-carte demander_carte(joueuse);
+int demander_carte(joueuse);
 
 /**
  * \brief Demande à une joueuse où elle veut augmenter la probabilité et une autre où elle doit diminuer, elle peut répondre NULL si elle veut rien modifier
