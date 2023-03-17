@@ -9,9 +9,15 @@ struct carte{
     char* nom;
     char* description;
 };
-typedef struct carte carte;
+typedef struct carte* carte;
 
-
+/**
+ * Idée d'implémentation dans le .c :
+ * carte carte_test=(carte)malloc(sizeof(struct carte));
+ * carte_test->nom="...";
+ * carte_test->description="...";
+ */
+ 
 
 
 
