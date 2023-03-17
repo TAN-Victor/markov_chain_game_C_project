@@ -6,6 +6,20 @@
  * 
  * @necessities personnages.h cartes.h
  * 
+ * Ce fichier decrit un ensemble de fonctions joueuse utiles.
+ * Il contient 1 type et 11 fonctions : 
+ * - le type joueuse définit une joeuse
+ * - creation_joueuse() pour créer une joueuse et initialier tous ces arguments
+ * - free_joueuse(j) pour libérer l'espace mémoire d'une joueuse
+ * - tout_joueuse(j1,j2) pour savoir quelle joueuse peut jouer
+ * - membre_ecole(j) pour obtenir tous les membres de l'école d'une joueuse
+ * - nb_membre_ecole(j) pour obtenir le nombre de membres de l'école d'une joueuse
+ * - tous_manges(j) pour tester si tous les membres d'une joueuse ont été mangés
+ * - reinitialise_capital(j) pour remettre le capital d'une joeuse à 5
+ * - utilise_capital(j,capital) pour utiliser le capital de la joeuse de la valeur souhaitée
+ * - utilise_carte(j,carte) pour jouer la carte demandée
+ * - deplacement_tout_le_monde(j) pour déplacer tous les membres d'une joueuse
+ * - manger(j) pour manger tous les membres d'une joueuse qui sont sur une case d'un monstre
  */
 #ifndef JOUEUSES_H
 #define JOUEUSES_H
@@ -23,15 +37,14 @@
     int id; /*on identifie une joueuse par un numéro unique*/
     int tour; /*cette valeur est égale à 0 si c'est le tour de la joueuse et 1 sinon*/
     int taille; /*nombre de membres de l'équipe (doit être inférieur à 7, initialisée à 5*/
-    int tours_restants_bonus; /*tours restants pendant lesquels on peut recevoir plus de capital, initialisé à 1*/
-    int tour_restants_jouer;/*tours restants pendant lesquels on peut faire plus de déplacement, initialisé à 1*/
+    int tours_restants_bonus_capital; /*tours restants pendant lesquels on peut recevoir plus de capital, initialisé à 1*/
+    int tours_restants_invinsibilite; /*nb de tour pendant lesquels les membres d'une joeuse ne peunvent pas etre manges */
+    int invinsibilite; /*vaut 1 si les membres sont invinsibles et 0 sinon, initialise à 0*/
+    int tours_restants_jouer;/*tours restants pendant lesquels on peut faire plus de déplacement, initialisé à 1*/
     int proba_par_capital; /*la valeur de la modification de la proba par une joueuse par unité de capital (cf Katrin Salhab), initialisée à 0.1*/
 };
 typedef struct joueuse joueuse;
-
-/**
- * @brief renvoie un pointeur vers une joueuse :
-            - on initialise le capital à 5
+reinitialise
             - on initialise les 5 membres du joueurs
             - on initialise la main_du_joueur avec 5 cartes aléatoires
             - on associe à la joeuse une clée unique (1 ou 2)-> cette clef permet de savoir qui est le joueur n°1
@@ -60,9 +73,7 @@ joueuse* tour_joueuse(joueuse* pj1, joueuse* pj2);
 /**
  * @brief renvoie la liste de personnage (de type membre de d'école) de la joueuse sélectionnée
  * @param pj pointeur vers la joueuse sélectionnée
- * @return une liste de personnage
-*/
-personnage[] membre_ecole(joueuse* pj);
+ * @return une liste de personreinitialisese* pj);
 
 
 /**
@@ -80,7 +91,7 @@ int nb_membre_ecole(joueuse* pj);
 int tous_manges(joueuse* pj);
 
 
-/**
+/**reinitialise
  * @brief on réinitialise le capital de la joueuse choisie (on le remet à 5)
  * @param pj pointeur vers la joueuse dont le capital va être réinitialisé
 */
