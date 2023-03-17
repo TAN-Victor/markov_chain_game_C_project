@@ -34,6 +34,13 @@ int main() {
      */
     zones* liste_zones = nouvellesZones();
 
+    carte A;
+    *(A->nom) = "";
+    *(A->description) = "";
+    carte liste_cartes[1] = { A }; // A compléter plus tard ou à le déplacer dans carte.c
+
+
+
 
     /**
      * @brief Tant qu'aucune des deux joueuses n'a plus de personnages, le jeu continue
@@ -66,9 +73,9 @@ int main() {
                 //message_generique(//int des modifs de zones, // peu importe, //0);  // voir avec interface.c
             }
             else { // Exclusion, ne peut pas jouer de carte si le capital a été dépensé
-                carte c = demander_carte(*liste_joueuses[i]);
-                if (c == NULL) {  // Sujet à modification, lorsque l'on choisit une carte qui est correcte
-                    utilise_carte(liste_joueuses[i], c);
+                int c = demander_carte(*liste_joueuses[i]);
+                if (c != -1) {  // Sujet à modification, lorsque l'on choisit une carte qui est correcte
+                    utilise_carte(liste_joueuses[i], liste_cartes[c]);
                     //message_generique(//int des modifs de zones, // peu importe, //0);  // voir avec interface.c
                 }
             }
