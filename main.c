@@ -24,7 +24,7 @@ int main() {
     joueuse* joueuse_1 = creation_joueuse();
     joueuse* joueuse_2 = creation_joueuse();
     joueuse* monstres = creation_joueuse();
-    fprintf(stderr, "Etape 1: creation des joueuses succes.\n");
+    fprintf(stderr, "Etape 1: creation des joueuses succes.\n"); // debug
 
     joueuse* liste_joueuses[3] = { joueuse_1, joueuse_2, monstres };
 
@@ -42,7 +42,7 @@ int main() {
      * 
      */
     
-    while(!tous_manges(&joueuse_1) || !tous_manges(&joueuse_2)) {
+    while(!tous_manges(liste_joueuses[0]) || !tous_manges(liste_joueuses[1])) {
 
         /**
          * @brief Alternance entre les 2 joueuses
@@ -67,7 +67,7 @@ int main() {
             }
             else { // Exclusion, ne peut pas jouer de carte si le capital a été dépensé
                 carte c = demander_carte(liste_joueuses[i]);
-                if (c.nom != "") {  // Sujet à modification, lorsque l'on choisit une carte qui est correcte
+                if (c == NULL) {  // Sujet à modification, lorsque l'on choisit une carte qui est correcte
                     utilise_carte(liste_joueuses[i], c);
                     //message_generique(//int des modifs de zones, // peu importe, //0);  // voir avec interface.c
                 }
