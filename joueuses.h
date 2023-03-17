@@ -19,7 +19,7 @@
  * - utilise_capital(j,capital) pour utiliser le capital de la joeuse de la valeur souhaitée
  * - utilise_carte(j,carte) pour jouer la carte demandée
  * - deplacement_tout_le_monde(j) pour déplacer tous les membres d'une joueuse
- * - manger(j) pour manger tous les membres d'une joueuse qui sont sur une case d'un monstre
+ * - manger(j) pour manger tous les membres d'une joueuse qui sont sur une case d'un
  */
 #ifndef JOUEUSES_H
 #define JOUEUSES_H
@@ -44,11 +44,14 @@
     int proba_par_capital; /*la valeur de la modification de la proba par une joueuse par unité de capital (cf Katrin Salhab), initialisée à 0.1*/
 };
 typedef struct joueuse joueuse;
-reinitialise
+
+/** 
+ * @brief renvoit un pointeur vers une joueuse :
+ *          - on initialise le capital à 5
             - on initialise les 5 membres du joueurs
             - on initialise la main_du_joueur avec 5 cartes aléatoires
             - on associe à la joeuse une clée unique (1 ou 2)-> cette clef permet de savoir qui est le joueur n°1
- * @param
+ * @param 
  * @return joueuse* un pointeur vers la joueuse crée
 */
 joueuse* creation_joueuse();
