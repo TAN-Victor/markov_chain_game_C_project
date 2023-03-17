@@ -72,9 +72,9 @@ int main() {
                     //message_generique(//int des modifs de zones, // peu importe, //0);  // voir avec interface.c
                 }
             }
-            deplacement_tout_le_monde(*liste_joueuses, *liste_zones);
-            manger(*liste_joueuses);
-            reinitialise_capital(liste_joueuses[i]);
+            deplacement_tout_le_monde(*liste_joueuses, *liste_zones); // Fonction qui n'est pas dans le sujet mais à implémenter en appelant plusieurs fois les déplacements
+            manger(*liste_joueuses); // Fonction qui n'est pas dans le sujet mais à implémenter en appelant plusieurs fois les tests de positions
+            reinitialise_capital(liste_joueuses[i]); // à modifier à "actualiser_joueuse", comme par exemple réduire le nombre de tours d'invinsibilité"
         }
 
 
