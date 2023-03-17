@@ -17,11 +17,15 @@
 
  struct joueuse
 {
-    int capital;
-    personnage[5] membres;
+    int capital;/*initialisé à 5*/
+    personnage* membres;/*une liste de pointeur de personnage de taille 7 (=taille max de l'équipe)*/
     carte* main_du_joueur; /*une liste contenant les cartes de la joueuse*/
     int id; /*on identifie une joueuse par un numéro unique*/
     int tour; /*cette valeur est égale à 0 si c'est le tour de la joueuse et 1 sinon*/
+    int taille; /*nombre de membres de l'équipe (doit être inférieur à 7, initialisée à 5*/
+    int tours_restants_bonus; /*tours restants pendant lesquels on peut recevoir plus de capital, initialisé à 1*/
+    int tour_restants_jouer;/*tours restants pendant lesquels on peut faire plus de déplacement, initialisé à 1*/
+    int proba_par_capital; /*la valeur de la modification de la proba par une joueuse par unité de capital (cf Katrin Salhab), initialisée à 0.1*/
 };
 typedef struct joueuse joueuse;
 
