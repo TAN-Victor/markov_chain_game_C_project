@@ -55,25 +55,25 @@ int main() {
              * @brief Affiche toutes les informations actuelles du jeu 
              * 
              */
-            afficher_toute_info(liste_joueuses[i], liste_joueuses[(i+1)%2], *liste_zones);
-            int n = demander_capital(liste_joueuses[i]);
+            afficher_toute_info(*liste_joueuses[i], *liste_joueuses[(i+1)%2], *liste_zones);
+            int n = demander_capital(*liste_joueuses[i]);
 
             if (n > 0) {
-                int zones_modifiees = demander_zones(*liste_zones);
+                int* zones_modifiees = demander_zones(*liste_zones);
                 utilise_capital(liste_joueuses[i], n);
                 modifierZone(zones_modifiees[0], zones_modifiees[1], n, 1);
                 modifierZone(zones_modifiees[0], zones_modifiees[2], n, 0);
                 //message_generique(//int des modifs de zones, // peu importe, //0);  // voir avec interface.c
             }
             else { // Exclusion, ne peut pas jouer de carte si le capital a été dépensé
-                carte c = demander_carte(liste_joueuses[i]);
+                carte c = demander_carte(*liste_joueuses[i]);
                 if (c == NULL) {  // Sujet à modification, lorsque l'on choisit une carte qui est correcte
                     utilise_carte(liste_joueuses[i], c);
                     //message_generique(//int des modifs de zones, // peu importe, //0);  // voir avec interface.c
                 }
             }
-            deplacement_tout_le_monde(liste_joueuses, *liste_zones);
-            manger(liste_joueuses);
+            deplacement_tout_le_monde(*liste_joueuses, *liste_zones);
+            manger(*liste_joueuses);
             reinitialise_capital(liste_joueuses[i]);
         }
 
