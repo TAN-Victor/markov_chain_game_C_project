@@ -82,8 +82,8 @@ int main() {
     }
 
     message_fin_du_jeu(*liste_joueuses[0], *liste_joueuses[1]);
-    free_joueuse(liste_joueuses[0],liste_joueuses[1]);
-
+    free_joueuse(liste_joueuses[0]);
+    free_joueuse(liste_joueuses[1]);
     return 0;
 
 }
