@@ -77,7 +77,8 @@ joueuse* tour_joueuse(joueuse* pj1, joueuse* pj2);
  * @brief renvoie la liste de personnage (de type membre de d'école) de la joueuse sélectionnée
  * @param pj pointeur vers la joueuse sélectionnée
  * @return une liste de personreinitialisese* pj);
-
+*/
+personnage* membre_ecole(joueuse* pj);
 
 /**
  * @brief renvoie le nombre de membres de la joueuse
@@ -94,7 +95,7 @@ int nb_membre_ecole(joueuse* pj);
 int tous_manges(joueuse* pj);
 
 
-/**reinitialise
+/**
  * @brief on réinitialise le capital de la joueuse choisie (on le remet à 5) on gère en meme temps les bonus dans cette fonction (tours_restants)
  * @param pj pointeur vers la joueuse dont le capital va être réinitialisé
 */
