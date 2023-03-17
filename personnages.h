@@ -14,15 +14,19 @@
 
 struct _personnage {
     int type; /* 0 pour monstre et 1 ou 2 pour membre d'école*/
-    int statut; /* 0 si mort, 1 si en vie */
+    int statut; /* 0 si mort, 1 si en vie, -1 si disparu, 2 si peut jouer 2 fois, 3 si FISA */
     int id; /* entier compris entre 1 et 5 pour les membres d'école, permettant de les identifier plus facilement */ 
-    zone zone_courante; /* zone courante sur laquelle se trouve le personnage*/
-    int nb_de_pas_restant; /* nombre de pas restant, initialisé à 1 à chaque tour */
+    int zone_courante; /* numéro de la zone courante du personnage*/
+    int zone_precedente; /* numéro de la zone précédente */
+    int nb_de_pas_restant; /* nombre de pas restant, initialisé à 1 à chaque tour sauf cas particuliers */
+    int peut_jouer; /* 1 si peut jouer ce tour, 0 sinon */
+    int nb_de_tour_disparu; /* vaut 0 initialement */
+
 };
-typedef struct _personnage personnage;
+typedef struct _personnage* personnage;
 
 /**
- * @brief renvoie un pointeur vers un personnages de type:
+ * @brief renvoie un personnages de type:
             - monstre si n = 0
             - membre d'école de joueuse 1 si n = 1
             - membre d'école de jouese 2 si n = 2,
@@ -31,41 +35,41 @@ typedef struct _personnage personnage;
  * 
  * @param n le type de personnage
  * @param z le numéro de la zone
- * @return personnage* un pointeur vers le personnage crée 
+ * @return personnage un pointeur vers le personnage crée 
  */
-personnage* nouveauPersonnage(int n, zone z);
+personnage nouveauPersonnage(int n, zone z);
 
 /**
- * @brief libère l'espace occupé par la case mémoire pointée par pp 
+ * @brief libère l'espace occupé par la case mémoire pointée par p 
  * 
- * @param pp pointeur vers la case mémoire occupée par le personnage que l'on souhaite libérer 
+ * @param p un personnage que l'on souhaite libérer 
  */
-void liberePersonnage(personnage* pp);
+void liberePersonnage(personnage p);
 
 
 /**
- * @brief déplace le personnage pointé sur la zone z
+ * @brief déplace le personnage sur la zone z
  * 
- * @param pp est un pointeur vers la case mémoire du personnage qui se déplace
+ * @param p est un personnage qui se déplace
  * @param z est la zone d'arrivée
  */
-void deplacer(personnage* pp, zone z);
+void deplacer(personnage p, zone z);
 
 
 /**
- * @brief renvoie la zone dans laquelle se trouve le personnage
+ * @brief renvoie le numéro de la zone dans laquelle se trouve le personnage
  * 
- * @param pp un personnage dont on souhaite obtenir la zone
- * @return la zone du personnage
+ * @param p un personnage dont on souhaite obtenir la zone
+ * @return le numéro de la zone du personnage, -1 en cas d'erreur
  */
-zone zonePersonnage(personnage p);
+int zonePersonnage(personnage p);
 
 
 /**
- * @brief met à jour le statut du personnage pointé par pp
+ * @brief met à jour le statut du personnage p
  * 
- * @param pp un pointeur vers le personnage qui a été mangé
+ * @param p le personnage qui a été mangé
  */
-void estMange(personnage* pp);
+void estMange(personnage p);
 
 #endif
