@@ -6,7 +6,7 @@
  * \file interface.h
  * Ce fichier décrit un ensemble de fonctions utile à une interface optimale
  * Il contient les 5 fonctions suivantes :
- * - \b afficher_toute_info(joueuse,joueuse,zones,personnage[]) qui permet d'afficher dans la console toutes les informations du jeu: les zones du jeu, les personnages qui sont dessus, la joueuse dont c'est le tour, le capital des joueuses, ...
+ * - \b afficher_toute_info(joueuse,joueuse,zones) qui permet d'afficher dans la console toutes les informations du jeu: les zones du jeu, les personnages qui sont dessus, la joueuse dont c'est le tour, le capital des joueuses, ...
  * - \b demander_capital(joueuse) pour demander à une joueuse combien de capital elle veut utiliser (elle peut répondre ne pas vouloir en utiliser)
  * - \b demander_carte(joueuse) pour demander à une joueuse si elle veut jouer une carte et si oui, laquelle
  * - \b demander_zones(zones) pour demander à une joueuse sur quel zone il faudrait augmenter la probabilité et sur laquelle il faudrait la baisser à partir de la zone où elle effectue cette action
@@ -16,12 +16,11 @@
 
 /**
  * \brief Affiche dans la console toutes les informations du jeu: les zones du jeu, les personnages qui sont dessus, la joueuse dont c'est le tour, le capital des joueuses, ...
- * \param joueuse,joueuse sont les 2 joueuses afin de récupérer les informations leurs concernants
+ * \param joueuse,joueuse sont les 2 joueuses afin de récupérer les informations leurs concernants (les membres de chaque joueuse compris)
  * \param zones afin de récupérer les informations sur toute les zones du jeu
- * \param personnage[] est un tableau de tout les personnages présent sur le plateau (Pour avoir accès aux informations leurs concernants)
  * \return rien
 */
-void afficher_toute_info(joueuse,joueuse,zones,personnage[]);
+void afficher_toute_info(joueuse,joueuse,zones);
 
 /**
  * \brief Demande à une joueuse combien de capital elle souhaite utiliser (elle peut répondre ne pas vouloir en utiliser)
