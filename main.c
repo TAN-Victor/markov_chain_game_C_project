@@ -2,7 +2,7 @@
  * @file main.c
  * @author Victor Tan
  * @brief Fichier source avec le main
- * @necessities joueuses.h
+ * @necessities interface.h
  * @date 2023-03-06
  * 
  */
@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 
@@ -18,12 +19,12 @@
 int main() {
 
     /**
-     * @brief Création de 3 "joueuses" car l'ensemble des monstres correspondra à une joueuse 
+     * @brief Création de 3 "joueuses"; l'ensemble des monstres correspondra à une joueuse 
      * 
      */
     joueuse* joueuse_1 = creation_joueuse(1); // 1 pour dire que l'on crée une joueuse jouable
     joueuse* joueuse_2 = creation_joueuse(1); // 1 pour dire que l'on crée une joueuse jouable
-    joueuse* monstres = creation_joueuse(0); // 1 pour dire que l'on crée une liste de monstres, il n'y aura qu'un seul monstre au début
+    joueuse* monstres = creation_joueuse(0); // 0 pour dire que l'on crée une liste de monstres, il n'y aura qu'un seul monstre au début
     fprintf(stderr, "Etape 1: creation des joueuses succes.\n"); // debug
 
     joueuse* liste_joueuses[3] = { joueuse_1, joueuse_2, monstres };
@@ -34,12 +35,12 @@ int main() {
      */
     zones* liste_zones = nouvellesZones();
 
-    carte A;
-    *(A->nom) = "";
-    *(A->description) = "";
-    carte liste_cartes[1] = { A }; // A compléter plus tard ou à le déplacer dans carte.c
+    struct carte A;
+    A.nom = "A";
+    A.description = "Description A";
+    carte liste_cartes[1] = { &A }; // A compléter plus tard avec l'ensemble des cartes, avec une fonction dans le main ou dans cartes.c
 
-
+    
 
 
     /**
