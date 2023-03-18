@@ -95,6 +95,7 @@ int main() {
     free_joueuse(liste_joueuses[0]);
     free_joueuse(liste_joueuses[1]);
     free_joueuse(liste_joueuses[2]);
+    libereZones(liste_zones);
     return 0;
 
 }
