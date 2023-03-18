@@ -25,9 +25,8 @@ int main() {
     joueuse* joueuse_1 = creation_joueuse(1); // 1 pour dire que l'on crée une joueuse jouable
     joueuse* joueuse_2 = creation_joueuse(1); // 1 pour dire que l'on crée une joueuse jouable
     joueuse* monstres = creation_joueuse(0); // 0 pour dire que l'on crée une liste de monstres, il n'y aura qu'un seul monstre au début
-    fprintf(stderr, "Etape 1: creation des joueuses succes.\n"); // debug
 
-    joueuse* liste_joueuses[3] = { joueuse_1, joueuse_2, monstres };
+    joueuse* liste_joueuses[3] = { joueuse_1, joueuse_2, monstres }; // Mettre les monstres et les joueuses ensemble permettra de les faire déplacer tous ensemble avec une même fonction
 
     /**
      * @brief Création des Zones du jeu (10 au début)
@@ -35,6 +34,11 @@ int main() {
      */
     zones* liste_zones = nouvellesZones();
 
+
+    /**
+     * @brief Création des cartes du jeu; pour l'instant une seule
+     * 
+     */
     struct carte A;
     A.nom = "A";
     A.description = "Description A";
@@ -49,9 +53,7 @@ int main() {
      * la partie se termine lorsqu'une des deux joueuses n'a plus de personnages.
      * 
      */
-    
         do {
-
         /**
          * @brief Alternance entre les 2 joueuses
          * 
@@ -69,13 +71,13 @@ int main() {
             if (n > 0) {
                 int* zones_modifiees = demander_zones(*liste_zones);
                 utilise_capital(liste_joueuses[i], n);
-                modifierZone(zones_modifiees[0], zones_modifiees[1], n, 1);
-                modifierZone(zones_modifiees[0], zones_modifiees[2], n, 0);
+                modifierZone(zones_modifiees[0], zones_modifiees[1], n, 1); // Augmentation de la probabilité d'aller de la zone 0 à la zone 1
+                modifierZone(zones_modifiees[0], zones_modifiees[2], n, 0); // Réduction de la probabilité d'aller de la zone 0 à la zone 2
                 //message_generique(//int des modifs de zones, // peu importe, //0);  // voir avec interface.c
             }
             else { // Exclusion, ne peut pas jouer de carte si le capital a été dépensé
                 int c = demander_carte(*liste_joueuses[i]);
-                if (c != -1) {  // Sujet à modification, lorsque l'on choisit une carte qui est correcte
+                if (c != -1) { // Si la joueuse veut jouer une carte
                     utilise_carte(liste_joueuses[i], liste_cartes[c]);
                     //message_generique(//int des modifs de zones, // peu importe, //0);  // voir avec interface.c
                 }
@@ -92,6 +94,7 @@ int main() {
     message_fin_du_jeu(*liste_joueuses[0], *liste_joueuses[1]);
     free_joueuse(liste_joueuses[0]);
     free_joueuse(liste_joueuses[1]);
+    free_joueuse(liste_joueuses[2]);
     return 0;
 
 }
