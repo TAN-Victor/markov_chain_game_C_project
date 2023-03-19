@@ -36,24 +36,12 @@ int main() {
 
 
     /**
-     * @brief Création des cartes du jeu; pour l'instant une seule
-     * 
-     */
-    struct carte A;
-    A.nom = "A";
-    A.description = "Description A";
-    carte liste_cartes[1] = { &A }; // A compléter plus tard avec l'ensemble des cartes, avec une fonction dans le main ou dans cartes.c
-
-    
-
-
-    /**
      * @brief Tant qu'aucune des deux joueuses n'a plus de personnages, le jeu continue
      * @stop Le nombre de personnages diminuera à chaque fois que le monstre mange,
      * la partie se termine lorsqu'une des deux joueuses n'a plus de personnages.
      * 
      */
-        do {
+    do {
         /**
          * @brief Alternance entre les 2 joueuses
          * 
@@ -65,9 +53,15 @@ int main() {
              * @brief Affiche toutes les informations actuelles du jeu 
              * 
              */
-            afficher_toute_info(*liste_joueuses[i], *liste_joueuses[(i+1)%2], *liste_zones);
-            int n = demander_capital(*liste_joueuses[i]);
+            afficher_toute_info(*liste_joueuses[i], *liste_joueuses[(i+1)%2], *liste_zones); // Appelle notamment tour_joueuse pour savoir qui joue
+            
+            
 
+            /**
+             * @brief Modification du plateau de jeu par utilisation du capital ou d'une carte
+             * 
+             */
+            int n = demander_capital(*liste_joueuses[i]);
             if (n > 0) {
                 int* zones_modifiees = demander_zones(*liste_zones);
                 utilise_capital(liste_joueuses[i], n);
@@ -76,23 +70,65 @@ int main() {
                 //message_generique(//int des modifs de zones, // peu importe, //0);  // voir avec interface.c
             }
             else { // Exclusion, ne peut pas jouer de carte si le capital a été dépensé
-                int c = demander_carte(*liste_joueuses[i]);
-                if (c != -1) { // Si la joueuse veut jouer une carte
-                    utilise_carte(liste_joueuses[i], liste_cartes[c]);
+                carte c = demander_carte(*liste_joueuses[i]); // Doit vérifier si la carte est jouable
+                if (c != NULL) { // Si la joueuse veut jouer une carte
+                    utilise_carte(liste_joueuses[i], c); // A modifier dans le futur, car une carte pourra augmenter le nombre de zone donc la fonction devrait prendre d'autres arguments
                     //message_generique(//int des modifs de zones, // peu importe, //0);  // voir avec interface.c
                 }
             }
-            deplacement_tout_le_monde(*liste_joueuses, *liste_zones); // Fonction qui n'est pas dans le sujet mais à implémenter en appelant plusieurs fois les déplacements
-            manger(*liste_joueuses); // Fonction qui n'est pas dans le sujet mais à implémenter en appelant plusieurs fois les tests de positions
-            reinitialise_capital(liste_joueuses[i]); // à modifier à "actualiser_joueuse", comme par exemple réduire le nombre de tours d'invinsibilité"
+
+            reinitialise_capital(liste_joueuses[i]); // Réinitialisation du capital de la joueuse, à modifier dans le futur pour être plutôt une actualisation_joueuse
+                                            // Par ex, actualiser le nombre de tours d'invincibilité, le nombre de tours de bonus de capital, ...
+        }
+
+        /**
+         * @brief Déplacement des monstres
+         * 
+         */
+        int nombre_monstre = nb_membre_ecole(liste_joueuses[2]); // Nombre de monstres dans le jeu
+        for (int j = 0; j < nombre_monstre; j += 1) {
+            deplacer(membre_ecole(liste_joueuses[2])[j], *trouveZone(prochaineZone(zonePersonnage(membre_ecole(liste_joueuses[2])[j])))); // Déplacement des monstres vers leur prochaine zone
+            //message_generique( //int des déplacements des monstres, //3, //zones); // voir avec interface.c
         }
 
 
+        /**
+         * @brief Déplacement des personnages des joueuses
+         * 
+         */
+        for (int i = 0; i < 2; i += 1) {
+            int nombre_personnage = nb_membre_ecole(liste_joueuses[i]); // Nombre de personnages dans l'école de la joueuse_(i+1)
+            for (int j = 0; j < nombre_personnage; j += 1) {
+                deplacer(membre_ecole(liste_joueuses[i])[j], *trouveZone(prochaineZone(zonePersonnage(membre_ecole(liste_joueuses[i])[j])))); // Déplacement des personnages vers leur prochaine zone
+                //message_generique( //int des déplacements des personnages, //i, //zones); // voir avec interface.c
+            }
+        }
+
+        /**
+         * @brief Vérification de la présence des personnages dans les zones des monstres
+         * 
+         */
+        for (int k = 0; k < nombre_monstre; k += 1) {
+            for (int l = 0; l < 2; l += 1) {
+                for (int m = 0; m < nb_membre_ecole(liste_joueuses[l]); m += 1) {
+                    if (zonePersonnage(membre_ecole(liste_joueuses[l])[m]) == zonePersonnage(membre_ecole(liste_joueuses[2])[k])) {
+                        estMange(membre_ecole(liste_joueuses[l])[m]);
+                        //message_generique( //int du message de mort, //i, //m); // voir avec interface.c
+                    }
+                }
+            }
+        }
+            
 
     } while(!tous_manges(liste_joueuses[0]) || !tous_manges(liste_joueuses[1]));
 
+
+    /**
+     * @brief Fin du jeu
+     * 
+     */
     message_fin_du_jeu(*liste_joueuses[0], *liste_joueuses[1]);
-    free_joueuse(liste_joueuses[0]);
+    free_joueuse(liste_joueuses[0]);    // Libération de la mémoire par appel à liberePersonnage
     free_joueuse(liste_joueuses[1]);
     free_joueuse(liste_joueuses[2]);
     libereZones(liste_zones);
