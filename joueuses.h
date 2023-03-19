@@ -18,8 +18,6 @@
  * - reinitialise_capital(j) pour remettre le capital d'une joeuse à 5
  * - utilise_capital(j,capital) pour utiliser le capital de la joeuse de la valeur souhaitée
  * - utilise_carte(j,carte) pour jouer la carte demandée
- * - deplacement_tout_le_monde(j) pour déplacer tous les membres d'une joueuse
- * - manger(j) pour manger tous les membres d'une joueuse qui sont sur une case d'un
  */
 #ifndef JOUEUSES_H
 #define JOUEUSES_H
@@ -117,16 +115,4 @@ void utilise_capital(joueuse* pj, int capital);
 */
 void utilise_carte(joueuse* pj, carte c);
 
-/**
- * @brief cette fonction déplace tout le monde
- * @param liste_joueuses un pointeur vers les deux joueuses et les monstres
- * @param liste_zones l'ensembles des zones
-*/
-void deplacement_tout_le_monde(joueuse* liste_joueuses, zones liste_zones);
-
-/**
- * @brief détermine si un personnage est dans la zone d'un monstre et si oui alors il est mangé
- * @param liste_joueuses pointeur vers les deux joueuses et les monstres
-*/
-void manger(joueuse* liste_joueuses);
 #endif
