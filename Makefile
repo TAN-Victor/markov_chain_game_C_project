@@ -1,22 +1,22 @@
 
-prog: zones.o personnages.o cartes.o joueuses.o interface.o main.o
-	gcc -Wall -Wextra -g zones.o personnages.o cartes.o joueuses.o interface.o main.o -o prog
+bin/prog: obj/zones.o obj/personnages.o obj/cartes.o obj/joueuses.o obj/interface.o obj/main.o
+	gcc -Wall -Wextra -g obj/zones.o obj/personnages.o obj/cartes.o obj/joueuses.o obj/interface.o obj/main.o -o bin/prog
 
-zones.o: zones.c zones.h
-	gcc -Wall -Wextra -c zones.c
+obj/zones.o: src/zones.c headers/zones.h
+	gcc -Wall -Wextra -c src/zones.c
 
-personnages.o: personnages.c personnages.h
-	gcc -Wall -Wextra -c personnages.c 
+obj/personnages.o: src/personnages.c headers/personnages.h
+	gcc -Wall -Wextra -c src/personnages.c 
 
-cartes.o: cartes.c cartes.h
-	gcc -Wall -Wextra -c cartes.c
+obj/cartes.o: src/cartes.c headers/cartes.h
+	gcc -Wall -Wextra -c src/cartes.c
 
-joueuses.o: joueuses.c joueuses.h
-	gcc -Wall -Wextra -c joueuses.c
+obj/joueuses.o: src/joueuses.c headers/joueuses.h
+	gcc -Wall -Wextra -c src/joueuses.c
 
-interface.o: interface.c interface.h
-	gcc -Wall -Wextra -c interface.c
+obj/interface.o: src/interface.c headers/interface.h
+	gcc -Wall -Wextra -c src/interface.c
 
-main.o: main.c interface.h
-	gcc -Wall -Wextra -c main.c
+obj/main.o: src/main.c headers/interface.h
+	gcc -Wall -Wextra -c src/main.c
 
