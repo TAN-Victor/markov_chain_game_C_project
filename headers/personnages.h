@@ -72,4 +72,9 @@ int zonePersonnage(personnage p);
  */
 void estMange(personnage p);
 
+/* ---------------------------------------------------------------------------- */
+/* Getters and Setters */
+
+/* code les getter des paramètres du struct personnage */
+
 #endif
