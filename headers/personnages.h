@@ -89,7 +89,7 @@ int getType(personnage p);
  * @param p un personnage dont on souhaite obtenir l'id
  * @return l'id du personnage, -1 en cas d'erreur
  */
-int getId(personnage p);
+int getIdPersonnage(personnage p);
 
 /**
  * @brief renvoie le statut du personnage
@@ -154,7 +154,7 @@ void setType(personnage p, int type);
  * @param p un personnage dont on souhaite modifier l'id
  * @param id le nouveau id du personnage
  */
-void setId(personnage p, int id);
+void setIdPersonnage(personnage p, int id);
 
 /**
  * @brief modifie le statut du personnage
