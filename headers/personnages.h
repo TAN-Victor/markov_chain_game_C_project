@@ -72,4 +72,136 @@ int zonePersonnage(personnage p);
  */
 void estMange(personnage p);
 
+/* ---------------------------------------------------------------------------- */
+/* Getters and Setters */
+
+/**
+ * @brief renvoie le type du personnage
+ * 
+ * @param p un personnage dont on souhaite obtenir le type
+ * @return le type du personnage, -1 en cas d'erreur
+ */
+int getType(personnage p);
+
+/**
+ * @brief renvoie l'id du personnage
+ * 
+ * @param p un personnage dont on souhaite obtenir l'id
+ * @return l'id du personnage, -1 en cas d'erreur
+ */
+int getId(personnage p);
+
+/**
+ * @brief renvoie le statut du personnage
+ * 
+ * @param p un personnage dont on souhaite obtenir le statut
+ * @return le statut du personnage, -1 en cas d'erreur
+ */
+int getStatut(personnage p);
+
+/**
+ * @brief renvoie la zone courante du personnage p
+ * 
+ * @param p 
+ * @return int correspondant au numéro de la zone courante du personnage p
+ */
+int getZoneCourante(personnage p);
+
+/**
+ * @brief renvoie la zone précédente du personnage p
+ * 
+ * @param p 
+ * @return int correspondant au numéro de la zone précédente du personnage p
+ */
+int getZonePrecedente(personnage p);
+
+/**
+ * @brief renvoie le nombre de pas restant du personnage
+ * 
+ * @param p un personnage dont on souhaite obtenir le nombre de pas restant
+ * @return le nombre de pas restant du personnage, -1 en cas d'erreur
+ */
+int getNbPasRestant(personnage p);
+
+/**
+ * @brief renvoie le nombre de tour restant avant que le personnage ne réapparaisse
+ * 
+ * @param p un personnage dont on souhaite obtenir le nombre de tour restant avant que le personnage ne réapparaisse
+ * @return le nombre de tour restant avant que le personnage ne réapparaisse, -1 en cas d'erreur
+ */
+int getNbTourDisparu(personnage p);
+
+/**
+ * @brief renvoie le booléen permettant de savoir si le personnage peut jouer ou non
+ * 
+ * @param p un personnage dont on souhaite savoir si il peut jouer ou non
+ * @return le booléen permettant de savoir si le personnage peut jouer ou non, -1 en cas d'erreur
+ */
+int getPeutJouer(personnage p);
+
+
+/**
+ * @brief modifie le type du personnage
+ * 
+ * @param p un personnage dont on souhaite modifier le type
+ * @param type le nouveau type du personnage
+ */
+void setType(personnage p, int type);
+
+/**
+ * @brief modifie l'id du personnage
+ * 
+ * @param p un personnage dont on souhaite modifier l'id
+ * @param id le nouveau id du personnage
+ */
+void setId(personnage p, int id);
+
+/**
+ * @brief modifie le statut du personnage
+ * 
+ * @param p un personnage dont on souhaite modifier le statut
+ * @param statut le nouveau statut du personnage : 0 si mort, 1 si en vie, -1 si disparu, 2 si peut jouer 2 fois, 3 si FISA
+ */
+void setStatut(personnage p, int statut);
+
+/**
+ * @brief modifie la zone courante du personnage
+ * 
+ * @param p un personnage dont on souhaite modifier la zone courante
+ * @param zoneCourante la nouvelle zone courante du personnage, compris entre 0 et nb_zones-1
+ */
+void setZoneCourante(personnage p, int zoneCourante);
+
+/**
+ * @brief modifie la zone précédente du personnage
+ * 
+ * @param p 
+ * @param zonePrecedente la nouvelle zone précédente du personnage, compris entre 0 et nb_zones-1
+ */
+void setZonePrecedente(personnage p, int zonePrecedente);
+
+/**
+ * @brief modifie le nombre de pas restant du personnage
+ * 
+ * @param p un personnage dont on souhaite modifier le nombre de pas restant
+ * @param nbPasRestant le nouveau nombre de pas restant du personnage
+ */
+void setNbPasRestant(personnage p, int nbPasRestant);
+
+/**
+ * @brief modifie le nombre de tour restant avant que le personnage ne réapparaisse
+ * 
+ * @param p un personnage dont on souhaite modifier le nombre de tour restant avant que le personnage ne réapparaisse
+ * @param nbTourDisparu le nouveau nombre de tour restant avant que le personnage ne réapparaisse
+ */
+void setNbTourDisparu(personnage p, int nbTourDisparu);
+
+/**
+ * @brief modifie le booléen permettant de savoir si le personnage peut jouer ou non
+ * 
+ * @param p un personnage dont on souhaite modifier le booléen permettant de savoir si le personnage peut jouer ou non
+ * @param peutJouer le nouveau booléen permettant de savoir si le personnage peut jouer ou non
+ */
+void setPeutJouer(personnage p, int peutJouer);
+
 #endif

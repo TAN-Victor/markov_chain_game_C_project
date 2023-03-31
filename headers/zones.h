@@ -45,7 +45,7 @@ void libereZones(zones* pz);
  * @param n numéro de la zone compris entre 0 et nb_zones-1
  * @return zone* pointeur vers la zone de numéro n
  */
-zone* trouveZone(int n);
+zone* trouveZone(zones z, int n);
 
 
 /**
@@ -56,7 +56,7 @@ zone* trouveZone(int n);
  * @param capital capital investi <= au capital de la joueuse 
  * @param action indique si on augmente (action = 1) ou retire (action = 0) de la probabilité
  */
-void modifierZone(int n1, int n2, int capital, int action);
+void modifierZone(zones* z, int n1, int n2, int capital, int action);
 
 
 /**
@@ -65,6 +65,40 @@ void modifierZone(int n1, int n2, int capital, int action);
  * @param nz numéro de la zone actuelle compris entre 
  * @return le numéro de la prochaine zone, -1 en cas d'erreur 
  */
-int prochaineZone(int nz);
+int prochaineZone(zones z, int nz);
+
+/* ------------------------------------------------------------------ */
+/* Getters and Setters */
+
+/**
+ * @brief renvoie le numéro de la zone z
+ * 
+ * @param z zone 
+ * @return int numéro de la zone
+ */
+int getNumero(zone z);
+
+/**
+ * @brief renvoie la tableau des proba de se déplacer vers les zones du jeu à partir de la zone z passée en argument
+ * 
+ * @param z une zone
+ * @return float* le tableau des proba
+ */
+float* getProbas(zone z);
+
+/**
+ * @brief renvoie la liste des zones du jeu
+ * 
+ * @param z les zones du jeu
+ * @return zone* 
+ */
+zone* getZones(zones z);
+
+/**
+ * @brief ajoute une zone au jeu
+ * 
+ * @param z les zones du jeu
+ */
+void addZone(zones* z);
 
 #endif

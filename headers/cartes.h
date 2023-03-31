@@ -17,12 +17,19 @@ typedef struct carte* carte;
  * carte_test->nom="...";
  * carte_test->description="...";
  */
- 
 
+/**
+ * @brief renvoie le nom d'une carte
+ * 
+ * @param c 
+ * @return char* le nom de la carte
+ */
+char* getNom(carte c);
 
-
-
-
-
-
-
+/**
+ * @brief renvoie la description de la carte
+ * 
+ * @param c 
+ * @return char* la description
+ */
+char* getDescription(carte c);
