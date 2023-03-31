@@ -15,9 +15,11 @@
  * @brief test si la joueuse est initialisée
  * 
  * @param j la joueuse à tester
+ * 
  * @return int 1 si initialisée, 0 sinon
  * 
  */
+//ce test est à chier
 int test_init_joueuses(joueuse j)
 {
     if(j == NULL)
