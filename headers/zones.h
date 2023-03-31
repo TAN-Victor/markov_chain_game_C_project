@@ -20,7 +20,7 @@ struct _zones{
     zone* tab_zones; /* tableau des zones, de taille nb_zones */
     int nb_zones; /* nombre de zones */
 };
-typedef struct _zones zones;
+typedef struct _zones* zones;
 
 
 /**
@@ -28,7 +28,7 @@ typedef struct _zones zones;
  * 
  * @return renvoie un pointeur vers l'ensemble des zones du jeu 
  */
-zones* nouvellesZones();
+zones nouvellesZones();
 
 
 /**
@@ -36,7 +36,7 @@ zones* nouvellesZones();
  * 
  * @param pz une adresse vers un ensemble de zones valide
  */
-void libereZones(zones* pz);
+void libereZones(zones pz);
 
 
 /**
@@ -56,7 +56,7 @@ zone* trouveZone(zones z, int n);
  * @param capital capital investi <= au capital de la joueuse 
  * @param action indique si on augmente (action = 1) ou retire (action = 0) de la probabilité
  */
-void modifierZone(zones* z, int n1, int n2, int capital, int action);
+void modifierZone(zones z, int n1, int n2, int capital, int action);
 
 
 /**
@@ -99,6 +99,6 @@ zone* getZones(zones z);
  * 
  * @param z les zones du jeu
  */
-void addZone(zones* z);
+void addZone(zones z);
 
 #endif

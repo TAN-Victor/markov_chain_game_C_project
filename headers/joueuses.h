@@ -25,19 +25,19 @@
 #include "personnages.h"
 #include "cartes.h"
 #include "zones.h"
+#include "structures.h"
 
 
  struct joueuse
 {
     int capital;/*initialisé à 5*/
     personnage* membres;/*une liste de pointeur de personnage de taille 7 (=taille max de l'équipe)*/
-    carte* main_du_joueur; /*une liste contenant les cartes de la joueuse*/
+    liste_cartes* main_du_joueur; /*une liste contenant les cartes de la joueuse*/
     int id; /*on identifie une joueuse par un numéro unique*/
     int tour; /*cette valeur est égale à 0 si c'est le tour de la joueuse et 1 sinon*/
     int taille; /*nombre de membres de l'équipe (doit être inférieur à 7), initialisée à 5*/
     int tours_restants_bonus_capital; /*tours restants pendant lesquels on peut recevoir plus de capital, initialisé à 1*/
     int tours_restants_invinsibilite; /*nb de tour pendant lesquels les membres d'une joeuse ne peunvent pas etre manges */
-    int invinsibilite; /*vaut 1 si les membres sont invinsibles et 0 sinon, initialise à 0*/
     int tours_restants_jouer;/*tours restants pendant lesquels on peut faire plus de déplacement, initialisé à 1*/
     float proba_par_capital; /*la valeur de la modification de la proba par une joueuse par unité de capital (cf Katrin Salhab), initialisée à 0.1*/
 };
@@ -130,9 +130,9 @@ int getCapital(joueuse j);
  * @brief renvoie la liste des cartes de la main d'une joueuse
  * 
  * @param j : une joueuse 
- * @return carte* : la liste des cartes de la main d'une joueuse 
+ * @return liste_cartes* : la liste des cartes de la main d'une joueuse 
  */
-carte* getMains(joueuse j);
+liste_cartes* getMains(joueuse j);
 
 /**
  * @brief renvoie l'id d'une joueuse
@@ -140,7 +140,7 @@ carte* getMains(joueuse j);
  * @param j : une joueuse 
  * @return int : l'id d'une joueuse
  */
-int getId(joueuse j);
+int getIdJoueuse(joueuse j);
 
 /**
  * @brief renvoie 1 si c'est à la joueuse de jouer, 0 sinon
@@ -212,15 +212,7 @@ void setCapital(joueuse j, int capital);
  * @param j : une joueuse 
  * @param p : le personnage à modifier
  */
-void setPersonnages(joueuse j, personnage* p);
-
-/**
- * @brief modifie la liste des cartes de la main d'une joueuse
- * 
- * @param j : une joueuse 
- * @param c : une pointeur vers la carte à modifier 
- */
-void setCartes(joueuse j, carte c);
+void setPersonnage(joueuse j, personnage* p);
 
 /**
  * @brief modifie l'id d'une joueuse
@@ -228,7 +220,7 @@ void setCartes(joueuse j, carte c);
  * @param j : une joueuse 
  * @param id : le nouvel id
  */
-void setId(joueuse j, int id);
+void setIdJoueuse(joueuse j, int id);
 
 /**
  * @brief modifie le tour d'une joueuse
