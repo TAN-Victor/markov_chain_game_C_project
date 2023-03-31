@@ -10,9 +10,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int test_init_joueuses(joueuses_t joueuses)
+#include "headers/joueuses.h"
+/**
+ * @brief test si la joueuse est initialisée
+ * 
+ * @param j la joueuse à tester
+ * @return int 1 si initialisée, 0 sinon
+ * 
+ */
+int test_init_joueuses(joueuse j)
 {
-    if(joueuses == NULL)
+    if(j == NULL)
     {
         return 0;
     }
