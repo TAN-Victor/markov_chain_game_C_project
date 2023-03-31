@@ -7,7 +7,7 @@
  * 
  */
 
-#include "interface.h"
+#include "../headers/interface.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -77,9 +77,7 @@ int main() {
                 }
             }
 
-            reinitialise_capital(liste_joueuses[i]); // Réinitialisation du capital de la joueuse, à modifier dans le futur pour être plutôt une actualisation_joueuse
-                                            // Par ex, actualiser le nombre de tours d'invincibilité, le nombre de tours de bonus de capital, ...
-        }
+
 
         /**
          * @brief Déplacement des monstres
@@ -96,10 +94,10 @@ int main() {
          * @brief Déplacement des personnages des joueuses
          * 
          */
-        for (int i = 0; i < 2; i += 1) {
-            int nombre_personnage = nb_membre_ecole(liste_joueuses[i]); // Nombre de personnages dans l'école de la joueuse_(i+1)
-            for (int j = 0; j < nombre_personnage; j += 1) {
-                deplacer(membre_ecole(liste_joueuses[i])[j], *trouveZone(prochaineZone(zonePersonnage(membre_ecole(liste_joueuses[i])[j])))); // Déplacement des personnages vers leur prochaine zone
+        for (int j = 0; j < 2; j += 1) {
+            int nombre_personnage = nb_membre_ecole(liste_joueuses[j]); // Nombre de personnages dans l'école de la joueuse_(i+1)
+            for (int k = 0; k < nombre_personnage; k += 1) {
+                deplacer(membre_ecole(liste_joueuses[j])[k], *trouveZone(prochaineZone(zonePersonnage(membre_ecole(liste_joueuses[i])[j])))); // Déplacement des personnages vers leur prochaine zone
                 //message_generique( //int des déplacements des personnages, //i, //zones); // voir avec interface.c
             }
         }
@@ -118,7 +116,9 @@ int main() {
                 }
             }
         }
-            
+        reinitialise_capital(liste_joueuses[i]); // Réinitialisation du capital de la joueuse, à modifier dans le futur pour être plutôt une actualisation_joueuse
+                                            // Par ex, actualiser le nombre de tours d'invincibilité, le nombre de tours de bonus de capital, ...
+        }            
 
     } while(!tous_manges(liste_joueuses[0]) || !tous_manges(liste_joueuses[1]));
 
