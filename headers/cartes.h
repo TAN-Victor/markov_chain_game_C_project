@@ -5,6 +5,10 @@
  * ainsi que 2 autres tableaux de cartes de taille 5 contenant les cartes tirées qui seront la main de chaque joueur.
 */
 
+#ifndef CARTES_H
+#define CARTES_H
+
+
 struct carte{
     char* nom;
     char* description;
@@ -33,3 +37,5 @@ char* getNom(carte c);
  * @return char* la description
  */
 char* getDescription(carte c);
+
+#endif
