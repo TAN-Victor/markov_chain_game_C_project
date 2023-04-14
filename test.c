@@ -21,57 +21,106 @@
  * @return int 1 si initialisée correctement, 0 sinon
  * 
  */
-//ce test est à chier
 int test_init_joueuses()
 {
-    joueuse j = creation_joueuse(1,1); /*on créé une joueuse*/
+    joueuse j = creation_joueuse(1); /*on créé une joueuse*/
     if (j==NULL){
         return 0;
     }
     if (getCapital(j) != 5){
-        fprintf("pb capital\n");
+        fprintf(stderr,"pb capital\n");
         return 0;
     }
     if (getTaille(j) != 5){
-        fprintf("pb taille\n");
+        fprintf(stderr,"pb taille\n");
         return 0;
     }
     if (getIdJoueuse(j) != 1){
-        fprintf("pb id\n");
+        fprintf(stderr,"pb id\n");
         return 0;
     }
     if (getTour(j) != 1){
-        fprintf("pb tour\n");
+        fprintf(stderr,"pb tour\n");
         return 0;
     }
     if (getToursRestantsBonusCapital(j) != 1){
-        fprintf("pb tours restants bonus capital\n");
+        fprintf(stderr,"pb tours restants bonus capital\n");
         return 0;
     }
-    if (getToursInvinsibilite(j) != 0){
-        frprintf("pb tours invinsibilite\n");
+    if (getToursInvincibilite(j) != 0){
+        fprintf(stderr,"pb tours invinsibilite\n");
         return 0;
     }
     if (getToursRestantsJouer(j) != 1){
-        fprintf("pb tours restants jouer\n");
+        fprintf(stderr,"pb tours restants jouer\n");
         return 0;
     }
     if (getProbaParCapital(j) != 0.1){
-        fprintf("pb proba par capital\n");
+        fprintf(stderr,"pb proba par capital\n");
         return 0;
     }
-    if (getMains(j) == NULL){
-        fprintf("pb mains\n");
+    if (getMain(j) == NULL){
+        fprintf(stderr,"pb mains\n");
         return 0;
     }
     if (getMembres(j) == NULL){
-        fprintf("pb membres\n");
+        fprintf(stderr,"pb membres\n");
         return 0;
     }
     //tester la création des personnages
     free(j);
-    return 1
+
+    joueuse m = creation_joueuse(0); /*on créé un monstre*/
+    //adapter aux valeurs choisit par adam dans la fonction creation_joueuse
+    if (m==NULL){
+        return 0;
+    }
+    if (getCapital(m) != -1){
+        fprintf(stderr,"pb capital\n");
+        return 0;
+    }
+    if (getTaille(m) != 1){
+        fprintf(stderr,"pb taille\n");
+        return 0;
+    }
+    if (getIdJoueuse(m) != 0){
+        fprintf(stderr,"pb id\n");
+        return 0;
+    }
+    if (getTour(m) != 1){
+        fprintf(stderr,"pb tour\n");
+        return 0;
+    }
+    if (getToursRestantsBonusCapital(m) != 1){
+        fprintf(stderr,"pb tours restants bonus capital\n");
+        return 0;
+    }
+    if (getToursInvincibilite(m) != -1){
+        fprintf(stderr,"pb tours invinsibilite\n");
+        return 0;
+    }
+    if (getToursRestantsJouer(m) != 1){
+        fprintf(stderr,"pb tours restants jouer\n");
+        return 0;
+    }
+    if (getProbaParCapital(m) != 0.1){
+        fprintf(stderr,"pb proba par capital\n");
+        return 0;
+    }
+    if (getMain(m) == NULL){
+        fprintf(stderr,"pb mains\n");
+        return 0;
+    }
+    if (getMembres(m) == NULL){
+        fprintf(stderr,"pb membres\n");
+        return 0;
+    }
+    //tester la création des personnages
+    free(m);
+    
+    return 1;
 }
+
 
 /**
  * @brief test si les zones sont initialisées correctement
@@ -84,25 +133,45 @@ int test_init_joueuses()
 int test_init_zones(){
     zones z = nouvellesZones(); /*on créé 10 zones*/
     if (z==NULL){
+        fprintf(stderr,"NULL pointer");
         return 0;
     }
     if (getNbZones(z) != 10){
-        fprintf("pb nb zones\n");
+        fprintf(stderr,"pb nb zones\n");
         return 0;
     }
     for (int i=0; i<10; i++){
-        if (getZones(z,i) == NULL){
-            fprintf("pb zone %d\n",i);
+    if (getTabZones(z)[i] == NULL){
+            fprintf(stderr,"pb zone %d\n",i);
             return 0;
         }
         for (int j=0; j<getNbZones(z); j++){
-            if (getProbas(z)[i][j] != 0.1){
-                fprintf("pb proba %d %d\n",i,j);
+            if (getProbas(getTabZones(z)[i])[j] != 0.1){
+                fprintf(stderr,"pb proba %d %d\n",i,j);
                 return 0;
             }
             }
         }
-    }
     free(z);
     return 1;
+}
+
+
+int test_init_personnage(){
+    zones zs = nouvellesZones();
+    personnage perso  = nouveauPersonnage(1,trouveZone(zs,0));//membre de l'équipe 1
+    if (perso == NULL){
+        fprintf(stderr,"NULL pointer");
+        return 0;
+    }
+    free(perso);
+    return 1;
+}
+
+
+int main(){
+    int test_zones = test_init_zones();
+    int test_joueuses = test_init_joueuses();
+    printf("%d",test_zones);
+    printf("%d",test_joueuses);
 }
