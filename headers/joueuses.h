@@ -39,7 +39,7 @@
 {
     int capital;/*initialisé à 5*/
     personnage* membres;/*une liste de pointeur de personnage de taille 7 (=taille max de l'équipe)*/
-    liste_cartes* main_du_joueur; /*une liste contenant les cartes de la joueuse*/
+    liste_cartes main_du_joueur; /*une liste contenant les cartes de la joueuse*/
     int id; /*on identifie une joueuse par un numéro unique, 0 si c'est la liste de monstres, 1 si c'est la joueuse 1, 2 si c'est la joueuse 2*/
     int tour; /*cette valeur est égale à 0 si c'est le tour de la joueuse et 1 sinon*/
     int taille; /*nombre de membres de l'équipe (doit être inférieur à 7), initialisée à 5*/
@@ -139,7 +139,7 @@ int getCapital(joueuse j);
  * @param j : une joueuse 
  * @return liste_cartes* : la liste des cartes de la main d'une joueuse 
  */
-liste_cartes* getMain(joueuse j);
+liste_cartes getMain(joueuse j);
 
 /**
  * @brief renvoie l'id d'une joueuse

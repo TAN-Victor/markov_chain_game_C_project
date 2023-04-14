@@ -1,16 +1,72 @@
 #include "../headers/zones.h"
-/* implémente les interfaces des setters et getters de zones.h*/
-
+/* Implémentation des setters et getters */
+/**
+ * @brief renvoie le numéro de la zone z
+ * 
+ * @param z zone 
+ * @return int numéro de la zone
+ */
 int getNumero(zone z){
-    return z.numero;
+    return z->numero;
 }
 
+/**
+ * @brief renvoie la tableau des proba de se déplacer vers les zones du jeu à partir de la zone z passée en argument
+ * 
+ * @param z une zone
+ * @return float* le tableau des proba
+ */
 float* getProbas(zone z){
-    return z.probas;
+    return z->probas;
 }
 
-zone* getZones(zones z){
+/**
+ * @brief renvoie un entier correspondant au type de joueurs autorisés sur la zone
+ * 
+ * @param z la zone en question
+ * @return int 
+ */
+int getEstAutorise(zone z){
+    return z->est_autorise;
+}
+
+/**
+ * @brief met à jour l'entier est_autorise
+ * 
+ * @param z la zone à modifier
+ */
+void setEstAutorise(zone z, int n){
+    z->est_autorise = n;
+}
+
+/**
+ * @brief renvoie la liste des zones du jeu
+ * 
+ * @param z les zones du jeu
+ * @return zone* 
+ */
+zone getTabZones(zones z){
     return z->tab_zones;
+}
+
+/**
+ * @brief renvoie le nombre de zones des zones du jeu
+ * 
+ * @param z l'ensemble des zones du jeu
+ * @return int le nombre de zones
+ */
+int getNbZones(zones z){
+    return z->nb_zones;
+}
+
+/**
+ * @brief met à jour le nombre de zone
+ * 
+ * @param z l'ensemble des zones
+ * @param n le nouveau nombre de zones
+ */
+void setNbZones(zones z, int n){
+    z->nb_zones = n;
 }
 
 void addZone(zones z){
