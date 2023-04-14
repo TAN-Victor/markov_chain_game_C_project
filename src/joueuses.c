@@ -15,7 +15,7 @@ int getCapital(joueuse j){
  * @param j : une joueuse 
  * @return carte* : la liste des cartes de la main d'une joueuse 
  */
-liste_cartes* getMains(joueuse j){
+liste_cartes* getMain(joueuse j){
     return j->main_du_joueur;
 }
 
@@ -65,8 +65,8 @@ int getNbToursBonusCapital(joueuse j){
  * @param j : une joueuse 
  * @return int : 1 si les membres de la joueuse sont invinsibles, 0 sinon
  */
-int getInvinsibilite(joueuse j){
-    return getToursInvinsibilite(j) > 0;
+int getInvincibilite(joueuse j){
+    return getToursInvincibilite(j) > 0;
 }
 
 /**
@@ -75,8 +75,8 @@ int getInvinsibilite(joueuse j){
  * @param j : une joueuse 
  * @return int : le nombre de tours restants pendant lesquels les membres de la joueuse sont invinsibles
  */
-int getToursInvinsibilite(joueuse j){
-    return j->tours_restants_invinsibilite;
+int getToursInvincibilite(joueuse j){
+    return j->tours_restants_invincibilite;
 }
 
 /**
@@ -164,7 +164,7 @@ void setToursRestantsBonusCapital(joueuse j, int toursRestants){
  * @param toursRestants : le nouveau nombre de tours restants sous invinsibilité
  */
 void setToursRestantsInvinsibilite(joueuse j, int toursRestants){
-    j->tours_restants_invinsibilite = toursRestants;
+    j->tours_restants_invincibilite = toursRestants;
 }
 
 /**

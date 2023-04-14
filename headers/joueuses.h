@@ -27,17 +27,24 @@
 #include "zones.h"
 #include "structures.h"
 
+/* Création de constantes */
+#define CAPITAL_DE_BASE 5
+#define NB_DE_MONSTRE 1
+#define NB_MEMBRES_JOUEUSE_1 5
+#define NB_MEMBRES_JOUEUSE_2 5
+#define NB_CARTES_MAIN_JOUEUSE_1 5
+#define NB_CARTES_MAIN_JOUEUSE_2 5
 
  struct joueuse
 {
     int capital;/*initialisé à 5*/
     personnage* membres;/*une liste de pointeur de personnage de taille 7 (=taille max de l'équipe)*/
     liste_cartes* main_du_joueur; /*une liste contenant les cartes de la joueuse*/
-    int id; /*on identifie une joueuse par un numéro unique*/
+    int id; /*on identifie une joueuse par un numéro unique, -1 si c'est la liste de monstres*/
     int tour; /*cette valeur est égale à 0 si c'est le tour de la joueuse et 1 sinon*/
     int taille; /*nombre de membres de l'équipe (doit être inférieur à 7), initialisée à 5*/
     int tours_restants_bonus_capital; /*tours restants pendant lesquels on peut recevoir plus de capital, initialisé à 1*/
-    int tours_restants_invinsibilite; /*nb de tour pendant lesquels les membres d'une joeuse ne peunvent pas etre manges */
+    int tours_restants_invincibilite; /*nb de tour pendant lesquels les membres d'une joueuse ne peuvent pas etre manges */
     int tours_restants_jouer;/*tours restants pendant lesquels on peut faire plus de déplacement, initialisé à 1*/
     float proba_par_capital; /*la valeur de la modification de la proba par une joueuse par unité de capital (cf Katrin Salhab), initialisée à 0.1*/
 };
@@ -49,7 +56,7 @@ typedef struct joueuse* joueuse;
             - on initialise les 5 membres du joueurs
             - on initialise la main_du_joueur avec 5 cartes aléatoires
             - on associe à la joeuse une clée unique (1 ou 2)-> cette clef permet de savoir qui est le joueur n°1
- * @param n un entier si n=0 on cree un monstre dans un ensemble de monstres, si n=1 on cree une joueuse
+ * @param n un entier si n=0 on cree un ensemble de monstre avec un seul monstre, si n=1 on cree une joueuse
  * @return joueuse un pointeur vers la joueuse crée
 */
 joueuse creation_joueuse(int n);
@@ -132,7 +139,7 @@ int getCapital(joueuse j);
  * @param j : une joueuse 
  * @return liste_cartes* : la liste des cartes de la main d'une joueuse 
  */
-liste_cartes* getMains(joueuse j);
+liste_cartes* getMain(joueuse j);
 
 /**
  * @brief renvoie l'id d'une joueuse
@@ -172,7 +179,7 @@ int getToursRestantsBonusCapital(joueuse j);
  * @param j : une joueuse 
  * @return int : 1 si les membres de la joueuse sont invinsibles, 0 sinon
  */
-int getInvinsibilite(joueuse j);
+int getInvincibilite(joueuse j);
 
 /**
  * @brief renvoie le nombre de tours restants pendant lesquels les membres de la joueuse sont invinsibles
@@ -180,7 +187,7 @@ int getInvinsibilite(joueuse j);
  * @param j : une joueuse 
  * @return int : le nombre de tours restants pendant lesquels les membres de la joueuse sont invinsibles
  */
-int getToursInvinsibilite(joueuse j);
+int getToursInvincibilite(joueuse j);
 
 /**
  * @brief renvoie le nombre de tours restants pendant lesquels la joueuse peut jouer plusieurs fois par tour

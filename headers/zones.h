@@ -10,9 +10,14 @@
 #ifndef ZONE_H
 #define ZONE_H
 
+/* Création des Constantes */
+#define NB_DE_ZONES 10
+
+
 struct _zone {
     int numero; /* numéro de la zone */
     float* probas; /* tableau des proba de se déplacer vers chaque zone du jeu*/
+    int est_autorise; /* vaut 0 si tous les personnages sont autorisés, 1 si uniquement ceux de joueuse 1, 2 si ceux de joueuse 2*/
 };
 typedef struct _zone zone;
 
