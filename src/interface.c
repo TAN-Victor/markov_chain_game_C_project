@@ -39,20 +39,20 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         printf("===================================================\n"); 
         printf("Votre capital actuel: %d crédit(s)\n", getCapital(j1));
         printf("Votre main de cartes: \n");
-        printf("Il vous reste actuellement %n membre(s)\n");
+        printf("Il vous reste actuellement %d membre(s)\n", getTaille(j1));
         printf("---------------------------------------------------\n");
         
         if (getToursRestantsBonusCapital(j1) > 0) {
-            printf("Votre bonus de capital dure encore %n tour(s)\n");
+            printf("Votre bonus de capital dure encore %d tour(s)\n", getToursRestantsBonusCapital(j1));
         }
         if (getProbaParCapital(j1) > 0.1) {
-            printf("Chaque unité de capital investi modifie de %n les probabilités\n");
+            printf("Chaque unité de capital investi modifie de %f les probabilités\n", getProbaParCapital(j1));
         }
-        if (getToursInvinsibilite(j1) > 0) {
-            printf("Votre bonus d'invincibilité dure encore %n tour(s)\n");
+        if (getToursInvincibilite(j1) > 0) {
+            printf("Votre bonus d'invincibilité dure encore %d tour(s)\n", getToursInvincibilite(j1));
         }
         if (getToursRestantsJouer(j1) > 1) {
-            printf("Vous pouvez jouer %n tour(s)\n");
+            printf("Vous pouvez jouer %d tour(s)\n", getToursRestantsJouer(j1));
         }
         printf("---------------------------------------------------\n");
 
@@ -60,18 +60,20 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         //printf("Appuyez sur Entrée pour continuer de jouer\n");
         //printf("---------------------------------------------------\n");
         
-        printf("Vos membres d'école sont sur les zones: \n")  // A MODIFIER AVEC UNE INTERFACE
+        printf("Vos membres d'école sont sur les zones: \n");  // A MODIFIER AVEC UNE INTERFACE
         for (int i = 0; i < getTaille(j1); i += 1) {
             printf("%2d", getZoneCourante(getMembres(j1)[i]));
         }
-        printf("Less membres d'école adverse sont sur les zones: \n")
+        printf("Les membres d'école adverse sont sur les zones: \n");
         for (int i = 0; i < getTaille(j2); i += 1) {
             printf("%2d", getZoneCourante(getMembres(j2)[i]));
         }
-        printf("Le(s) monstre(s) sont sur les zones: \n")
+        printf("Le(s) monstre(s) sont sur les zones: \n");
         for (int i = 0; i < getTaille(m); i += 1) {
             printf("%2d", getZoneCourante(getMembres(m)[i]));
         }
+        printf("Il y a %d zones. \n", getNbZones(liste_zones));
+
         printf("---------------------------------------------------\n");
 }
 
@@ -93,7 +95,7 @@ int demander_capital(joueuse j1) {
     scanf("%d", &montant);
 
     if (montant <= 0) {
-        return 0
+        return 0;
     }
     else {
         if (capital < montant) {
@@ -114,16 +116,16 @@ int demander_capital(joueuse j1) {
 */
 carte demander_carte(joueuse j1) {
     int choix = 0;
-    int taille_main_cartes = j1.main_du_joueur->nb_cartes; //TODO
+    int taille_main_cartes = getNbCartes(getMain(j1));
     printf("Vous avez les cartes suivantes: \n");
     for (int i = 0; i < taille_main_cartes; i += 1) {
-        printf("%s  ", getName(lecture_cartes(getMains(j1), i)));
+        printf("%s  ", getNom(lecture_cartes(getMain(j1), i)));
     }
     printf("\n Quelle carte voulez-vous utiliser ?\n");
     scanf("%d", &choix);
 
     if (choix <= 0) {
-        return 0
+        return 0;
     }
     else {
         if (taille_main_cartes < choix) {
@@ -131,47 +133,65 @@ carte demander_carte(joueuse j1) {
             return 0;
         }
         else {
-            return lecture_cartes(getMains(j1), choix-1);
+            return lecture_cartes(getMain(j1), choix-1);
         }
     }
 }
 
+
 /**
- * \brief Demande à une joueuse où elle veut augmenter la probabilité et une autre où elle doit diminuer, elle peut répondre NULL si elle veut rien modifier
- * \param zones afin de savoir sur quelle zone intéragir (un paramamètre joueuse n'est pas utile car dans le main on sait déjà sur quelle joueuse demander)
- * \return un tableau contenant 3 int représentant le numéro de la zone de départ et 2 zones où la probabilité est à modifier(le premier sera celle à augmenter et le deuxième celle à diminuer), NULL sinon
+ * \brief Demande à une joueuse le numéro de la zone de départ dont elle veut modifier les probabilités d'accéder à une autre zone 
+ * \param zones afin de savoir sur quelle zone intéragir
+ * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1; -1 sinon
 */
-int* demander_zones(zones liste_zones) {
-    int choix_a_augmenter = -1;
-    int choix_a_diminuer = -1;
+int demander_zones_depart(zones liste_zones) {
     int choix_depart = -1;
-    int nombre_de_zones = NB_DE_ZONES;
+    int nombre_de_zones = getNbZones(liste_zones);
     printf("Choissez une zone de départ entre 1 et %d: \n", nombre_de_zones);
     scanf("%d", &choix_depart);
     if (choix_depart <= 0 || choix_depart > nombre_de_zones) {
         fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
-        return null;
+        return -1;
     }
+    return choix_depart;
+}
+
+/**
+ * \brief Demande à une joueuse le numéro de la zone d'arrivée dont elle veut augmenter les probabilités d'accéder à cette zone
+ * \param zones afin de savoir sur quelle zone intéragir
+ * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1; ou -1 sinon
+*/
+int demander_zones_arrivee_augmenter(zones liste_zones) {
+    int choix_a_augmenter = -1;
+    int nombre_de_zones = getNbZones(liste_zones);
     printf("Choisissez une zone dont vous souhaitez AUGMENTER la probabilité entre 1 et %d: \n", nombre_de_zones);
     scanf("%d", &choix_a_augmenter);
 
     if (choix_a_augmenter <= 0 || choix_a_augmenter > nombre_de_zones) {
         fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
-        return null;
+        return -1;
     }
-    else {
-        printf("Vous avez choisi la zone %d; \n Choisissez une zone dont vous souhaitez DIMINUER la probabilité entre 1 et %d (%d exclu): \n", choix_a_augmenter, nombre_de_zones, choix_a_diminuer);
-        if (choix_a_diminuer <= 0 || choix_a_diminuer > nombre_de_zones) {
-            fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
-            return null;
-        }
-        else {
-            printf("Vous avez choisi la zone %d. \n", choix_a_diminuer);
-            int *triplet = [choix_depart, choix_a_augmenter, choix_a_diminuer];
-            return triplet;
-        }
-    }
+    return choix_a_augmenter;
 }
+
+/**
+ * \brief Demande à une joueuse le numéro de la zone d'arrivée dont elle veut diminuer les probabilités d'accéder à une autre zone
+ *          La zone doit être différente de la zone d'arrivée dont on veut augmenter la probabilité
+ * \param zones afin de savoir sur quelle zone intéragir
+ * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1; -1 sinon
+*/
+int demander_zones_arrivee_diminuer(zones liste_zones, int zone_augmentee) {
+    int choix_a_diminuer = -1;
+    int nombre_de_zones = getNbZones(liste_zones);
+    printf("Choisissez une zone dont vous souhaitez DIMINUER la probabilité entre 1 et %d (%d exclu): \n", nombre_de_zones, zone_augmentee);
+        if (choix_a_diminuer <= 0 || choix_a_diminuer > nombre_de_zones || choix_a_diminuer == zone_augmentee) {
+            fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
+            return -1;
+        }
+        return choix_a_diminuer;
+}
+
+
 
 /**
  * \brief Affiche dans la console un message quand le jeu est fini
@@ -184,10 +204,10 @@ void message_fin_du_jeu(joueuse j1, joueuse j2) {
     printf("============ La partie est terminée !! ============\n");
     printf("===================================================\n");
     if (tous_manges(j1)) {
-        printf("C'est la joueuse 2 qui gagne ! Il lui reste %d personnages !\n", j2->taille); //TODO
+        printf("C'est la joueuse 2 qui gagne ! Il lui reste %d personnages !\n", getTaille(j2));
     } 
     else {
-        printf("C'est la joueuse 1 qui gagne ! Il lui reste %d personnages !\n", j1->taille); //TODO
+        printf("C'est la joueuse 1 qui gagne ! Il lui reste %d personnages !\n", getTaille(j1));
     }
 }
 
@@ -203,15 +223,15 @@ void message_generique(int n, joueuse j1, int* option, carte option2) {
                 break;
         case 2: fprintf(stderr, "Les zones ont été correctement initialisés. \n");
                 break;
-        case 3: printf("La joueuse n° %d a utilisé %d de capital. \n", j1->id, option[0]); //TODO
+        case 3: printf("La joueuse n° %d a utilisé %d de capital. \n", getIdJoueuse(j1), option[0]);
                 break;
         case 4: printf("La probabilité de passer de la zone %d à la zone %d a changé de %d. \n", option[0], option[1], option[2]);
                 break;
-        case 5: printf("La joueuse n° %d a utilisé la carte %s", j1->id, getName(option2)); //TODO
+        case 5: printf("La joueuse n° %d a utilisé la carte %s", getIdJoueuse(j1), getNom(option2));
                 break;
         case 6: printf("Tous les personnages ont bougé. \n");
                 break;
-        case 7: printf("Le personnage n° %d de la joueuse n° %d a été mangé. \n", option[0], j1->id); //TODO
+        case 7: printf("Le personnage n° %d de la joueuse n° %d a été mangé. \n", option[0], getIdJoueuse(j1));
                 break;
         case 8: printf("Le tour est terminé, le capital a été réintialisé. \n");
                 break;

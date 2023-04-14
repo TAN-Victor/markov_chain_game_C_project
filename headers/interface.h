@@ -37,11 +37,26 @@ int demander_capital(joueuse);
 carte demander_carte(joueuse);
 
 /**
- * \brief Demande à une joueuse où elle veut augmenter la probabilité et une autre où elle doit diminuer, elle peut répondre NULL si elle veut rien modifier
- * \param zones afin de savoir sur quelle zone intéragir (un paramamètre joueuse n'est pas utile car dans le main on sait déjà sur quelle joueuse demander)
- * \return un tableau contenant 3 int représentant le numéro de la zone de départ et 2 zones où la probabilité est à modifier(le premier sera celle à augmenter et le deuxième celle à diminuer), NULL sinon
+ * \brief Demande à une joueuse le numéro de la zone de départ dont elle veut modifier les probabilités d'accéder à une autre zone 
+ * \param zones afin de savoir sur quelle zone intéragir
+ * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1
 */
-int* demander_zones(zones);
+int demander_zones_depart(zones);
+
+/**
+ * \brief Demande à une joueuse le numéro de la zone d'arrivée dont elle veut augmenter les probabilités d'accéder à cette zone
+ * \param zones afin de savoir sur quelle zone intéragir
+ * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1
+*/
+int demander_zones_arrivee_augmenter(zones);
+
+/**
+ * \brief Demande à une joueuse le numéro de la zone d'arrivée dont elle veut diminuer les probabilités d'accéder à une autre zone
+ *          La zone doit être différente de la zone d'arrivée dont on veut augmenter la probabilité
+ * \param zones afin de savoir sur quelle zone intéragir
+ * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1; -1 sinon
+*/
+int demander_zones_arrivee_diminuer(zones, int);
 
 /**
  * \brief Affiche dans la console un message quand le jeu est fini
@@ -56,5 +71,5 @@ void message_fin_du_jeu(joueuse,joueuse);
 * \param joueuse Joueuse concernéé par le message
 * \param int Index du personnage de la joueuse ou index du numéro de carte utilisé, ... m=0 lorsqu'il n'est pas utile
 */
-void message_generique(int,joueuse,int);
+void message_generique(int,joueuse,int*, carte);
 
