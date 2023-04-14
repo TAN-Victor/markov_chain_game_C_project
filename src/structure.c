@@ -13,7 +13,35 @@
 #include <stdlib.h>
 #include "../headers/structures.h"
 
+/* Getter et Setters */
+/**
+ * @brief renvoie un entier correspondant au nombre de cartes présentes dans la liste
+ * 
+ * @param lc 
+ * @return int correspondant au nombre de cartes 
+ */
+int getNbCartes(liste_cartes lc){
+    return lc->nb_cartes;
+}
 
+/**
+ * @brief met à jour le nombre de cartes de la main
+ * 
+ * @param n 
+ */
+void setNbCartes(int n){
+    lc->nb_cartes = n;
+}
+
+/**
+ * @brief renvoie la liste de cartes de la liste de cartes passés en arguments
+ * 
+ * @param lc 
+ * @return carte* tableau de cartes
+ */
+carte* getCartes(liste_cartes lc){
+    return lc->cartes;
+}
 
 void ajout_carte(liste_cartes liste, carte carte){
     liste->nb_cartes++;

@@ -20,6 +20,30 @@ struct liste_cartes {
 };
 typedef struct liste_cartes* liste_cartes;
 
+/* Getter et Setters */
+/**
+ * @brief renvoie un entier correspondant au nombre de cartes présentes dans la liste
+ * 
+ * @param lc 
+ * @return int correspondant au nombre de cartes 
+ */
+int getNbCartes(liste_cartes lc);
+
+/**
+ * @brief met à jour le nombre de cartes de la main
+ * 
+ * @param n 
+ */
+void setNbCartes(int n);
+
+/**
+ * @brief renvoie la liste de cartes de la liste de cartes passés en arguments
+ * 
+ * @param lc 
+ * @return carte* tableau de cartes
+ */
+carte* getCartes(liste_cartes lc);
+
 /**
  * @brief ajoute une carte à la liste
  * 
