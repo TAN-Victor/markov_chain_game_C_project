@@ -12,6 +12,9 @@
 
 #include "zones.h"
 
+/* Création des Constantes */
+#define NB_DE_PAS_RESTANT 1
+
 struct _personnage {
     int type; /* 0 pour monstre et 1 ou 2 pour membre d'école*/
     int statut; /* 0 si mort, 1 si en vie, -1 si disparu, 2 si peut jouer 2 fois, 3 si FISA */
@@ -21,7 +24,6 @@ struct _personnage {
     int nb_de_pas_restant; /* nombre de pas restant, initialisé à 1 à chaque tour sauf cas particuliers */
     int peut_jouer; /* 1 si peut jouer ce tour, 0 sinon */
     int nb_de_tour_disparu; /* vaut 0 initialement */
-
 };
 typedef struct _personnage* personnage;
 
@@ -89,7 +91,7 @@ int getType(personnage p);
  * @param p un personnage dont on souhaite obtenir l'id
  * @return l'id du personnage, -1 en cas d'erreur
  */
-int getId(personnage p);
+int getIdPersonnage(personnage p);
 
 /**
  * @brief renvoie le statut du personnage
@@ -154,7 +156,7 @@ void setType(personnage p, int type);
  * @param p un personnage dont on souhaite modifier l'id
  * @param id le nouveau id du personnage
  */
-void setId(personnage p, int id);
+void setIdPersonnage(personnage p, int id);
 
 /**
  * @brief modifie le statut du personnage

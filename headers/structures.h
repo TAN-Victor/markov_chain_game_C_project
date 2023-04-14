@@ -13,7 +13,7 @@
 
 #include "cartes.h"
 
-//strctures concernant les cartes
+//structures concernant les cartes
 struct liste_cartes {
     int nb_cartes;
     carte *cartes;
