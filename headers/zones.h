@@ -48,9 +48,9 @@ void libereZones(zones pz);
  * @brief renvoie un pointeur vers la zone dont le numéro est n
  * 
  * @param n numéro de la zone compris entre 0 et nb_zones-1
- * @return zone* pointeur vers la zone de numéro n
+ * @return zone la zone numéro n
  */
-zone* trouveZone(zones z, int n);
+zone trouveZone(zones z, int n);
 
 
 /**
