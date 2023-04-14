@@ -197,7 +197,7 @@ void message_fin_du_jeu(joueuse j1, joueuse j2) {
 * \param joueuse Joueuse concernéé par le message
 * \param int* Index du personnage de la joueuse ou index du numéro de carte utilisé, ... m=0 lorsqu'il n'est pas utile
 */
-void message_generique(int n, joueuse j1, int* option) {
+void message_generique(int n, joueuse j1, int* option, carte option2) {
     switch (n) {
         case 1: fprintf(stderr, "Les personnages ont été correctement initialisés. \n");
                 break;
@@ -207,7 +207,7 @@ void message_generique(int n, joueuse j1, int* option) {
                 break;
         case 4: printf("La probabilité de passer de la zone %d à la zone %d a changé de %d. \n", option[0], option[1], option[2]);
                 break;
-        case 5: printf("La joueuse n° %d a utilisé la carte %s", j1->id, getName(lecture_cartes(getMains(j1), option[0]))); //TODO
+        case 5: printf("La joueuse n° %d a utilisé la carte %s", j1->id, getName(option2)); //TODO
                 break;
         case 6: printf("Tous les personnages ont bougé. \n");
                 break;
