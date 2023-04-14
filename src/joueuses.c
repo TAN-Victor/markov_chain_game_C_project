@@ -15,7 +15,7 @@ int getCapital(joueuse j){
  * @param j : une joueuse 
  * @return carte* : la liste des cartes de la main d'une joueuse 
  */
-liste_cartes* getMain(joueuse j){
+liste_cartes getMain(joueuse j){
     return j->main_du_joueur;
 }
 
