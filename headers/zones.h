@@ -19,10 +19,10 @@ struct _zone {
     float* probas; /* tableau des proba de se déplacer vers chaque zone du jeu*/
     int est_autorise; /* vaut 0 si tous les personnages sont autorisés, 1 si uniquement ceux de joueuse 1, 2 si ceux de joueuse 2*/
 };
-typedef struct _zone zone;
+typedef struct _zone *zone;
 
 struct _zones{
-    zone* tab_zones; /* tableau des zones, de taille nb_zones */
+    zone tab_zones; /* tableau des zones, de taille nb_zones */
     int nb_zones; /* nombre de zones */
 };
 typedef struct _zones* zones;
@@ -92,12 +92,44 @@ int getNumero(zone z);
 float* getProbas(zone z);
 
 /**
+ * @brief renvoie un entier correspondant au type de joueurs autorisés sur la zone
+ * 
+ * @param z la zone en question
+ * @return int 
+ */
+int getEstAutorise(zone z);
+
+/**
+ * @brief met à jour l'entier est_autorise
+ * 
+ * @param z la zone à modifier
+ * @param n le type de perso autorisés
+ */
+void setEstAutorise(zone z, int n);
+
+/**
  * @brief renvoie la liste des zones du jeu
  * 
  * @param z les zones du jeu
  * @return zone* 
  */
-zone* getZones(zones z);
+zone getTabZones(zones z);
+
+/**
+ * @brief renvoie le nombre de zones des zones du jeu
+ * 
+ * @param z l'ensemble des zones du jeu
+ * @return int le nombre de zones
+ */
+int getNbZones(zones z);
+
+/**
+ * @brief met à jour le nombre de zone
+ * 
+ * @param z l'ensemble des zones
+ * @param n le nouveau nombre de zones
+ */
+void setNbZones(zones z, int n);
 
 /**
  * @brief ajoute une zone au jeu
