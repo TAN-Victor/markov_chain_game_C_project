@@ -35,23 +35,23 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
 
         printf("\033[2J"); // Nettoyer le terminal
         printf("===================================================\n");
-        printf("======= C'est le tour de la joueuse n° %d ! =======\n", j1.id); //TODO
+        printf("======= C'est le tour de la joueuse n° %d ! =======\n", getIdJoueuse(j1));
         printf("===================================================\n"); 
-        printf("Votre capital actuel: %d crédit(s)\n", j1.capital);//TODO
+        printf("Votre capital actuel: %d crédit(s)\n", getCapital(j1));
         printf("Votre main de cartes: \n");
         printf("Il vous reste actuellement %n membre(s)\n");
         printf("---------------------------------------------------\n");
         
-        if (j1.tours_restants_bonus_capital > 0) {
+        if (getToursRestantsBonusCapital(j1) > 0) {
             printf("Votre bonus de capital dure encore %n tour(s)\n");
         }
-        if (j1.proba_par_capital > 0.1) {
+        if (getProbaParCapital(j1) > 0.1) {
             printf("Chaque unité de capital investi modifie de %n les probabilités\n");
         }
-        if (j1.tours_restants_invincibilite > 0) {
+        if (getToursInvinsibilite(j1) > 0) {
             printf("Votre bonus d'invincibilité dure encore %n tour(s)\n");
         }
-        if (j1.tours_restants_jouer > 1) {
+        if (getToursRestantsJouer(j1) > 1) {
             printf("Vous pouvez jouer %n tour(s)\n");
         }
         printf("---------------------------------------------------\n");
@@ -60,17 +60,17 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         //printf("Appuyez sur Entrée pour continuer de jouer\n");
         //printf("---------------------------------------------------\n");
         
-        printf("Vos membres d'école sont sur les zones: \n")
-        for (int i = 0; i < j1.taille; i += 1) {//TODO
-            printf("%2d", j1.membres[i]->zone_courante);//TODO
+        printf("Vos membres d'école sont sur les zones: \n")  // A MODIFIER AVEC UNE INTERFACE
+        for (int i = 0; i < getTaille(j1); i += 1) {
+            printf("%2d", getZoneCourante(getMembres(j1)[i]));
         }
         printf("Less membres d'école adverse sont sur les zones: \n")
-        for (int i = 0; i < j2.taille; i += 1) {//TODO
-            printf("%2d", j2.membres[i]->zone_courante);//TODO
+        for (int i = 0; i < getTaille(j2); i += 1) {
+            printf("%2d", getZoneCourante(getMembres(j2)[i]));
         }
         printf("Le(s) monstre(s) sont sur les zones: \n")
-        for (int i = 0; i < m.taille; i += 1) {//TODO
-            printf("%2d", m.membres[i]->zone_courante);//TODO
+        for (int i = 0; i < getTaille(m); i += 1) {
+            printf("%2d", getZoneCourante(getMembres(m)[i]));
         }
         printf("---------------------------------------------------\n");
 }
@@ -87,7 +87,7 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
 */
 int demander_capital(joueuse j1) {
     int montant;
-    int capital = j1.capital //TODO
+    int capital = getCapital(j1);
     printf("Vous avez actuellement un capital de %d crédit(s): \n", capital);
     printf("Combien de capital voulez-vous utiliser ?\n Entrez un entier négatif ou nul pour annuler\n");
     scanf("%d", &montant);
