@@ -40,7 +40,7 @@
     int capital;/*initialisé à 5*/
     personnage* membres;/*une liste de pointeur de personnage de taille 7 (=taille max de l'équipe)*/
     liste_cartes* main_du_joueur; /*une liste contenant les cartes de la joueuse*/
-    int id; /*on identifie une joueuse par un numéro unique, -1 si c'est la liste de monstres*/
+    int id; /*on identifie une joueuse par un numéro unique, 0 si c'est la liste de monstres, 1 si c'est la joueuse 1, 2 si c'est la joueuse 2*/
     int tour; /*cette valeur est égale à 0 si c'est le tour de la joueuse et 1 sinon*/
     int taille; /*nombre de membres de l'équipe (doit être inférieur à 7), initialisée à 5*/
     int tours_restants_bonus_capital; /*tours restants pendant lesquels on peut recevoir plus de capital, initialisé à 1*/
@@ -56,7 +56,7 @@ typedef struct joueuse* joueuse;
             - on initialise les 5 membres du joueurs
             - on initialise la main_du_joueur avec 5 cartes aléatoires
             - on associe à la joeuse une clée unique (1 ou 2)-> cette clef permet de savoir qui est le joueur n°1
- * @param n un entier si n=0 on cree un ensemble de monstre avec un seul monstre, si n=1 on cree une joueuse
+ * @param n un entier si n=0 on cree un ensemble de monstre avec un seul monstre, si n=1 on cree une joueuse 1, si n=2 on cree une joueuse 2
  * @return joueuse un pointeur vers la joueuse crée
 */
 joueuse creation_joueuse(int n);
