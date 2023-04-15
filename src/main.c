@@ -27,13 +27,13 @@ int main() {
     joueuse monstres = creation_joueuse(0); // 0 pour dire que l'on crée une liste de monstres, il n'y aura qu'un seul monstre au début
 
     joueuse liste_joueuses[3] = { joueuse_1, joueuse_2, monstres }; // Mettre les monstres et les joueuses ensemble permettra de les faire déplacer tous ensemble avec une même fonction
-    message_generique(1, null, null, null);
+    message_generique(1, NULL, NULL, NULL);
     /**
      * @brief Création des Zones du jeu (10 au début)
      * 
      */
     zones liste_zones = nouvellesZones();
-    message_generique(2, null, null, null);
+    message_generique(2, NULL, NULL, NULL);
 
 
     /**
@@ -64,20 +64,25 @@ int main() {
              */
             int n = demander_capital(liste_joueuses[i]);
             if (n > 0) {
-                int* zones_modifiees = demander_zones(liste_zones);
+                int zone_depart = demander_zones_depart(liste_zones);
+                int zone_arrivee_augmenter = demander_zones_arrivee_augmenter(liste_zones);
+                int zone_arrivee_diminuer = demander_zones_arrivee_diminuer(liste_zones, zone_arrivee_augmenter);
                 utilise_capital(liste_joueuses[i], n);
-                message_generique(3, liste_joueuses[i], &n, null);
+                message_generique(3, liste_joueuses[i], &n, NULL);
                 int proba_par_capital = getProbaParCapital(liste_joueuses[i]);
-                modifierZone(liste_zones, zones_modifiees[0], zones_modifiees[1], m, 1); // Augmentation de la probabilité d'aller de la zone 0 à la zone 1
-                modifierZone(liste_zones, zones_modifiees[0], zones_modifiees[2], m, 0); // Réduction de la probabilité d'aller de la zone 0 à la zone 2
-                message_generique(4, null, [zones_modifiees[0], zones_modifiees[1], m], null);
-                message_generique(4, null, [zones_modifiees[0], zones_modifiees[2], -m], null);
+                int m = n * proba_par_capital;
+                modifierZone(liste_zones, zone_depart, zone_arrivee_augmenter, m, 1); // Augmentation de la probabilité d'aller de la zone 0 à la zone 1
+                modifierZone(liste_zones, zone_depart, zone_arrivee_diminuer, m, 0); // Réduction de la probabilité d'aller de la zone 0 à la zone 2
+                int triplet_augmenter[3] = {zone_depart, zone_arrivee_augmenter, m};
+                int triplet_diminuer[3] = {zone_depart, zone_arrivee_diminuer, -m};
+                message_generique(4, NULL, triplet_augmenter, NULL);
+                message_generique(4, NULL, triplet_diminuer, NULL);
             }
             else { // Exclusion, ne peut pas jouer de carte si le capital a été dépensé
                 carte c = demander_carte(liste_joueuses[i]); // Doit vérifier si la carte est jouable
                 if (c != NULL) { // Si la joueuse veut jouer une carte
                     utilise_carte(liste_joueuses[i], c); // A modifier dans le futur, car une carte pourra augmenter le nombre de zone donc la fonction devrait prendre d'autres arguments
-                    message_generique(5, liste_joueuses[i], null, c);  // voir avec interface.c
+                    message_generique(5, liste_joueuses[i], NULL, c);  // voir avec interface.c
                 }
             }
 
@@ -89,7 +94,7 @@ int main() {
          */
         int nombre_monstre = nb_membre_ecole(liste_joueuses[2]); // Nombre de monstres dans le jeu
         for (int j = 0; j < nombre_monstre; j += 1) {
-            deplacer(getMembres(liste_joueuses[2])[j], *trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[2])[j])))); // Déplacement des monstres vers leur prochaine zone
+            deplacer(getMembres(liste_joueuses[2])[j], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[2])[j])))); // Déplacement des monstres vers leur prochaine zone
         }
 
 
@@ -100,10 +105,10 @@ int main() {
         for (int j = 0; j < 2; j += 1) {
             int nombre_personnage = nb_membre_ecole(liste_joueuses[j]); // Nombre de personnages dans l'école de la joueuse_(i+1)
             for (int k = 0; k < nombre_personnage; k += 1) {
-                deplacer(getMembres(liste_joueuses[j])[k], *trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[i])[j])))); // Déplacement des personnages vers leur prochaine zone
+                deplacer(getMembres(liste_joueuses[j])[k], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[i])[j])))); // Déplacement des personnages vers leur prochaine zone
             }
         }
-        message_generique(6, null, null, null);
+        message_generique(6, NULL, NULL, NULL);
 
 
         /**
@@ -115,14 +120,14 @@ int main() {
                 for (int m = 0; m < nb_membre_ecole(liste_joueuses[l]); m += 1) {
                     if (zonePersonnage(getMembres(liste_joueuses[l])[m]) == zonePersonnage(getMembres(liste_joueuses[2])[k])) {
                         estMange(getMembres(liste_joueuses[l])[m]);
-                        message_generique(7, liste_joueuses[l], m, null);
+                        message_generique(7, liste_joueuses[l], &m, NULL);
                     }
                 }
             }
         }
         reinitialise_capital(liste_joueuses[i]); // Réinitialisation du capital de la joueuse, à modifier dans le futur pour être plutôt une actualisation_joueuse
                                             // Par ex, actualiser le nombre de tours d'invincibilité, le nombre de tours de bonus de capital, ...
-        message_generique(8, null, null, null);
+        message_generique(8, NULL, NULL, NULL);
         }            
 
     } while(!tous_manges(liste_joueuses[0]) || !tous_manges(liste_joueuses[1]));
@@ -136,9 +141,9 @@ int main() {
     free_joueuse(liste_joueuses[0]);    // Libération de la mémoire par appel à liberePersonnage
     free_joueuse(liste_joueuses[1]);
     free_joueuse(liste_joueuses[2]);
-    message_generique(9, null, null, null);
+    message_generique(9, NULL, NULL, NULL);
     libereZones(liste_zones);
-    message_generique(10, null, null, null);
+    message_generique(10, NULL, NULL, NULL);
     return 0;
 
 }
