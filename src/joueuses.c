@@ -177,3 +177,67 @@ void setToursRestantsJouer(joueuse j, int toursRestants){
     j->tours_restants_jouer = toursRestants;
 }
 
+/** 
+ * @brief renvoit une joueuse :
+ *          - on initialise le capital à 5
+            - on initialise les 5 membres du joueurs
+            - on initialise la main_du_joueur avec 5 cartes aléatoires
+            - on associe à la joeuse une clée unique (1 ou 2)-> cette clef permet de savoir qui est le joueur n°1
+ * @param n un entier si n=0 on cree un monstre dans un ensemble de monstres, si n=1 on cree une joueuse
+ * @return joueuse un pointeur vers la joueuse crée
+*/
+joueuse creation_joueuse(int n){
+    if(n!=1 || n!=2 || n!=0){
+        fprintf(stderr," creation_joueuse : n doit avoir pour valeur 0 , 1 ou 2");
+        exit(1);
+    }
+    joueuse jou=malloc(sizeof(struct joueuse));
+    jou->capital=5;
+    jou->membres=malloc(sizeof(7*struct _personnage));
+    // En cours de développement pour l'implémentation des cartes : Besoin d'avoir une liste de carte global en paramètre ou mettre la liste de carte en paramètre
+    jou->id=n;
+    if(n==1){
+        jou->tour=1;
+    }
+    else{
+        jou->tour=0;
+    }
+    jou->taille=5;
+    jou->tours_restants_bonus_capital=1;
+    jou->tours_restants_invinsibilite=0;
+    jou->tours_restants_jouer=1;
+    jou->proba_par_capital=0.1;
+    return jou;
+}
+
+/**
+ * @brief libère l'espace mémoire occupée par la case mémoire pointée par pj
+ * @param pj pointeur vers la case mémoire occupée par la joueuse que l'on souhaite libérer
+*/
+void free_joueuse(joueuse pj){
+    free(pj->membres);
+    free(pj);
+}
+
+/**
+ * @brief renvoie la joueuse dont c'est le tour en testant sur les deux joueuses, celle dont la valeur tour vaut 0
+ * @param pj1 pointeur vers la joueuse 1
+ * @param pj2 pointeur vers la joueuse 2
+ * @return un pointeur vers la joueuse dont c'est le tour
+*/
+joueuse tour_joueuse(joueuse pj1, joueuse pj2){
+    if((pj1->tour==0 && pj2->tour==0) || (pj1->tour==1 && pj2->tour==1) ){
+        fprintf(stderr,"tour_joueuse : le tour des 2 joueuses est à 0 ou 1");
+        exit(2);
+    }
+    else if(pj1->tour==1 && pj2->tour==0){
+        return pj1;
+    }
+    else if(pj1->tour==0 && pj2->tour==1){
+        return pj2;
+    }
+}
+
+
+
+
