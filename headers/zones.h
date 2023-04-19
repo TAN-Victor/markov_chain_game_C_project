@@ -10,20 +10,18 @@
 #ifndef ZONE_H
 #define ZONE_H
 
-/* Création des Constantes */
-#define NB_DE_ZONES 10
+#include "structures.h"
 
 
-struct _zone {
-    int numero; /* numéro de la zone */
-    float* probas; /* tableau des proba de se déplacer vers chaque zone du jeu*/
+struct _zone{
+    int numero; /* numéro de la zone, compris entre 0 et NB_DE_ZONES-1 */
     int est_autorise; /* vaut 0 si tous les personnages sont autorisés, 1 si uniquement ceux de joueuse 1, 2 si ceux de joueuse 2*/
 };
 typedef struct _zone* zone;
 
 struct _zones{
     zone* tab_zones; /* tableau des zones, de taille nb_zones */
-    int nb_zones; /* nombre de zones */
+    matrice_probas matrice; /* matrice des probabilités de se déplacer entre les zones */
 };
 typedef struct _zones* zones;
 
@@ -84,12 +82,12 @@ int prochaineZone(zones z, int nz);
 int getNumero(zone z);
 
 /**
- * @brief renvoie la tableau des proba de se déplacer vers les zones du jeu à partir de la zone z passée en argument
+ * @brief met à jour le numéro de la zone
  * 
- * @param z une zone
- * @return float* le tableau des proba
+ * @param z la zone à modifier
+ * @param n le nouveau numéro
  */
-float* getProbas(zone z);
+void setNumero(zone z, int n);
 
 /**
  * @brief renvoie un entier correspondant au type de joueurs autorisés sur la zone
@@ -116,20 +114,20 @@ void setEstAutorise(zone z, int n);
 zone* getTabZones(zones z);
 
 /**
- * @brief renvoie le nombre de zones des zones du jeu
+ * @brief renvoie la matrice des probabilités de se déplacer entre les zones
  * 
- * @param z l'ensemble des zones du jeu
- * @return int le nombre de zones
+ * @param z les zones du jeu
+ * @return matrice_probas 
  */
-int getNbZones(zones z);
+matrice_probas getMatrice(zones z);
 
 /**
- * @brief met à jour le nombre de zone
+ * @brief met à jour la matrice des probabilités de se déplacer entre les zones
  * 
- * @param z l'ensemble des zones
- * @param n le nouveau nombre de zones
+ * @param z les zones du jeu
+ * @param m la nouvelle matrice
  */
-void setNbZones(zones z, int n);
+void setMatrice(zones z, matrice_probas m);
 
 /**
  * @brief ajoute une zone au jeu

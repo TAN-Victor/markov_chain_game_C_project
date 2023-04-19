@@ -56,8 +56,8 @@ int getZonePrecedente(personnage p){
  * @param p un personnage dont on souhaite obtenir le nombre de pas restant
  * @return le nombre de pas restant du personnage, -1 en cas d'erreur
  */
-int getNbPasRestant(personnage p){
-    return p->nb_de_pas_restant;
+int getNbPas(personnage p){
+    return p->nb_de_pas;
 }
 
 /**
@@ -66,18 +66,18 @@ int getNbPasRestant(personnage p){
  * @param p un personnage dont on souhaite obtenir le nombre de tour restant avant que le personnage ne réapparaisse
  * @return le nombre de tour restant avant que le personnage ne réapparaisse, -1 en cas d'erreur
  */
-int getNbTourDisparu(personnage p){
-    return p->nb_de_tour_disparu;
+int getNbTourDisparuRestant(personnage p){
+    return p->nb_de_tour_disparu_restant;
 }
 
 /**
- * @brief renvoie le booléen permettant de savoir si le personnage peut jouer ou non
+ * @brief renvoie le booléen permettant de savoir si le personnage peut se déplacer ou non
  * 
- * @param p un personnage dont on souhaite savoir si il peut jouer ou non
- * @return le booléen permettant de savoir si le personnage peut jouer ou non, -1 en cas d'erreur
+ * @param p un personnage dont on souhaite savoir si il peut se déplacer ou non
+ * @return le booléen permettant de savoir si le personnage peut se déplacer ou non, -1 en cas d'erreur
  */
-int getPeutJouer(personnage p){
-    return p->peut_jouer;
+int getPeutSeDeplacer(personnage p){
+    return p->peut_se_deplacer;
 }
 
 /**
@@ -136,8 +136,8 @@ void setZonePrecedente(personnage p, int zonePrecedente){
  * @param p un personnage dont on souhaite modifier le nombre de pas restant
  * @param nbPasRestant le nouveau nombre de pas restant du personnage
  */
-void setNbPasRestant(personnage p, int nbPasRestant){
-    p->nb_de_pas_restant = nbPasRestant;
+void setDeNbPas(personnage p, int nbDePas){
+    p->nb_de_pas = nbDePas;
 }
 
 /**
@@ -146,8 +146,8 @@ void setNbPasRestant(personnage p, int nbPasRestant){
  * @param p un personnage dont on souhaite modifier le nombre de tour restant avant que le personnage ne réapparaisse
  * @param nbTourDisparu le nouveau nombre de tour restant avant que le personnage ne réapparaisse
  */
-void setNbTourDisparu(personnage p, int nbTourDisparu){
-    p->nb_de_tour_disparu = nbTourDisparu;
+void setNbDeTourDisparuRestant(personnage p, int nbTourDisparu){
+    p->nb_de_tour_disparu_restant = nbTourDisparu;
 }
 
 /**
@@ -156,6 +156,6 @@ void setNbTourDisparu(personnage p, int nbTourDisparu){
  * @param p un personnage dont on souhaite modifier le booléen permettant de savoir si le personnage peut jouer ou non
  * @param peutJouer le nouveau booléen permettant de savoir si le personnage peut jouer ou non
  */
-void setPeutJouer(personnage p, int peutJouer){
-    p->peut_jouer = peutJouer;
+void setPeutSeDeplacer(personnage p, int peutSeDeplacer){
+    p->peut_se_deplacer = peutSeDeplacer;
 }

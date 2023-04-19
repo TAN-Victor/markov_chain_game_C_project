@@ -13,6 +13,10 @@
 
 #include "cartes.h"
 
+/* Création des constantes */
+#define NB_CARTES_MAIN_JOUEUSE 5
+#define NB_DE_ZONES 10
+
 //structures concernant les cartes
 struct liste_cartes {
     int nb_cartes;
