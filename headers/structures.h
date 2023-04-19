@@ -9,7 +9,7 @@
  * 
  */
 #ifndef STRUCTURES_H
-#define STRCUTURES_H
+#define STRUCTURES_H
 
 #include "cartes.h"
 
