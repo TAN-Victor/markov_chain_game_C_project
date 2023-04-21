@@ -13,17 +13,20 @@
 #include "zones.h"
 
 /* Création des Constantes */
-#define NB_DE_PAS_RESTANT 1
+#define NB_DE_PAS 1
+#define NB_DE_TOUR_DISPARU_RESTANT 0
+#define PEUT_SE_DEPLACER 1
+#define STATUT 1
 
 struct _personnage {
     int type; /* 0 pour monstre et 1 ou 2 pour membre d'école*/
-    int statut; /* 0 si mort, 1 si en vie, -1 si disparu, 2 si peut jouer 2 fois, 3 si FISA */
+    int statut; /* 0 si mort, 1 si en vie, -1 si disparu, 3 si FISA */
     int id; /* entier compris entre 1 et 5 pour les membres d'école, permettant de les identifier plus facilement */ 
     int zone_courante; /* numéro de la zone courante du personnage*/
     int zone_precedente; /* numéro de la zone précédente */
-    int nb_de_pas_restant; /* nombre de pas restant, initialisé à 1 à chaque tour sauf cas particuliers */
-    int peut_jouer; /* 1 si peut jouer ce tour, 0 sinon */
-    int nb_de_tour_disparu; /* vaut 0 initialement */
+    int nb_de_pas; /* nombre de pas par tour, initialisé à 1 */
+    int peut_se_deplacer; /* 1 si peut se déplacer ce tour, 0 sinon */
+    int nb_de_tour_disparu_restant; /* vaut 0 initialement */
 };
 typedef struct _personnage* personnage;
 
@@ -123,7 +126,7 @@ int getZonePrecedente(personnage p);
  * @param p un personnage dont on souhaite obtenir le nombre de pas restant
  * @return le nombre de pas restant du personnage, -1 en cas d'erreur
  */
-int getNbPasRestant(personnage p);
+int getNbPas(personnage p);
 
 /**
  * @brief renvoie le nombre de tour restant avant que le personnage ne réapparaisse
@@ -131,7 +134,7 @@ int getNbPasRestant(personnage p);
  * @param p un personnage dont on souhaite obtenir le nombre de tour restant avant que le personnage ne réapparaisse
  * @return le nombre de tour restant avant que le personnage ne réapparaisse, -1 en cas d'erreur
  */
-int getNbTourDisparu(personnage p);
+int getNbTourDisparuRestant(personnage p);
 
 /**
  * @brief renvoie le booléen permettant de savoir si le personnage peut jouer ou non
@@ -139,8 +142,7 @@ int getNbTourDisparu(personnage p);
  * @param p un personnage dont on souhaite savoir si il peut jouer ou non
  * @return le booléen permettant de savoir si le personnage peut jouer ou non, -1 en cas d'erreur
  */
-int getPeutJouer(personnage p);
-
+int getPeutSeDeplacer(personnage p);
 
 /**
  * @brief modifie le type du personnage
@@ -188,7 +190,7 @@ void setZonePrecedente(personnage p, int zonePrecedente);
  * @param p un personnage dont on souhaite modifier le nombre de pas restant
  * @param nbPasRestant le nouveau nombre de pas restant du personnage
  */
-void setNbPasRestant(personnage p, int nbPasRestant);
+void setDeNbPas(personnage p, int nbDePas);
 
 /**
  * @brief modifie le nombre de tour restant avant que le personnage ne réapparaisse
@@ -196,7 +198,7 @@ void setNbPasRestant(personnage p, int nbPasRestant);
  * @param p un personnage dont on souhaite modifier le nombre de tour restant avant que le personnage ne réapparaisse
  * @param nbTourDisparu le nouveau nombre de tour restant avant que le personnage ne réapparaisse
  */
-void setNbTourDisparu(personnage p, int nbTourDisparu);
+void setNbDeTourDisparuRestant(personnage p, int nbTourDisparu);
 
 /**
  * @brief modifie le booléen permettant de savoir si le personnage peut jouer ou non
@@ -204,6 +206,6 @@ void setNbTourDisparu(personnage p, int nbTourDisparu);
  * @param p un personnage dont on souhaite modifier le booléen permettant de savoir si le personnage peut jouer ou non
  * @param peutJouer le nouveau booléen permettant de savoir si le personnage peut jouer ou non
  */
-void setPeutJouer(personnage p, int peutJouer);
+void setPeutSeDeplacer(personnage p, int peutSeDeplacer);
 
 #endif

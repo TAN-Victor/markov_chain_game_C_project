@@ -30,10 +30,9 @@
 /* Création de constantes */
 #define CAPITAL_DE_BASE 5
 #define NB_DE_MONSTRE 1
-#define NB_MEMBRES_JOUEUSE_1 5
-#define NB_MEMBRES_JOUEUSE_2 5
-#define NB_CARTES_MAIN_JOUEUSE_1 5
-#define NB_CARTES_MAIN_JOUEUSE_2 5
+#define NB_MEMBRES_JOUEUSE 5
+#define PROBA_PAR_CAPITAL 0.1
+#define NB_TOURS_RESTANTS_JOUER 1
 
  struct joueuse
 {
@@ -45,7 +44,7 @@
     int taille; /*nombre de membres de l'équipe (doit être inférieur à 7), initialisée à 5*/
     int tours_restants_bonus_capital; /*tours restants pendant lesquels on peut recevoir plus de capital, initialisé à 1*/
     int tours_restants_invincibilite; /*nb de tour pendant lesquels les membres d'une joueuse ne peuvent pas etre manges */
-    int tours_restants_jouer;/*tours restants pendant lesquels on peut faire plus de déplacement, initialisé à 1*/
+    int tours_restants_jouer;/*tours restants pendant lesquels on peut faire des déplacements, initialisé à 1 (correspond au nombre de tours d'affilés)*/
     float proba_par_capital; /*la valeur de la modification de la proba par une joueuse par unité de capital (cf Katrin Salhab), initialisée à 0.1*/
 };
 typedef struct joueuse* joueuse;

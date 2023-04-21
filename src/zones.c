@@ -11,13 +11,13 @@ int getNumero(zone z){
 }
 
 /**
- * @brief renvoie la tableau des proba de se déplacer vers les zones du jeu à partir de la zone z passée en argument
+ * @brief met à jour le numéro de la zone
  * 
- * @param z une zone
- * @return float* le tableau des proba
+ * @param z la zone à modifier
+ * @param n le nouveau numéro
  */
-float* getProbas(zone z){
-    return z->probas;
+void setNumero(zone z, int n){
+    z->numero = n;
 }
 
 /**
@@ -50,42 +50,55 @@ zone* getTabZones(zones z){
 }
 
 /**
- * @brief renvoie le nombre de zones des zones du jeu
+ * @brief renvoie la matrice des probabilités de se déplacer entre les zones
  * 
- * @param z l'ensemble des zones du jeu
- * @return int le nombre de zones
+ * @param z les zones du jeu
+ * @return matrice_probas 
  */
-int getNbZones(zones z){
-    return z->nb_zones;
+matrice_probas getMatrice(zones z){
+    return z->matrice;
 }
 
 /**
- * @brief met à jour le nombre de zone
+ * @brief met à jour la matrice des probabilités de se déplacer entre les zones
  * 
- * @param z l'ensemble des zones
- * @param n le nouveau nombre de zones
+ * @param z les zones du jeu
+ * @param m la nouvelle matrice
  */
-void setNbZones(zones z, int n){
-    z->nb_zones = n;
+void setMatrice(zones z, matrice_probas m){
+    z->matrice = m;
 }
 
-void addZone(zones z){
-    /* on incrémente le nombre de zone */
-    z->nb_zones++;
-    /* on réalloue la mémoire pour ajouter une zone */
-    z->tab_zones = realloc(z->tab_zones, z->nb_zones * sizeof(zone));
-    /* on initialise la nouvelle zone */
-    z->tab_zones[z->nb_zones-1]->numero = z->nb_zones-1;
-    z->tab_zones[z->nb_zones-1]->probas = malloc(sizeof(int) * z->nb_zones);
-    /* les probas de se déplacer vers d'autres zones sont nulles */
-    for(int i = 0; i < z->nb_zones-1; i++){
-        z->tab_zones[z->nb_zones-1]->probas[i] = 0;
-    }
-    /* la proba de se déplacer vers cette zone quand on s'y trouve déjà vaut 1 */
-    z->tab_zones[z->nb_zones-1]->probas[z->nb_zones-1] = 1;
+void addZone(zones z) {
+    matrice_probas matrice = malloc(sizeof(matrice_probas));
+    int new_taille = getMatrice(z)->taille + 1;
+    matrice->taille = new_taille;
 
-    /* on s'occupe de mettre les proba de se diriger vers la nouvelle zone à 0 */
-    for (int i = 0; i < z->nb_zones-1; i++){
-        z->tab_zones[i]->probas[z->nb_zones-1] = 0;
+    /* on alloue la nouvelle zone */
+    matrice->proba = realloc(matrice->proba, new_taille * sizeof(float*));
+    matrice->proba[new_taille - 1] = malloc(new_taille * sizeof(float));
+
+    /* on initialise les probas de la nouvelle zone */
+    for (int i = 0; i < new_taille-1; i++){
+        matrice->proba[new_taille - 1][i] = 0;
     }
+    matrice->proba[new_taille - 1][new_taille - 1] = 1;
+
+    /* on initialise les probas des zones existantes */
+    for (int i = 0; i < new_taille-1; i++){
+        matrice->proba[i] = realloc(matrice->proba[i], new_taille * sizeof(float));
+        matrice->proba[i][new_taille - 1] = 0;
+    }
+
+    /* on met à jour la matrice */
+    setMatrice(z, matrice);
+
+    /* on met à jour la nouvelle zone */
+    zone new_zone = malloc(sizeof(zone));
+    setNumero(new_zone, new_taille);
+
+    /* on met à jour le tableau de zones */
+    z->tab_zones = realloc(z->tab_zones, new_taille * sizeof(zone));
+    z->tab_zones[new_taille - 1] = new_zone;
+
 }

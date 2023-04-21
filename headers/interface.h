@@ -1,7 +1,3 @@
-#include "joueuses.h"
-#include "zones.h"
-#include "personnages.h"
-
 /**
  * \file interface.h
  * Ce fichier décrit un ensemble de fonctions utile à une interface optimale
@@ -13,6 +9,13 @@
  * - \b message_fin_du_jeu(joueuse,joueuse) qui permet d'afficher dans la console un message quand le jeu est fini
  * - \b messsage_generique(int,joueuse,int) pour afficher des messages génériques (par exemple si un membre a été mangé)
 */
+
+#ifndef INTERFACE_H
+#define INTERFACE_H
+
+#include "joueuses.h"
+#include "zones.h"
+#include "personnages.h"
 
 /**
  * \brief Affiche dans la console toutes les informations du jeu: les zones du jeu, les personnages qui sont dessus, la joueuse dont c'est le tour, le capital des joueuses, ...
@@ -73,3 +76,4 @@ void message_fin_du_jeu(joueuse,joueuse);
 */
 void message_generique(int,joueuse,int*, carte);
 
+#endif

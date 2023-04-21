@@ -47,7 +47,7 @@ int main() {
          * @brief Alternance entre les 2 joueuses
          * 
          */
-        for (int i = 0; i < 2; i += 1) {
+        for (int i = 0; i < 2; i += 1) { // A modifier pour prendre en compte les 'doubles tours' avec les cartes, en testant avec getter et reset à chaque tour
 
     
             /**
@@ -69,7 +69,7 @@ int main() {
                 int zone_arrivee_diminuer = demander_zones_arrivee_diminuer(liste_zones, zone_arrivee_augmenter);
                 utilise_capital(liste_joueuses[i], n);
                 message_generique(3, liste_joueuses[i], &n, NULL);
-                int proba_par_capital = getProbaParCapital(liste_joueuses[i]);
+                int proba_par_capital = getProbaParCapital(liste_joueuses[i]); // Voir si la carte de Katrin Salhab permet de modifier cette valeur une fois pour 3 tours ou tous les tours pendant 3 tours
                 int m = n * proba_par_capital;
                 modifierZone(liste_zones, zone_depart, zone_arrivee_augmenter, m, 1); // Augmentation de la probabilité d'aller de la zone 0 à la zone 1
                 modifierZone(liste_zones, zone_depart, zone_arrivee_diminuer, m, 0); // Réduction de la probabilité d'aller de la zone 0 à la zone 2
