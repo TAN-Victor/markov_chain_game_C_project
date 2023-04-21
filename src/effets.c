@@ -35,7 +35,7 @@ void pouvoir_carte_Bannour(zone z1, zone z2, joueuse* list_joueuses) {
                 setZoneCourante(getMembres(list_joueuses[i])[j], zone_2); 
             }
             else if (getZoneCourante(getMembres(list_joueuses[i])[j]) == zone_2) {
-                setZoneCourante(getMembres(list_joueuses[i])[j], zone_2);
+                setZoneCourante(getMembres(list_joueuses[i])[j], zone_1);
             }
         }
     }
@@ -47,7 +47,13 @@ void pouvoir_carte_Bannour(zone z1, zone z2, joueuse* list_joueuses) {
  * @param list_joueuses_dont_monstres La liste de tout les joueurs et monstres afin de savoir la zone courante de chacun des personnages de chaque joueur
  * @return rien
  */
-void pouvoir_carte_Honore(joueuse* list_joueuses_dont_monstres);
+void pouvoir_carte_Honore(joueuse* list_joueuses_dont_monstres) {
+    for (int i = 0; i < 3; i += 1) {
+        for (int j = 0; j < getTaille(list_joueuses_dont_monstres[2]); j += 1) {
+            
+        }
+    }
+}
 
 /**
  * @brief Execute le pouvoir de la carte Renaud Rioboo
