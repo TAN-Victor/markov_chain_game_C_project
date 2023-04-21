@@ -17,6 +17,10 @@
 #include "zones.h"
 #include "personnages.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 /**
  * \brief Affiche dans la console toutes les informations du jeu: les zones du jeu, les personnages qui sont dessus, la joueuse dont c'est le tour, le capital des joueuses, ...
  * \param joueuse,joueuse,joueuse sont les 2 joueuses afin de récupérer les informations leurs concernants (les membres de chaque joueuse compris) ainsi que les monstres
@@ -60,6 +64,13 @@ int demander_zones_arrivee_augmenter(zones);
  * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1; -1 sinon
 */
 int demander_zones_arrivee_diminuer(zones, int);
+
+/**
+ * \brief Demande à une joueuse le numéro d'un personnage de la joueuse (ou liste de monstres) 
+ * \param joueuse afin de savoir sur quelle joueuse ou liste de monstres intéragir
+ * \return le numéro du personnage entre 1 et la taille de la liste, donc l'indice du personnage + 1; -1 sinon
+*/
+int demander_personnage(joueuse j1);
 
 /**
  * \brief Affiche dans la console un message quand le jeu est fini
