@@ -7,7 +7,7 @@
 #ifndef EFFETS_H
 #define EFFETS_H
 
-#include "joueuses.h"
+#include "interface.h"
 
 /**
  * @brief Execute le pouvoir de la carte Massinissa Merabet
@@ -30,9 +30,10 @@ void pouvoir_carte_Bannour(zone z1,zone z2,joueuse* list_joueuses);
  * @brief Execute le pouvoir de la carte  Valentin Honoré
  * Chaque montre se déplace 3 fois. Chaque membre d'école qu'un monstre rencontre est mangé
  * @param list_joueuses_dont_monstres La liste de tout les joueurs et monstres afin de savoir la zone courante de chacun des personnages de chaque joueur
+ * @param list_zones la liste des zones
  * @return rien
  */
-void pouvoir_carte_Honore(joueuse* list_joueuses_dont_monstres);
+void pouvoir_carte_Honore(joueuse* list_joueuses_dont_monstres, zones list_zones);
 
 /**
  * @brief Execute le pouvoir de la carte Renaud Rioboo
@@ -77,10 +78,10 @@ void pouvoir_carte_Munante(joueuse* list_joueuses);
 /**
  * @brief Execute le pouvoir de la carte Cyril Benezet
  * Déplacez un des monstres sur la zone de votre choix. Si un membre d'école se trouve sur la zone du monstre, il n'est pas mangé.
- * @param list_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
+ * @param monstres permet d'avoir l'ensemble des monstres
  * @return rien
 */
-void pouvoir_carte_Benezet(joueuse* list_joueuses);
+void pouvoir_carte_Benezet(joueuse monstres);
 
 /**
  * @brief Execute le pouvoir de la carte Anne-Laure Ligozat
@@ -113,9 +114,10 @@ void pouvoir_carte_DembeleCabot(joueuse jou);
  * Un membre de l'école de l'autre joueuse qui devrait se déplacer sur cette zone ne se déplace pas.
  * La probabilité d'aller sur cette zone est de 0. Depuis cette zone, la probabilité de rester sur cette zone est 1.
  * @param zo permet d'avoir l'ensemble des zones
+ * @param jou permet d'avoir la joueuse
  * @return rien
  */
-void pouvoir_carte_Pacave(zones zo);
+void pouvoir_carte_Pacave(zones zo, joueuse jou);
 
 /**
  * @brief Execute le pouvoir de la carte Jerome Huet
