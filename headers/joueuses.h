@@ -206,6 +206,14 @@ int getToursRestantsJouer(joueuse j);
 float getProbaParCapital(joueuse j);
 
 /**
+ * @brief met à jour la proba_par_capital de la joueuse
+ * 
+ * @param j 
+ * @param proba 
+ */
+void setProbaProbaParCapital(joueuse j, float proba);
+
+/**
  * @brief modifie le capital d'une joueuse
  * 
  * @param j : une joueuse 
@@ -214,12 +222,20 @@ float getProbaParCapital(joueuse j);
 void setCapital(joueuse j, int capital);
 
 /**
- * @brief modifie la liste des personnages d'une joueuse
+ * @brief ajoute un personnage aux membres de la joueuse
  * 
  * @param j : une joueuse 
- * @param p : le personnage à modifier
+ * @param p : le personnage à ajouter
  */
-void setPersonnage(joueuse j, personnage* p);
+void addMembres(joueuse j, personnage* p);
+
+/**
+ * @brief supprime un personnage des membres de la joueuse
+ * 
+ * @param j : une joueuse 
+ * @param id : l'id du personnage à supprimer
+ */
+void removeMembres(joueuse j, int id);
 
 /**
  * @brief modifie l'id d'une joueuse
