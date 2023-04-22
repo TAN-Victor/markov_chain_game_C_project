@@ -211,6 +211,23 @@ int demander_personnage(joueuse j1) {
 
 
 /**
+ * \brief Demande à une joueuse quelle probabilité par capital elle souhaite avoir entre 0.1 et 1
+ * \param zones afin de savoir quelles zones changer
+ * \return la valeur de probabilité par capital que la joueuse souhaite avoir, 0 sinon
+*/
+int demander_proba_par_capital(zones liste_cartes) {
+    int choix = -1;
+    printf("Choisissez une probabilité par capital entre 0.1 et 1: \n");
+    scanf("%d", &choix);
+    if (choix < 0.1 || choix > 1) {
+        fprintf(stderr, "Attention, vous n'avez pas entré une probabilité par capital correcte.\n");
+        return -1;
+    }
+    return choix;
+}
+
+
+/**
  * \brief Affiche dans la console un message quand le jeu est fini
  * \param joueuse,joueuse afin d'avoir les informations si tout les membres de l'école d'une joueuse ont été mangés
  * \return rien

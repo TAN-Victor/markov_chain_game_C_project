@@ -36,6 +36,7 @@ void afficher_toute_info(joueuse,joueuse,joueuse,zones);
 */
 int demander_capital(joueuse);
 
+
 /**
  * \brief Demande à une joueuse si elle veut jouer une carte qu'elle possède et si oui, laquelle
  * \param joueuse afin de savoir à quelle joueuse demander (les cartes associées sont déjà dans les fonctions de joueuses.h)
@@ -71,6 +72,13 @@ int demander_zones_arrivee_diminuer(zones, int);
  * \return le numéro du personnage entre 1 et la taille de la liste, donc l'indice du personnage + 1; -1 sinon
 */
 int demander_personnage(joueuse j1);
+
+/**
+ * \brief Demande à une joueuse quelle probabilité par capital elle souhaite avoir entre 0.1 et 1
+ * \param zones afin de savoir quelles zones changer
+ * \return la valeur de probabilité par capital que la joueuse souhaite avoir, 0 sinon
+*/
+int demander_proba_par_capital(zones);
 
 /**
  * \brief Affiche dans la console un message quand le jeu est fini
