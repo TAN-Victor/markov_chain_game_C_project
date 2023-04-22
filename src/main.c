@@ -9,9 +9,7 @@
 
 #include "../headers/interface.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
 
 
 
@@ -35,7 +33,7 @@ int main() {
     zones liste_zones = nouvellesZones();
     message_generique(2, NULL, NULL, NULL);
 
-
+    int i = -1; // Vaut 0 si c'est le tour de la joueuse 1, 1 si c'est le tour de la joueuse 2
     /**
      * @brief Tant qu'aucune des deux joueuses n'a plus de personnages, le jeu continue
      * @stop Le nombre de personnages diminuera à chaque fois que le monstre mange,
@@ -44,17 +42,23 @@ int main() {
      */
     do {
         /**
-         * @brief Alternance entre les 2 joueuses
+         * @brief i vaut 0 si c'est le tour de la joueuse 1, 1 si c'est le tour de la joueuse 2
+         * Il faudra donc utiliser les setTour à la fin de la boucle pour changer les tours
          * 
          */
-        for (int i = 0; i < 2; i += 1) { // A modifier pour prendre en compte les 'doubles tours' avec les cartes, en testant avec getter et reset à chaque tour
+        if (getTour(liste_joueuses[0]) == 1) {
+            i = 0;
+        }
+        else {
+            i = 1;
+        }
 
     
             /**
              * @brief Affiche toutes les informations actuelles du jeu 
              * 
              */
-            afficher_toute_info(liste_joueuses[i], liste_joueuses[(i+1)%2],liste_joueuses[2], liste_zones); // Appelle notamment tour_joueuse pour savoir qui joue
+            afficher_toute_info(liste_joueuses[i], liste_joueuses[(i+1)%2],liste_joueuses[2], liste_zones); // La joueuse du 1er argument est celle qui joue en ce moment
             
             
 
@@ -94,7 +98,11 @@ int main() {
          */
         int nombre_monstre = nb_membre_ecole(liste_joueuses[2]); // Nombre de monstres dans le jeu
         for (int j = 0; j < nombre_monstre; j += 1) {
-            deplacer(getMembres(liste_joueuses[2])[j], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[2])[j])))); // Déplacement des monstres vers leur prochaine zone
+            if (getPeutSeDeplacer(getMembres(liste_joueuses[2])[j]) == 1 && getStatut(getMembres(liste_joueuses[2])[j]) == 1) {
+                for (int k = 0; k < getNbPas(getMembres(liste_joueuses[2])[j]); k += 1) {
+                    deplacer(getMembres(liste_joueuses[2])[j], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[2])[j])))); // Déplacement des monstres vers leur prochaine zone
+                }
+            }
         }
 
 
@@ -105,7 +113,12 @@ int main() {
         for (int j = 0; j < 2; j += 1) {
             int nombre_personnage = nb_membre_ecole(liste_joueuses[j]); // Nombre de personnages dans l'école de la joueuse_(i+1)
             for (int k = 0; k < nombre_personnage; k += 1) {
-                deplacer(getMembres(liste_joueuses[j])[k], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[i])[j])))); // Déplacement des personnages vers leur prochaine zone
+                if (getPeutSeDeplacer(getMembres(liste_joueuses[j])[k]) == 1 && (getStatut(getMembres(liste_joueuses[j])[k]) == 1 || getStatut(getMembres(liste_joueuses[j])[k]) == 3 && getPeutSeDeplacer(getMembres(liste_joueuses[j])[k])) ) {
+                    // Si le personnage peut se déplacer et ( qu'il est vivant ou (qu'il est un FIPA et peut jouer))
+                    for (int l = 0; l < getNbPas(getMembres(liste_joueuses[j])[k]); l += 1) {    
+                        deplacer(getMembres(liste_joueuses[j])[k], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[i])[j])))); // Déplacement des personnages vers leur prochaine zone
+                    }
+                }
             }
         }
         message_generique(6, NULL, NULL, NULL);
@@ -119,16 +132,36 @@ int main() {
             for (int l = 0; l < 2; l += 1) {
                 for (int m = 0; m < nb_membre_ecole(liste_joueuses[l]); m += 1) {
                     if (zonePersonnage(getMembres(liste_joueuses[l])[m]) == zonePersonnage(getMembres(liste_joueuses[2])[k])) {
-                        estMange(getMembres(liste_joueuses[l])[m]);
-                        message_generique(7, liste_joueuses[l], &m, NULL);
+                        if (getToursInvincibilite(liste_joueuses[l]) == 0 && (getStatut(getMembres(liste_joueuses[l])[m]) == 1 || getStatut(getMembres(liste_joueuses[l])[m]) == 3)) {
+                            // Si le personnage n'est pas invincible et (qu'il est vivant ou qu'il est un FIPA)
+                            estMange(getMembres(liste_joueuses[l])[m]);
+                            message_generique(7, liste_joueuses[l], &m, NULL);
+                        }
                     }
                 }
             }
         }
-        reinitialise_capital(liste_joueuses[i]); // Réinitialisation du capital de la joueuse, à modifier dans le futur pour être plutôt une actualisation_joueuse
-                                            // Par ex, actualiser le nombre de tours d'invincibilité, le nombre de tours de bonus de capital, ...
-        message_generique(8, NULL, NULL, NULL);
-        }            
+        reinitialise_capital(liste_joueuses[i]); // Réinitialisation du capital de la joueuse active
+        int tours_restants_bonus_capital = getToursBonusCapital(liste_joueuses[i]);
+        int tours_restants_invincibilite = getToursInvincibilite(liste_joueuses[i]);
+        int tours_restants_jouer = getToursJouer(liste_joueuses[i]);
+        if (tours_restants_bonus_capital > 0) {
+            setToursBonusCapital(liste_joueuses[i], tours_restants_bonus_capital - 1); // Diminution du nombre de tours restants pour le bonus de capital
+        }
+        if (tours_restants_bonus_capital == 0) {
+            //TODO setProbaParCapital(liste_joueuses[i], PROBA_PAR_CAPITAL); // Réinitialisation de la probabilité par capital
+        }
+        if (tours_restants_invincibilite > 0) {
+            setToursInvincibilite(liste_joueuses[i], tours_restants_invincibilite - 1); // Diminution du nombre de tours restants pour l'invincibilité
+        }
+        if (tours_restants_jouer > 0) {
+            setToursJouer(liste_joueuses[i], tours_restants_jouer - 1); // Diminution du nombre de tours restants pour le bonus de capital
+        }
+        if (tours_restants_jouer == 0) { // Si le nombre de tours restants pour jouer est égal à 0, c'est au tour de l'autre joueuse
+            setTour(liste_joueuses[i], 0);
+            setTour(liste_joueuses[(i+1)%2], 1);
+        }
+        message_generique(8, NULL, NULL, NULL);            
 
     } while(!tous_manges(liste_joueuses[0]) || !tous_manges(liste_joueuses[1]));
 

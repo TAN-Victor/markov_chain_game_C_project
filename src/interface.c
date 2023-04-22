@@ -192,6 +192,40 @@ int demander_zones_arrivee_diminuer(zones liste_zones, int zone_augmentee) {
 }
 
 
+/**
+ * \brief Demande à une joueuse le numéro d'un personnage de la joueuse (ou liste de monstres) 
+ * \param joueuse afin de savoir sur quelle joueuse ou liste de monstres intéragir
+ * \return le numéro du personnage entre 1 et la taille de la liste, donc l'indice du personnage + 1; -1 sinon
+*/
+int demander_personnage(joueuse j1) {
+    int choix = -1;
+    int taille = getTaille(j1);
+    printf("Choissez une zone de départ entre 1 et %d: \n", taille);
+    scanf("%d", &choix);
+    if (choix <= 0 || choix > taille) {
+        fprintf(stderr, "Attention, vous n'avez pas entré un personnage (ou monstre) correct.\n");
+        return -1;
+    }
+    return choix;
+}
+
+
+/**
+ * \brief Demande à une joueuse quelle probabilité par capital elle souhaite avoir entre 0.1 et 1
+ * \param zones afin de savoir quelles zones changer
+ * \return la valeur de probabilité par capital que la joueuse souhaite avoir, 0 sinon
+*/
+int demander_proba_par_capital(zones liste_cartes) {
+    int choix = -1;
+    printf("Choisissez une probabilité par capital entre 0.1 et 1: \n");
+    scanf("%d", &choix);
+    if (choix < 0.1 || choix > 1) {
+        fprintf(stderr, "Attention, vous n'avez pas entré une probabilité par capital correcte.\n");
+        return -1;
+    }
+    return choix;
+}
+
 
 /**
  * \brief Affiche dans la console un message quand le jeu est fini

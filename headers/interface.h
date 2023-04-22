@@ -17,6 +17,10 @@
 #include "zones.h"
 #include "personnages.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 /**
  * \brief Affiche dans la console toutes les informations du jeu: les zones du jeu, les personnages qui sont dessus, la joueuse dont c'est le tour, le capital des joueuses, ...
  * \param joueuse,joueuse,joueuse sont les 2 joueuses afin de récupérer les informations leurs concernants (les membres de chaque joueuse compris) ainsi que les monstres
@@ -31,6 +35,7 @@ void afficher_toute_info(joueuse,joueuse,joueuse,zones);
  * \return le nombre de capital que la joueuse souhaite dépenser, 0 sinon
 */
 int demander_capital(joueuse);
+
 
 /**
  * \brief Demande à une joueuse si elle veut jouer une carte qu'elle possède et si oui, laquelle
@@ -60,6 +65,20 @@ int demander_zones_arrivee_augmenter(zones);
  * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1; -1 sinon
 */
 int demander_zones_arrivee_diminuer(zones, int);
+
+/**
+ * \brief Demande à une joueuse le numéro d'un personnage de la joueuse (ou liste de monstres) 
+ * \param joueuse afin de savoir sur quelle joueuse ou liste de monstres intéragir
+ * \return le numéro du personnage entre 1 et la taille de la liste, donc l'indice du personnage + 1; -1 sinon
+*/
+int demander_personnage(joueuse j1);
+
+/**
+ * \brief Demande à une joueuse quelle probabilité par capital elle souhaite avoir entre 0.1 et 1
+ * \param zones afin de savoir quelles zones changer
+ * \return la valeur de probabilité par capital que la joueuse souhaite avoir, 0 sinon
+*/
+int demander_proba_par_capital(zones);
 
 /**
  * \brief Affiche dans la console un message quand le jeu est fini

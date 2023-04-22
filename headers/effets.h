@@ -7,7 +7,7 @@
 #ifndef EFFETS_H
 #define EFFETS_H
 
-#include "joueuses.h"
+#include "interface.h"
 
 /**
  * @brief Execute le pouvoir de la carte Massinissa Merabet
@@ -30,9 +30,10 @@ void pouvoir_carte_Bannour(zone z1,zone z2,joueuse* list_joueuses);
  * @brief Execute le pouvoir de la carte  Valentin Honoré
  * Chaque montre se déplace 3 fois. Chaque membre d'école qu'un monstre rencontre est mangé
  * @param list_joueuses_dont_monstres La liste de tout les joueurs et monstres afin de savoir la zone courante de chacun des personnages de chaque joueur
+ * @param list_zones la liste des zones
  * @return rien
  */
-void pouvoir_carte_Honore(joueuse* list_joueuses_dont_monstres);
+void pouvoir_carte_Honore(joueuse* list_joueuses_dont_monstres, zones list_zones);
 
 /**
  * @brief Execute le pouvoir de la carte Renaud Rioboo
@@ -77,10 +78,10 @@ void pouvoir_carte_Munante(joueuse* list_joueuses);
 /**
  * @brief Execute le pouvoir de la carte Cyril Benezet
  * Déplacez un des monstres sur la zone de votre choix. Si un membre d'école se trouve sur la zone du monstre, il n'est pas mangé.
- * @param list_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
+ * @param monstres permet d'avoir l'ensemble des monstres
  * @return rien
 */
-void pouvoir_carte_Benezet(joueuse* list_joueuses);
+void pouvoir_carte_Benezet(joueuse monstres);
 
 /**
  * @brief Execute le pouvoir de la carte Anne-Laure Ligozat
@@ -113,9 +114,10 @@ void pouvoir_carte_DembeleCabot(joueuse jou);
  * Un membre de l'école de l'autre joueuse qui devrait se déplacer sur cette zone ne se déplace pas.
  * La probabilité d'aller sur cette zone est de 0. Depuis cette zone, la probabilité de rester sur cette zone est 1.
  * @param zo permet d'avoir l'ensemble des zones
+ * @param jou permet d'avoir la joueuse
  * @return rien
  */
-void pouvoir_carte_Pacave(zones zo);
+void pouvoir_carte_Pacave(zones zo, joueuse jou);
 
 /**
  * @brief Execute le pouvoir de la carte Jerome Huet
@@ -140,17 +142,19 @@ void pouvoir_carte_Matias(joueuse list_monstres);
  * Pendant vos 3 prochains tours, un point de capital permet de déplacer une quantité 
  * 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ou 1 de probabilité.
  * @param jou permet d'avoir la joueuse
+ * @param zo permet d'avoir l'ensemble des zones
  * @return rien
  */
-void pouvoir_carte_Salhab(joueuse jou);
+void pouvoir_carte_Salhab(joueuse jou, zones zo);
 
 /**
  * @brief Execute le pouvoir de la carte Sergio Pulido-Nino
  * Mettez à 0 les probabilités permettant de sortir de la zone de chaque monstre et mettez à 1 la probabilité de rester dans la zone de chaque monstre.
  * @param zo permet d'avoir l'ensemble des zones
+ * @param monstres permet d'avoir l'ensemble des monstres
  * @return rien
  */
-void pouvoir_carte_PulidoNino(zones zo);
+void pouvoir_carte_PulidoNino(zones zo, joueuse monstres);
 
 /**
  * @brief Execute le pouvoir de la carte Dimitri Watel
@@ -173,10 +177,11 @@ void pouvoir_carte_Szafranski(joueuse* list_joueuses);
  * @brief Execute le pouvoir de la carte Julien Forest
  * Mettez toutes les probabilités à 0. Puis, pour chaque zone, la probabilité de se déplacer de cette zone vers la zone contenant
  *  le monstre passe à 0.5 (s'il y a plusieurs monstres, un des monstres est choisi au hasard) ; et la probabilité de se déplacer de cette zone vers une autre zone ne contenant pas de monstre choisie aléatoirement passe également à 0.5.
- * @param list_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
+ * @param zones permet d'avoir l'ensemble des zones
+ * @param monstres permet d'avoir l'ensemble des monstres
  * @return rien
  */
-void pouvoir_carte_Forest(joueuse* list_joueuses);
+void pouvoir_carte_Forest(zones zo, joueuse monstres);
 
 /**
  * @brief Execute le pouvoir de la carte Laurent Prével
