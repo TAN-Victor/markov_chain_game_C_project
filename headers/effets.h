@@ -10,6 +10,14 @@
 #include "interface.h"
 
 /**
+ * @brief Execute l'une des fonctions correspondantes au pouvoir de la carte en fonction du nom de cette dernière mise en paramètre
+ * @param jou Pour savoir sur quelle joueuse intéragir
+ * @param c Pour savoir quelle fonction pouvoir_carte utiliser
+ * @return rien
+ */
+void wrapper_pouvoir_carte(joueuse* list_joueuses,zones list_zones,);
+
+/**
  * @brief Execute le pouvoir de la carte Massinissa Merabet
  * Pendant vos 3 prochains tours, votre capital augmente de 2
  * @param jou Pour savoir sur quelle joueuse intéragir
