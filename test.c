@@ -161,6 +161,13 @@ int test_init_zones(){
 }
 
 
+/**
+ * @brief test si les personnages sont initialisés correctement
+ * 
+ * @param nothing
+ * 
+ * @return int 1 si initialisée correctement, 0 sinon
+*/
 int test_init_personnage(){
     zones zs = nouvellesZones();
     personnage perso  = nouveauPersonnage(1,trouveZone(zs,0));//membre de l'équipe 1
@@ -303,14 +310,23 @@ int test_init_personnage(){
         return 0;
     }
     free(monstre);
+    fprintf(stdout,"test init personnage ok\n");
     return 1;
 }
 
 
+int test_vie_d_un_personnage(){
+    personnage perso = nouveauPersonnage(1,trouveZone(zs,0));
+    if (getPeutSeDeplacer(perso)){ //on test si le personnage peut se déplacer sur chacune des zones
+        for (int i, i<10, i++){
+            deplacer(perso,i);
+        }
+    }
+}
+
 int main(){
     int test_zones = test_init_zones();
     int test_joueuses = test_init_joueuses();
-    printf("%d",test_zones);
-    printf("%d",test_joueuses);
+    int test_personnage = test_init_personnage();
     return 0;
 }
