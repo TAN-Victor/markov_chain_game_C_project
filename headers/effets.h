@@ -10,12 +10,13 @@
 #include "interface.h"
 
 /**
- * @brief Execute l'une des fonctions correspondantes au pouvoir de la carte en fonction du nom de cette dernière mise en paramètre
- * @param jou Pour savoir sur quelle joueuse intéragir
- * @param c Pour savoir quelle fonction pouvoir_carte utiliser
+ * @brief Execute le pouvoir de la carte en fonction du nom de la carte
+ * @param jou Pour savoir sur quelles joueuses et monstres intéragir
+ * @param list_zones la liste des zones
+ * @param nom_carte le nom de la carte pour savoir quel pouvoir executer
  * @return rien
  */
-void wrapper_pouvoir_carte(joueuse* list_joueuses,zones list_zones,);
+void wrapper_pouvoir_carte(joueuse* list_joueuses, zones list_zones, char* nom_carte);
 
 /**
  * @brief Execute le pouvoir de la carte Massinissa Merabet

@@ -76,7 +76,7 @@ void pouvoir_carte_Honore(joueuse* list_joueuses_dont_monstres, zones list_zones
  */
 void pouvoir_carte_Rioboo(joueuse* list_joueuses, zones zo) {
     for (int i = 0; i < getCapital(list_joueuses[1]); i += 1) {
-        int nombre_zones = 10; // TODO: changer le nombre de zones
+        int nombre_zones = getTailleMatrice(zo); // TODO: changer le nombre de zones
         srand(time(NULL));
         int zone_1 = rand() % nombre_zones + 1;
         int zone_2 = rand() % nombre_zones + 1;
@@ -198,8 +198,8 @@ void pouvoir_carte_DembeleCabot(joueuse jou) {
  */
 void pouvoir_carte_Pacave(zones zo, joueuse jou) {
     addZone(zo);
-    //setEstAutorise(getZones(zo)[getTaille(zo) - 1], 1); // TODO get taille
-    //TODO refaire les proba
+    //setEstAutorise(getZones(zo)[getTailleMatrice(zo) - 1], 1); // TODO get taille
+    //TODO modifier_proba(getTabZones(zo), getTailleMatrice(zo) - 1, getTailleMatrice(zo) - 1, 1);
 }
 
 /**
@@ -212,12 +212,13 @@ void pouvoir_carte_Pacave(zones zo, joueuse jou) {
  */
 void pouvoir_carte_Huet(zones zo) {
     matrice_probas matrice = getMatrice(zo);
-    // TODO int taille = getTaille(zo);
+    // TODO int taille = getTailleMatrice(zo);
     // for (int i = 0; i < taille; i += 1) {
+    //      float proba = getProba(matrice, i, taille - 1);
     //     for (int j = 0; j < taille - 1; j += 1) {
     //         setProba(matrice, i, j, getProba(matrice, i, j + 1));
     //     }
-    //     setProba(matrice, i, taille - 1, getProba(matrice, i, 0));
+    //     setProba(matrice, i, taille - 1, proba);
     // }
 }
 
