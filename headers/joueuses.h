@@ -15,7 +15,7 @@
  * - membre_ecole(j) pour obtenir tous les membres de l'école d'une joueuse
  * - nb_membre_ecole(j) pour obtenir le nombre de membres de l'école d'une joueuse
  * - tous_manges(j) pour tester si tous les membres d'une joueuse ont été mangés
- * - reinitialise_capital(j) pour remettre le capital d'une joeuse à 5
+ * - reinitialise_capital(j) pour remettre le capital d'une joueuse à 5
  * - utilise_capital(j,capital) pour utiliser le capital de la joeuse de la valeur souhaitée
  * - utilise_carte(j,carte) pour jouer la carte demandée
  */
@@ -116,7 +116,7 @@ void utilise_capital(joueuse pj, int capital);
 
 
 /**
- * @brief la carte c est retirer de la main du joueur et on applique les effets de la carte (il faut assi s'assurer que le joueur possède la carte)
+ * @brief la carte c est retirer de la main du joueur et on applique les effets de la carte (il faut aussi s'assurer que le joueur possède la carte)
  * @param pj pointeur vers une joueuse
  * @param c la carte que la joueuse souhaite jouer
 */
