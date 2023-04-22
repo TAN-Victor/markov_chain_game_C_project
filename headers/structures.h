@@ -99,6 +99,23 @@ typedef struct matrice_probas* matrice_probas;
 float lecture_probas(matrice_probas matrice, int i, int j);
 
 
+/* Getters et Setters */
+/**
+ * @brief renvoie la taille de la matrice
+ * 
+ * @param matrice un pointeur vers la matrice de probas
+ * 
+ * @return int la taille de la matrice
+*/
+int getTaille(matrice_probas matrice);
+
+/**
+ * @brief met à jour la taille de la matrice
+ * 
+ * @param taille la nouvelle taille de la matrice
+*/
+void setTaille(int taille);
+
 /**
  * @brief création d'une matrice de probas de taille taille
  * 

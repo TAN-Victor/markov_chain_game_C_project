@@ -1,4 +1,7 @@
 #include "../headers/joueuses.h"
+
+/* Setters et Getters */
+
 /**
  * @brief renvoie le capital d'une joueuse
  * 
@@ -108,6 +111,16 @@ float getProbaParCapital(joueuse j){
 }
 
 /**
+ * @brief met à jour la proba_par_capital de la joueuse
+ * 
+ * @param j 
+ * @param proba 
+ */
+void setProbaProbaParCapital(joueuse j, float proba){
+    j->proba_par_capital = proba;
+}
+
+/**
  * @brief modifie le capital d'une joueuse
  * 
  * @param j : une joueuse 
@@ -177,6 +190,55 @@ void setToursRestantsJouer(joueuse j, int toursRestants){
     j->tours_restants_jouer = toursRestants;
 }
 
+/**
+ * @brief renvoie le le bonus_temporaire
+ * 
+ * @param j 
+ * @return int : le bonus_temporaire 1 ou 0
+ */
+int getBonusTemporaire(joueuse j){
+    return j->bonus_temporaire;
+}
+
+/**
+ * @brief modifie le bonus_temporaire
+ * 
+ * @param j 
+ * @param bonus : le nouveau bonus_capital, 1 ou 0
+ */
+void setBonusTemporaire(joueuse j, int bonus){
+    j->bonus_temporaire = bonus;
+}
+
+/**
+ * @brief ajoute un personnage aux membres de la joueuse
+ * 
+ * @param j : une joueuse 
+ * @param p : le personnage à ajouter
+ */
+void addMembres(joueuse j, personnage* p){
+    j->membres = realloc(j->membres, (j->taille+1)*sizeof(personnage*));
+    j->membres[j->taille] = p;
+}
+
+/**
+ * @brief supprime un personnage des membres de la joueuse
+ * 
+ * @param j : une joueuse 
+ * @param id : l'id du personnage à supprimer
+ */
+void removeMembres(joueuse j, int id){
+    int i;
+    for(i=0; i<j->taille; i++){
+        if(getIdPersonnage(j->membres[i]) == id){
+            j->membres[i] = j->membres[j->taille-1];
+            j->taille--;
+            j->membres = realloc(j->membres, j->taille*sizeof(personnage*));
+            break;
+        }
+    }
+}
+
 /** 
  * @brief renvoit une joueuse :
  *          - on initialise le capital à 5
@@ -237,7 +299,4 @@ joueuse tour_joueuse(joueuse pj1, joueuse pj2){
         return pj2;
     }
 }
-
-
-
 
