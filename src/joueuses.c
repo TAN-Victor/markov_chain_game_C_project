@@ -1,4 +1,7 @@
 #include "../headers/joueuses.h"
+
+/* Setters et Getters */
+
 /**
  * @brief renvoie le capital d'une joueuse
  * 
@@ -82,7 +85,7 @@ int getToursInvincibilite(joueuse j){
 /**
  * @brief renvoie la liste de personnage (de type membre de d'école) de la joueuse sélectionnée
  * @param pj pointeur vers la joueuse sélectionnée
- * @return une liste de personreinitialisese* pj;
+ * @return une liste de personnage* pj;
 */
 personnage* getMembres(joueuse pj){
     return pj->membres;
@@ -105,6 +108,16 @@ int getToursRestantsJouer(joueuse j){
  */
 float getProbaParCapital(joueuse j){
     return j->proba_par_capital;
+}
+
+/**
+ * @brief met à jour la proba_par_capital de la joueuse
+ * 
+ * @param j 
+ * @param proba 
+ */
+void setProbaProbaParCapital(joueuse j, float proba){
+    j->proba_par_capital = proba;
 }
 
 /**
@@ -177,6 +190,55 @@ void setToursRestantsJouer(joueuse j, int toursRestants){
     j->tours_restants_jouer = toursRestants;
 }
 
+/**
+ * @brief renvoie le le bonus_temporaire
+ * 
+ * @param j 
+ * @return int : le bonus_temporaire 1 ou 0
+ */
+int getBonusTemporaire(joueuse j){
+    return j->bonus_temporaire;
+}
+
+/**
+ * @brief modifie le bonus_temporaire
+ * 
+ * @param j 
+ * @param bonus : le nouveau bonus_capital, 1 ou 0
+ */
+void setBonusTemporaire(joueuse j, int bonus){
+    j->bonus_temporaire = bonus;
+}
+
+/**
+ * @brief ajoute un personnage aux membres de la joueuse
+ * 
+ * @param j : une joueuse 
+ * @param p : le personnage à ajouter
+ */
+void addMembres(joueuse j, personnage* p){
+    j->membres = realloc(j->membres, (j->taille+1)*sizeof(personnage*));
+    j->membres[j->taille] = p;
+}
+
+/**
+ * @brief supprime un personnage des membres de la joueuse
+ * 
+ * @param j : une joueuse 
+ * @param id : l'id du personnage à supprimer
+ */
+void removeMembres(joueuse j, int id){
+    int i;
+    for(i=0; i<j->taille; i++){
+        if(getIdPersonnage(j->membres[i]) == id){
+            j->membres[i] = j->membres[j->taille-1];
+            j->taille--;
+            j->membres = realloc(j->membres, j->taille*sizeof(personnage*));
+            break;
+        }
+    }
+}
+
 /** 
  * @brief renvoit une joueuse :
  *          - on initialise le capital à 5
@@ -192,21 +254,21 @@ joueuse creation_joueuse(int n){
         exit(1);
     }
     joueuse jou=malloc(sizeof(struct joueuse));
-    jou->capital=5;
+    setCapital(jou,CAPITAL_DE_BASE);
     jou->membres=malloc(sizeof(7*struct _personnage));
     // En cours de développement pour l'implémentation des cartes : Besoin d'avoir une liste de carte global en paramètre ou mettre la liste de carte en paramètre
-    jou->id=n;
+    setIdJoueuse(jou,n);
     if(n==1){
-        jou->tour=1;
+        setTour(jou,1);
     }
     else{
-        jou->tour=0;
+        setTour(jou,0);
     }
-    jou->taille=5;
-    jou->tours_restants_bonus_capital=1;
-    jou->tours_restants_invinsibilite=0;
-    jou->tours_restants_jouer=1;
-    jou->proba_par_capital=0.1;
+    setTaille(jou,NB_MEMBRES_JOUEUSE);
+    setToursRestantsBonusCapital(jou,1);
+    setToursRestantsInvinsibilite(jou,0);
+    setToursRestantsJouer(jou,1);
+    setProbaProbaParCapital(jou,0.1);
     return jou;
 }
 
@@ -226,18 +288,96 @@ void free_joueuse(joueuse pj){
  * @return un pointeur vers la joueuse dont c'est le tour
 */
 joueuse tour_joueuse(joueuse pj1, joueuse pj2){
-    if((pj1->tour==0 && pj2->tour==0) || (pj1->tour==1 && pj2->tour==1) ){
+    if((getTour(pj1)==0 && getTour(pj2)==0) || (getTour(pj1)==1 && getTour(pj2)==1) ){ // Utile pour un futur débugage
         fprintf(stderr,"tour_joueuse : le tour des 2 joueuses est à 0 ou 1");
         exit(2);
     }
-    else if(pj1->tour==1 && pj2->tour==0){
+    else if(getTour(pj1)==1 && getTour(pj2)==0){
         return pj1;
     }
-    else if(pj1->tour==0 && pj2->tour==1){
+    else if(getTour(pj1)==0 && getTour(pj2)==1){
         return pj2;
     }
 }
 
+/**
+ * @brief renvoie le nombre de membres de la joueuse
+ * @param pj  pointeur vers la joueuse dont on veut connaitre le nombre de membre
+*/
+int nb_membre_ecole(joueuse pj){
+    if(getTaille(pj)>7){
+        fprintf(stderr,"nb_membre_ecole : joueuse %d possède plus de 7 membres",getIdJoueuse(pj));
+        exit(3);
+    }
+    else if(getTaille(pj)<0){
+        fprintf(stderr,"nb_membre_ecole : joueuse %d possède en dessous de 0 membres",getIdJoueuse(pj));
+        exit(4);
+    }
+    else {
+        return getTaille(pj);
+    }
+}
 
+/**
+ * @brief on test si tous les membres d'une joueuse ont été mangés
+ * @param pj pointeur vers la joueuse dont on veux savoir s'il lui reste des membres
+ * @return 1 (=vrai) si tous les membres sont mangés et 0 (=faux) sinon
+*/
+int tous_manges(joueuse pj){
+    if(getTaille(pj)==0){
+        return 1;
+    }
+    else if(getTaille(pj)<0){
+        fprintf(stderr,"tous_manges : joueuse %d possède en dessous de 0 membres",getIdJoueuse(pj));
+        exit(5);
+    }
+    else {
+        return 0;
+    }
+}
+
+/**
+ * @brief on réinitialise le capital de la joueuse choisie (on le remet à 5) on gère en meme temps les bonus dans cette fonction (tours_restants)
+ * @param pj pointeur vers la joueuse dont le capital va être réinitialisé
+*/
+void reinitialise_capital(joueuse pj){
+    setCapital(pj,CAPITAL_DE_BASE);
+    setBonusTemporaire(pj,1);
+}
+
+/**
+ * @brief on retire du capital à la joueuse sélectionnée du montant choisit (en vérifiant que son capital ne passe pas en négatif)
+ * @param pj pointeur vers la joueuse dont le capital va être modifié
+ * @param capital entier que l'on va soustraire au capital de la joueuse
+*/
+void utilise_capital(joueuse pj, int capital){
+    if(getCapital(pj)-capital<0){
+        fprintf(stderr,"utilise_capital : joueuse %d %d-%d négatif",getIdJoueuse(pj),getCapital(pj),capital);
+        exit(6);
+    }
+    else{
+        setCapital(pj,getCapital(pj)-capital);
+    }
+}
+
+/**
+ * @brief la carte c est retirer de la main du joueur et on applique les effets de la carte (il faut aussi s'assurer que le joueur possède la carte)
+ * @param pj pointeur vers une joueuse
+ * @param c la carte que la joueuse souhaite jouer
+*/
+void utilise_carte(joueuse pj, carte c){
+     int exist_carte=0;
+     for(int i=0;i<getNbCartes(getMain(pj));i++){
+         if(lecture_cartes(getMain(pj),i)==c){
+             exist_carte=1;
+         }
+     }
+     if(exist_carte==1){
+         // Wrapper en cours de dev
+     }
+     else{
+         printf("La carte utilisé n'est pas dans votre main joueuse %d",getIdJoueuse(pj));
+     }
+}
 
 

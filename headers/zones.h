@@ -56,10 +56,10 @@ zone trouveZone(zones z, int n);
  *        proba est augmenté/diminué de 0.1 par capital investi
  * @param n1 numéro de la zone de départ compris entre 0 et nb_zones-1
  * @param n2 numéro de la zone d'arrivée compris entre 0 et nb_zones-1
- * @param capital capital investi <= au capital de la joueuse 
+ * @param proba quantité de probabilité à ajouter ou retirer, est posiftif
  * @param action indique si on augmente (action = 1) ou retire (action = 0) de la probabilité
  */
-void modifierZone(zones z, int n1, int n2, int capital, int action);
+void modifierZone(zones z, int n1, int n2, float proba, int action);
 
 
 /**
