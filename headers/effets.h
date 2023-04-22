@@ -142,17 +142,19 @@ void pouvoir_carte_Matias(joueuse list_monstres);
  * Pendant vos 3 prochains tours, un point de capital permet de déplacer une quantité 
  * 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ou 1 de probabilité.
  * @param jou permet d'avoir la joueuse
+ * @param zo permet d'avoir l'ensemble des zones
  * @return rien
  */
-void pouvoir_carte_Salhab(joueuse jou);
+void pouvoir_carte_Salhab(joueuse jou, zones zo);
 
 /**
  * @brief Execute le pouvoir de la carte Sergio Pulido-Nino
  * Mettez à 0 les probabilités permettant de sortir de la zone de chaque monstre et mettez à 1 la probabilité de rester dans la zone de chaque monstre.
  * @param zo permet d'avoir l'ensemble des zones
+ * @param monstres permet d'avoir l'ensemble des monstres
  * @return rien
  */
-void pouvoir_carte_PulidoNino(zones zo);
+void pouvoir_carte_PulidoNino(zones zo, joueuse monstres);
 
 /**
  * @brief Execute le pouvoir de la carte Dimitri Watel
@@ -175,10 +177,11 @@ void pouvoir_carte_Szafranski(joueuse* list_joueuses);
  * @brief Execute le pouvoir de la carte Julien Forest
  * Mettez toutes les probabilités à 0. Puis, pour chaque zone, la probabilité de se déplacer de cette zone vers la zone contenant
  *  le monstre passe à 0.5 (s'il y a plusieurs monstres, un des monstres est choisi au hasard) ; et la probabilité de se déplacer de cette zone vers une autre zone ne contenant pas de monstre choisie aléatoirement passe également à 0.5.
- * @param list_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
+ * @param zones permet d'avoir l'ensemble des zones
+ * @param monstres permet d'avoir l'ensemble des monstres
  * @return rien
  */
-void pouvoir_carte_Forest(joueuse* list_joueuses);
+void pouvoir_carte_Forest(zones zo, joueuse monstres);
 
 /**
  * @brief Execute le pouvoir de la carte Laurent Prével

@@ -238,17 +238,32 @@ void pouvoir_carte_Matias(joueuse list_monstres) {
  * Pendant vos 3 prochains tours, un point de capital permet de déplacer une quantité 
  * 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ou 1 de probabilité.
  * @param jou permet d'avoir la joueuse
+ * @param zo permet d'avoir l'ensemble des zones
  * @return rien
  */
-void pouvoir_carte_Salhab(joueuse jou);
+void pouvoir_carte_Salhab(joueuse jou, zones zo) {
+    int proba_par_capital = demander_proba_par_capital(zo);
+    setProbaParCapital(jou, proba_par_capital); // TODO
+    setToursRestantsBonusProba(jou, 4); // 4 car 1 tour sera perdu après l'utilisation de cette carte
+}
 
 /**
  * @brief Execute le pouvoir de la carte Sergio Pulido-Nino
  * Mettez à 0 les probabilités permettant de sortir de la zone de chaque monstre et mettez à 1 la probabilité de rester dans la zone de chaque monstre.
  * @param zo permet d'avoir l'ensemble des zones
+ * @param monstres permet d'avoir l'ensemble des monstres
  * @return rien
  */
-void pouvoir_carte_PulidoNino(zones zo);
+void pouvoir_carte_PulidoNino(zones zo, joueuse monstres) {
+    matrice_probas matrice = getMatrice(zo);
+    for (int i = 0; i < getTaille(monstres); i += 1) {
+        int j = getZoneCourante(getMembres(monstres)[i]);
+        for (int k = 0; k < getTaille(zo); k += 1) {
+            setProba(matrice, j, k, 0); // TODO
+        }
+        setProba(matrice, j, j, 1); // TODO
+    }
+}
 
 /**
  * @brief Execute le pouvoir de la carte Dimitri Watel
@@ -256,7 +271,10 @@ void pouvoir_carte_PulidoNino(zones zo);
  * @param jou permet d'avoir la joueuse
  * @return rien
  */
-void pouvoir_carte_Watel(joueuse jou);
+void pouvoir_carte_Watel(joueuse jou) {
+    int choix = demander_choix_membre(jou);
+    setStatut(getMembres(jou)[choix - 1], 3);
+}
 
 /**
  * @brief Execute le pouvoir de la carte Marie Szafranski
@@ -265,16 +283,38 @@ void pouvoir_carte_Watel(joueuse jou);
  * @param list_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
  * @return rien
  */
-void pouvoir_carte_Szafranski(joueuse* list_joueuses);
+void pouvoir_carte_Szafranski(joueuse* list_joueuses) {
+    for (int i = 0; i < 3; i += 1) {
+        ajouter_membre(list_joueuses[0], i + 1); //TODO 
+    }
+}
 
 /**
  * @brief Execute le pouvoir de la carte Julien Forest
  * Mettez toutes les probabilités à 0. Puis, pour chaque zone, la probabilité de se déplacer de cette zone vers la zone contenant
  *  le monstre passe à 0.5 (s'il y a plusieurs monstres, un des monstres est choisi au hasard) ; et la probabilité de se déplacer de cette zone vers une autre zone ne contenant pas de monstre choisie aléatoirement passe également à 0.5.
- * @param list_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
+ * @param zones permet d'avoir l'ensemble des zones
+ * @param monstres permet d'avoir l'ensemble des monstres
  * @return rien
  */
-void pouvoir_carte_Forest(joueuse* list_joueuses);
+void pouvoir_carte_Forest(zones zo, joueuse monstres) {
+    matrice_probas matrice = getMatrice(zo);
+    for (int i = 0; i < getTaille(zo); i += 1) {
+        for (int j = 0; j < getTaille(zo); j += 1) {
+            setProba(matrice, i, j, 0); // TODO
+        }
+    }
+    int random = rand() % getTaille(monstres);
+    int zone_monstre = getZoneCourante(getMembres(monstres)[random]);
+    for (int i = 0; i < getTaille(zo); i += 1) {
+        setProba(matrice, i, zone_monstre, 0.5); // TODO
+        int random2 = rand() % getTaille(zo);
+        while (random2 == zone_monstre) {
+            random2 = rand() % getTaille(zo);
+        }
+        setProba(matrice, i, random2, 0.5); // TODO
+    }
+}
 
 /**
  * @brief Execute le pouvoir de la carte Laurent Prével
@@ -283,5 +323,7 @@ void pouvoir_carte_Forest(joueuse* list_joueuses);
  * @param jou permet d'avoir la joueuse
  * @return rien
 */
-void pouvoir_carte_Prevel(joueuse jou);
+void pouvoir_carte_Prevel(joueuse jou) {
+    setToursRestantsInvinsibilite(jou, 4);
+}
 
