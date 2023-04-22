@@ -322,6 +322,33 @@ int test_vie_d_un_personnage(){
             deplacer(perso,i);
         }
     }
+    setStatut(perso,0);
+    if (getStatut(perso) != 0){
+        fprintf(stderr,"probleme de mis a jour du statut à 0\n");
+    }
+    setStatut(perso,1); 
+    if (getStatut(perso) != 1){
+        fprintf(stderr,"probleme de mis a jour du statut à 1\n");
+    }
+    setStatut(perso,-1);
+    if (getStatut(perso) != -1){
+        fprintf(stderr,"probleme de mis a jour du statut à -1\n");
+    }
+    setStatut(perso,3);
+    if (getStatut(perso) != 3){
+        fprintf(stderr,"probleme de mis a jour du statut à 3\n");
+    }
+    estMange(personnage perso);
+    if (getStatut(perso) != 0){
+        fprintf(stderr,"probleme de mis a jour du statut lorsque le personnage est mangé\n");
+    }
+    free(perso);
+    fprintf(stdout,"test vie d'un personnage ok\n");
+    return 1;
+}
+
+int test_modif_proba_avec_capital(){
+    
 }
 
 int main(){
