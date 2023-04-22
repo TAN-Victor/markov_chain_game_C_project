@@ -1,4 +1,7 @@
 #include "../headers/joueuses.h"
+
+/* Setters et Getters */
+
 /**
  * @brief renvoie le capital d'une joueuse
  * 
@@ -177,6 +180,27 @@ void setToursRestantsJouer(joueuse j, int toursRestants){
     j->tours_restants_jouer = toursRestants;
 }
 
+/**
+ * @brief renvoie le le bonus_temporaire
+ * 
+ * @param j 
+ * @return int : le bonus_temporaire 1 ou 0
+ */
+int getBonusTemporaire(joueuse j){
+    return j->bonus_temporaire;
+}
+
+/**
+ * @brief modifie le bonus_temporaire
+ * 
+ * @param j 
+ * @param bonus : le nouveau bonus_capital, 1 ou 0
+ */
+void setBonusTemporaire(joueuse j, int bonus){
+    j->bonus_temporaire = bonus;
+}
+
+
 /** 
  * @brief renvoit une joueuse :
  *          - on initialise le capital à 5
@@ -237,7 +261,4 @@ joueuse tour_joueuse(joueuse pj1, joueuse pj2){
         return pj2;
     }
 }
-
-
-
 

@@ -1,5 +1,26 @@
 #include "../headers/zones.h"
 /* Implémentation des setters et getters */
+
+/**
+ * @brief modifie la probabilité de la zone en fonction du capital investi
+ *        proba est augmenté/diminué de 0.1 par capital investi
+ * @param n1 numéro de la zone de départ compris entre 0 et nb_zones-1
+ * @param n2 numéro de la zone d'arrivée compris entre 0 et nb_zones-1
+ * @param proba quantité de probabilité à ajouter ou retirer, est posiftif
+ * @param action indique si on augmente (action = 1) ou retire (action = 0) de la probabilité
+ */
+void modifierZone(zones z, int n1, int n2, float proba, int action) {
+    if (action == 1) {
+        modifier_proba(getMatrice(z), n1, n2, lecture_probas(z, n1, n2) + proba);
+ 
+    }
+    else if (action == 0) {
+        modifier_proba(getMatrice(z), n1, n2, lecture_probas(z, n1, n2) - proba);
+    }
+}
+
+
+
 /**
  * @brief renvoie le numéro de la zone z
  * 
