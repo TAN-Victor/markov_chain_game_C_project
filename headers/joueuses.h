@@ -23,8 +23,7 @@
 #define JOUEUSES_H
 
 #include "personnages.h"
-#include <stdlib.h>
-#include <stdio.h>
+
 
 /* Création de constantes */
 #define CAPITAL_DE_BASE 5
