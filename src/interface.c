@@ -72,7 +72,7 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         for (int i = 0; i < getTaille(m); i += 1) {
             printf("%2d", getZoneCourante(getMembres(m)[i]));
         }
-        printf("Il y a %d zones. \n", getTailleMatrice(liste_zones)); // TODO
+        printf("Il y a %d zones. \n", getTailleMatrice(getMatrice(liste_zones))); // TODO
 
         printf("---------------------------------------------------\n");
 }
@@ -146,7 +146,7 @@ carte demander_carte(joueuse j1) {
 */
 int demander_zones_depart(zones liste_zones) {
     int choix_depart = -1;
-    int nombre_de_zones = getTailleMatrice(liste_zones); //TODO
+    int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones)); //TODO
     printf("Choissez une zone de départ entre 1 et %d: \n", nombre_de_zones);
     scanf("%d", &choix_depart);
     if (choix_depart <= 0 || choix_depart > nombre_de_zones) {
@@ -163,7 +163,7 @@ int demander_zones_depart(zones liste_zones) {
 */
 int demander_zones_arrivee_augmenter(zones liste_zones) {
     int choix_a_augmenter = -1;
-    int nombre_de_zones = getTailleMatrice(liste_zones); //TODO
+    int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones)); //TODO
     printf("Choisissez une zone dont vous souhaitez AUGMENTER la probabilité entre 1 et %d: \n", nombre_de_zones);
     scanf("%d", &choix_a_augmenter);
 
@@ -182,7 +182,7 @@ int demander_zones_arrivee_augmenter(zones liste_zones) {
 */
 int demander_zones_arrivee_diminuer(zones liste_zones, int zone_augmentee) {
     int choix_a_diminuer = -1;
-    int nombre_de_zones = getTailleMatrice(liste_zones); //TODO
+    int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones)); //TODO
     printf("Choisissez une zone dont vous souhaitez DIMINUER la probabilité entre 1 et %d (%d exclu): \n", nombre_de_zones, zone_augmentee);
         if (choix_a_diminuer <= 0 || choix_a_diminuer > nombre_de_zones || choix_a_diminuer == zone_augmentee) {
             fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
@@ -199,7 +199,7 @@ int demander_zones_arrivee_diminuer(zones liste_zones, int zone_augmentee) {
 */
 int demander_zones_autre(zones liste_zones, int zone_depart) {
     int choix = -1;
-    int nombre_de_zones = getTailleMatrice(liste_zones); //TODO
+    int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones)); //TODO
     printf("Choisissez une autre zone entre 1 et %d (%d exclu): \n", nombre_de_zones, zone_depart);
         if (choix <= 0 || choix > nombre_de_zones || choix == zone_depart) {
             fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
@@ -229,10 +229,9 @@ int demander_personnage(joueuse j1) {
 
 /**
  * \brief Demande à une joueuse quelle probabilité par capital elle souhaite avoir entre 0.1 et 1
- * \param zones afin de savoir quelles zones changer
  * \return la valeur de probabilité par capital que la joueuse souhaite avoir, 0 sinon
 */
-int demander_proba_par_capital(zones liste_cartes) {
+int demander_proba_par_capital() {
     int choix = -1;
     printf("Choisissez une probabilité par capital entre 0.1 et 1: \n");
     scanf("%d", &choix);

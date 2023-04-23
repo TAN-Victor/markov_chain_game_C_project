@@ -83,10 +83,9 @@ int demander_personnage(joueuse j1);
 
 /**
  * \brief Demande à une joueuse quelle probabilité par capital elle souhaite avoir entre 0.1 et 1
- * \param zones afin de savoir quelles zones changer
  * \return la valeur de probabilité par capital que la joueuse souhaite avoir, 0 sinon
 */
-int demander_proba_par_capital(zones);
+int demander_proba_par_capital();
 
 /**
  * \brief Affiche dans la console un message quand le jeu est fini
