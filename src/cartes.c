@@ -1,9 +1,5 @@
 #include "../headers/cartes.h"
-#include "../headers/personnages.h"
-#include "../headers/cartes.h"
-#include "../headers/joueuses.h"
-#include "../headers/zones.h"
-#include "../headers/interface.h"
+
 
  /**
  * \brief Créer une carte vide
