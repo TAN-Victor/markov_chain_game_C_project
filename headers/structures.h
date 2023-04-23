@@ -107,14 +107,14 @@ float lecture_probas(matrice_probas matrice, int i, int j);
  * 
  * @return int la taille de la matrice
 */
-int getTaille(matrice_probas matrice);
+int getTailleMatrice(matrice_probas matrice);
 
 /**
  * @brief met à jour la taille de la matrice
  * 
  * @param taille la nouvelle taille de la matrice
 */
-void setTaille(int taille);
+void setTailleMatrice(int taille);
 
 /**
  * @brief création d'une matrice de probas de taille taille

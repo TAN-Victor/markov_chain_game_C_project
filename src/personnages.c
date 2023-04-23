@@ -1,5 +1,6 @@
 #include "../headers/personnages.h"
 
+/* Getters et Setters */
 /**
  * @brief renvoie le type du personnage
  * 
@@ -159,3 +160,24 @@ void setNbDeTourDisparuRestant(personnage p, int nbTourDisparu){
 void setPeutSeDeplacer(personnage p, int peutSeDeplacer){
     p->peut_se_deplacer = peutSeDeplacer;
 }
+
+/**
+ * @brief renvoie le nombre de tours restant avant que le bonus de pas ne disparaisse
+ * 
+ * @param p un personnage dont on souhaite obtenir le nombre de tours restant avant que le bonus de pas ne disparaisse
+ * @return le nombre de tours restant avant que le bonus de pas ne disparaisse, -1 si bonus permananent
+ */
+int getToursRestantsBonusPas(personnage p){
+    return p->tours_restants_bonus_pas;
+}
+
+/**
+ * @brief modifie le nombre de tours restant avant que le bonus de pas ne disparaisse
+ * 
+ * @param p un personnage dont on souhaite modifier le nombre de tours restant avant que le bonus de pas ne disparaisse
+ * @param toursRestantsBonusPas le nouveau nombre de tours restant avant que le bonus de pas ne disparaisse, -1 si bonus permanent
+ */
+void setToursRestantsBonusPas(personnage p, int toursRestantsBonusPas){
+    p->tours_restants_bonus_pas = toursRestantsBonusPas;
+}
+

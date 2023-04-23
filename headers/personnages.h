@@ -25,6 +25,7 @@ struct _personnage {
     int zone_courante; /* numéro de la zone courante du personnage*/
     int zone_precedente; /* numéro de la zone précédente */
     int nb_de_pas; /* nombre de pas par tour, initialisé à 1 */
+    int tours_restants_bonus_pas; /* nombre de tours restants pour le bonus de pas, initialisé à 0, vaut n positif si bonus temporaire, et -1 si bonus permanent */
     int peut_se_deplacer; /* 1 si peut se déplacer ce tour, 0 sinon */
     int nb_de_tour_disparu_restant; /* vaut 0 initialement */
 };
@@ -207,5 +208,21 @@ void setNbDeTourDisparuRestant(personnage p, int nbTourDisparu);
  * @param peutJouer le nouveau booléen permettant de savoir si le personnage peut jouer ou non
  */
 void setPeutSeDeplacer(personnage p, int peutSeDeplacer);
+
+/**
+ * @brief renvoie le nombre de tours restant avant que le bonus de pas ne disparaisse
+ * 
+ * @param p un personnage dont on souhaite obtenir le nombre de tours restant avant que le bonus de pas ne disparaisse
+ * @return le nombre de tours restant avant que le bonus de pas ne disparaisse, -1 si bonus permananent
+ */
+int getToursRestantsBonusPas(personnage p);
+
+/**
+ * @brief modifie le nombre de tours restant avant que le bonus de pas ne disparaisse
+ * 
+ * @param p un personnage dont on souhaite modifier le nombre de tours restant avant que le bonus de pas ne disparaisse
+ * @param toursRestantsBonusPas le nouveau nombre de tours restant avant que le bonus de pas ne disparaisse, -1 si bonus permanent
+ */
+void setToursRestantsBonusPas(personnage p, int toursRestantsBonusPas);
 
 #endif
