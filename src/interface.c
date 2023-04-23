@@ -19,9 +19,7 @@
 
 #include "../headers/interface.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
 
 /**
  * \brief Affiche dans la console toutes les informations du jeu: les zones du jeu, les personnages qui sont dessus, la joueuse dont c'est le tour, le capital des joueuses, ...
