@@ -85,8 +85,8 @@ int main() {
             else { // Exclusion, ne peut pas jouer de carte si le capital a été dépensé
                 carte c = demander_carte(liste_joueuses[i]); // Doit vérifier si la carte est jouable
                 if (c != NULL) { // Si la joueuse veut jouer une carte
-                    utilise_carte(liste_joueuses[i], c); // A modifier dans le futur, car une carte pourra augmenter le nombre de zone donc la fonction devrait prendre d'autres arguments
                     message_generique(5, liste_joueuses[i], NULL, c);  // voir avec interface.c
+                    utilise_carte(liste_joueuses[i], c); // A modifier dans le futur, car une carte pourra augmenter le nombre de zone donc la fonction devrait prendre d'autres arguments
                 }
             }
 
@@ -149,7 +149,7 @@ int main() {
             setToursBonusCapital(liste_joueuses[i], tours_restants_bonus_capital - 1); // Diminution du nombre de tours restants pour le bonus de capital
         }
         if (tours_restants_bonus_capital == 0) {
-            //TODO setProbaParCapital(liste_joueuses[i], PROBA_PAR_CAPITAL); // Réinitialisation de la probabilité par capital
+            setProbaParCapital(liste_joueuses[i], PROBA_PAR_CAPITAL); // Réinitialisation de la probabilité par capital
         }
         if (tours_restants_invincibilite > 0) {
             setToursInvincibilite(liste_joueuses[i], tours_restants_invincibilite - 1); // Diminution du nombre de tours restants pour l'invincibilité

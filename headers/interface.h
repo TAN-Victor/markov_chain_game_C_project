@@ -67,6 +67,14 @@ int demander_zones_arrivee_augmenter(zones);
 int demander_zones_arrivee_diminuer(zones, int);
 
 /**
+ * \brief Demande à une joueuse le numéro d'une autre zone que zone_depart
+ * \param zones afin de savoir sur quelle zone intéragir
+ * \param zone_depart afin de savoir quelle zone ne pas proposer
+ * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1; -1 sinon
+*/
+int demander_zones_autre(zones liste_zones, int zone_depart);
+
+/**
  * \brief Demande à une joueuse le numéro d'un personnage de la joueuse (ou liste de monstres) 
  * \param joueuse afin de savoir sur quelle joueuse ou liste de monstres intéragir
  * \return le numéro du personnage entre 1 et la taille de la liste, donc l'indice du personnage + 1; -1 sinon
