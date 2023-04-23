@@ -43,6 +43,27 @@ carte* getCartes(liste_cartes lc){
     return lc->cartes;
 }
 
+/**
+ * @brief renvoie la taille de la matrice
+ * 
+ * @param matrice un pointeur vers la matrice de probas
+ * 
+ * @return int la taille de la matrice
+*/
+int getTailleMatrice(matrice_probas matrice){
+    return matrice->taille;
+}
+
+/**
+ * @brief met à jour la taille de la matrice
+ * 
+ * @param taille la nouvelle taille de la matrice
+*/
+void setTailleMatrice(int taille){
+    matrice->taille = taille;
+}
+
+
 void ajout_carte(liste_cartes liste, carte carte){
     liste->nb_cartes++;
     liste->cartes = realloc(liste->cartes, liste->nb_cartes * sizeof(carte));
