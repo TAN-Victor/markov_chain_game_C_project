@@ -49,11 +49,11 @@ void pouvoir_carte_Honore(joueuse* list_joueuses_dont_monstres, zones list_zones
  * Lors du prochain tour, la joueuse adverse ne choisit pas comment est utilisé son capital. Chaque 
  * point de capital est utilisé aléatoirement: pour chaque point, choisissez les trois zones Z1, Z2 et 
  * Z3 uniformément parmi les triplets pouvant être choisis.
- * @param list_joueuses La liste de tout les joueurs afin d'avoir les informations sur les 2 joueuses
+ * @param adverse la joueuse adverse
  * @param zo l'ensemble des zones où la proba va être modifié pour certaines 
  * @return rien
  */
-void pouvoir_carte_Rioboo(joueuse* list_joueuses, zones zo);
+void pouvoir_carte_Rioboo(joueuse adverse, zones zo);
 
 /**
  * @brief Execute le pouvoir de la carte Kevin Goilard

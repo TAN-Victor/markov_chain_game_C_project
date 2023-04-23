@@ -191,6 +191,23 @@ int demander_zones_arrivee_diminuer(zones liste_zones, int zone_augmentee) {
         return choix_a_diminuer;
 }
 
+/**
+ * \brief Demande à une joueuse le numéro d'une autre zone que zone_depart
+ * \param zones afin de savoir sur quelle zone intéragir
+ * \param zone_depart afin de savoir quelle zone ne pas proposer
+ * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1; -1 sinon
+*/
+int demander_zones_autre(zones liste_zones, int zone_depart) {
+    int choix = -1;
+    int nombre_de_zones = getTailleMatrice(liste_zones); //TODO
+    printf("Choisissez une autre zone entre 1 et %d (%d exclu): \n", nombre_de_zones, zone_depart);
+        if (choix <= 0 || choix > nombre_de_zones || choix == zone_depart) {
+            fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
+            return -1;
+        }
+        return choix;
+}
+
 
 /**
  * \brief Demande à une joueuse le numéro d'un personnage de la joueuse (ou liste de monstres) 
@@ -265,7 +282,7 @@ void message_generique(int n, joueuse j1, int* option, carte option2) {
                 break;
         case 6: printf("Tous les personnages ont bougé. \n");
                 break;
-        case 7: printf("Le personnage n° %d de la joueuse n° %d a été mangé. \n", option[0], getIdJoueuse(j1));
+        case 7: printf("Le personnage n° %d de la joueuse n° %d est décédé. \n", option[0], getIdJoueuse(j1));
                 break;
         case 8: printf("Le tour est terminé, le capital a été réintialisé. \n");
                 break;

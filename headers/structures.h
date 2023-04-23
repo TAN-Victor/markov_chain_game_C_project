@@ -83,7 +83,7 @@ carte lecture_cartes(liste_cartes liste, int index);
 //structures concernant les probas
 struct matrice_probas {
     float** proba;
-    int taille;
+    int taille_matrice;
 };
 typedef struct matrice_probas* matrice_probas;
 
