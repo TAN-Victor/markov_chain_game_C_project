@@ -216,7 +216,7 @@ void setBonusTemporaire(joueuse j, int bonus){
  * @param j : une joueuse 
  * @param p : le personnage à ajouter
  */
-void addMembres(joueuse j, personnage* p){
+void addMembres(joueuse j, personnage p){
     j->membres = realloc(j->membres, (j->taille+1)*sizeof(personnage*));
     j->membres[j->taille] = p;
 }
@@ -255,7 +255,7 @@ joueuse creation_joueuse(int n){
     }
     joueuse jou=malloc(sizeof(struct joueuse));
     setCapital(jou,CAPITAL_DE_BASE);
-    jou->membres=malloc(sizeof(7*struct _personnage));
+    jou->membres=malloc(7*sizeof(struct _personnage));
     // En cours de développement pour l'implémentation des cartes : Besoin d'avoir une liste de carte global en paramètre ou mettre la liste de carte en paramètre
     setIdJoueuse(jou,n);
     if(n==1){
@@ -295,7 +295,7 @@ joueuse tour_joueuse(joueuse pj1, joueuse pj2){
     else if(getTour(pj1)==1 && getTour(pj2)==0){
         return pj1;
     }
-    else if(getTour(pj1)==0 && getTour(pj2)==1){
+    else {
         return pj2;
     }
 }
