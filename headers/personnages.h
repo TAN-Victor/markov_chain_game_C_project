@@ -11,6 +11,9 @@
 #define PERSONNAGES_H
 
 #include "zones.h"
+#include <stdlib.h>
+#include <stdio.h>
+
 
 /* Création des Constantes */
 #define NB_DE_PAS 1

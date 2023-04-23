@@ -10,7 +10,7 @@
  * \return Retourne une carte vide
 */
 carte creer_carte(){
-    carte c=(carte)malloc(sizeof(*carte));
+    carte c=(carte)malloc(sizeof(carte));
     return c;
 }
 
