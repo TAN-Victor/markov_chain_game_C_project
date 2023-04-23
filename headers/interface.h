@@ -14,8 +14,7 @@
 #define INTERFACE_H
 
 #include "joueuses.h"
-#include "zones.h"
-#include "personnages.h"
+
 
 #include <stdio.h>
 #include <stdlib.h>
