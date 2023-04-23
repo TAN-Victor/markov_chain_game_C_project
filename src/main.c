@@ -2,12 +2,12 @@
  * @file main.c
  * @author Victor Tan
  * @brief Fichier source avec le main
- * @necessities interface.h
+ * @necessities effets.h
  * @date 2023-03-06
  * 
  */
 
-#include "../headers/interface.h"
+#include "../headers/effets.h"
 
 
 
@@ -113,7 +113,7 @@ int main() {
         for (int j = 0; j < 2; j += 1) {
             int nombre_personnage = nb_membre_ecole(liste_joueuses[j]); // Nombre de personnages dans l'école de la joueuse_(i+1)
             for (int k = 0; k < nombre_personnage; k += 1) {
-                if (getPeutSeDeplacer(getMembres(liste_joueuses[j])[k]) == 1 && (getStatut(getMembres(liste_joueuses[j])[k]) == 1 || getStatut(getMembres(liste_joueuses[j])[k]) == 3 && getPeutSeDeplacer(getMembres(liste_joueuses[j])[k])) ) {
+                if (getPeutSeDeplacer(getMembres(liste_joueuses[j])[k]) == 1 && (getStatut(getMembres(liste_joueuses[j])[k]) == 1 || getStatut(getMembres(liste_joueuses[j])[k]) == 3) ) {
                     // Si le personnage peut se déplacer et ( qu'il est vivant ou (qu'il est un FIPA et peut jouer))
                     for (int l = 0; l < getNbPas(getMembres(liste_joueuses[j])[k]); l += 1) {    
                         deplacer(getMembres(liste_joueuses[j])[k], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[i])[j])))); // Déplacement des personnages vers leur prochaine zone
@@ -142,20 +142,20 @@ int main() {
             }
         }
         reinitialise_capital(liste_joueuses[i]); // Réinitialisation du capital de la joueuse active
-        int tours_restants_bonus_capital = getToursBonusCapital(liste_joueuses[i]);
+        int tours_restants_bonus_capital = getToursRestantsBonusCapital(liste_joueuses[i]);
         int tours_restants_invincibilite = getToursInvincibilite(liste_joueuses[i]);
-        int tours_restants_jouer = getToursJouer(liste_joueuses[i]);
+        int tours_restants_jouer = getToursRestantsJouer(liste_joueuses[i]);
         if (tours_restants_bonus_capital > 0) {
-            setToursBonusCapital(liste_joueuses[i], tours_restants_bonus_capital - 1); // Diminution du nombre de tours restants pour le bonus de capital
+            setToursRestantsBonusCapital(liste_joueuses[i], tours_restants_bonus_capital - 1); // Diminution du nombre de tours restants pour le bonus de capital
         }
         if (tours_restants_bonus_capital == 0) {
             setProbaParCapital(liste_joueuses[i], PROBA_PAR_CAPITAL); // Réinitialisation de la probabilité par capital
         }
         if (tours_restants_invincibilite > 0) {
-            setToursInvincibilite(liste_joueuses[i], tours_restants_invincibilite - 1); // Diminution du nombre de tours restants pour l'invincibilité
+            setToursRestantsInvincibilite(liste_joueuses[i], tours_restants_invincibilite - 1); // Diminution du nombre de tours restants pour l'invincibilité
         }
         if (tours_restants_jouer > 0) {
-            setToursJouer(liste_joueuses[i], tours_restants_jouer - 1); // Diminution du nombre de tours restants pour le bonus de capital
+            setToursRestantsJouer(liste_joueuses[i], tours_restants_jouer - 1); // Diminution du nombre de tours restants pour le bonus de capital
         }
         if (tours_restants_jouer == 0) { // Si le nombre de tours restants pour jouer est égal à 0, c'est au tour de l'autre joueuse
             setTour(liste_joueuses[i], 0);
