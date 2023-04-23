@@ -26,6 +26,8 @@
 #include "cartes.h"
 #include "zones.h"
 #include "structures.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 /* Création de constantes */
 #define CAPITAL_DE_BASE 5
@@ -227,7 +229,7 @@ void setCapital(joueuse j, int capital);
  * @param j : une joueuse 
  * @param p : le personnage à ajouter
  */
-void addMembres(joueuse j, personnage* p);
+void addMembres(joueuse j, personnage p);
 
 /**
  * @brief supprime un personnage des membres de la joueuse
