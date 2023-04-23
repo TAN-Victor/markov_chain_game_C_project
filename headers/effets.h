@@ -12,11 +12,11 @@
 /**
  * @brief Execute le pouvoir de la carte en fonction du nom de la carte
  * @param jou Pour savoir sur quelles joueuses et monstres intéragir
- * @param list_zones la liste des zones
+ * @param liste_zones la liste des zones
  * @param nom_carte le nom de la carte pour savoir quel pouvoir executer
  * @return rien
  */
-void wrapper_pouvoir_carte(joueuse* list_joueuses, zones list_zones, char* nom_carte);
+void wrapper_pouvoir_carte(joueuse* liste_joueuses, zones liste_zones, char* nom_carte);
 
 /**
  * @brief Execute le pouvoir de la carte Massinissa Merabet
@@ -29,20 +29,20 @@ void pouvoir_carte_Merabet(joueuse jou);
 /**
  * @brief Execute le pouvoir de la carte Fetia Bannour
  * Choisissez deux zones, les personnages présents sur ces deux zones sont échangés
- * @param z1,z2 Pour savoir sur quelle zone échanger les personnages
- * @param list_joueuses La liste de tout les joueurs afin de savoir la zone courante de chacun des personnages de chaque joueur
+ * @param zones la liste des zones
+ * @param liste_joueuses La liste de tout les joueurs afin de savoir la zone courante de chacun des personnages de chaque joueur
  * @return rien
  */
-void pouvoir_carte_Bannour(zone z1,zone z2,joueuse* list_joueuses);
+void pouvoir_carte_Bannour(zones liste_zones,joueuse* liste_joueuses);
 
 /**
  * @brief Execute le pouvoir de la carte  Valentin Honoré
  * Chaque montre se déplace 3 fois. Chaque membre d'école qu'un monstre rencontre est mangé
- * @param list_joueuses_dont_monstres La liste de tout les joueurs et monstres afin de savoir la zone courante de chacun des personnages de chaque joueur
- * @param list_zones la liste des zones
+ * @param liste_joueuses_dont_monstres La liste de tout les joueurs et monstres afin de savoir la zone courante de chacun des personnages de chaque joueur
+ * @param liste_zones la liste des zones
  * @return rien
  */
-void pouvoir_carte_Honore(joueuse* list_joueuses_dont_monstres, zones list_zones);
+void pouvoir_carte_Honore(joueuse* liste_joueuses_dont_monstres, zones liste_zones);
 
 /**
  * @brief Execute le pouvoir de la carte Renaud Rioboo
@@ -59,10 +59,10 @@ void pouvoir_carte_Rioboo(joueuse adverse, zones zo);
  * @brief Execute le pouvoir de la carte Kevin Goilard
  * Lors du prochain tour et du suivant, c'est vous qui jouez. Lors des deux 
  * tours suivant, c'est la joueuse adverse qui joue.
-* @param list_joueuses permet d'avoir l'ensemble des 2 joueuses
+* @param liste_joueuses permet d'avoir l'ensemble des 2 joueuses
  * @return rien
  */
-void pouvoir_carte_Goilard(joueuse* list_joueuses);
+void pouvoir_carte_Goilard(joueuse* liste_joueuses);
 
 
 /**
@@ -71,26 +71,27 @@ void pouvoir_carte_Goilard(joueuse* list_joueuses);
  * ils se déplacent de nouveau. Si ces deux membres sont sur la zone du monstre avant le second déplacement,
  * ils ne sont pas mangés. On recommence l'opération au plus 100 fois, jusqu'à ce que les membres des écoles 
  * adverses soient sur des zones distinctes.
- * @param list_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
+ * @param liste_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
  * @return rien
 */
-void pouvoir_carte_Bourard(joueuse* list_joueuses);
+void pouvoir_carte_Bourard(joueuse* liste_joueuses);
 
 /**
  * @brief Execute le pouvoir de la carte Denisse Munante
  * Les membres d'écoles présents sur la zone où était un monstre avant son dernier déplacement sont mangés.
- * @param list_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
+ * @param liste_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
  * @return rien
 */
-void pouvoir_carte_Munante(joueuse* list_joueuses);
+void pouvoir_carte_Munante(joueuse* liste_joueuses);
 
 /**
  * @brief Execute le pouvoir de la carte Cyril Benezet
  * Déplacez un des monstres sur la zone de votre choix. Si un membre d'école se trouve sur la zone du monstre, il n'est pas mangé.
  * @param monstres permet d'avoir l'ensemble des monstres
+ * @param liste_zones permet d'avoir l'ensemble des zones
  * @return rien
 */
-void pouvoir_carte_Benezet(joueuse monstres);
+void pouvoir_carte_Benezet(joueuse monstres, zones liste_zones);
 
 /**
  * @brief Execute le pouvoir de la carte Anne-Laure Ligozat
@@ -103,10 +104,10 @@ void pouvoir_carte_Ligozat(joueuse jou);
 /**
  * @brief Execute le pouvoir de la carte Christophe Mouilleron
  * Choisissez un membre de l'école de la joueuse adverse. Ce membre devient un membre de votre école.
- * @param list_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
+ * @param liste_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
  * @return rien
 */
-void pouvoir_carte_Mouilleron(joueuse* list_joueuses);
+void pouvoir_carte_Mouilleron(joueuse* liste_joueuses);
 
 /**
  * @brief Execute le pouvoir de la carte Djibril-Aurelien Dembele-Cabot
@@ -141,20 +142,19 @@ void pouvoir_carte_Huet(zones zo);
 /**
  * @brief Execute le pouvoir de la carte Christine Matias
  * Chaque monstre disparaît pendant 2 tours. Il réapparaîtra sur la zone d'où il est parti.
- * @param list_monstres permet d'avoir l'ensemble des monstres
+ * @param liste_monstres permet d'avoir l'ensemble des monstres
  * @return rien
  */
-void pouvoir_carte_Matias(joueuse list_monstres);
+void pouvoir_carte_Matias(joueuse liste_monstres);
 
 /**
  * @brief Execute le pouvoir de la carte Katrin Salhab
  * Pendant vos 3 prochains tours, un point de capital permet de déplacer une quantité 
  * 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ou 1 de probabilité.
  * @param jou permet d'avoir la joueuse
- * @param zo permet d'avoir l'ensemble des zones
  * @return rien
  */
-void pouvoir_carte_Salhab(joueuse jou, zones zo);
+void pouvoir_carte_Salhab(joueuse jou);
 
 /**
  * @brief Execute le pouvoir de la carte Sergio Pulido-Nino
@@ -177,10 +177,11 @@ void pouvoir_carte_Watel(joueuse jou);
  * @brief Execute le pouvoir de la carte Marie Szafranski
  * Ajoutez un monstre sur la zone 1, un membre de votre école sur la zone 2 et un membre de l'école adverse sur 
  * la zone 3. Si un membre d'école se trouve sur la même zone qu'un monstre, il n'est pas mangé.
- * @param list_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
+ * @param liste_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
+ * @param zo permet d'avoir l'ensemble des zones
  * @return rien
  */
-void pouvoir_carte_Szafranski(joueuse* list_joueuses);
+void pouvoir_carte_Szafranski(joueuse* liste_joueuses, zones zo);
 
 /**
  * @brief Execute le pouvoir de la carte Julien Forest

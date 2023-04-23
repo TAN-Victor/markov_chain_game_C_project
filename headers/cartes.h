@@ -9,6 +9,11 @@
 #define CARTES_H
 
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
 struct carte{
     char* nom;
     char* description;

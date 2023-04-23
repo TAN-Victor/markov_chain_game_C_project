@@ -23,9 +23,7 @@
 #define JOUEUSES_H
 
 #include "personnages.h"
-#include "cartes.h"
-#include "zones.h"
-#include "structures.h"
+
 
 /* Création de constantes */
 #define CAPITAL_DE_BASE 5
@@ -212,7 +210,7 @@ float getProbaParCapital(joueuse j);
  * @param j 
  * @param proba 
  */
-void setProbaProbaParCapital(joueuse j, float proba);
+void setProbaParCapital(joueuse j, float proba);
 
 /**
  * @brief modifie le capital d'une joueuse
@@ -228,7 +226,7 @@ void setCapital(joueuse j, int capital);
  * @param j : une joueuse 
  * @param p : le personnage à ajouter
  */
-void addMembres(joueuse j, personnage* p);
+void addMembres(joueuse j, personnage p);
 
 /**
  * @brief supprime un personnage des membres de la joueuse
@@ -276,7 +274,7 @@ void setToursRestantsBonusCapital(joueuse j, int toursRestants);
  * @param j : une joueuse 
  * @param toursRestants : le nouveau nombre de tours restants sous invinsibilité
  */
-void setToursRestantsInvinsibilite(joueuse j, int toursRestants);
+void setToursRestantsInvincibilite(joueuse j, int toursRestants);
 
 /**
  * @brief modifie le nombre de tours restants pendant lesquels la joueuse peut jouer plusieurs fois par tour
