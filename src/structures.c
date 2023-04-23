@@ -59,7 +59,7 @@ int getTaille(matrice_probas matrice);{
  * 
  * @param taille la nouvelle taille de la matrice
 */
-void setTaille(int taille){
+void setTaille(matrice_probas matrice, int taille){
     matrice->taille = taille;
 }
 

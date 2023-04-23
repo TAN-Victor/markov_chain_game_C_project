@@ -114,7 +114,7 @@ int getTailleMatrice(matrice_probas matrice);
  * 
  * @param taille la nouvelle taille de la matrice
 */
-void setTailleMatrice(int taille);
+void setTailleMatrice(matrice_probas matrice, int taille);
 
 /**
  * @brief création d'une matrice de probas de taille taille
