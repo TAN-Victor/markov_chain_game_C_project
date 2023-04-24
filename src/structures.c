@@ -66,29 +66,29 @@ void setTailleMatrice(matrice_probas matrice, int taille){
 
 
 void ajout_carte(liste_cartes liste, carte carte){
-    liste->nb_cartes++;
-    liste->cartes = realloc(liste->cartes, liste->nb_cartes * sizeof(carte));
-    liste->cartes[liste->nb_cartes - 1] = carte;
+    setNbCartes(lsite,getNbCartes(liste)+1);
+    getCartes(liste) = realloc(getCartes(liste), getNbCartes(liste) * sizeof(carte));
+    getCartes(liste)[getNbCartes(liste) - 1] = carte;
 }
 
 carte lecture_cartes(liste_cartes liste, int index){
-    if (index < liste->nb_cartes){
-        return liste->cartes[index];
+    if (index < getNbCartes(liste)){
+        return getCartes(liste)[index];
     }
     return NULL;
 }
 
 void suppr_cartes(liste_cartes liste, carte carte){
     int index = 0;
-    while (index < liste->nb_cartes && liste->cartes[index] != carte){
+    while (index < getNbCartes(liste) && getCartes(liste)[index] != carte){
         index++;
     }
-    if (index < liste->nb_cartes){
-        liste->nb_cartes--;
-        for (int i = index; i < liste->nb_cartes; i++){
-            liste->cartes[i] = liste->cartes[i + 1];
+    if (index < getNbCartes(liste)){
+        setNbCartes(lsite,getNbCartes(liste)-1);
+        for (int i = index; i < getNbCartes(liste); i++){
+            getCartes(liste)[i] = getCartes(liste)[i + 1];
         }
-        liste->cartes = realloc(liste->cartes, liste->nb_cartes * sizeof(carte));
+        getCartes(liste) = realloc(getCartes(liste), getNbCartes(liste) * sizeof(carte));
     }
 }
 
