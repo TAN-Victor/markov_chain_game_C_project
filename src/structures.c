@@ -63,9 +63,9 @@ void setTailleMatrice(matrice_probas matrice, int taille){
 }
 
 void ajout_carte(liste_cartes liste, carte carte){
-    setNbCartes(lsite,getNbCartes(liste)+1);
-    getCartes(liste) = realloc(getCartes(liste), getNbCartes(liste) * sizeof(carte));
-    getCartes(liste)[getNbCartes(liste) - 1] = carte;
+    setNbCartes(liste,getNbCartes(liste)+1);
+    liste->cartes = realloc(liste->cartes,(liste->nb_cartes)*sizeof(carte));
+    liste->cartes[getNbCartes(liste)] = carte;
 }
 
 carte lecture_cartes(liste_cartes liste, int index){
