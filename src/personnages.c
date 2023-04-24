@@ -181,3 +181,93 @@ void setToursRestantsBonusPas(personnage p, int toursRestantsBonusPas){
     p->tours_restants_bonus_pas = toursRestantsBonusPas;
 }
 
+/**
+ * @brief renvoie un personnages de type:
+            - monstre si n = 0
+            - membre d'école de joueuse 1 si n = 1
+            - membre d'école de jouese 2 si n = 2,
+          le place sur la zone z passée en argument
+          et initialise son statut sur vivant (ie 1)
+ * 
+ * @param n le type de personnage
+ * @param nz le numéro de la zone
+ * @return personnage un pointeur vers le personnage crée 
+ */
+personnage nouveauPersonnage(int n, int id_to_put, int nz){
+    personnage perso=mallloc(sizeof(_personnage));
+    if(n==0){
+        setType(perso,n);
+        setStatut(perso,1);
+        setIdPersonnage(perso,id_to_put);
+        setZoneCourante(perso,nz);
+        setZonePrecedente(perso,NULL);
+        setDeNbPas(perso,1);
+        setToursRestantsBonusPas(perso,0);
+        setPeutSeDeplacer(perso,1);
+        setNbDeTourDisparuRestant(perso,0);
+    }
+    if(n==1){
+        setType(perso,n);
+        setStatut(perso,1);
+        setIdPersonnage(perso,id_to_put);
+        setZoneCourante(perso,nz);
+        setZonePrecedente(perso,NULL);
+        setDeNbPas(perso,1);
+        setToursRestantsBonusPas(perso,0);
+        setPeutSeDeplacer(perso,1);
+        setNbDeTourDisparuRestant(perso,0);
+    }
+    if(n==2){
+        setType(perso,n);
+        setStatut(perso,1);
+        setIdPersonnage(perso,id_to_put);
+        setZoneCourante(perso,nz);
+        setZonePrecedente(perso,NULL);
+        setDeNbPas(perso,1);
+        setToursRestantsBonusPas(perso,0);
+        setPeutSeDeplacer(perso,1);
+        setNbDeTourDisparuRestant(perso,0);
+    }
+    
+}
+
+/**
+ * @brief libère l'espace occupé par la case mémoire pointée par p 
+ * 
+ * @param p un personnage que l'on souhaite libérer 
+ */
+void liberePersonnage(personnage p){
+    free(p);
+}
+
+/**
+ * @brief déplace le personnage sur la zone z
+ * 
+ * @param p est un personnage qui se déplace
+ * @param z est la zone d'arrivée
+ */
+void deplacer(personnage p, zone z){
+    setZonePrecedente(p,getZoneCourante(p));
+    setZoneCourante(p,getNumero(z));
+}
+
+/**
+ * @brief renvoie le numéro de la zone dans laquelle se trouve le personnage
+ * 
+ * @param p un personnage dont on souhaite obtenir la zone
+ * @return le numéro de la zone du personnage, -1 en cas d'erreur
+ */
+int zonePersonnage(personnage p){
+    return getNumero(getZoneCourante(p));
+}
+
+/**
+ * @brief met à jour le statut du personnage p
+ * 
+ * @param p le personnage qui a été mangé
+ */
+void estMange(personnage p){
+   setStatut(p,0);
+   setPeutSeDeplacer(p,0); // J'ai fais l'hypothèse que quand tu es mort -> tu te déplaces pas
+}
+
