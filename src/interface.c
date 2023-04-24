@@ -52,6 +52,9 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         if (getToursRestantsJouer(j1) > 1) {
             printf("Vous pouvez jouer %d tour(s)\n", getToursRestantsJouer(j1));
         }
+        if (getBonusTemporaire(j1) != NULL) {
+            printf("Vous avez un bonus temporaire: %d\n", getBonusTemporaire(j1));
+        }
         printf("---------------------------------------------------\n");
 
         //printf("↓ Appuyez sur la flèche du bas pour afficher les zones ↓\n");
@@ -117,7 +120,7 @@ carte demander_carte(joueuse j1) {
     int taille_main_cartes = getNbCartes(getMain(j1));
     printf("Vous avez les cartes suivantes: \n");
     for (int i = 0; i < taille_main_cartes; i += 1) {
-        printf("%s  ", getNom(lecture_cartes(getMain(j1), i)));
+        printf("%d] %s\n", i+1, getNom(lecture_cartes(getMain(j1), i)));
     }
     printf("\n Quelle carte voulez-vous utiliser ?\n");
     scanf("%d", &choix);
