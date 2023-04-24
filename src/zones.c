@@ -19,7 +19,72 @@ void modifierZone(zones z, int n1, int n2, float proba, int action) {
     }
 }
 
+/**
+ * @brief initialise nb_zones à 10 et créer les zones du jeu 
+ * 
+ * @return renvoie un pointeur vers l'ensemble des zones du jeu 
+ */
+zones nouvellesZones(){
+    zones zos=(zones)malloc(sizeof(zones));
+    zos->tab_zones=(zone*)malloc(NB_DE_ZONES*sizeof(_zone));
+    zos->matrice=(matrice_probas)malloc(sizeof(matrice_probas));
+    for(int i=0;i<NB_DE_ZONES;i++){
+        addZone(zos);
+    }
+}
 
+/**
+ * @brief libère toutes les zones du jeu
+ * 
+ * @param pz une adresse vers un ensemble de zones valide
+ */
+void libereZones(zones pz){
+    free(pz->tab_zones);
+    free(pz->matrice);
+    free(pz);
+}
+
+/**
+ * @brief renvoie un pointeur vers la zone dont le numéro est n
+ * 
+ * @param n numéro de la zone compris entre 0 et nb_zones-1
+ * @return zone la zone numéro n
+ */
+zone trouveZone(zones z, int n){
+    if(n<0 || n>9){
+        fprintf(stderr," trouveZone : n<0 ou n>9, en effet, n=%d",n);
+        exit(n);
+    }
+    if(getTailleMatrice(z->matrice)==11 && (n<0 || n>10)){
+        fprintf(stderr," trouveZone : n<0 ou n>10, en effet, n=%d",n);
+        exit(n);
+    }
+    for(int i=0;i<getTailleMatrice(z->matrice);i++) { // Ici j'ai pris en compte la taille de la matrice car c'est elle qui change si on ajoute une 11ième zone
+        if(getNumero(getTabZones(z)[i]))==n){
+            return getTabZones(z)[i];
+        }
+    }
+    fprintf(stderr," trouveZone : aucune zone trouver pour n=%d",n);
+    exit(n);
+}
+
+/**
+ * @brief renvoie le numéro de la prochaine zone
+ * 
+ * @param nz numéro de la zone actuelle compris entre 
+ * @return le numéro de la prochaine zone, -1 en cas d'erreur 
+ */
+int prochaineZone(zones z, int nz){
+    if(nz<0 || nz>8){
+        fprintf(stderr," prochaineZone : nz<0 ou nz>8, en effet, nz=%d",nz);
+        return -1;
+    }
+    if(getTailleMatrice(z->matrice)==11 && (nz<0 || nz>9)){
+        fprintf(stderr," prochaineZone : nz<0 ou nz>10, en effet, nz=%d",nz);
+        return -1;
+    }
+    return getNumero(getTabZones(zo)[nz+1]);   
+}
 
 /**
  * @brief renvoie le numéro de la zone z
@@ -117,6 +182,7 @@ void addZone(zones z) {
     /* on met à jour la nouvelle zone */
     zone new_zone = malloc(sizeof(zone));
     setNumero(new_zone, new_taille);
+    setEstAutorise(new_zone,0);
 
     /* on met à jour le tableau de zones */
     z->tab_zones = realloc(z->tab_zones, new_taille * sizeof(zone));
