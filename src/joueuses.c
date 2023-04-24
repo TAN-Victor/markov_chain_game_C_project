@@ -324,8 +324,8 @@ joueuse creation_joueuse(int n){
             }
             carte carte_to_delete=getCartes(liste_cartes_global)[index];
             ajout_carte(getMain(jou),getCartes(liste_cartes_global)[index]);
-            supprimer_carte_global(liste_cartes_global,carte_to_delete);
-    }
+            supprimer_carte_global(carte_to_delete);
+        }
  
     }
     else if(n==0){
@@ -360,7 +360,11 @@ joueuse creation_joueuse(int n){
             int index = (random % range);
             if(index==range){
                 index-=1;
-            }       
+            }
+            carte carte_to_delete=getCartes(liste_cartes_global)[index];
+            ajout_carte(getMain(jou),getCartes(liste_cartes_global)[index]);
+            supprimer_carte_global(carte_to_delete);
+        }
         setToursRestantsBonusCapital(jou,1);
         setToursRestantsInvincibilite(jou,0);
         setToursRestantsJouer(jou,1);
