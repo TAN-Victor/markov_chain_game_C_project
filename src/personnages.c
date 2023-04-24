@@ -233,7 +233,7 @@ personnage nouveauPersonnage(int n, int id_to_put, int nz){
 
 /**
  * @brief libère l'espace occupé par la case mémoire pointée par p 
- * 
+ * @
  * @param p un personnage que l'on souhaite libérer 
  */
 void liberePersonnage(personnage p){
