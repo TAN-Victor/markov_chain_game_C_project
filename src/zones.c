@@ -26,11 +26,12 @@ void modifierZone(zones z, int n1, int n2, float proba, int action) {
  */
 zones nouvellesZones(){
     zones zos=(zones)malloc(sizeof(zones));
-    zos->tab_zones=(zone*)malloc(NB_DE_ZONES*sizeof(_zone));
+    zos->tab_zones=(zone*)malloc(NB_DE_ZONES*sizeof(struct _zone));
     zos->matrice=(matrice_probas)malloc(sizeof(matrice_probas));
     for(int i=0;i<NB_DE_ZONES;i++){
         addZone(zos);
     }
+    return zos;
 }
 
 /**
@@ -60,7 +61,7 @@ zone trouveZone(zones z, int n){
         exit(n);
     }
     for(int i=0;i<getTailleMatrice(z->matrice);i++) { // Ici j'ai pris en compte la taille de la matrice car c'est elle qui change si on ajoute une 11ième zone
-        if(getNumero(getTabZones(z)[i]))==n){
+        if(getNumero(getTabZones(z)[i])==n){
             return getTabZones(z)[i];
         }
     }
@@ -83,7 +84,7 @@ int prochaineZone(zones z, int nz){
         fprintf(stderr," prochaineZone : nz<0 ou nz>10, en effet, nz=%d",nz);
         return -1;
     }
-    return getNumero(getTabZones(zo)[nz+1]);   
+    return getNumero(getTabZones(z)[nz+1]);   
 }
 
 /**
