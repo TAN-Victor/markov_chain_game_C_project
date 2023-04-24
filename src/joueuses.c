@@ -296,7 +296,17 @@ joueuse creation_joueuse(int n){
     joueuse jou=malloc(sizeof(struct joueuse));
     setCapital(jou,CAPITAL_DE_BASE);
     jou->membres=malloc(7*sizeof(struct _personnage));
-    // En cours de développement pour l'implémentation des cartes : Besoin d'avoir une liste de carte global en paramètre ou mettre la liste de carte en paramètre
+    for(int i=0;i<NB_CARTES_MAIN_JOUEUSE;i++){
+        int range = getNbCartes(liste_cartes_global);
+        int random = rand();
+        int index = (random % range);
+        if(index==range){
+            index-=1;
+        }
+        carte carte_to_delete=getCartes(liste_cartes_global)[index];
+        ajout_carte(getMain(jou),getCartes(liste_cartes_global)[index]);
+        supprimer_carte_global(liste_cartes_global,carte_to_delete);
+    }
     setIdJoueuse(jou,n);
     if(n==1){
         setTour(jou,1);
@@ -413,7 +423,8 @@ void utilise_carte(joueuse pj, carte c){
          }
      }
      if(exist_carte==1){
-         // Wrapper en cours de dev
+         // faire des scanf en fonction de la carte car les paramètres ne sont pas les mêmes en fonction
+         suppr_cartes(getMain(pj),c);
      }
      else{
          printf("La carte utilisé n'est pas dans votre main joueuse %d",getIdJoueuse(pj));
