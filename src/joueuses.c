@@ -493,7 +493,7 @@ void utilise_carte(joueuse* liste_joueuses, zones liste_zones, carte c){
     }
     if(exist_carte==1){
         wrapper_pouvoir_carte(liste_joueuses,liste_zones,getNom(c));
-        suppr_cartes(getMain(pj),c);
+        suppr_cartes(liste_joueuses[0],c);
     }
     else{
          printf("La carte utilisé n'est pas dans votre main, joueuse %d",getIdJoueuse(pj));
