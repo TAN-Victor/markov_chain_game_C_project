@@ -172,6 +172,15 @@ int main() {
             setTour(liste_joueuses[i], 0);
             setTour(liste_joueuses[(i+1)%2], 1);
         }
+        for (int j = 0; j < getTaille(liste_joueuses[i]); i += 1) {
+            if (getStatut(getMembres(liste_joueuses[i])[j]) == 3) {
+                setPeutSeDeplacer(getMembres(liste_joueuses[i])[j], (getPeutSeDeplacer(getMembres(liste_joueuses[i])[j]) + 1)%2); // Inversion de la possibilité de jouer du FIPA
+            }
+            if (getStatut(getMembres(liste_joueuses[i])[j]) == 1 && getPeutSeDeplacer(getMembres(liste_joueuses[i])[j]) == 0) {
+                setPeutSeDeplacer(getMembres(liste_joueuses[i])[j], 1); // Réinitialisation de la possibilité de jouer du personnage
+            }
+        }
+
         message_generique(8, NULL, NULL, NULL);            
 
     } while(!tous_manges(liste_joueuses[0]) || !tous_manges(liste_joueuses[1]));
