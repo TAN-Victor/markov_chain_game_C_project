@@ -30,10 +30,12 @@ typedef struct carte* carte;
  */
 
  /**
- * \brief Créer une carte vide
- * \return Retourne une carte vide
+ * \brief Créer une carte
+ * \param nom_to_put le nom de la carte à créer
+ * \param description_to_put La description de la carte à créer
+ * \return Retourne une carte personnalisé
 */
-carte creer_carte();
+carte creer_carte(char* nom_to_put,char* description_to_put);
 
 /**
  * @brief renvoie le nom d'une carte

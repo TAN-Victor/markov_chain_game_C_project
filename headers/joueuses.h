@@ -23,6 +23,7 @@
 #define JOUEUSES_H
 
 #include "personnages.h"
+#include "structures.h" // Afin de pouvoir intéragir avec la liste_cartes_global
 
 
 /* Création de constantes */
