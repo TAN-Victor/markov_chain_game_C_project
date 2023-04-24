@@ -72,9 +72,10 @@ void pouvoir_carte_Goilard(joueuse* liste_joueuses);
  * ils ne sont pas mangés. On recommence l'opération au plus 100 fois, jusqu'à ce que les membres des écoles 
  * adverses soient sur des zones distinctes.
  * @param liste_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
+ * @param liste_zones
  * @return rien
 */
-void pouvoir_carte_Bourard(joueuse* liste_joueuses);
+void pouvoir_carte_Bourard(joueuse* liste_joueuses, zones liste_zones);
 
 /**
  * @brief Execute le pouvoir de la carte Denisse Munante
