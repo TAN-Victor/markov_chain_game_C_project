@@ -7,12 +7,6 @@
  * 
  */
 
-#include "../headers/cartes.h"
-#include "../headers/structures.h"
-#include "../headers/zones.h"
-#include "../headers/personnages.h"
-#include "../headers/joueuses.h"
-#include "../headers/interface.h"
 #include "../headers/effets.h"
 
 
