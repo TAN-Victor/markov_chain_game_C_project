@@ -238,7 +238,7 @@ void setBonusTemporaire(joueuse j, int bonus){
  */
 void addMembres(joueuse j, personnage p){
     j->membres = realloc(j->membres, (j->taille+1)*sizeof(personnage*));
-    setTaille(j,getTaille(pj)+1);
+    setTaille(j,getTaille(j)+1);
     j->membres[j->taille-1] = p;
 }
 
