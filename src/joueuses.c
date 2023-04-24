@@ -496,7 +496,7 @@ void utilise_carte(joueuse* liste_joueuses, zones liste_zones, carte c){
         suppr_cartes(liste_joueuses[0],c);
     }
     else{
-         printf("La carte utilisé n'est pas dans votre main, joueuse %d",getIdJoueuse(pj));
+         printf("La carte utilisé n'est pas dans votre main, joueuse %d",getIdJoueuse(liste_joueuses[0]));
     }
 }
 
