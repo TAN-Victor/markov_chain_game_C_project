@@ -185,19 +185,19 @@ void pouvoir_carte_Goilard(joueuse* liste_joueuses) {
 }
 
 
-/**
- * @brief Execute le pouvoir de la carte Laurence Bourard
- * Lors du prochain déplacement, si deux membres d'écoles adverses se retrouvent sur la même zone,
- * ils se déplacent de nouveau. Si ces deux membres sont sur la zone du monstre avant le second déplacement,
- * ils ne sont pas mangés. On recommence l'opération au plus 100 fois, jusqu'à ce que les membres des écoles 
- * adverses soient sur des zones distinctes.
- * @param liste_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
- * @return rien
-*/
-void pouvoir_carte_Bourard(joueuse* liste_joueuses) {
-    //TODO: Simule un déplacement de monstre et les déplacements des joueuses 
-    // TODO: Retire les tours des joueuses
-}
+// /**
+//  * @brief Execute le pouvoir de la carte Laurence Bourard
+//  * Lors du prochain déplacement, si deux membres d'écoles adverses se retrouvent sur la même zone,
+//  * ils se déplacent de nouveau. Si ces deux membres sont sur la zone du monstre avant le second déplacement,
+//  * ils ne sont pas mangés. On recommence l'opération au plus 100 fois, jusqu'à ce que les membres des écoles 
+//  * adverses soient sur des zones distinctes.
+//  * @param liste_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
+//  * @return rien
+// */
+// void pouvoir_carte_Bourard(joueuse* liste_joueuses) {
+//     //TODO: Simule un déplacement de monstre et les déplacements des joueuses 
+//     // TODO: Retire les tours des joueuses
+// }
 
 /**
  * @brief Execute le pouvoir de la carte Denisse Munante
@@ -318,18 +318,18 @@ void pouvoir_carte_Matias(joueuse liste_monstres) {
     }
 }
 
-/**
- * @brief Execute le pouvoir de la carte Katrin Salhab
- * Pendant vos 3 prochains tours, un point de capital permet de déplacer une quantité 
- * 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ou 1 de probabilité.
- * @param jou permet d'avoir la joueuse
- * @return rien
- */
-void pouvoir_carte_Salhab(joueuse jou) {
-    int proba_par_capital = getProbaParCapital(jou);
-    setProbaParCapital(jou, proba_par_capital);
-    setToursRestantsBonusProbaParCapital(jou, 4); // 4 car 1 tour sera perdu après l'utilisation de cette carte
-}
+// /**
+//  * @brief Execute le pouvoir de la carte Katrin Salhab
+//  * Pendant vos 3 prochains tours, un point de capital permet de déplacer une quantité 
+//  * 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ou 1 de probabilité.
+//  * @param jou permet d'avoir la joueuse
+//  * @return rien
+//  */
+// void pouvoir_carte_Salhab(joueuse jou) {
+//     int proba_par_capital = getProbaParCapital(jou);
+//     setProbaParCapital(jou, proba_par_capital);
+//     setToursRestantsBonusProbaParCapital(jou, 4); // 4 car 1 tour sera perdu après l'utilisation de cette carte
+// }
 
 /**
  * @brief Execute le pouvoir de la carte Sergio Pulido-Nino
