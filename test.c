@@ -458,8 +458,8 @@ void test_vie_d_un_personnage(){
 */
 void test_modif_proba_avec_capital(){
     zones zs = nouvellesZones();
-    joueuse j = creation_joueuse(1);
-    float coeff = getProbaParCapital(j);
+    joueuse j1 = creation_joueuse(1);
+    float coeff = getProbaParCapital(j1);
     for (int i=0; i<10; i++){ //on test si la modif
         float sum = 0;
         for (int j=0; j<10; j++){
@@ -467,7 +467,7 @@ void test_modif_proba_avec_capital(){
             modifierZone(zs,i,j,3,1);
             if (3*coeff + prob > 1 || 3*coeff + prob != lecture_probas(getMatrice(zs),i,j)){
                 fprintf(stderr,"probleme de modification de la proba avec le capital\n");
-                free_joueuse(j);
+                free_joueuse(j1);
                 libereZones(zs);
                 return;
             }
@@ -475,12 +475,12 @@ void test_modif_proba_avec_capital(){
         }
         if (sum != 1){
             fprintf(stderr,"probleme de somme des probas\n");
-            free_joueuse(j);
+            free_joueuse(j1);
             libereZones(zs);
             return;
         }
     }
-    free_joueuse(j);
+    free_joueuse(j1);
     libereZones(zs);
     fprintf(stdout,"test modif proba avec capital ok\n");
 }
@@ -510,7 +510,7 @@ void test_deroulement_du_jeu(){
     }
     free_joueuse(j1);
     personnage* persos2 = getMembres(j2);
-    joueuse j1 = creation_joueuse(1);
+    joueuse j1_ = creation_joueuse(1);
     while (persos2[i] != NULL){
         estMange(persos1[i]);
         i++;
@@ -518,10 +518,10 @@ void test_deroulement_du_jeu(){
     if (!tous_manges(j2)){
         fprintf(stderr,"probleme en fin de partie, le joeur 1 ne peut pas gagner\n");
         free_joueuse(j2);
-        free_joueuse(j1);
+        free_joueuse(j1_);
         return;
     }
-    free_joueuse(j1);
+    free_joueuse(j1_);
     free_joueuse(j2);
 }
 
