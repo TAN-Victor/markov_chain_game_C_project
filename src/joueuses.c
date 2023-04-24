@@ -475,13 +475,14 @@ void utilise_capital(joueuse pj, int capital){
 
 /**
  * @brief la carte c est retirer de la main du joueur et on applique les effets de la carte (il faut aussi s'assurer que le joueur possède la carte)
- * @param pj pointeur vers une joueuse
+ * @param liste_joueuses liste des joueuses dont monstres
+ * @param liste_zones liste des zones du jeu
  * @param c la carte que la joueuse souhaite jouer
 */
 void utilise_carte(joueuse* liste_joueuses, zones liste_zones, carte c){
     int exist_carte=0;
-    for(int i=0;i<getNbCartes(getMain(pj));i++){
-        if(lecture_cartes(getMain(pj),i)==c){
+    for(int i=0;i<getNbCartes(getMain(liste_joueuses[0]));i++){
+        if(lecture_cartes(getMain(liste_joueuses[0]),i)==c){
             exist_carte=1;
             break;
         }
