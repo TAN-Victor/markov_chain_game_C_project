@@ -10,11 +10,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "headers/joueuses.h"
-#include "headers/zones.h"
-#include "headers/personnages.h"
-#include "headers/cartes.h"
-#include "headers/structures.h"
+#include "./headers/joueuses.h"
+#include "./headers/zones.h"
+#include "./headers/personnages.h"
+#include "./headers/cartes.h"
+#include "./headers/structures.h"
 
 
 /**
