@@ -559,6 +559,39 @@ void test_demarage_du_jeu(){
         free_joueuse(m);
         free_joueuse(j2);
         free_joueuse(j1);
+        fprintf(stderr,"erreur: il y a plus d'un monstre\n");
+        return;
+    }
+    if (getZone(getMembres(m)[0])!=1){
+        free_joueuse(m);
+        free_joueuse(j2);
+        free_joueuse(j1);
+        fprintf(stderr,"erreur: le monstre n'est pas dans la zone 1\n");
+        return;
+    }
+    free_joueuse(m);
+    if (getTaille(j1)!=5){
+        free_joueuse(j2);
+        free_joueuse(j1);
+        fprintf(stderr,"erreur: il n'y a pas assez de joueuses\n")
+        return;
+    }
+    if (getTaille(j2)!=5){
+        free_joueuse(j2);
+        free_joueuse(j1);
+        fprintf(stderr,"erreur: il n'y a pas assez de joueuses\n")
+        return;
+    }
+    if (getZone(getMembres(j1)[0])!=2 || getZone(j1)!=3){
+        free_joueuse(j2);
+        free_joueuse(j1);
+        fprintf(stderr,"erreur: la joueuse 1 n'est pas dans la zone 2 ou 3\n")
+        return;
+    }
+    if (getZone(getMembres(j2)[0])!=4 || getZone(j2)!=5){
+        free_joueuse(j2);
+        free_joueuse(j1);
+        fprintf(stderr,"erreur: la joueuse 2 n'est pas dans la zone 4 ou 5\n")
         return;
     }
 }
