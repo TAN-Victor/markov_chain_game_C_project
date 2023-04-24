@@ -23,7 +23,7 @@
 struct _personnage {
     int type; /* 0 pour monstre et 1 ou 2 pour membre d'école*/
     int statut; /* 0 si mort, 1 si en vie, -1 si disparu, 3 si FISA */
-    int id; /* entier compris entre 1 et 5 pour les membres d'école, permettant de les identifier plus facilement */ 
+    int id; /* entier compris entre 1 et 5 pour les membres d'école, permettant de les identifier plus facilement, 0 si c'est un monstre
     int zone_courante; /* numéro de la zone courante du personnage*/
     int zone_precedente; /* numéro de la zone précédente */
     int nb_de_pas; /* nombre de pas par tour, initialisé à 1 */
@@ -42,10 +42,11 @@ typedef struct _personnage* personnage;
           et initialise son statut sur vivant (ie 1)
  * 
  * @param n le type de personnage
- * @param z le numéro de la zone
+ * @param id_to_put l'id à mettre qui sera généré aléatoirement, vaut 0 si le personnage est un monstre
+ * @param nz le numéro de la zone
  * @return personnage un pointeur vers le personnage crée 
  */
-personnage nouveauPersonnage(int n, zone z);
+personnage nouveauPersonnage(int n,int id_to_put,int nz);
 
 /**
  * @brief libère l'espace occupé par la case mémoire pointée par p 
