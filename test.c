@@ -405,7 +405,6 @@ void test_modif_proba_avec_capital(){
 */
 void test_deroulement_du_jeu(){
     joueuse j1 = creation_joueuse(1);
-    zones zs = nouvellesZones();
     personnage* persos1 = getMembres(j1);
     int i = 0;
     while (persos1[i] != NULL){
@@ -420,7 +419,7 @@ void test_deroulement_du_jeu(){
 
 
 void test_affichage(){
-
+    
 }
 
 int main(){
