@@ -96,7 +96,7 @@ void ajouter_carte_global(carte c);
  * 
  * @param le nom de la carte à supprimer 
 */
-void supprimer_carte_global(char nom);
+void supprimer_carte_global(carte c);
 
 /**
  * @brief Libère la mémoire de liste_cartes_global
