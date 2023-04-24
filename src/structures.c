@@ -9,8 +9,7 @@
  * 
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+
 #include "../headers/structures.h"
 
 /* Getter et Setters */
