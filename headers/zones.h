@@ -11,8 +11,7 @@
 #define ZONE_H
 
 #include "structures.h"
-#include <stdio.h>
-#include <stdlib.h>
+
 
 
 struct _zone{
