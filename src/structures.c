@@ -72,6 +72,7 @@ carte lecture_cartes(liste_cartes liste, int index){
     if (index < getNbCartes(liste)){
         return getCartes(liste)[index];
     }
+    fprintf(stderr,"index out of range");
     return NULL;
 }
 
@@ -80,12 +81,12 @@ void suppr_cartes(liste_cartes liste, carte carte){
     while (index < getNbCartes(liste) && getCartes(liste)[index] != carte){
         index++;
     }
-    if (index < getNbCartes(liste)){
-        setNbCartes(lsite,getNbCartes(liste)-1);
-        for (int i = index; i < getNbCartes(liste); i++){
-            getCartes(liste)[i] = getCartes(liste)[i + 1];
+    if (index < getNbCartes(liste)){ //si on vérifie cette condition c'est que on a trouvé une carte dans la lsite qui corespond à celle passée en argument
+        setNbCartes(liste,getNbCartes(liste)-1);
+        for (int i = index; i < getNbCartes(liste); i++){//on parcours la liste à partir de l'indice de la carte à supprimer
+            liste->cartes[i] = getCartes(liste)[i + 1];
         }
-        getCartes(liste) = realloc(getCartes(liste), getNbCartes(liste) * sizeof(carte));
+        liste->cartes = realloc(getCartes(liste), getNbCartes(liste) * sizeof(carte));
     }
 }
 
