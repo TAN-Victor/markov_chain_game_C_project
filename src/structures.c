@@ -84,7 +84,7 @@ void suppr_cartes(liste_cartes liste, carte carte){
         index++;
     }
     if (index < getNbCartes(liste)){
-        getNbCartes(liste)--;
+        setNbCartes(lsite,getNbCartes(liste)-1);
         for (int i = index; i < getNbCartes(liste); i++){
             getCartes(liste)[i] = getCartes(liste)[i + 1];
         }
