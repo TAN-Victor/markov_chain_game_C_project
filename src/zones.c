@@ -40,8 +40,11 @@ zones nouvellesZones(){
  * @param pz une adresse vers un ensemble de zones valide
  */
 void libereZones(zones pz){
+    for(int i=0;i<getTailleMatrice(z->matrice);i++){ // j'ai pris en compte le taille de la matrice car c'est elle qui me permet de savoir si il y a 10 ou 11 zones
+        free(pz->tab_zones[i]);
+    }
     free(pz->tab_zones);
-    free(pz->matrice);
+    suppression_matrice(pz->matrice);
     free(pz);
 }
 

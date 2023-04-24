@@ -374,6 +374,13 @@ joueuse creation_joueuse(int n){
  * @param pj pointeur vers la case mémoire occupée par la joueuse que l'on souhaite libérer
 */
 void free_joueuse(joueuse pj){
+    for(int i=0;i<getTaille(pj);i++){
+        free(pj->membres[i]);
+    }
+    for(int i=0;i<getNbCartes(getMain(pj));i++){
+        free(pj->main_du_joueur->cartes[i]);
+    }
+    free(pj->main_du_joueur);
     free(pj->membres);
     free(pj);
 }
@@ -422,6 +429,15 @@ int nb_membre_ecole(joueuse pj){
 */
 int tous_manges(joueuse pj){
     if(getTaille(pj)==0){
+        return 1;
+    }
+    int manges=0;
+    for(int i=0;i<getTaille(pj);i++){
+        if(getStatut(getMembres(pj)[i])==0){
+            manges+=1;
+        }
+    }
+    if(manges==getTaille(pj)){
         return 1;
     }
     else if(getTaille(pj)<0){

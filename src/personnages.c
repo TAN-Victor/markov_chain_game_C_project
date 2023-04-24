@@ -268,6 +268,6 @@ int zonePersonnage(personnage p){
  */
 void estMange(personnage p){
    setStatut(p,0);
-   setPeutSeDeplacer(p,0); // J'ai fais l'hypothèse que quand tu es mort -> tu te déplaces pas
+   setPeutSeDeplacer(p,0);
 }
 
