@@ -274,7 +274,7 @@ void setToursRestantsBonusCapital(joueuse j, int toursRestants);
  * @param j : une joueuse 
  * @return int : le nombre restant de tours sous invinsibilité
  */
-void getToursRestantsInvincibilite(joueuse j);
+int getToursRestantsInvincibilite(joueuse j);
 
 /**
  * @brief modifie la valeur du nombre restant de tours sous invinsibilité
