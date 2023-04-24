@@ -74,7 +74,7 @@ void wrapper_pouvoir_carte(joueuse* liste_joueuses, zones liste_zones, char* nom
     else if (strcmp(nom_carte, "Julien Forest") == 0) {
         pouvoir_carte_Forest(liste_zones, liste_joueuses[2]);
     }
-    else if (strcmp(nom_carte, "Laurent Prevel") == 0) {
+    else if (strcmp(nom_carte, "Laurent Prével") == 0) {
         pouvoir_carte_Prevel(liste_joueuses[0]);
     }
 }
