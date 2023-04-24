@@ -196,7 +196,7 @@ int getToursRestantsInvincibilite(joueuse j){
  * @param j : une joueuse 
  * @param toursRestants : le nouveau nombre de tours restants sous invinsibilité
  */
-void setToursRestantsInvinsibilite(joueuse j, int toursRestants){
+void setToursRestantsInvincibilite(joueuse j, int toursRestants){
     j->tours_restants_invincibilite = toursRestants;
 }
 
@@ -306,7 +306,7 @@ joueuse creation_joueuse(int n){
     }
     setTaille(jou,NB_MEMBRES_JOUEUSE);
     setToursRestantsBonusCapital(jou,1);
-    setToursRestantsInvinsibilite(jou,0);
+    setToursRestantsInvincibilite(jou,0);
     setToursRestantsJouer(jou,1);
     setProbaParCapital(jou,0.1);
     return jou;
