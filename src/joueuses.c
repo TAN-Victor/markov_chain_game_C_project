@@ -214,7 +214,7 @@ void setToursRestantsJouer(joueuse j, int toursRestants){
  * @brief renvoie le le bonus_temporaire
  * 
  * @param j 
- * @return int : le bonus_temporaire 1 ou 0
+ * @return int : la valeur du bonus pendant ce tour
  */
 int getBonusTemporaire(joueuse j){
     return j->bonus_temporaire;
@@ -224,7 +224,7 @@ int getBonusTemporaire(joueuse j){
  * @brief modifie le bonus_temporaire
  * 
  * @param j 
- * @param bonus : le nouveau bonus_capital, 1 ou 0
+ * @param bonus : le nouveau bonus_capital, doit être positif
  */
 void setBonusTemporaire(joueuse j, int bonus){
     j->bonus_temporaire = bonus;
@@ -238,7 +238,8 @@ void setBonusTemporaire(joueuse j, int bonus){
  */
 void addMembres(joueuse j, personnage p){
     j->membres = realloc(j->membres, (j->taille+1)*sizeof(personnage*));
-    j->membres[j->taille] = p;
+    setTaille(j,getTaille(pj)+1);
+    j->membres[j->taille-1] = p;
 }
 
 /**
@@ -293,32 +294,78 @@ joueuse creation_joueuse(int n){
         fprintf(stderr," creation_joueuse : n doit avoir pour valeur 0 , 1 ou 2");
         exit(1);
     }
+
     joueuse jou=malloc(sizeof(struct joueuse));
-    setCapital(jou,CAPITAL_DE_BASE);
-    jou->membres=malloc(7*sizeof(struct _personnage));
-    for(int i=0;i<NB_CARTES_MAIN_JOUEUSE;i++){
-        int range = getNbCartes(liste_cartes_global);
-        int random = rand();
-        int index = (random % range);
-        if(index==range){
-            index-=1;
-        }
-        carte carte_to_delete=getCartes(liste_cartes_global)[index];
-        ajout_carte(getMain(jou),getCartes(liste_cartes_global)[index]);
-        supprimer_carte_global(liste_cartes_global,carte_to_delete);
-    }
-    setIdJoueuse(jou,n);
+
     if(n==1){
         setTour(jou,1);
+        setCapital(jou,CAPITAL_DE_BASE);
+        setTaille(jou,NB_MEMBRES_JOUEUSE);
+        for(int i=0;i<getTaille(jou);i++){
+            int range = 5 - 1 + 1;
+            int random = rand();
+            int id_to_put=1 + (random % range);
+            range = 3 - 2 + 1;
+            random = rand();
+            int zone_id_to_put=2 + (random % range); // Génère l'id de la zone entre 2 et 3
+            personnage p=nouveauPersonnage(n,id_to_put,zone_id_to_put);
+            addMembres(jou,p);
+        }
+        setToursRestantsBonusCapital(jou,1);
+        setToursRestantsInvincibilite(jou,0);
+        setToursRestantsJouer(jou,1);
+        setProbaParCapital(jou,0.1);
+        for(int i=0;i<NB_CARTES_MAIN_JOUEUSE;i++){
+            int range = getNbCartes(liste_cartes_global);
+            int random = rand();
+            int index = (random % range);
+            if(index==range){
+                index-=1;
+            }
+            carte carte_to_delete=getCartes(liste_cartes_global)[index];
+            ajout_carte(getMain(jou),getCartes(liste_cartes_global)[index]);
+            supprimer_carte_global(liste_cartes_global,carte_to_delete);
     }
-    else{
+ 
+    }
+    else if(n==0){
+        setIdJoueuse(jou,n);
+        setTaille(jou,NB_DE_MONSTRE);
+        for(int i=0;i<getTaille(jou);i++){
+            personnage p=nouveauPersonnage(n,n,1);
+            addMembres(jou,p);
+        }
+        setToursRestantsBonusCapital(jou,1);
+        setToursRestantsInvincibilite(jou,0);
+        setToursRestantsJouer(jou,1);
+        setProbaParCapital(jou,0.1);
+    }
+    else if(n==2){
         setTour(jou,0);
+        setIdJoueuse(jou,n);
+        setTaille(jou,NB_MEMBRES_JOUEUSE);
+        for(int i=0;i<getTaille(jou);i++){
+            int range = 5 - 1 + 1;
+            int random = rand();
+            int id_to_put=1 + (random % range);
+            range = 5 - 4 + 1;
+            random = rand();
+            int zone_id_to_put=4 + (random % range);  // Génère l'id de la zone entre 4 et 5
+            personnage p=nouveauPersonnage(n,id_to_put,zone_id_to_put);
+            addMembres(jou,p);
+        }
+        for(int i=0;i<NB_CARTES_MAIN_JOUEUSE;i++){
+            int range = getNbCartes(liste_cartes_global);
+            int random = rand();
+            int index = (random % range);
+            if(index==range){
+                index-=1;
+            }       
+        setToursRestantsBonusCapital(jou,1);
+        setToursRestantsInvincibilite(jou,0);
+        setToursRestantsJouer(jou,1);
+        setProbaParCapital(jou,0.1);
     }
-    setTaille(jou,NB_MEMBRES_JOUEUSE);
-    setToursRestantsBonusCapital(jou,1);
-    setToursRestantsInvincibilite(jou,0);
-    setToursRestantsJouer(jou,1);
-    setProbaParCapital(jou,0.1);
     return jou;
 }
 
@@ -417,18 +464,16 @@ void utilise_capital(joueuse pj, int capital){
 */
 void utilise_carte(joueuse pj, carte c){
      int exist_carte=0;
-     for(int i=0;i<getNbCartes(getMain(pj));i++){
-         if(lecture_cartes(getMain(pj),i)==c){
-             exist_carte=1;
-         }
-     }
-     if(exist_carte==1){
+    if(lecture_cartes(getMain(pj),i)==c){
+        exist_carte=1;
+    }
+    if(exist_carte==1){
          // faire des scanf en fonction de la carte car les paramètres ne sont pas les mêmes en fonction
          suppr_cartes(getMain(pj),c);
-     }
-     else{
+    }
+    else{
          printf("La carte utilisé n'est pas dans votre main joueuse %d",getIdJoueuse(pj));
-     }
+    }
 }
 
 

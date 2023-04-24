@@ -33,7 +33,7 @@ void wrapper_pouvoir_carte(joueuse* liste_joueuses, zones liste_zones, char* nom
         pouvoir_carte_Goilard(liste_joueuses);
     }
     else if (strcmp(nom_carte, "Laurence Bourard") == 0) {
-        pouvoir_carte_Bourard(liste_joueuses);
+        pouvoir_carte_Bourard(liste_joueuses, liste_zones);
     }
     else if (strcmp(nom_carte, "Denisse Munante") == 0) {
         pouvoir_carte_Munante(liste_joueuses);
@@ -74,7 +74,7 @@ void wrapper_pouvoir_carte(joueuse* liste_joueuses, zones liste_zones, char* nom
     else if (strcmp(nom_carte, "Julien Forest") == 0) {
         pouvoir_carte_Forest(liste_zones, liste_joueuses[2]);
     }
-    else if (strcmp(nom_carte, "Laurent Prevel") == 0) {
+    else if (strcmp(nom_carte, "Laurent Prével") == 0) {
         pouvoir_carte_Prevel(liste_joueuses[0]);
     }
 }
@@ -185,19 +185,61 @@ void pouvoir_carte_Goilard(joueuse* liste_joueuses) {
 }
 
 
-// /**
-//  * @brief Execute le pouvoir de la carte Laurence Bourard
-//  * Lors du prochain déplacement, si deux membres d'écoles adverses se retrouvent sur la même zone,
-//  * ils se déplacent de nouveau. Si ces deux membres sont sur la zone du monstre avant le second déplacement,
-//  * ils ne sont pas mangés. On recommence l'opération au plus 100 fois, jusqu'à ce que les membres des écoles 
-//  * adverses soient sur des zones distinctes.
-//  * @param liste_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
-//  * @return rien
-// */
-// void pouvoir_carte_Bourard(joueuse* liste_joueuses) {
-//     //TODO: Simule un déplacement de monstre et les déplacements des joueuses 
-//     // TODO: Retire les tours des joueuses
-// }
+/**
+ * @brief Execute le pouvoir de la carte Laurence Bourard
+ * Lors du prochain déplacement, si deux membres d'écoles adverses se retrouvent sur la même zone,
+ * ils se déplacent de nouveau. Si ces deux membres sont sur la zone du monstre avant le second déplacement,
+ * ils ne sont pas mangés. On recommence l'opération au plus 100 fois, jusqu'à ce que les membres des écoles 
+ * adverses soient sur des zones distinctes.
+ * @param liste_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
+ * @param liste_zones permet d'avoir l'ensemble des zones
+ * @return rien
+*/
+void pouvoir_carte_Bourard(joueuse* liste_joueuses, zones liste_zones) {
+    // Consumme les mouvements des monstres
+    int nombre_monstre = nb_membre_ecole(liste_joueuses[2]);
+    for (int j = 0; j < nombre_monstre; j += 1) {
+        if (getPeutSeDeplacer(getMembres(liste_joueuses[2])[j]) == 1 && getStatut(getMembres(liste_joueuses[2])[j]) == 1) {
+            for (int k = 0; k < getNbPas(getMembres(liste_joueuses[2])[j]); k += 1) {
+                deplacer(getMembres(liste_joueuses[2])[j], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[2])[j])))); // Déplacement des monstres vers leur prochaine zone
+            }
+            setPeutSeDeplacer(getMembres(liste_joueuses[2])[j], 0);
+        }
+    }
+
+    // Déplacement des joueuses
+    for (int i = 0; i < 2; i += 1) {
+        for (int j = 0; j < getTaille(liste_joueuses[i]); j += 1) {
+            if (getPeutSeDeplacer(getMembres(liste_joueuses[i])[j]) == 1 && getStatut(getMembres(liste_joueuses[i])[j]) == 1) {
+                for (int k = 0; k < getNbPas(getMembres(liste_joueuses[i])[j]); k += 1) {
+                    deplacer(getMembres(liste_joueuses[i])[j], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[i])[j])))); // Déplacement des joueuses vers leur prochaine zone
+                }
+            }
+        }
+    }
+    int continuer = 1;
+    while (continuer == 1) {
+        continuer = 0;
+        for (int i = 0; i < getTaille(liste_joueuses[0]); i += 1) {
+            for (int j = 0; j < getTaille(liste_joueuses[1]); j += 1) {
+                if (getZoneCourante(getMembres(liste_joueuses[0])[i]) == getZoneCourante(getMembres(liste_joueuses[1])[j])) {
+                    continuer = 1;
+                    deplacer(getMembres(liste_joueuses[0])[i], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[0])[i])))); // Déplacement des joueuses vers leur prochaine zone
+                    deplacer(getMembres(liste_joueuses[1])[j], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[1])[j])))); // Déplacement des joueuses vers leur prochaine zone
+                }
+            }
+        }
+    }
+    // Empêche les joueuses de se déplacer de nouveau
+    for (int i = 0; i < 2; i += 1) {
+        for (int j = 0; j < getTaille(liste_joueuses[i]); j += 1) {
+            setPeutSeDeplacer(getMembres(liste_joueuses[i])[j], 0);
+        }
+    }
+    
+
+
+}
 
 /**
  * @brief Execute le pouvoir de la carte Denisse Munante
@@ -318,18 +360,18 @@ void pouvoir_carte_Matias(joueuse liste_monstres) {
     }
 }
 
-// /**
-//  * @brief Execute le pouvoir de la carte Katrin Salhab
-//  * Pendant vos 3 prochains tours, un point de capital permet de déplacer une quantité 
-//  * 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ou 1 de probabilité.
-//  * @param jou permet d'avoir la joueuse
-//  * @return rien
-//  */
-// void pouvoir_carte_Salhab(joueuse jou) {
-//     int proba_par_capital = getProbaParCapital(jou);
-//     setProbaParCapital(jou, proba_par_capital);
-//     setToursRestantsBonusProbaParCapital(jou, 4); // 4 car 1 tour sera perdu après l'utilisation de cette carte
-// }
+/**
+ * @brief Execute le pouvoir de la carte Katrin Salhab
+ * Pendant vos 3 prochains tours, un point de capital permet de déplacer une quantité 
+ * 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ou 1 de probabilité.
+ * @param jou permet d'avoir la joueuse
+ * @return rien
+ */
+void pouvoir_carte_Salhab(joueuse jou) {
+    int proba_par_capital = getProbaParCapital(jou);
+    setProbaParCapital(jou, proba_par_capital);
+    setToursRestantsBonusProbaParCapital(jou, 4); // 4 car 1 tour sera perdu après l'utilisation de cette carte
+}
 
 /**
  * @brief Execute le pouvoir de la carte Sergio Pulido-Nino

@@ -71,21 +71,21 @@
             </task>
             <task id="77" name="Finition A4" color="#8cb6ce" meeting="false" start="2023-03-05" duration="9" complete="0" thirdDate="2023-03-07" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="78" name="tâche_B1" color="#ffcccc" meeting="false" start="2023-03-21" duration="34" complete="71" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
+        <task id="78" name="tâche_B1" color="#ffcccc" meeting="false" start="2023-03-21" duration="34" complete="86" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
             <task id="106" name="Création branche lot_b" color="#8cb6ce" meeting="true" start="2023-03-21" duration="0" complete="0" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true"/>
             <task id="110" name="Makefile" color="#8cb6ce" meeting="false" start="2023-03-21" duration="18" complete="100" thirdDate="2023-03-20" thirdDate-constraint="0" expand="true"/>
             <task id="115" name="Modification Git pour les dossiers" color="#8cb6ce" meeting="true" start="2023-03-21" duration="0" complete="0" thirdDate="2023-03-20" thirdDate-constraint="0" expand="true"/>
             <task id="118" name="Premiers ajouts du lot_b au Gantt" color="#8cb6ce" meeting="false" start="2023-03-21" duration="13" complete="100" thirdDate="2023-03-22" thirdDate-constraint="0" expand="true"/>
             <task id="153" name="Création read_me" color="#8cb6ce" meeting="false" start="2023-03-27" duration="3" complete="100" thirdDate="2023-03-27" thirdDate-constraint="0" expand="true"/>
-            <task id="149" name="Recompilation du main.c" color="#8cb6ce" meeting="false" start="2023-04-09" duration="15" complete="31" thirdDate="2023-04-03" thirdDate-constraint="0" expand="true"/>
+            <task id="149" name="Recompilation du main.c" color="#8cb6ce" meeting="false" start="2023-04-09" duration="15" complete="84" thirdDate="2023-04-03" thirdDate-constraint="0" expand="true"/>
             <task id="151" name="Validation lot_b" color="#8cb6ce" meeting="false" start="2023-04-21" duration="3" complete="0" thirdDate="2023-03-31" thirdDate-constraint="0" expand="true"/>
         </task>
         <task id="82" name="tâche_B2" color="#ccccff" meeting="false" start="2023-03-21" duration="34" complete="94" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
             <task id="121" name="Création des premiers tests" color="#8cb6ce" meeting="false" start="2023-03-21" duration="27" complete="100" thirdDate="2023-03-14" thirdDate-constraint="0" expand="true"/>
-            <task id="124" name="Finition des tests" color="#8cb6ce" meeting="false" start="2023-04-16" duration="8" complete="74" thirdDate="2023-03-21" thirdDate-constraint="0" expand="true"/>
+            <task id="124" name="Finition des tests" color="#8cb6ce" meeting="false" start="2023-04-16" duration="8" complete="76" thirdDate="2023-03-21" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="90" name="tâche_B3" color="#ccccff" meeting="false" start="2023-03-21" duration="34" complete="84" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
-            <task id="127" name="Création stuctures de données" color="#8cb6ce" meeting="false" start="2023-03-21" duration="34" complete="84" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true"/>
+        <task id="90" name="tâche_B3" color="#ccccff" meeting="false" start="2023-03-21" duration="34" complete="88" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
+            <task id="127" name="Création stuctures de données" color="#8cb6ce" meeting="false" start="2023-03-21" duration="34" complete="88" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true"/>
         </task>
         <task id="93" name="tâche_B4" color="#ffccff" meeting="false" start="2023-03-21" duration="34" complete="100" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
             <task id="129" name="Création de variables globales" color="#8cb6ce" meeting="false" start="2023-03-21" duration="34" complete="100" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true"/>
@@ -93,16 +93,16 @@
         <task id="95" name="tâche_B5" color="#ffccff" meeting="false" start="2023-03-21" duration="34" complete="94" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
             <task id="131" name="Création des getters et setters" color="#8cb6ce" meeting="false" start="2023-03-21" duration="34" complete="94" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="98" name="tâche_B6" color="#ccffcc" meeting="false" start="2023-03-21" duration="34" complete="59" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
+        <task id="98" name="tâche_B6" color="#ccffcc" meeting="false" start="2023-03-21" duration="34" complete="91" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
             <task id="133" name="Création des fichiers .c" color="#8cb6ce" meeting="false" start="2023-03-21" duration="14" complete="100" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true"/>
-            <task id="135" name="Implémentation des .c" color="#8cb6ce" meeting="false" start="2023-03-21" duration="34" complete="43" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true"/>
+            <task id="135" name="Implémentation des .c" color="#8cb6ce" meeting="false" start="2023-03-21" duration="34" complete="88" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="101" name="tâche_B7" color="#ccffcc" meeting="false" start="2023-03-21" duration="34" complete="95" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
+        <task id="101" name="tâche_B7" color="#ccffcc" meeting="false" start="2023-03-21" duration="34" complete="100" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
             <task id="137" name="Création de 5 cartes" color="#8cb6ce" meeting="false" start="2023-03-21" duration="14" complete="100" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true"/>
             <task id="139" name="Implémentation des 5 cartes" color="#8cb6ce" meeting="false" start="2023-04-07" duration="6" complete="100" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true"/>
             <task id="141" name="Création de toutes les cartes" color="#8cb6ce" meeting="false" start="2023-03-31" duration="17" complete="100" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true"/>
             <task id="142" name="Implémentation de toutes les cartes" color="#8cb6ce" meeting="false" start="2023-04-17" duration="5" complete="100" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true"/>
-            <task id="154" name="Fin des implémentations" color="#8cb6ce" meeting="false" start="2023-04-19" duration="5" complete="62" thirdDate="2023-04-03" thirdDate-constraint="0" expand="true"/>
+            <task id="154" name="Fin des implémentations" color="#8cb6ce" meeting="false" start="2023-04-19" duration="5" complete="100" thirdDate="2023-04-03" thirdDate-constraint="0" expand="true"/>
         </task>
         <task id="104" name="tâche_B8" color="#ffcccc" meeting="false" start="2023-03-21" duration="34" complete="76" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
             <task id="145" name="Premiers affichages d'interfaces" color="#8cb6ce" meeting="false" start="2023-03-21" duration="25" complete="100" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true"/>
@@ -136,6 +136,9 @@
         <allocation task-id="142" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="145" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="147" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="101" resource-id="0" function="Default:0" responsible="true" load="95.0"/>
+        <allocation task-id="139" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="137" resource-id="0" function="Default:0" responsible="false" load="0.0"/>
         <allocation task-id="3" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="75" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="56" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
@@ -153,11 +156,11 @@
         <allocation task-id="8" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="77" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="98" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
-        <allocation task-id="101" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="133" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="135" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
         <allocation task-id="137" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
-        <allocation task-id="139" resource-id="3" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="139" resource-id="3" function="Default:0" responsible="false" load="0.0"/>
+        <allocation task-id="101" resource-id="3" function="Default:0" responsible="true" load="5.0"/>
     </allocations>
     <vacations/>
     <previous/>

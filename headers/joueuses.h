@@ -23,7 +23,6 @@
 #define JOUEUSES_H
 
 #include "personnages.h"
-#include "structures.h" // Afin de pouvoir intéragir avec la liste_cartes_global
 
 
 /* Création de constantes */
@@ -45,7 +44,7 @@
     int tours_restants_invincibilite; /*nb de tour pendant lesquels les membres d'une joueuse ne peuvent pas etre manges */
     int tours_restants_jouer;/*tours restants pendant lesquels on peut faire des déplacements, initialisé à 1 (correspond au nombre de tours d'affilés)*/
     float proba_par_capital; /*la valeur de la modification de la proba par une joueuse par unité de capital (cf Katrin Salhab), initialisée à 0.1*/
-    int bonus_temporaire; /* 1 si carte de Dembele-Cabot est activée, 0 sinon. Si activé le capital a une valeur de 15. Sa valeur est réinitialisée au tour suivant */
+    int bonus_temporaire; /* vaut un entier strictement positif si le bonus est actif, correspondant à la valeur du bonus de capital pendant un tour uniquement, et est remise à 0 au tour suivant. Vaut 0 si aucun bonus de capital */
     int tours_restants_bonus_proba_par_capital; /*nb de tour pendant lesquels la proba par capital est modifiée*/
 };
 typedef struct joueuse* joueuse;
@@ -297,7 +296,7 @@ void setToursRestantsJouer(joueuse j, int toursRestants);
  * @brief renvoie le le bonus_temporaire
  * 
  * @param j 
- * @return int : le bonus_temporaire 1 ou 0
+ * @return int : la valeur du bonus pendant ce tour
  */
 int getBonusTemporaire(joueuse j);
 
@@ -305,7 +304,7 @@ int getBonusTemporaire(joueuse j);
  * @brief modifie le bonus_temporaire
  * 
  * @param j 
- * @param bonus : le nouveau bonus_capital, 1 ou 0
+ * @param bonus : le nouveau bonus_capital, doit être positif
  */
 void setBonusTemporaire(joueuse j, int bonus);
 
