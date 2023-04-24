@@ -38,7 +38,7 @@ int getNbCartes(liste_cartes lc);
  * 
  * @param n 
  */
-void setNbCartes(int n);
+void setNbCartes(liste_cartes lc, int n);
 
 /**
  * @brief renvoie la liste de cartes de la liste de cartes passés en arguments
