@@ -478,17 +478,20 @@ void utilise_capital(joueuse pj, int capital){
  * @param pj pointeur vers une joueuse
  * @param c la carte que la joueuse souhaite jouer
 */
-void utilise_carte(joueuse pj, carte c){
-     int exist_carte=0;
-    if(lecture_cartes(getMain(pj),i)==c){
-        exist_carte=1;
+void utilise_carte(joueuse* liste_joueuses, zones liste_zones, carte c){
+    int exist_carte=0;
+    for(int i=0;i<getNbCartes(getMain(pj));i++){
+        if(lecture_cartes(getMain(pj),i)==c){
+            exist_carte=1;
+            break;
+        }
     }
     if(exist_carte==1){
-         // faire des scanf en fonction de la carte car les paramètres ne sont pas les mêmes en fonction
-         suppr_cartes(getMain(pj),c);
+        wrapper_pouvoir_carte(liste_joueuses,liste_zones,getNom(c));
+        suppr_cartes(getMain(pj),c);
     }
     else{
-         printf("La carte utilisé n'est pas dans votre main joueuse %d",getIdJoueuse(pj));
+         printf("La carte utilisé n'est pas dans votre main, joueuse %d",getIdJoueuse(pj));
     }
 }
 
