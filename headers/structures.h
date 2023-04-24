@@ -75,7 +75,33 @@ void suppr_cartes(liste_cartes liste, carte carte);
 */
 carte lecture_cartes(liste_cartes liste, int index);
 
+// structure pour le tableau qui contiendra les cartes
 
+extern liste_cartes liste_cartes_global; //le mot-clé extern va permettre de pouvoir utiliser liste_cartes_global partout
+
+/**
+ * @brief Alloue la mémoire à la liste_cartes_global
+*/
+void creer_liste_cartes_global();
+
+/**
+ * @brief Ajouter une carte à la fin de la liste
+ * 
+ * @param une carte c
+*/
+void ajouter_carte_global(carte c);
+
+/**
+ * @brief supprime une carte de la liste (une fois celle dernière piochée par une joueuse)
+ * 
+ * @param le nom de la carte à supprimer 
+*/
+void supprimer_carte_global(char nom);
+
+/**
+ * @brief Libère la mémoire de liste_cartes_global
+*/
+void free_listes_cartes_global();
 
 
 
