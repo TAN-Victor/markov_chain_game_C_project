@@ -214,7 +214,7 @@ void setToursRestantsJouer(joueuse j, int toursRestants){
  * @brief renvoie le le bonus_temporaire
  * 
  * @param j 
- * @return int : le bonus_temporaire 1 ou 0
+ * @return int : la valeur du bonus pendant ce tour
  */
 int getBonusTemporaire(joueuse j){
     return j->bonus_temporaire;
@@ -224,7 +224,7 @@ int getBonusTemporaire(joueuse j){
  * @brief modifie le bonus_temporaire
  * 
  * @param j 
- * @param bonus : le nouveau bonus_capital, 1 ou 0
+ * @param bonus : le nouveau bonus_capital, doit être positif
  */
 void setBonusTemporaire(joueuse j, int bonus){
     j->bonus_temporaire = bonus;
