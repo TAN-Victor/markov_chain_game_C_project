@@ -281,7 +281,7 @@ void message_generique(int n, joueuse j1, int* option, carte option2) {
                 break;
         case 7: printf("Le personnage n° %d de la joueuse n° %d est décédé. \n", option[0], getIdJoueuse(j1));
                 break;
-        case 8: printf("Le tour est terminé, le capital a été réintialisé. \n");
+        case 8: printf("Le tour est terminé, le capital et les effets des joueuses ont été réintialisés. \n");
                 break;
         case 9: fprintf(stderr, "Les personnages ont été correctement libéré par free(). \n");
                 break;
