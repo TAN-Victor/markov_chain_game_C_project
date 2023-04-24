@@ -92,7 +92,7 @@ int main() {
                 carte c = demander_carte(liste_joueuses[i]); // Doit vérifier si la carte est jouable
                 if (c != NULL) { // Si la joueuse veut jouer une carte
                     message_generique(5, liste_joueuses[i], NULL, c);  // voir avec interface.c
-                    utilise_carte(liste_joueuses[i], c); // A modifier dans le futur, car une carte pourra augmenter le nombre de zone donc la fonction devrait prendre d'autres arguments
+                    utilise_carte(liste_joueuses, liste_zones, c); 
                 }
             }
 
