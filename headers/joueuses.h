@@ -120,7 +120,7 @@ void utilise_capital(joueuse pj, int capital);
  * @param liste_zones liste des zones du jeu
  * @param c la carte que la joueuse souhaite jouer
 */
-void utilise_carte(joueuse* liste_joueuses, zones liste_zones, carte c)
+void utilise_carte(joueuse* liste_joueuses, zones liste_zones, carte c);
 
 /* ---------------------------------------------------------------------------------------------------------- */
 /* Getters and Setters */
