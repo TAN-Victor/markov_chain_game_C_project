@@ -23,11 +23,7 @@
 #define JOUEUSES_H
 
 #include "personnages.h"
-#include "cartes.h"
-#include "zones.h"
-#include "structures.h"
-#include <stdlib.h>
-#include <stdio.h>
+
 
 /* Création de constantes */
 #define CAPITAL_DE_BASE 5
@@ -49,6 +45,7 @@
     int tours_restants_jouer;/*tours restants pendant lesquels on peut faire des déplacements, initialisé à 1 (correspond au nombre de tours d'affilés)*/
     float proba_par_capital; /*la valeur de la modification de la proba par une joueuse par unité de capital (cf Katrin Salhab), initialisée à 0.1*/
     int bonus_temporaire; /* 1 si carte de Dembele-Cabot est activée, 0 sinon. Si activé le capital a une valeur de 15. Sa valeur est réinitialisée au tour suivant */
+    int tour_restant_bonus_proba_par_capital; /*nb de tour pendant lesquels la proba par capital est modifiée*/
 };
 typedef struct joueuse* joueuse;
 
@@ -213,7 +210,7 @@ float getProbaParCapital(joueuse j);
  * @param j 
  * @param proba 
  */
-void setProbaProbaParCapital(joueuse j, float proba);
+void setProbaParCapital(joueuse j, float proba);
 
 /**
  * @brief modifie le capital d'une joueuse
@@ -277,7 +274,7 @@ void setToursRestantsBonusCapital(joueuse j, int toursRestants);
  * @param j : une joueuse 
  * @param toursRestants : le nouveau nombre de tours restants sous invinsibilité
  */
-void setToursRestantsInvinsibilite(joueuse j, int toursRestants);
+void setToursRestantsInvincibilite(joueuse j, int toursRestants);
 
 /**
  * @brief modifie le nombre de tours restants pendant lesquels la joueuse peut jouer plusieurs fois par tour

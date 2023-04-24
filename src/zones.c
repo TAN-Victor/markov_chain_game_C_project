@@ -11,11 +11,11 @@
  */
 void modifierZone(zones z, int n1, int n2, float proba, int action) {
     if (action == 1) {
-        modifier_proba(getMatrice(z), n1, n2, lecture_probas(z, n1, n2) + proba);
+        modifier_proba(getMatrice(z), n1, n2, lecture_probas(getMatrice(z), n1, n2) + proba);
  
     }
     else if (action == 0) {
-        modifier_proba(getMatrice(z), n1, n2, lecture_probas(z, n1, n2) - proba);
+        modifier_proba(getMatrice(z), n1, n2, lecture_probas(getMatrice(z), n1, n2) - proba);
     }
 }
 
@@ -92,8 +92,8 @@ void setMatrice(zones z, matrice_probas m){
 
 void addZone(zones z) {
     matrice_probas matrice = malloc(sizeof(matrice_probas));
-    int new_taille = getMatrice(z)->taille + 1;
-    matrice->taille = new_taille;
+    int new_taille = getMatrice(z)->taille_matrice + 1;
+    setTailleMatrice(matrice, new_taille);
 
     /* on alloue la nouvelle zone */
     matrice->proba = realloc(matrice->proba, new_taille * sizeof(float*));

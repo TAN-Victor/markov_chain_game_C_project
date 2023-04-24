@@ -9,8 +9,7 @@
  * 
  */
 
-#include <stdio.h>
-#include <stdlib.h>
+
 #include "../headers/structures.h"
 
 /* Getter et Setters */
@@ -29,7 +28,7 @@ int getNbCartes(liste_cartes lc){
  * 
  * @param n 
  */
-void setNbCartes(int n){
+void setNbCartes(liste_cartes lc, int n){
     lc->nb_cartes = n;
 }
 
@@ -50,8 +49,8 @@ carte* getCartes(liste_cartes lc){
  * 
  * @return int la taille de la matrice
 */
-int getTaille(matrice_probas matrice);{
-    return matrice->taille;
+int getTailleMatrice(matrice_probas matrice){
+    return matrice->taille_matrice;
 }
 
 /**
@@ -59,9 +58,12 @@ int getTaille(matrice_probas matrice);{
  * 
  * @param taille la nouvelle taille de la matrice
 */
-void setTaille(int taille){
-    matrice->taille = taille;
+void setTailleMatrice(matrice_probas matrice, int taille){
+    matrice->taille_matrice = taille;
 }
+
+
+
 
 void ajout_carte(liste_cartes liste, carte carte){
     liste->nb_cartes++;
@@ -71,7 +73,7 @@ void ajout_carte(liste_cartes liste, carte carte){
 
 carte lecture_cartes(liste_cartes liste, int index){
     if (index < liste->nb_cartes){
-        return &liste->cartes[index];
+        return liste->cartes[index];
     }
     return NULL;
 }
@@ -92,7 +94,7 @@ void suppr_cartes(liste_cartes liste, carte carte){
 
 matrice_probas creer_matrice(int taille){
     matrice_probas matrice = malloc(sizeof(matrice_probas));
-    matrice->taille = taille;
+    matrice->taille_matrice = taille;
     matrice->proba = malloc(taille * sizeof(float*));
     for (int i = 0; i < taille; i++){
         matrice->proba[i] = malloc(taille * sizeof(float));
@@ -109,7 +111,7 @@ void modifier_proba(matrice_probas matrice, int i, int j, float proba){
 }
 
 void suppression_matrice(matrice_probas matrice){
-    for (int i = 0; i < matrice->taille; i++){
+    for (int i = 0; i < matrice->taille_matrice; i++){
         free(matrice->proba[i]);
     }
     free(matrice->proba);
@@ -117,14 +119,14 @@ void suppression_matrice(matrice_probas matrice){
 }
 
 matrice_probas produit_matrice(matrice_probas matrice1, matrice_probas matrice2){
-    if (matrice1->taille != matrice2->taille){
+    if (matrice1->taille_matrice != matrice2->taille_matrice){
         return NULL;
     }
-    matrice_probas matrice = creer_matrice(matrice1->taille);
-    for (int i = 0; i < matrice->taille; i++){
-        for (int j = 0; j < matrice->taille; j++){
+    matrice_probas matrice = creer_matrice(matrice1->taille_matrice);
+    for (int i = 0; i < matrice->taille_matrice; i++){
+        for (int j = 0; j < matrice->taille_matrice; j++){
             float somme = 0;
-            for (int k = 0; k < matrice->taille; k++){
+            for (int k = 0; k < matrice->taille_matrice; k++){
                 somme += matrice1->proba[i][k] * matrice2->proba[k][j];
             }
             matrice->proba[i][j] = somme;

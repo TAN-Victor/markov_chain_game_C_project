@@ -13,6 +13,7 @@
 #include "structures.h"
 
 
+
 struct _zone{
     int numero; /* numéro de la zone, compris entre 0 et NB_DE_ZONES-1 */
     int est_autorise; /* vaut 0 si tous les personnages sont autorisés, 1 si uniquement ceux de joueuse 1, 2 si ceux de joueuse 2*/

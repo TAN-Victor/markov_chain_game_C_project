@@ -38,7 +38,7 @@ int getNbCartes(liste_cartes lc);
  * 
  * @param n 
  */
-void setNbCartes(int n);
+void setNbCartes(liste_cartes lc, int n);
 
 /**
  * @brief renvoie la liste de cartes de la liste de cartes passés en arguments
@@ -114,7 +114,7 @@ int getTailleMatrice(matrice_probas matrice);
  * 
  * @param taille la nouvelle taille de la matrice
 */
-void setTailleMatrice(int taille);
+void setTailleMatrice(matrice_probas matrice, int taille);
 
 /**
  * @brief création d'une matrice de probas de taille taille
