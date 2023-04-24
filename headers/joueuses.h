@@ -45,7 +45,7 @@
     int tours_restants_jouer;/*tours restants pendant lesquels on peut faire des déplacements, initialisé à 1 (correspond au nombre de tours d'affilés)*/
     float proba_par_capital; /*la valeur de la modification de la proba par une joueuse par unité de capital (cf Katrin Salhab), initialisée à 0.1*/
     int bonus_temporaire; /* 1 si carte de Dembele-Cabot est activée, 0 sinon. Si activé le capital a une valeur de 15. Sa valeur est réinitialisée au tour suivant */
-    int tour_restant_bonus_proba_par_capital; /*nb de tour pendant lesquels la proba par capital est modifiée*/
+    int tours_restants_bonus_proba_par_capital; /*nb de tour pendant lesquels la proba par capital est modifiée*/
 };
 typedef struct joueuse* joueuse;
 
@@ -269,6 +269,14 @@ void setTaille(joueuse j, int taille);
 void setToursRestantsBonusCapital(joueuse j, int toursRestants);
 
 /**
+ * @brief renvoie la valeur du nombre restant de tours sous invinsibilité
+ * 
+ * @param j : une joueuse 
+ * @return int : le nombre restant de tours sous invinsibilité
+ */
+void getToursRestantsInvincibilite(joueuse j);
+
+/**
  * @brief modifie la valeur du nombre restant de tours sous invinsibilité
  * 
  * @param j : une joueuse 
@@ -299,5 +307,21 @@ int getBonusTemporaire(joueuse j);
  * @param bonus : le nouveau bonus_capital, 1 ou 0
  */
 void setBonusTemporaire(joueuse j, int bonus);
+
+/**
+ * @brief renvoie le nombre de tours restants pendant lesquels la proba par capital est augmentée
+ * 
+ * @param j 
+ * @return int : le nombre de tours restants pendant lesquels la proba par capital est augmentée
+ */
+int getToursRestantsBonusProbaParCapital(joueuse j);
+
+/**
+ * @brief modifie le nombre de tours restants pendant lesquels la proba par capital est augmentée
+ * 
+ * @param j 
+ * @param toursRestants : le nouveau nombre de tours restants pendant lesquels la proba par capital est augmentée
+ */
+void setToursRestantsBonusProbaParCapital(joueuse j, int toursRestants);
 
 #endif

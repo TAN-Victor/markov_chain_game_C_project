@@ -101,6 +101,16 @@ int getToursRestantsJouer(joueuse j){
 }
 
 /**
+ * @brief renvoie le nombre de tours restants sous bonus de capital de la joueuse
+ * 
+ * @param j : une joueuse 
+ * @return int : le nombre de tours restants sous bonus
+ */
+int getToursRestantsBonusCapital(joueuse j){
+    return j->tours_restants_bonus_capital;
+}
+
+/**
  * @brief renvoie la proba par capital de la joueuse
  * 
  * @param j 
@@ -116,7 +126,7 @@ float getProbaParCapital(joueuse j){
  * @param j 
  * @param proba 
  */
-void setProbaProbaParCapital(joueuse j, float proba){
+void setProbaParCapital(joueuse j, float proba){
     j->proba_par_capital = proba;
 }
 
@@ -168,6 +178,16 @@ void setTaille(joueuse j, int taille){
  */
 void setToursRestantsBonusCapital(joueuse j, int toursRestants){
     j->tours_restants_bonus_capital = toursRestants;
+}
+
+/**
+ * @brief renvoie la valeur du nombre restant de tours sous invinsibilité
+ * 
+ * @param j : une joueuse 
+ * @return int : le nombre restant de tours sous invinsibilité
+ */
+void getToursRestantsInvincibilite(joueuse j){
+    return j->tours_restants_invincibilite;
 }
 
 /**
@@ -237,6 +257,26 @@ void removeMembres(joueuse j, int id){
             break;
         }
     }
+}
+
+/**
+ * @brief renvoie le nombre de tours restants pendant lesquels la proba par capital est augmentée
+ * 
+ * @param j 
+ * @return int : le nombre de tours restants pendant lesquels la proba par capital est augmentée
+ */
+int getToursRestantsBonusProbaParCapital(joueuse j){
+    return j->tours_restants_bonus_proba_par_capital;
+}
+
+/**
+ * @brief modifie le nombre de tours restants pendant lesquels la proba par capital est augmentée
+ * 
+ * @param j 
+ * @param toursRestants : le nouveau nombre de tours restants pendant lesquels la proba par capital est augmentée
+ */
+void setToursRestantsBonusProbaParCapital(joueuse j, int toursRestants){
+    j->tours_restants_bonus_proba_par_capital = toursRestants;
 }
 
 /** 
