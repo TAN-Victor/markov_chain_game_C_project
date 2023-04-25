@@ -28,7 +28,7 @@ typedef struct _zones* zones;
 
 /**
  * @brief initialise nb_zones à 10 et créer les zones du jeu 
- * 
+ * @author Adam Ouzegdouh
  * @return renvoie un pointeur vers l'ensemble des zones du jeu 
  */
 zones nouvellesZones();
@@ -36,7 +36,7 @@ zones nouvellesZones();
 
 /**
  * @brief libère toutes les zones du jeu
- * 
+ * @author Adam Ouzegdouh
  * @param pz une adresse vers un ensemble de zones valide
  */
 void libereZones(zones pz);
@@ -44,7 +44,7 @@ void libereZones(zones pz);
 
 /**
  * @brief renvoie un pointeur vers la zone dont le numéro est n
- * 
+ * @author Adam Ouzegdouh
  * @param n numéro de la zone compris entre 0 et nb_zones-1
  * @return zone la zone numéro n
  */
@@ -64,7 +64,7 @@ void modifierZone(zones z, int n1, int n2, float proba, int action);
 
 /**
  * @brief renvoie le numéro de la prochaine zone
- * 
+ * @author Adam Ouzegdouh
  * @param nz numéro de la zone actuelle compris entre 
  * @return le numéro de la prochaine zone, -1 en cas d'erreur 
  */

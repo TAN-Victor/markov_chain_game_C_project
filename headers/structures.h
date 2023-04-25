@@ -81,25 +81,27 @@ extern liste_cartes liste_cartes_global; //le mot-clé extern va permettre de po
 
 /**
  * @brief Alloue la mémoire à la liste_cartes_global
+  * @author Adam Ouzegdouh
 */
 void creer_liste_cartes_global();
 
 /**
  * @brief Ajouter une carte à la fin de la liste
- * 
+  * @author Adam Ouzegdouh
  * @param une carte c
 */
 void ajouter_carte_global(carte c);
 
 /**
  * @brief supprime une carte de la liste (une fois celle dernière piochée par une joueuse)
- * 
+ * @author Adam Ouzegdouh
  * @param le nom de la carte à supprimer 
 */
-void supprimer_carte_global(char nom);
+void supprimer_carte_global(carte c);
 
 /**
  * @brief Libère la mémoire de liste_cartes_global
+ * @author Adam Ouzegdouh
 */
 void free_listes_cartes_global();
 

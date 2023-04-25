@@ -194,13 +194,13 @@ void setToursRestantsBonusPas(personnage p, int toursRestantsBonusPas){
  * @return personnage un pointeur vers le personnage crée 
  */
 personnage nouveauPersonnage(int n, int id_to_put, int nz){
-    personnage perso=mallloc(sizeof(_personnage));
+    personnage perso=malloc(sizeof(struct _personnage));
     if(n==0){
         setType(perso,n);
         setStatut(perso,1);
         setIdPersonnage(perso,id_to_put);
         setZoneCourante(perso,nz);
-        setZonePrecedente(perso,NULL);
+        setZonePrecedente(perso,-1);
         setDeNbPas(perso,1);
         setToursRestantsBonusPas(perso,0);
         setPeutSeDeplacer(perso,1);
@@ -211,7 +211,7 @@ personnage nouveauPersonnage(int n, int id_to_put, int nz){
         setStatut(perso,1);
         setIdPersonnage(perso,id_to_put);
         setZoneCourante(perso,nz);
-        setZonePrecedente(perso,NULL);
+        setZonePrecedente(perso,-1);
         setDeNbPas(perso,1);
         setToursRestantsBonusPas(perso,0);
         setPeutSeDeplacer(perso,1);
@@ -222,18 +222,18 @@ personnage nouveauPersonnage(int n, int id_to_put, int nz){
         setStatut(perso,1);
         setIdPersonnage(perso,id_to_put);
         setZoneCourante(perso,nz);
-        setZonePrecedente(perso,NULL);
+        setZonePrecedente(perso,-1);
         setDeNbPas(perso,1);
         setToursRestantsBonusPas(perso,0);
         setPeutSeDeplacer(perso,1);
         setNbDeTourDisparuRestant(perso,0);
     }
-    
+    return perso;
 }
 
 /**
  * @brief libère l'espace occupé par la case mémoire pointée par p 
- * 
+ * @
  * @param p un personnage que l'on souhaite libérer 
  */
 void liberePersonnage(personnage p){
@@ -258,7 +258,7 @@ void deplacer(personnage p, zone z){
  * @return le numéro de la zone du personnage, -1 en cas d'erreur
  */
 int zonePersonnage(personnage p){
-    return getNumero(getZoneCourante(p));
+    return getZoneCourante(p);
 }
 
 /**
@@ -268,6 +268,6 @@ int zonePersonnage(personnage p){
  */
 void estMange(personnage p){
    setStatut(p,0);
-   setPeutSeDeplacer(p,0); // J'ai fais l'hypothèse que quand tu es mort -> tu te déplaces pas
+   setPeutSeDeplacer(p,0);
 }
 

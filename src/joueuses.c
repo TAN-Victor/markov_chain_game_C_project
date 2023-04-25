@@ -238,7 +238,7 @@ void setBonusTemporaire(joueuse j, int bonus){
  */
 void addMembres(joueuse j, personnage p){
     j->membres = realloc(j->membres, (j->taille+1)*sizeof(personnage*));
-    setTaille(j,getTaille(pj)+1);
+    setTaille(j,getTaille(j)+1);
     j->membres[j->taille-1] = p;
 }
 
@@ -324,8 +324,8 @@ joueuse creation_joueuse(int n){
             }
             carte carte_to_delete=getCartes(liste_cartes_global)[index];
             ajout_carte(getMain(jou),getCartes(liste_cartes_global)[index]);
-            supprimer_carte_global(liste_cartes_global,carte_to_delete);
-    }
+            supprimer_carte_global(carte_to_delete);
+        }
  
     }
     else if(n==0){
@@ -360,7 +360,11 @@ joueuse creation_joueuse(int n){
             int index = (random % range);
             if(index==range){
                 index-=1;
-            }       
+            }
+            carte carte_to_delete=getCartes(liste_cartes_global)[index];
+            ajout_carte(getMain(jou),getCartes(liste_cartes_global)[index]);
+            supprimer_carte_global(carte_to_delete);
+        }
         setToursRestantsBonusCapital(jou,1);
         setToursRestantsInvincibilite(jou,0);
         setToursRestantsJouer(jou,1);
@@ -374,6 +378,13 @@ joueuse creation_joueuse(int n){
  * @param pj pointeur vers la case mémoire occupée par la joueuse que l'on souhaite libérer
 */
 void free_joueuse(joueuse pj){
+    for(int i=0;i<getTaille(pj);i++){
+        free(pj->membres[i]);
+    }
+    for(int i=0;i<getNbCartes(getMain(pj));i++){
+        free(pj->main_du_joueur->cartes[i]);
+    }
+    free(pj->main_du_joueur);
     free(pj->membres);
     free(pj);
 }
@@ -424,6 +435,15 @@ int tous_manges(joueuse pj){
     if(getTaille(pj)==0){
         return 1;
     }
+    int manges=0;
+    for(int i=0;i<getTaille(pj);i++){
+        if(getStatut(getMembres(pj)[i])==0){
+            manges+=1;
+        }
+    }
+    if(manges==getTaille(pj)){
+        return 1;
+    }
     else if(getTaille(pj)<0){
         fprintf(stderr,"tous_manges : joueuse %d possède en dessous de 0 membres",getIdJoueuse(pj));
         exit(5);
@@ -459,20 +479,24 @@ void utilise_capital(joueuse pj, int capital){
 
 /**
  * @brief la carte c est retirer de la main du joueur et on applique les effets de la carte (il faut aussi s'assurer que le joueur possède la carte)
- * @param pj pointeur vers une joueuse
+ * @param liste_joueuses liste des joueuses dont monstres
+ * @param liste_zones liste des zones du jeu
  * @param c la carte que la joueuse souhaite jouer
 */
-void utilise_carte(joueuse pj, carte c){
-     int exist_carte=0;
-    if(lecture_cartes(getMain(pj),i)==c){
-        exist_carte=1;
+void utilise_carte(joueuse* liste_joueuses, zones liste_zones, carte c){
+    int exist_carte=0;
+    for(int i=0;i<getNbCartes(getMain(liste_joueuses[0]));i++){
+        if(lecture_cartes(getMain(liste_joueuses[0]),i)==c){
+            exist_carte=1;
+            break;
+        }
     }
     if(exist_carte==1){
-         // faire des scanf en fonction de la carte car les paramètres ne sont pas les mêmes en fonction
-         suppr_cartes(getMain(pj),c);
+        wrapper_pouvoir_carte(liste_joueuses,liste_zones,getNom(c));
+        suppr_cartes(liste_joueuses[0],c);
     }
     else{
-         printf("La carte utilisé n'est pas dans votre main joueuse %d",getIdJoueuse(pj));
+         printf("La carte utilisé n'est pas dans votre main, joueuse %d",getIdJoueuse(liste_joueuses[0]));
     }
 }
 

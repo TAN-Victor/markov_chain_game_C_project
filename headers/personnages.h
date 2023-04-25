@@ -23,7 +23,7 @@
 struct _personnage {
     int type; /* 0 pour monstre et 1 ou 2 pour membre d'école*/
     int statut; /* 0 si mort, 1 si en vie, -1 si disparu, 3 si FISA */
-    int id; /* entier compris entre 1 et 5 pour les membres d'école, permettant de les identifier plus facilement, 0 si c'est un monstre
+    int id; /* entier compris entre 1 et 5 pour les membres d'école, permettant de les identifier plus facilement, 0 si c'est un monstre*/
     int zone_courante; /* numéro de la zone courante du personnage*/
     int zone_precedente; /* numéro de la zone précédente */
     int nb_de_pas; /* nombre de pas par tour, initialisé à 1 */
@@ -40,7 +40,7 @@ typedef struct _personnage* personnage;
             - membre d'école de jouese 2 si n = 2,
           le place sur la zone z passée en argument
           et initialise son statut sur vivant (ie 1)
- * 
+ * @author Adam Ouzegdouh
  * @param n le type de personnage
  * @param id_to_put l'id à mettre qui sera généré aléatoirement, vaut 0 si le personnage est un monstre
  * @param nz le numéro de la zone
@@ -50,7 +50,7 @@ personnage nouveauPersonnage(int n,int id_to_put,int nz);
 
 /**
  * @brief libère l'espace occupé par la case mémoire pointée par p 
- * 
+  * @author Adam Ouzegdouh
  * @param p un personnage que l'on souhaite libérer 
  */
 void liberePersonnage(personnage p);
@@ -58,7 +58,7 @@ void liberePersonnage(personnage p);
 
 /**
  * @brief déplace le personnage sur la zone z
- * 
+  * @author Adam Ouzegdouh
  * @param p est un personnage qui se déplace
  * @param z est la zone d'arrivée
  */
@@ -67,7 +67,7 @@ void deplacer(personnage p, zone z);
 
 /**
  * @brief renvoie le numéro de la zone dans laquelle se trouve le personnage
- * 
+ * @author Adam Ouzegdouh
  * @param p un personnage dont on souhaite obtenir la zone
  * @return le numéro de la zone du personnage, -1 en cas d'erreur
  */
@@ -76,7 +76,7 @@ int zonePersonnage(personnage p);
 
 /**
  * @brief met à jour le statut du personnage p
- * 
+ * @author Adam Ouzegdouh
  * @param p le personnage qui a été mangé
  */
 void estMange(personnage p);
