@@ -370,9 +370,11 @@ joueuse tour_joueuse(joueuse pj1, joueuse pj2){
         exit(2);
     }
     else if(getTour(pj1)==1 && getTour(pj2)==0){
+        printf("C'est le tour de la joueuse %d",getIdJoueuse(pj1));
         return pj1;
     }
     else {
+        printf("C'est le tour de la joueuse %d",getIdJoueuse(pj1));
         return pj2;
     }
 }
@@ -380,6 +382,7 @@ joueuse tour_joueuse(joueuse pj1, joueuse pj2){
 /**
  * @brief renvoie le nombre de membres de la joueuse
  * @param pj  pointeur vers la joueuse dont on veut connaitre le nombre de membre
+ * @return le nombre de membre d'école de la joueuses mise en paramètre
 */
 int nb_membre_ecole(joueuse pj){
     if(getTaille(pj)>7){
@@ -391,6 +394,7 @@ int nb_membre_ecole(joueuse pj){
         exit(4);
     }
     else {
+        printf("Le nombre de membre de la joueuse %d est %d",getIdJoueuse(pj),getTaille(pj));
         return getTaille(pj);
     }
 }
