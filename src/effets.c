@@ -39,7 +39,7 @@ void wrapper_pouvoir_carte(joueuse* liste_joueuses, zones liste_zones, char* nom
         pouvoir_carte_Munante(liste_joueuses);
     }
     else if (strcmp(nom_carte, "Cyril Benezet") == 0) {
-        pouvoir_carte_Benezet(liste_joueuses[2], liste_zones);
+        pouvoir_carte_Benezet(liste_joueuses, liste_zones);
     }
     else if (strcmp(nom_carte, "Anne-Laure Ligozat") == 0) {
         pouvoir_carte_Ligozat(liste_joueuses[0]);
@@ -265,14 +265,24 @@ void pouvoir_carte_Munante(joueuse* liste_joueuses) {
 /**
  * @brief Execute le pouvoir de la carte Cyril Benezet
  * Déplacez un des monstres sur la zone de votre choix. Si un membre d'école se trouve sur la zone du monstre, il n'est pas mangé.
- * @param monstres permet d'avoir l'ensemble des monstres
+ * @param liste_joueuses permet d'avoir la liste de tous les joueuses
+ * @param liste_zones permet d'avoir l'ensemble des zones
  * @return rien
 */
-void pouvoir_carte_Benezet(joueuse monstres, zones liste_zones) {
-    int choix = demander_personnage(monstres);
-    setDeNbPas(getMembres(monstres)[choix - 1], 0); // Consumme le déplacement du monstre //TODO Add le nombre de tour
-    int zone = demander_zones_depart(liste_zones);
-    setZoneCourante(getMembres(monstres)[choix - 1], zone);
+void pouvoir_carte_Benezet(joueuse* liste_joueuses, zones liste_zones) {
+    // joueuse monstres = liste_joueuses[2];
+    // int choix = demander_personnage(monstres);
+    // setPeutSeDeplacer(getMembres(monstres)[choix - 1], 0);
+    // int zone = demander_zones_depart(liste_zones);
+    // setZonePrecedente(getMembres(monstres)[choix - 1], getZoneCourante(getMembres(monstres)[choix - 1]));
+    // setZoneCourante(getMembres(monstres)[choix - 1], zone);
+    // for (int i = 0; i < 2; i += 1) {
+    //     for (int j = 0; j < getTaille(liste_joueuses[i]); j += 1) {
+    //         if (getZoneCourante(getMembres(liste_joueuses[i])[j]) == zone) {
+    //             setToursRestantsInvincibilite(getMembres(liste_joueuses[i])[j], 1);
+    //         }
+    //     }
+    // }
 }
 
 /**
@@ -283,7 +293,7 @@ void pouvoir_carte_Benezet(joueuse monstres, zones liste_zones) {
 */
 void pouvoir_carte_Ligozat(joueuse jou) {
     int choix = demander_personnage(jou);
-    setDeNbPas(getMembres(jou)[choix - 1], 1); // TODO add le nombre de tours infini
+    setDeNbPas(getMembres(jou)[choix - 1], 1);
 }
 
 /**
