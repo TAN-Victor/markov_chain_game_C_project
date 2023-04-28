@@ -21,6 +21,10 @@ int main() {
      * 
      */
     liste_cartes liste_cartes_global = creer_liste_cartes_global();
+        for (int i = 0; i < 20; i += 1) {
+        printf("CARTE %d : %s \n",i, getNom(getCartes(liste_cartes_global)[i]));
+        fflush(stdout);
+    }
     /**
      * @brief Création de 3 "joueuses"; l'ensemble des monstres correspondra à une joueuse 
      * 

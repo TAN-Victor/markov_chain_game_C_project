@@ -8,7 +8,7 @@
  * \return Retourne une carte personnalisé
 */
 carte creer_carte(char* nom_to_put,char* description_to_put){
-    carte c=(carte)malloc(sizeof(struct carte));
+    carte c=(carte)malloc(sizeof(carte));
     c->nom=nom_to_put;
     c->description=description_to_put;
     return c;
