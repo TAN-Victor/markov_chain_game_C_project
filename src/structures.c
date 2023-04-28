@@ -64,15 +64,15 @@ void setTailleMatrice(matrice_probas matrice, int taille){
 
 void ajout_carte(liste_cartes liste, carte carte){
     setNbCartes(liste,getNbCartes(liste)+1);
-    liste->cartes = realloc(liste->cartes,(liste->nb_cartes)*sizeof(carte));
-    liste->cartes[getNbCartes(liste-1)] = carte;
+    liste->cartes = realloc(liste->cartes,getNbCartes(liste)*sizeof(carte));
+    liste->cartes[getNbCartes(liste)-1] = carte;
 }
 
 carte lecture_cartes(liste_cartes liste, int index){
     if (index < getNbCartes(liste)){
         return getCartes(liste)[index];
     }
-    fprintf(stderr,"lecture_cartes: index out of range");
+    fprintf(stderr,"index out of range");
     return NULL;
 }
 
@@ -86,17 +86,18 @@ void suppr_cartes(liste_cartes liste, carte carte){
         for (int i = index; i < getNbCartes(liste); i++){//on parcours la liste à partir de l'indice de la carte à supprimer
             liste->cartes[i] = getCartes(liste)[i + 1];
         }
-        liste->cartes = realloc(getCartes(liste), getNbCartes(liste) * sizeof(carte));
+        liste->cartes = realloc(getCartes(liste), getNbCartes(liste) * sizeof(carte)); 
     }
 }
 
 
-liste_cartes creer_liste_cartes_global(){
-    liste_cartes liste_cartes_global = malloc(sizeof(struct liste_cartes));
+liste_cartes creer_liste_cartes_global() {
+    liste_cartes liste_cartes_global=malloc(sizeof(struct liste_cartes)); // Correction sizeof du struct et pas du pointeur
     setNbCartes(liste_cartes_global,0);
 
-    carte carte_Merabet=creer_carte("Massinissa Merabet","Pendant vos 3 prochains tours, votre capital augmente de 2.");
+    carte carte_Merabet=creer_carte("Massinissa Merabet", "Pendant vos 3 prochains tours, votre capital augmente de 2.");
     ajout_carte(liste_cartes_global,carte_Merabet);
+
 
     carte carte_Bannour=creer_carte("Fetia Bannour","Choisissez deux zones, les personnages présents sur ces deux zones sont échangés.");
     ajout_carte(liste_cartes_global,carte_Bannour);
@@ -159,9 +160,8 @@ liste_cartes creer_liste_cartes_global(){
 }
 
 
-
 matrice_probas creer_matrice(int taille){
-    matrice_probas matrice = malloc(sizeof(struct matrice_probas));
+    matrice_probas matrice = malloc(sizeof(struct matrice_probas)); // Correction size of struct et pas le pointeur
     matrice->taille_matrice = taille;
     matrice->proba = malloc(taille * sizeof(float*));
     for (int i = 0; i < taille; i++){
