@@ -462,20 +462,20 @@ void utilise_capital(joueuse pj, int capital){
  * @param c la carte que la joueuse souhaite jouer
 */
 void utilise_carte(joueuse* liste_joueuses, zones liste_zones, carte c){
-    int exist_carte=0;
-    for(int i=0;i<getNbCartes(getMain(liste_joueuses[0]));i++){
-        if(lecture_cartes(getMain(liste_joueuses[0]),i)==c){
-            exist_carte=1;
-            break;
-        }
-    }
-    if(exist_carte==1){
-        wrapper_pouvoir_carte(liste_joueuses,liste_zones,getNom(c));
-        suppr_cartes(liste_joueuses[0],c);
-    }
-    else{
-         printf("La carte utilisé n'est pas dans votre main, joueuse %d",getIdJoueuse(liste_joueuses[0]));
-    }
+    // int exist_carte=0;
+    // for(int i=0;i<getNbCartes(getMain(liste_joueuses[0]));i++){
+    //     if(lecture_cartes(getMain(liste_joueuses[0]),i)==c){
+    //         exist_carte=1;
+    //         break;
+    //     }
+    // }
+    // if(exist_carte==1){
+    //     wrapper_pouvoir_carte(liste_joueuses,liste_zones,getNom(c));
+    //     suppr_cartes(liste_joueuses[0],c);
+    // }
+    // else{
+    //      printf("La carte utilisé n'est pas dans votre main, joueuse %d",getIdJoueuse(liste_joueuses[0]));
+    // }
 }
 
 
