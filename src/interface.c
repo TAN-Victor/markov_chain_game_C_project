@@ -294,7 +294,7 @@ float demander_proba_par_capital() {
         fprintf(stderr, "Attention, vous n'avez pas entré une probabilité par capital correcte. Il doit être multiple de 0.1\n");
         return -1;
     }
-    if (fabs(choix * 10.0 - round(choix * 10.0)) < 1e-6) {
+    if (fabs(choix * 10.0 - floor(choix * 10.0)) < 1e-6) {
         fprintf(stderr, "Attention, vous n'avez pas entré une probabilité par capital correcte. Il doit être multiple de 0.1\n");
     }    
     return choix;
