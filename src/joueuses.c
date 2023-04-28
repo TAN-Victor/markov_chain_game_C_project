@@ -370,11 +370,9 @@ joueuse tour_joueuse(joueuse pj1, joueuse pj2){
         exit(2);
     }
     else if(getTour(pj1)==1 && getTour(pj2)==0){
-        printf("C'est le tour de la joueuse %d\n",getIdJoueuse(pj1));
         return pj1;
     }
     else {
-        printf("C'est le tour de la joueuse %d\n",getIdJoueuse(pj1));
         return pj2;
     }
 }
@@ -394,7 +392,6 @@ int nb_membre_ecole(joueuse pj){
         exit(4);
     }
     else {
-        printf("Le nombre de membre de la joueuse %d est %d\n",getIdJoueuse(pj),getTaille(pj));
         return getTaille(pj);
     }
 }
@@ -406,7 +403,6 @@ int nb_membre_ecole(joueuse pj){
 */
 int tous_manges(joueuse pj){
     if(getTaille(pj)==0){
-        printf("Les membres de l'équipe de la joueuse %d ont tous été mangés\n",getIdJoueuse(pj));
         return 1;
     }
     int manges=0;
@@ -416,7 +412,6 @@ int tous_manges(joueuse pj){
         }
     }
     if(manges==getTaille(pj)){
-        printf("Les membres de l'équipe de la joueuse %d ont tous été mangés\n",getIdJoueuse(pj));
         return 1;
     }
     else if(getTaille(pj)<0){
@@ -424,7 +419,6 @@ int tous_manges(joueuse pj){
         exit(5);
     }
     else {
-        printf("Les membres de l'équipe de la joueuse %d n'ont pas tous été mangés\n",getIdJoueuse(pj));
         return 0;
     }
 }
@@ -436,7 +430,6 @@ int tous_manges(joueuse pj){
 void reinitialise_capital(joueuse pj){
     setCapital(pj,CAPITAL_DE_BASE);
     setBonusTemporaire(pj,1);
-    printf("Le capital de la joueuse %d a été réinitialisé, capital : %d\n",getIdJoueuse(pj),getCapital(pj));
 }
 
 /**
@@ -451,7 +444,6 @@ void utilise_capital(joueuse pj, int capital){
     }
     else{
         setCapital(pj,getCapital(pj)-capital);
-        printf("%d du capital de la joueuse %d a été dépensé, capital : %d\n",getIdJoueuse(pj),capital,getCapital(pj));
     }
 }
 

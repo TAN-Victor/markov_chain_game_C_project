@@ -126,11 +126,10 @@ void utilise_capital(joueuse pj, int capital);
 /**
  * @brief la carte c est retirer de la main du joueur et on applique les effets de la carte (il faut aussi s'assurer que le joueur possède la carte)
   * @author Adam Ouzegdouh
- * @param liste_joueuses liste des joueuses dont monstres
- * @param liste_zones liste des zones du jeu
+ * @param joue la joueuse qui joue la carte
  * @param c la carte que la joueuse souhaite jouer
 */
-void utilise_carte(joueuse* liste_joueuses, zones liste_zones, carte c);
+void utilise_carte(joueuse joue, carte c);
 
 /* ---------------------------------------------------------------------------------------------------------- */
 /* Getters and Setters */
