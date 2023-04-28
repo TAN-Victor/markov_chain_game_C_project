@@ -27,7 +27,7 @@
  */
 void test_init_joueuses()
 {
-    joueuse j = creation_joueuse(1); /*on créé une joueuse*/
+    joueuse j = creation_joueuse(); /*on créé une joueuse*/
     if (j==NULL){
         free_joueuse(j);
         return;
