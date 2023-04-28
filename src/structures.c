@@ -83,7 +83,7 @@ void suppr_cartes(liste_cartes liste, carte carte){
     }
     if (index < getNbCartes(liste)){ //si on vérifie cette condition c'est que on a trouvé une carte dans la lsite qui corespond à celle passée en argument
         setNbCartes(liste,getNbCartes(liste)-1);
-        free(carte);
+        //free(liste->cartes[index]);
         for (int i = index; i < getNbCartes(liste); i++){//on parcours la liste à partir de l'indice de la carte à supprimer
             liste->cartes[i] = getCartes(liste)[i + 1];
         }
