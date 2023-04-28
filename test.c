@@ -444,7 +444,7 @@ void test_init_personnage(){
 */
 void test_vie_d_un_personnage(){
     zones zs = nouvellesZones();
-    personnage perso = nouveauPersonnage(1,trouveZone(zs,0));
+    personnage perso = nouveauPersonnage(1,1,2);
     if (getPeutSeDeplacer(perso)){ //on test si le personnage peut se déplacer sur chacune des zones
         for (int i=0; i<10; i++){
             deplacer(perso,trouveZone(zs,i));
@@ -525,7 +525,7 @@ void test_modif_proba_avec_capital(){
     }
     free_joueuse(j1);
     libereZones(zs);
-    free_listes_cartes_global();
+    free(lg);
     fprintf(stdout,"test modif proba avec capital ok\n");
 }
 
@@ -538,9 +538,9 @@ void test_modif_proba_avec_capital(){
  * @return nothing
 */
 void test_deroulement_du_jeu(){
-    liste_cartes lg = 
-    joueuse j1 = creation_joueuse(1);
-    joueuse j2 = creation_joueuse(2);
+    liste_cartes lg = creer_liste_cartes_global();
+    joueuse j1 = creation_joueuse(1,lg);
+    joueuse j2 = creation_joueuse(2,lg);
     personnage* persos1 = getMembres(j1);
     int i = 0;
     while (persos1[i] != NULL){
@@ -555,7 +555,7 @@ void test_deroulement_du_jeu(){
     }
     free_joueuse(j1);
     personnage* persos2 = getMembres(j2);
-    joueuse j1_ = creation_joueuse(1);
+    joueuse j1_ = creation_joueuse(1,lg);
     while (persos2[i] != NULL){
         estMange(persos1[i]);
         i++;
@@ -568,6 +568,7 @@ void test_deroulement_du_jeu(){
     }
     free_joueuse(j1_);
     free_joueuse(j2);
+    free(lg);
 }
 
 /**
@@ -578,20 +579,27 @@ void test_deroulement_du_jeu(){
  * @return nothing
 */
 void test_init_main(){
-    joueuse j = creation_joueuse(1);
+    liste_cartes lg = creer_liste_cartes_global();
+    joueuse j = creation_joueuse(1,lg);
     liste_cartes main_j = getMain(j);
     if (getNbCartes(main_j)!=5){
         fprintf(stderr,"erreur: il n'y pas assez de cartes lors de l'initialisation");
         free_joueuse(j);
+        free(lg);
+        free(main_j);
         return;
     }
     for (int i=0; i<5; i++){
         if(getCartes(main_j)[i]==NULL){
             fprintf(stderr,"erreur: la %d ème carte est NULL",i);
             free_joueuse(j);
+            free(lg);
             return;
         }
     }
+    free(lg);
+    free_joueuse(j);
+    free(main_j);
     fprintf(stdout,"test_init_main ok");
 }
 
