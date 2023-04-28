@@ -90,6 +90,18 @@ void suppr_cartes(liste_cartes liste, carte carte){
     }
 }
 
+/**
+ * @brief libère la mémoire allouée à la liste de cartes
+ * 
+ * @param liste 
+ */
+void libere_liste_cartes(liste_cartes liste){
+    for (int i = 0; i < getNbCartes(liste); i++){
+        free(liste->cartes[i]);
+    }
+    free(liste->cartes);
+    free(liste);
+}
 
 liste_cartes creer_liste_cartes_global() {
     liste_cartes liste_cartes_global=malloc(sizeof(struct liste_cartes)); // Correction sizeof du struct et pas du pointeur

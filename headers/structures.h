@@ -66,6 +66,13 @@ void ajout_carte(liste_cartes liste, carte carte);
 void suppr_cartes(liste_cartes liste, carte carte);
 
 /**
+ * @brief libère la mémoire allouée à la liste de cartes
+ * 
+ * @param liste 
+ */
+void libere_liste_cartes(liste_cartes liste);
+
+/**
  * @brief lecture de la carte d'indice index
  * 
  * @param liste un pointeur vers la liste des cartes
