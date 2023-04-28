@@ -312,7 +312,34 @@ joueuse creation_joueuse(int n, liste_cartes liste_cartes_global){
         personnage monstre = nouveauPersonnage(n, 1, 1);
         addMembres(jou, monstre);
     }
-    
+    else {
+        for (int i = 1; i < 6; i += 1) {
+            srand(time(NULL));
+            int random = 2*n + rand()%2;
+            personnage nouveau = nouveauPersonnage(n, i, random);
+            addMembres(jou, nouveau); // Devra appeler realloc
+        }
+    }
+    setToursRestantsBonusCapital(jou, 0);
+    setToursRestantsInvincibilite(jou, 0);
+    setToursRestantsJouer(jou, 1);
+    setProbaParCapital(jou, PROBA_PAR_CAPITAL);
+    setBonusTemporaire(jou, 0);
+    setToursRestantsBonusProbaParCapital(jou, 0);
+
+    liste_cartes main_cartes = (liste_cartes) malloc(sizeof(struct liste_cartes)); // La main de la joueuse
+    jou->main_du_joueur = main_cartes;
+    setNbCartes(main_cartes, 0);
+    for (int j = 0; j < 5; j += 1) {
+        int random = rand()%getNbCartes(liste_cartes_global);
+        carte c = lecture_cartes(liste_cartes_global, random);
+        ajout_carte(main_cartes, c);
+        suppr_cartes(liste_cartes_global, c);
+    }
+    printf("ID : %d\n", getIdJoueuse(jou));
+    printf("CAPITAL : %d\n", getCapital(jou));
+    fflush(stdout);
+    return jou;
 }
 
 /**

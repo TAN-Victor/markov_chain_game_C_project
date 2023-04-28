@@ -57,9 +57,10 @@ typedef struct joueuse* joueuse;
             - on initialise la main_du_joueur avec 5 cartes aléatoires
             - on associe à la joeuse une clée unique (1 ou 2)-> cette clef permet de savoir qui est le joueur n°1
  * @param n un entier si n=0 on cree un ensemble de monstre avec un seul monstre, si n=1 on cree une joueuse 1, si n=2 on cree une joueuse 2
+ * @param liste_cartes_global la liste de toutes les cartes du jeu
  * @return joueuse un pointeur vers la joueuse crée
 */
-joueuse creation_joueuse(int n);
+joueuse creation_joueuse(int n, liste_cartes liste_cartes_global);
 
 
 /**
