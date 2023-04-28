@@ -330,6 +330,8 @@ joueuse creation_joueuse(int n, liste_cartes liste_cartes_global){
     liste_cartes main_cartes = (liste_cartes) malloc(sizeof(struct liste_cartes)); // La main de la joueuse
     jou->main_du_joueur = main_cartes;
     setNbCartes(main_cartes, 0);
+    carte* ensemble_cartes = (carte *) malloc (sizeof(carte));
+    main_cartes->cartes = ensemble_cartes;
     for (int j = 0; j < 5; j += 1) {
         int random = rand()%getNbCartes(liste_cartes_global);
         carte c = lecture_cartes(liste_cartes_global, random);

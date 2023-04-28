@@ -218,12 +218,14 @@ void pouvoir_carte_Bourard(joueuse* liste_joueuses, zones liste_zones) {
         }
     }
     int continuer = 1;
-    while (continuer == 1) {
+    int nb_tour = 0;
+    while (continuer == 1 && nb_tour < 100) {
         continuer = 0;
         for (int i = 0; i < getTaille(liste_joueuses[0]); i += 1) {
             for (int j = 0; j < getTaille(liste_joueuses[1]); j += 1) {
                 if (getZoneCourante(getMembres(liste_joueuses[0])[i]) == getZoneCourante(getMembres(liste_joueuses[1])[j])) {
                     continuer = 1;
+                    nb_tour += 1;
                     deplacer(getMembres(liste_joueuses[0])[i], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[0])[i])))); // Déplacement des joueuses vers leur prochaine zone
                     deplacer(getMembres(liste_joueuses[1])[j], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[1])[j])))); // Déplacement des joueuses vers leur prochaine zone
                 }

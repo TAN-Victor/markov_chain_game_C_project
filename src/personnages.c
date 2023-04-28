@@ -216,7 +216,7 @@ void setToursRestantsBonusPas(personnage p, int toursRestantsBonusPas){
  */
 personnage nouveauPersonnage(int n, int id_to_put, int nz){
     personnage perso=malloc(sizeof(struct _personnage));
-    setType(perso,nz);
+    setType(perso,n);
     setStatut(perso,1); // 1 car vivant
     setIdPersonnage(perso,id_to_put); // id du personnage
     setZoneCourante(perso,nz);

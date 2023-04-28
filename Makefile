@@ -1,5 +1,5 @@
 bin/prog: obj/cartes.o obj/structures.o obj/zones.o obj/personnages.o obj/joueuses.o obj/interface.o obj/effets.o obj/main.o
-	gcc -Wall -Wextra -g obj/cartes.o obj/structures.o obj/zones.o obj/personnages.o obj/joueuses.o obj/interface.o obj/effets.o obj/main.o -o bin/prog
+	gcc -Wall -Wextra -g obj/cartes.o obj/structures.o obj/zones.o obj/personnages.o obj/joueuses.o obj/interface.o obj/effets.o obj/main.o -lm -o bin/prog
 
 obj/zones.o: src/zones.c headers/zones.h
 	gcc -Wall -Wextra -c src/zones.c -o obj/zones.o
