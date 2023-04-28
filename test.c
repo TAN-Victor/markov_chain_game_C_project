@@ -30,67 +30,67 @@ void test_init_joueuses()
     liste_cartes lg = creer_liste_cartes_global();
     joueuse j = creation_joueuse(1,lg); /*on créé une joueuse*/
     if (j==NULL){
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(j);
         return;
     }
     if (getCapital(j) != 5){
         fprintf(stderr,"pb capital\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(j);
         return;
     }
     if (getTaille(j) != 5){
         fprintf(stderr,"pb taille\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(j);
         return;
     }
     if (getIdJoueuse(j) != 1){
         fprintf(stderr,"pb id\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(j);
         return;
     }
     if (getTour(j) != 1){
         fprintf(stderr,"pb tour\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(j);
         return;
     }
     if (getToursRestantsBonusCapital(j) != 1){
         fprintf(stderr,"pb tours restants bonus capital\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(j);
         return;
     }
     if (getToursInvincibilite(j) != 0){
         fprintf(stderr,"pb tours invinsibilite\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(j);
         return;
     }
     if (getToursRestantsJouer(j) != 1){
         fprintf(stderr,"pb tours restants jouer\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(j);
         return;
     }
     if (getProbaParCapital(j) != 0.1){
         fprintf(stderr,"pb proba par capital\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(j);
         return;
     }
     if (getMain(j) == NULL){
         fprintf(stderr,"pb mains\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(j);
         return;
     }
     if (getMembres(j) == NULL){
         fprintf(stderr,"pb membres\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(j);
         return;
     }
@@ -101,72 +101,72 @@ void test_init_joueuses()
     //adapter aux valeurs choisit par adam dans la fonction creation_joueuse
     if (m==NULL){
         free_joueuse(m);
-        free(lg);
+        libere_liste_cartes(lg);
         return;
     }
     if (getCapital(m) != -1){
         fprintf(stderr,"pb capital\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(m);
         return;
     }
     if (getTaille(m) != 1){
         fprintf(stderr,"pb taille\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(m);
         return;
     }
     if (getIdJoueuse(m) != 0){
         fprintf(stderr,"pb id\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(m);
         return;
     }
     if (getTour(m) != 1){
         fprintf(stderr,"pb tour\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(m);
         return;
     }
     if (getToursRestantsBonusCapital(m) != 1){
         fprintf(stderr,"pb tours restants bonus capital\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(m);
         return;
     }
     if (getToursInvincibilite(m) != -1){
         fprintf(stderr,"pb tours invinsibilite\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(m);
         return;
     }
     if (getToursRestantsJouer(m) != 1){
         fprintf(stderr,"pb tours restants jouer\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(m);
         return;
     }
     if (getProbaParCapital(m) != 0.1){
         fprintf(stderr,"pb proba par capital\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(m);
         return;
     }
     if (getMain(m) == NULL){
         fprintf(stderr,"pb mains\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(m);
         return;
     }
     if (getMembres(m) == NULL){
         fprintf(stderr,"pb membres\n");
-        free(lg);
+        libere_liste_cartes(lg);
         free_joueuse(m);
         return;
     }
     //tester la création des personnages
     free_joueuse(m);
-    free(lg);
+    libere_liste_cartes(lg);
     fprintf(stdout,"test init joueuses ok\n");
 }
 
@@ -282,7 +282,7 @@ void test_init_personnage(){
         liberePersonnage(perso);
         return;
     }
-    if (getToursRestantsBonusPas(personnage) != 0){
+    if (getToursRestantsBonusPas(perso) != 0){
         fprintf(stderr,"pb tours restants bonus pas\n");
         libereZones(zs);
         liberePersonnage(perso);
@@ -435,6 +435,7 @@ void test_init_personnage(){
     fprintf(stdout,"test init personnage ok\n");
 }
 
+
 /**
  * @brief test les déplcements d'un personnage et les modifications de satut ainsi que si le personnage est mangé ou non
  * 
@@ -525,13 +526,13 @@ void test_modif_proba_avec_capital(){
     }
     free_joueuse(j1);
     libereZones(zs);
-    free(lg);
+    libere_liste_cartes(lg);
     fprintf(stdout,"test modif proba avec capital ok\n");
 }
 
 
 /**
- * @brief test le déroulement du jeu (vainqueur, fin du jeu, démarage du jeu)
+ * @brief test le déroulement du jeu (vainqueur, fin du jeu)
  * 
  * @param nothing
  * 
@@ -551,6 +552,7 @@ void test_deroulement_du_jeu(){
         fprintf(stderr,"probleme en fin de partie, le joeur 2 ne peut pas gagner\n");
         free_joueuse(j2);
         free_joueuse(j1);
+        libere_liste_cartes(lg);
         return;
     }
     free_joueuse(j1);
@@ -564,11 +566,12 @@ void test_deroulement_du_jeu(){
         fprintf(stderr,"probleme en fin de partie, le joeur 1 ne peut pas gagner\n");
         free_joueuse(j2);
         free_joueuse(j1_);
+        libere_liste_cartes(lg);
         return;
     }
     free_joueuse(j1_);
     free_joueuse(j2);
-    free(lg);
+    libere_liste_cartes(lg);
 }
 
 /**
@@ -585,7 +588,7 @@ void test_init_main(){
     if (getNbCartes(main_j)!=5){
         fprintf(stderr,"erreur: il n'y pas assez de cartes lors de l'initialisation");
         free_joueuse(j);
-        free(lg);
+        libere_liste_cartes(lg);
         free(main_j);
         return;
     }
@@ -593,20 +596,28 @@ void test_init_main(){
         if(getCartes(main_j)[i]==NULL){
             fprintf(stderr,"erreur: la %d ème carte est NULL",i);
             free_joueuse(j);
-            free(lg);
+            libere_liste_cartes(lg);
             return;
         }
     }
-    free(lg);
+    libere_liste_cartes(lg);
     free_joueuse(j);
     free(main_j);
     fprintf(stdout,"test_init_main ok");
 }
 
+/**
+ * @brief test si le debut du jeu s'effectue correctement 
+ * 
+ * @param nothing
+ * 
+ * @return nothing
+*/
 void test_demarage_du_jeu(){
-    joueuse j1 = creation_joueuse(1);
-    joueuse j2 = creation_joueuse(2);
-    joueuse m = creation_joueuse(0);
+    liste_cartes lg = creer_liste_cartes_global();
+    joueuse j1 = creation_joueuse(1,lg);
+    joueuse j2 = creation_joueuse(2,lg);
+    joueuse m = creation_joueuse(0,lg);
     //test s'il n'y a qu'un seul monstre et s'il se trouve dans la zone 1;
     if (getTaille(m)!=1) {
         free_joueuse(m);
@@ -615,7 +626,7 @@ void test_demarage_du_jeu(){
         fprintf(stderr,"erreur: il y a plus d'un monstre\n");
         return;
     }
-    if (getZone(getMembres(m)[0])!=1){
+    if (getZoneCourante(getMembres(m)[0])!=1){
         free_joueuse(m);
         free_joueuse(j2);
         free_joueuse(j1);
@@ -626,28 +637,29 @@ void test_demarage_du_jeu(){
     if (getTaille(j1)!=5){
         free_joueuse(j2);
         free_joueuse(j1);
-        fprintf(stderr,"erreur: il n'y a pas assez de joueuses\n")
+        fprintf(stderr,"erreur: il n'y a pas assez de joueuses\n");
         return;
     }
     if (getTaille(j2)!=5){
         free_joueuse(j2);
         free_joueuse(j1);
-        fprintf(stderr,"erreur: il n'y a pas assez de joueuses\n")
+        fprintf(stderr,"erreur: il n'y a pas assez de joueuses\n");
         return;
     }
-    if (getZone(getMembres(j1)[0])!=2 || getZone(j1)!=3){
+    if (getZoneCourante(getMembres(j1)[0])!=1 && getZoneCourante(getMembres(j1)[0])!=2){
         free_joueuse(j2);
         free_joueuse(j1);
-        fprintf(stderr,"erreur: la joueuse 1 n'est pas dans la zone 2 ou 3\n")
+        fprintf(stderr,"erreur: la joueuse 1 n'est pas dans la zone 2 ou 3\n");
         return;
     }
-    if (getZone(getMembres(j2)[0])!=4 || getZone(j2)!=5){
+    if (getZoneCourante(getMembres(j2)[0])!=4 || getZoneCourante(getMembres(j2)[0])!=3){
         free_joueuse(j2);
         free_joueuse(j1);
-        fprintf(stderr,"erreur: la joueuse 2 n'est pas dans la zone 4 ou 5\n")
+        fprintf(stderr,"erreur: la joueuse 2 n'est pas dans la zone 4 ou 5\n");
         return;
     }
 }
+
 
 int main(){
     test_init_zones();
