@@ -14,6 +14,7 @@
 #include <string.h>
 #include <time.h>
 #include <ctype.h>
+#include <math.h>
 
 struct carte{
     char* nom;
