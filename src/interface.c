@@ -279,10 +279,10 @@ int demander_personnage(joueuse j1) {
  * \brief Demande à une joueuse quelle probabilité par capital elle souhaite avoir entre 0.1 et 1
  * \return la valeur de probabilité par capital que la joueuse souhaite avoir, 0 sinon
 */
-int demander_proba_par_capital() {
-    int choix = -1;
+float demander_proba_par_capital() {
+    float choix = -1.;
     printf("Choisissez une probabilité par capital entre 0.1 et 1: \n");
-    while (scanf("%d", &choix) != 1 || choix <= 0) {
+    while (scanf("%e", &choix) != 1 || choix <= 0.) {
         if (isdigit(choix)) {
             fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
         } else {
@@ -290,10 +290,13 @@ int demander_proba_par_capital() {
         }
         while (getchar() != '\n');
     }
-    if (choix > 1 || choix % 0.1 != 0) {
+    if (choix > 1.0) {
         fprintf(stderr, "Attention, vous n'avez pas entré une probabilité par capital correcte. Il doit être multiple de 0.1\n");
         return -1;
     }
+    if (fabs(choix * 10.0 - round(choix * 10.0)) < 1e-6) {
+        fprintf(stderr, "Attention, vous n'avez pas entré une probabilité par capital correcte. Il doit être multiple de 0.1\n");
+    }    
     return choix;
 }
 
