@@ -234,7 +234,12 @@ void deplacer(personnage p, zone z){
  * @return le numéro de la zone du personnage, -1 en cas d'erreur
  */
 int zonePersonnage(personnage p){
-    return getZoneCourante(p);
+    if(getZoneCourante(p)<0){
+        return -1;
+    }
+    else {
+        return getZoneCourante(p);
+    }
 }
 
 /**
