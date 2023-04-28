@@ -195,7 +195,7 @@ void test_init_zones(){
 */
 void test_init_personnage(){
     zones zs = nouvellesZones();
-    personnage perso  = nouveauPersonnage(1,trouveZone(zs,0));//membre de l'équipe 1
+    personnage perso  = nouveauPersonnage(1,1,2);//membre de l'équipe 1 sur la zone 
     if (perso == NULL){
         fprintf(stderr,"NULL pointer");
         libereZones(zs);
@@ -224,14 +224,14 @@ void test_init_personnage(){
         return;
     }
     //tester la zone courante:
-    if (getZoneCourante(perso) != getNumero(trouveZone(zs,0))){
+    if (getZoneCourante(perso) != 2){
         fprintf(stderr,"pb zone courante\n");
         libereZones(zs);
         liberePersonnage(perso);
         return;
     }
     //tester la zone précédente:
-    if (getZonePrecedente(perso) != getNumero(trouveZone(zs,0))){
+    if (getZonePrecedente(perso) != -1){
         fprintf(stderr,"pb zone precedente\n");
         libereZones(zs);
         liberePersonnage(perso);
@@ -258,9 +258,15 @@ void test_init_personnage(){
         liberePersonnage(perso);
         return;
     }
+    if (getToursRestantsBonusPas(personnage) != 0){
+        fprintf(stderr,"pb tours restants bonus pas\n");
+        libereZones(zs);
+        liberePersonnage(perso);
+        return;
+    }
     liberePersonnage(perso);
 
-    personnage perso2 = nouveauPersonnage(2,trouveZone(zs,0));//memebre de l'équipe 2
+    personnage perso2 = nouveauPersonnage(2,1,4);//memebre de l'équipe 2
     if (perso2 == NULL){
         fprintf(stderr,"NULL pointer");
         libereZones(zs);
@@ -289,14 +295,14 @@ void test_init_personnage(){
         return;
     }
     //tester la zone courante:
-    if (getZoneCourante(perso2) != getNumero(trouveZone(zs,0))){
+    if (getZoneCourante(perso2) != 4){
         fprintf(stderr,"pb zone courante\n");
         libereZones(zs);
         liberePersonnage(perso2);
         return;
     }
     //tester la zone précédente:
-    if (getZonePrecedente(perso2) != getNumero(trouveZone(zs,0))){
+    if (getZonePrecedente(perso2) != -1){
         fprintf(stderr,"pb zone precedente\n");
         libereZones(zs);
         liberePersonnage(perso2);
@@ -323,9 +329,15 @@ void test_init_personnage(){
         liberePersonnage(perso2);
         return;
     }
+    if (getToursRestantsBonusPas(perso2)!= 0){
+        fprintf(stderr,"pb tours restants bonus pas\n");
+        libereZones(zs);
+        liberePersonnage(perso2);
+        return;
+    }
     free(perso2);
 
-    personnage monstre = nouveauPersonnage(0,trouveZone(zs,0));//monstre
+    personnage monstre = nouveauPersonnage(0,1,0);//monstre
     if (monstre == NULL){
         fprintf(stderr,"NULL pointer");
         libereZones(zs);
@@ -354,14 +366,14 @@ void test_init_personnage(){
         return;
     }
     //tester la zone courante:
-    if (getZoneCourante(monstre) != getNumero(trouveZone(zs,0))){
+    if (getZoneCourante(monstre) != 0){
         fprintf(stderr,"pb zone courante\n");
         libereZones(zs);
         liberePersonnage(monstre);
         return;
     }
     //tester la zone précédente:
-    if (getZonePrecedente(monstre) != getNumero(trouveZone(zs,0))){
+    if (getZonePrecedente(monstre) != -1){
         fprintf(stderr,"pb zone precedente\n");
         libereZones(zs);
         liberePersonnage(monstre);
@@ -384,6 +396,12 @@ void test_init_personnage(){
     //tester si le personnage peut se déplacer:
     if (getPeutSeDeplacer(monstre) != 1){
         fprintf(stderr,"pb peut se deplacer\n");
+        libereZones(zs);
+        liberePersonnage(monstre);
+        return;
+    }
+    if (getToursRestantsBonusPas(monstre)!= 0){
+        fprintf(stderr,"pb tours restants bonus pas\n");
         libereZones(zs);
         liberePersonnage(monstre);
         return;
