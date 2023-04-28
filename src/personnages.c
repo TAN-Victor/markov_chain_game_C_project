@@ -188,18 +188,19 @@ void setToursRestantsBonusPas(personnage p, int toursRestantsBonusPas){
             - membre d'école de jouese 2 si n = 2,
           le place sur la zone z passée en argument
           et initialise son statut sur vivant (ie 1)
- * 
+ * @author Adam Ouzegdouh
  * @param n le type de personnage
+ * @param id_to_put l'id à mettre qui sera généré aléatoirement, vaut 0 si le personnage est un monstre
  * @param nz le numéro de la zone
  * @return personnage un pointeur vers le personnage crée 
  */
 personnage nouveauPersonnage(int n, int id_to_put, int nz){
     personnage perso=malloc(sizeof(struct _personnage));
-    setType(perso,n); // 0 pour monstre, 1 pour joueur 1, 2 pour joueur 2
+    setType(perso,nz);
     setStatut(perso,1); // 1 car vivant
     setIdPersonnage(perso,id_to_put); // id du personnage
     setZoneCourante(perso,nz);
-    setZonePrecedente(perso,-1);
+    setZonePrecedente(perso,-1); // -1 car vient d'être créé
     setDeNbPas(perso,1);
     setToursRestantsBonusPas(perso,0);
     setPeutSeDeplacer(perso,1);
