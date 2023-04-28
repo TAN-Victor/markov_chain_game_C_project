@@ -30,6 +30,7 @@ struct _personnage {
     int tours_restants_bonus_pas; /* nombre de tours restants pour le bonus de pas, initialisé à 0, vaut n positif si bonus temporaire, et -1 si bonus permanent */
     int peut_se_deplacer; /* 1 si peut se déplacer ce tour, 0 sinon */
     int nb_de_tour_disparu_restant; /* vaut 0 initialement */
+    int invincible_ce_tour; /* vaut 0 initialement, 1 si invincible ce tour */
 };
 typedef struct _personnage* personnage;
 
@@ -147,6 +148,22 @@ int getNbTourDisparuRestant(personnage p);
  * @return le booléen permettant de savoir si le personnage peut jouer ou non, -1 en cas d'erreur
  */
 int getPeutSeDeplacer(personnage p);
+
+/**
+ * @brief renvoie le booléen permettant de savoir si le personnage est invincible ou non
+ * 
+ * @param p 
+ * @return int 1 ou 0
+ */
+int getInvincibleCeTour(personnage p);
+
+/**
+ * @brief met à jour l'invicibilité du personnage
+ * 
+ * @param p 
+ * @param invincible vaut 1 ou 0
+ */
+void setInvicibleCeTour(personnage p, int invincible);
 
 /**
  * @brief modifie le type du personnage

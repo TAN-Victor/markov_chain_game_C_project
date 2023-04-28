@@ -112,6 +112,26 @@ void setStatut(personnage p, int statut){
 }
 
 /**
+ * @brief renvoie le booléen permettant de savoir si le personnage est invincible ou non
+ * 
+ * @param p 
+ * @return int 1 ou 0
+ */
+int getInvincibleCeTour(personnage p){
+    return p->invincible_ce_tour;
+}
+
+/**
+ * @brief met à jour l'invicibilité du personnage
+ * 
+ * @param p 
+ * @param invincible vaut 1 ou 0
+ */
+void setInvicibleCeTour(personnage p, int invincible){
+    p->invincible_ce_tour = invincible;
+}
+
+/**
  * @brief modifie la zone courante du personnage
  * 
  * @param p un personnage dont on souhaite modifier la zone courante
