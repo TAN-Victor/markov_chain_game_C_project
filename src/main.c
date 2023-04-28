@@ -41,6 +41,13 @@ int main() {
      */
     zones liste_zones = nouvellesZones();
     message_generique(2, NULL, NULL, NULL); // Le message dit que les zones sont bien créees.
+    for (int i = 0; i < getTailleMatrice(getMatrice(liste_zones)); i += 1) {
+        for (int j = 0; j < getTailleMatrice(getMatrice(liste_zones)); j += 1) {
+            printf("%f ", lecture_probas(getMatrice(liste_zones), i, j));
+        }
+        getNumero(liste_zones[i]);
+    }
+
 
     int i = -1; // Va valoir 0 si c'est le tour de la joueuse 1, 1 si c'est le tour de la joueuse 2
     /**

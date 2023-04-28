@@ -88,11 +88,11 @@ void pouvoir_carte_Munante(joueuse* liste_joueuses);
 /**
  * @brief Execute le pouvoir de la carte Cyril Benezet
  * Déplacez un des monstres sur la zone de votre choix. Si un membre d'école se trouve sur la zone du monstre, il n'est pas mangé.
- * @param monstres permet d'avoir l'ensemble des monstres
+ * @param liste_joueuses permet d'avoir l'ensemble des joueuses
  * @param liste_zones permet d'avoir l'ensemble des zones
  * @return rien
 */
-void pouvoir_carte_Benezet(joueuse monstres, zones liste_zones);
+void pouvoir_carte_Benezet(joueuse* liste_joueuses, zones liste_zones);
 
 /**
  * @brief Execute le pouvoir de la carte Anne-Laure Ligozat
