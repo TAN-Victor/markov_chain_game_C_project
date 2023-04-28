@@ -20,16 +20,23 @@ void modifierZone(zones z, int n1, int n2, float proba, int action) {
 }
 
 /**
- * @brief initialise nb_zones à 10 et créer les zones du jeu 
+ * @brief initialise nb_zones à NB_DE_ZONES et créer les zones du jeu 
  * 
  * @return renvoie un pointeur vers l'ensemble des zones du jeu 
  */
 zones nouvellesZones(){
-    zones zos=(zones)malloc(sizeof(zones));
+    // on alloue la mémoire nécessaire pour les zones
+    zones zos=(zones)malloc(sizeof(struct _zones));
     zos->tab_zones=(zone*)malloc(NB_DE_ZONES*sizeof(struct _zone));
-    zos->matrice=(matrice_probas)malloc(sizeof(matrice_probas));
-    for(int i=0;i<NB_DE_ZONES;i++){
-        addZone(zos);
+    // on alloue la mémoire nécessaire pour la matrice de probas
+    zos->matrice=creer_matrice(NB_DE_ZONES);
+
+    // on initialise les zones
+    float prob = 1/(float)NB_DE_ZONES;
+    for (int i=0; i<NB_DE_ZONES; i++) {
+        for (int j=0; j<NB_DE_ZONES; j++) {
+            modifier_proba(zos->matrice, i, j, prob);
+        }
     }
     return zos;
 }
@@ -41,10 +48,10 @@ zones nouvellesZones(){
  */
 void libereZones(zones pz){
     for(int i=0;i<getTailleMatrice(pz->matrice);i++){ // j'ai pris en compte le taille de la matrice car c'est elle qui me permet de savoir si il y a 10 ou 11 zones
-        free(pz->tab_zones[i]);
+        free(getTabZones(pz)[i]);
     }
     free(pz->tab_zones);
-    suppression_matrice(pz->matrice);
+    suppression_matrice(getMatrice(pz));
     free(pz);
 }
 
@@ -55,39 +62,105 @@ void libereZones(zones pz){
  * @return zone la zone numéro n
  */
 zone trouveZone(zones z, int n){
-    if(n<0 || n>9){
-        fprintf(stderr," trouveZone : n<0 ou n>9, en effet, n=%d",n);
-        exit(n);
-    }
-    if(getTailleMatrice(z->matrice)==11 && (n<0 || n>10)){
-        fprintf(stderr," trouveZone : n<0 ou n>10, en effet, n=%d",n);
-        exit(n);
-    }
-    for(int i=0;i<getTailleMatrice(z->matrice);i++) { // Ici j'ai pris en compte la taille de la matrice car c'est elle qui change si on ajoute une 11ième zone
-        if(getNumero(getTabZones(z)[i])==n){
-            return getTabZones(z)[i];
+    // on regarde si le nombre de zone vaut 10
+    if(getTailleMatrice(getMatrice(z))==10)
+    {
+        // on regarde si le numéro de la zone est compris entre 0 et 9
+        if(n<0 || n>10)
+        {
+            fprintf(stderr," trouveZone : n<0 ou n>9, en effet, n=%d",n);
+            exit(n);
+        }
+        else
+        {
+            for(int i=0;i<getTailleMatrice(getMatrice(z));i++)
+            {
+                if(getNumero(getTabZones(z)[i])==n)
+                {
+                    return getTabZones(z)[i];
+                }
+            }
+            fprintf(stderr," trouveZone : aucune zone trouver pour n=%d",n);
+            exit(n);
         }
     }
-    fprintf(stderr," trouveZone : aucune zone trouver pour n=%d",n);
-    exit(n);
+    else // le nombre de zones vaut 11 dans ce cas là
+    {
+        // on regarde si le numéro de la zone est compris entre 0 et 10
+        if(n<0 || n>11)
+        {
+            fprintf(stderr," trouveZone : n<0 ou n>11, en effet, n=%d",n);
+            exit(n);
+        }
+        else
+        {
+            for(int i=0;i<getTailleMatrice(getMatrice(z));i++)
+            {
+                if(getNumero(getTabZones(z)[i])==n)
+                {
+                    return getTabZones(z)[i];
+                }
+            }
+            fprintf(stderr," trouveZone : aucune zone trouver pour n=%d",n);
+            exit(n);
+        }
+    }
 }
 
 /**
  * @brief renvoie le numéro de la prochaine zone
  * 
- * @param nz numéro de la zone actuelle compris entre 
+ * @param nz numéro de la zone actuelle compris entre 0 et taille_matrice-1
  * @return le numéro de la prochaine zone, -1 en cas d'erreur 
  */
 int prochaineZone(zones z, int nz){
-    if(nz<0 || nz>8){
-        fprintf(stderr," prochaineZone : nz<0 ou nz>8, en effet, nz=%d",nz);
-        return -1;
+    // on regarde si le nombre de zone vaut 10
+    if(getTailleMatrice(z->matrice)==10)
+    {
+        // on regarde si le numéro de la zone est compris entre 0 et 9
+        if(nz<0 || nz>9){
+            fprintf(stderr," prochaineZone : nz<0 ou nz>9, en effet, nz=%d",nz);
+            return -1;
+        }
+        double x = (double)rand() / RAND_MAX; // Générer un nombre aléatoire entre 0 et 1
+        double sum = 0.0;
+        int next_case = -1;
+        // Parcourir le tableau des probabilités et accumuler les probabilités
+        for (int i = 0; i < getTailleMatrice(getMatrice(z)); i++) // on parcourt la matrice de proba
+        {
+            sum += (getMatrice(z)->proba)[nz][i]; // on se place sur la nz-eme ligne et on parcours les colonnes
+            if (sum >= x)
+            {
+                next_case = i;
+                break;
+            }
+        }
+        // renvoie -1 en  cas d'erreur, et le numéro de la prochaine zone sinon
+        return next_case;
     }
-    if(getTailleMatrice(z->matrice)==11 && (nz<0 || nz>9)){
-        fprintf(stderr," prochaineZone : nz<0 ou nz>10, en effet, nz=%d",nz);
-        return -1;
-    }
-    return getNumero(getTabZones(z)[nz+1]);   
+    else // le nombre de zones vaut 11 dans ce cas là
+    {
+        // on regarde si le numéro de la zone est compris entre 0 et 10
+        if(nz<0 || nz>10){
+            fprintf(stderr," prochaineZone : nz<0 ou nz>10, en effet, nz=%d",nz);
+            return -1;
+        }
+        double x = (double)rand() / RAND_MAX; // Générer un nombre aléatoire entre 0 et 1
+        double sum = 0.0;
+        int next_case = -1;
+        // Parcourir le tableau des probabilités et accumuler les probabilités
+        for (int i = 0; i < getTailleMatrice(getMatrice(z)); i++) // on parcourt la matrice de proba
+        {
+            sum += (getMatrice(z)->proba)[nz][i]; // on se place sur la nz-eme ligne et on parcours les colonnes
+            if (sum >= x)
+            {
+                next_case = i;
+                break;
+            }
+        }
+        // renvoie -1 en  cas d'erreur, et le numéro de la prochaine zone sinon
+        return next_case;
+    } 
 }
 
 /**
@@ -159,8 +232,13 @@ void setMatrice(zones z, matrice_probas m){
     z->matrice = m;
 }
 
+/**
+ * @brief ajoute une zone au jeu
+ * 
+ * @param z les zones du jeu
+ */
 void addZone(zones z) {
-    matrice_probas matrice = malloc(sizeof(matrice_probas));
+    matrice_probas matrice = malloc(sizeof(struct matrice_probas));
     int new_taille = getMatrice(z)->taille_matrice + 1;
     setTailleMatrice(matrice, new_taille);
 
