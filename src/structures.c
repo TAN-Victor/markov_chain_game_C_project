@@ -92,7 +92,7 @@ void suppr_cartes(liste_cartes liste, carte carte){
 
 
 liste_cartes creer_liste_cartes_global(){
-    liste_cartes_global = malloc(sizeof(struct liste_cartes));
+    liste_cartes liste_cartes_global = malloc(sizeof(struct liste_cartes));
     setNbCartes(liste_cartes_global,0);
 
     carte carte_Merabet=creer_carte("Massinissa Merabet","Pendant vos 3 prochains tours, votre capital augmente de 2.");
