@@ -20,7 +20,7 @@ int main() {
      * @brief Création de la liste_cartes_global
      * 
      */
-    creer_liste_cartes_global();
+    liste_cartes liste_cartes_glocal = creer_liste_cartes_global();
     /**
      * @brief Création de 3 "joueuses"; l'ensemble des monstres correspondra à une joueuse 
      * 

@@ -65,14 +65,14 @@ void setTailleMatrice(matrice_probas matrice, int taille){
 void ajout_carte(liste_cartes liste, carte carte){
     setNbCartes(liste,getNbCartes(liste)+1);
     liste->cartes = realloc(liste->cartes,(liste->nb_cartes)*sizeof(carte));
-    liste->cartes[getNbCartes(liste)] = carte;
+    liste->cartes[getNbCartes(liste-1)] = carte;
 }
 
 carte lecture_cartes(liste_cartes liste, int index){
     if (index < getNbCartes(liste)){
         return getCartes(liste)[index];
     }
-    fprintf(stderr,"index out of range");
+    fprintf(stderr,"lecture_cartes: index out of range");
     return NULL;
 }
 
@@ -91,8 +91,8 @@ void suppr_cartes(liste_cartes liste, carte carte){
 }
 
 
-void creer_liste_cartes_global(){
-    liste_cartes_global=malloc(sizeof(liste_cartes));
+liste_cartes creer_liste_cartes_global(){
+    liste_cartes_global = malloc(sizeof(struct liste_cartes));
     setNbCartes(liste_cartes_global,0);
 
     carte carte_Merabet=creer_carte("Massinissa Merabet","Pendant vos 3 prochains tours, votre capital augmente de 2.");
@@ -154,20 +154,14 @@ void creer_liste_cartes_global(){
 
     carte carte_Prevel=creer_carte("Laurent Prével","Pendant 4 tours, les membres de votre école ne peuvent être mangés par un monstre. S'ils sont sur sa zone à la fin du tour, rien ne se passe, ils restent sur cette case.");
     ajout_carte(liste_cartes_global,carte_Prevel); 
+
+    return liste_cartes_global;
 }
 
-void supprimer_carte_global(carte c){
-    suppr_cartes(liste_cartes_global,c);
-}
-
-void free_listes_cartes_global(){
-    free(liste_cartes_global->cartes); // La non-utilisation de getter est volontaire pour éviter tout problèmes
-    free(liste_cartes_global);
-}
 
 
 matrice_probas creer_matrice(int taille){
-    matrice_probas matrice = malloc(sizeof(matrice_probas));
+    matrice_probas matrice = malloc(sizeof(struct matrice_probas));
     matrice->taille_matrice = taille;
     matrice->proba = malloc(taille * sizeof(float*));
     for (int i = 0; i < taille; i++){
