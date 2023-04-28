@@ -86,6 +86,7 @@ void suppr_cartes(liste_cartes liste, carte carte){
         for (int i = index; i < getNbCartes(liste); i++){//on parcours la liste à partir de l'indice de la carte à supprimer
             liste->cartes[i] = getCartes(liste)[i + 1];
         }
+        free(getCartes(liste)[getNbCartes(liste)]); //on libère la mémoire de la carte supprimée, la dernière de la liste
         liste->cartes = realloc(getCartes(liste), getNbCartes(liste) * sizeof(carte)); 
     }
 }
