@@ -83,10 +83,10 @@ void suppr_cartes(liste_cartes liste, carte carte){
     }
     if (index < getNbCartes(liste)){ //si on vérifie cette condition c'est que on a trouvé une carte dans la lsite qui corespond à celle passée en argument
         setNbCartes(liste,getNbCartes(liste)-1);
+        free(carte);
         for (int i = index; i < getNbCartes(liste); i++){//on parcours la liste à partir de l'indice de la carte à supprimer
             liste->cartes[i] = getCartes(liste)[i + 1];
         }
-        free(getCartes(liste)[getNbCartes(liste)]); //on libère la mémoire de la carte supprimée, la dernière de la liste, le -1 est déjà fait à la ligne 85
         liste->cartes = realloc(getCartes(liste), getNbCartes(liste) * sizeof(carte)); 
     }
 }
