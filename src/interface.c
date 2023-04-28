@@ -282,7 +282,7 @@ int demander_personnage(joueuse j1) {
 float demander_proba_par_capital() {
     float choix = -1.;
     printf("Choisissez une probabilité par capital entre 0.1 et 1: \n");
-    while (scanf("%d", &choix) != 1 || choix <= 0.) {
+    while (scanf("%e", &choix) != 1 || choix <= 0.) {
         if (isdigit(choix)) {
             fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
         } else {
