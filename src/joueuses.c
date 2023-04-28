@@ -366,15 +366,15 @@ void free_joueuse(joueuse pj){
 */
 joueuse tour_joueuse(joueuse pj1, joueuse pj2){
     if((getTour(pj1)==0 && getTour(pj2)==0) || (getTour(pj1)==1 && getTour(pj2)==1) ){ // Utile pour un futur débugage
-        fprintf(stderr,"tour_joueuse : le tour des 2 joueuses est à 0 ou 1");
+        fprintf(stderr,"tour_joueuse : le tour des 2 joueuses est à 0 ou 1\n");
         exit(2);
     }
     else if(getTour(pj1)==1 && getTour(pj2)==0){
-        printf("C'est le tour de la joueuse %d",getIdJoueuse(pj1));
+        printf("C'est le tour de la joueuse %d\n",getIdJoueuse(pj1));
         return pj1;
     }
     else {
-        printf("C'est le tour de la joueuse %d",getIdJoueuse(pj1));
+        printf("C'est le tour de la joueuse %d\n",getIdJoueuse(pj1));
         return pj2;
     }
 }
@@ -386,15 +386,15 @@ joueuse tour_joueuse(joueuse pj1, joueuse pj2){
 */
 int nb_membre_ecole(joueuse pj){
     if(getTaille(pj)>7){
-        fprintf(stderr,"nb_membre_ecole : joueuse %d possède plus de 7 membres",getIdJoueuse(pj));
+        fprintf(stderr,"nb_membre_ecole : joueuse %d possède plus de 7 membres\n",getIdJoueuse(pj));
         exit(3);
     }
     else if(getTaille(pj)<0){
-        fprintf(stderr,"nb_membre_ecole : joueuse %d possède en dessous de 0 membres",getIdJoueuse(pj));
+        fprintf(stderr,"nb_membre_ecole : joueuse %d possède en dessous de 0 membres\n",getIdJoueuse(pj));
         exit(4);
     }
     else {
-        printf("Le nombre de membre de la joueuse %d est %d",getIdJoueuse(pj),getTaille(pj));
+        printf("Le nombre de membre de la joueuse %d est %d\n",getIdJoueuse(pj),getTaille(pj));
         return getTaille(pj);
     }
 }
@@ -406,6 +406,7 @@ int nb_membre_ecole(joueuse pj){
 */
 int tous_manges(joueuse pj){
     if(getTaille(pj)==0){
+        printf("Les membres de l'équipe de la joueuse %d ont tous été mangés\n",getIdJoueuse(pj));
         return 1;
     }
     int manges=0;
@@ -415,13 +416,15 @@ int tous_manges(joueuse pj){
         }
     }
     if(manges==getTaille(pj)){
+        printf("Les membres de l'équipe de la joueuse %d ont tous été mangés\n",getIdJoueuse(pj));
         return 1;
     }
     else if(getTaille(pj)<0){
-        fprintf(stderr,"tous_manges : joueuse %d possède en dessous de 0 membres",getIdJoueuse(pj));
+        fprintf(stderr,"tous_manges : joueuse %d possède en dessous de 0 membres\n",getIdJoueuse(pj));
         exit(5);
     }
     else {
+        printf("Les membres de l'équipe de la joueuse %d n'ont pas tous été mangés\n",getIdJoueuse(pj));
         return 0;
     }
 }
@@ -433,6 +436,7 @@ int tous_manges(joueuse pj){
 void reinitialise_capital(joueuse pj){
     setCapital(pj,CAPITAL_DE_BASE);
     setBonusTemporaire(pj,1);
+    printf("Le capital de la joueuse %d a été réinitialisé, capital : %d\n",getIdJoueuse(pj),getCapital(pj));
 }
 
 /**
@@ -447,6 +451,7 @@ void utilise_capital(joueuse pj, int capital){
     }
     else{
         setCapital(pj,getCapital(pj)-capital);
+        printf("%d du capital de la joueuse %d a été dépensé, capital : %d\n",getIdJoueuse(pj),capital,getCapital(pj));
     }
 }
 
