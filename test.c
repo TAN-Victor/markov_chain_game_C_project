@@ -27,122 +27,146 @@
  */
 void test_init_joueuses()
 {
-    joueuse j = creation_joueuse(); /*on créé une joueuse*/
+    liste_cartes lg = creer_liste_cartes_global();
+    joueuse j = creation_joueuse(1,lg); /*on créé une joueuse*/
     if (j==NULL){
+        free(lg);
         free_joueuse(j);
         return;
     }
     if (getCapital(j) != 5){
         fprintf(stderr,"pb capital\n");
+        free(lg);
         free_joueuse(j);
         return;
     }
     if (getTaille(j) != 5){
         fprintf(stderr,"pb taille\n");
+        free(lg);
         free_joueuse(j);
         return;
     }
     if (getIdJoueuse(j) != 1){
         fprintf(stderr,"pb id\n");
+        free(lg);
         free_joueuse(j);
         return;
     }
     if (getTour(j) != 1){
         fprintf(stderr,"pb tour\n");
+        free(lg);
         free_joueuse(j);
         return;
     }
     if (getToursRestantsBonusCapital(j) != 1){
         fprintf(stderr,"pb tours restants bonus capital\n");
+        free(lg);
         free_joueuse(j);
         return;
     }
     if (getToursInvincibilite(j) != 0){
         fprintf(stderr,"pb tours invinsibilite\n");
+        free(lg);
         free_joueuse(j);
         return;
     }
     if (getToursRestantsJouer(j) != 1){
         fprintf(stderr,"pb tours restants jouer\n");
+        free(lg);
         free_joueuse(j);
         return;
     }
     if (getProbaParCapital(j) != 0.1){
         fprintf(stderr,"pb proba par capital\n");
+        free(lg);
         free_joueuse(j);
         return;
     }
     if (getMain(j) == NULL){
         fprintf(stderr,"pb mains\n");
+        free(lg);
         free_joueuse(j);
         return;
     }
     if (getMembres(j) == NULL){
         fprintf(stderr,"pb membres\n");
+        free(lg);
         free_joueuse(j);
         return;
     }
     //tester la création des personnages
     free_joueuse(j);
 
-    joueuse m = creation_joueuse(0); /*on créé un monstre*/
+    joueuse m = creation_joueuse(0,lg); /*on créé un monstre*/
     //adapter aux valeurs choisit par adam dans la fonction creation_joueuse
     if (m==NULL){
         free_joueuse(m);
+        free(lg);
         return;
     }
     if (getCapital(m) != -1){
         fprintf(stderr,"pb capital\n");
+        free(lg);
         free_joueuse(m);
         return;
     }
     if (getTaille(m) != 1){
         fprintf(stderr,"pb taille\n");
+        free(lg);
         free_joueuse(m);
         return;
     }
     if (getIdJoueuse(m) != 0){
         fprintf(stderr,"pb id\n");
+        free(lg);
         free_joueuse(m);
         return;
     }
     if (getTour(m) != 1){
         fprintf(stderr,"pb tour\n");
+        free(lg);
         free_joueuse(m);
         return;
     }
     if (getToursRestantsBonusCapital(m) != 1){
         fprintf(stderr,"pb tours restants bonus capital\n");
+        free(lg);
         free_joueuse(m);
         return;
     }
     if (getToursInvincibilite(m) != -1){
         fprintf(stderr,"pb tours invinsibilite\n");
+        free(lg);
         free_joueuse(m);
         return;
     }
     if (getToursRestantsJouer(m) != 1){
         fprintf(stderr,"pb tours restants jouer\n");
+        free(lg);
         free_joueuse(m);
         return;
     }
     if (getProbaParCapital(m) != 0.1){
         fprintf(stderr,"pb proba par capital\n");
+        free(lg);
         free_joueuse(m);
         return;
     }
     if (getMain(m) == NULL){
         fprintf(stderr,"pb mains\n");
+        free(lg);
         free_joueuse(m);
         return;
     }
     if (getMembres(m) == NULL){
         fprintf(stderr,"pb membres\n");
+        free(lg);
         free_joueuse(m);
         return;
     }
     //tester la création des personnages
     free_joueuse(m);
+    free(lg);
     fprintf(stdout,"test init joueuses ok\n");
 }
 
@@ -476,7 +500,8 @@ void test_vie_d_un_personnage(){
 */
 void test_modif_proba_avec_capital(){
     zones zs = nouvellesZones();
-    joueuse j1 = creation_joueuse(1);
+    liste_cartes lg = creer_liste_cartes_global();
+    joueuse j1 = creation_joueuse(1,lg);
     float coeff = getProbaParCapital(j1);
     for (int i=0; i<10; i++){ //on test si la modif
         float sum = 0;
@@ -500,6 +525,7 @@ void test_modif_proba_avec_capital(){
     }
     free_joueuse(j1);
     libereZones(zs);
+    free_listes_cartes_global();
     fprintf(stdout,"test modif proba avec capital ok\n");
 }
 
@@ -512,6 +538,7 @@ void test_modif_proba_avec_capital(){
  * @return nothing
 */
 void test_deroulement_du_jeu(){
+    liste_cartes lg = 
     joueuse j1 = creation_joueuse(1);
     joueuse j2 = creation_joueuse(2);
     personnage* persos1 = getMembres(j1);
