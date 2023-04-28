@@ -412,7 +412,8 @@ void pouvoir_carte_Watel(joueuse jou) {
  */
 void pouvoir_carte_Szafranski(joueuse* liste_joueuses, zones zo) {
     for (int i = 0; i < 3; i += 1) {
-        personnage nouveau = nouveauPersonnage(i, getTabZones(zo)[i+1]);
+        int id = getTaille(liste_joueuses[i]);
+        personnage nouveau = nouveauPersonnage(i, id+1, getNumero(getTabZones(zo)[i+1]));
         addMembres(liste_joueuses[i], nouveau); 
     }
 }

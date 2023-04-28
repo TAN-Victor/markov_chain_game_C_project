@@ -20,14 +20,14 @@ int main() {
      * @brief Création de la liste_cartes_global
      * 
      */
-    creer_liste_cartes_global();
+    liste_cartes liste_cartes_global = creer_liste_cartes_global();
     /**
      * @brief Création de 3 "joueuses"; l'ensemble des monstres correspondra à une joueuse 
      * 
      */
-    joueuse joueuse_1 = creation_joueuse(1); // 1 pour dire que l'on crée une joueuse jouable n°1
-    joueuse joueuse_2 = creation_joueuse(2); // 2 pour dire que l'on crée une joueuse jouable n°2
-    joueuse monstres = creation_joueuse(0); // 0 pour dire que l'on crée une liste de monstres, il n'y aura qu'un seul monstre au début
+    joueuse joueuse_1 = creation_joueuse(1, liste_cartes_global); // 1 pour dire que l'on crée une joueuse jouable n°1
+    joueuse joueuse_2 = creation_joueuse(2, liste_cartes_global); // 2 pour dire que l'on crée une joueuse jouable n°2
+    joueuse monstres = creation_joueuse(0, liste_cartes_global); // 0 pour dire que l'on crée une liste de monstres, il n'y aura qu'un seul monstre au début
 
     joueuse liste_joueuses[3] = { joueuse_1, joueuse_2, monstres }; // Mettre les monstres et les joueuses ensemble permettra de les faire déplacer tous ensemble avec une même fonction
     message_generique(1, NULL, NULL, NULL); // Les messages génériques sont là pour afficher des messages à l'écran, ils sont définis dans interface.c. Ici, le message dit que les joueuses sont bien créees.

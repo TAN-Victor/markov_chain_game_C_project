@@ -195,39 +195,15 @@ void setToursRestantsBonusPas(personnage p, int toursRestantsBonusPas){
  */
 personnage nouveauPersonnage(int n, int id_to_put, int nz){
     personnage perso=malloc(sizeof(struct _personnage));
-    if(n==0){
-        setType(perso,n);
-        setStatut(perso,1);
-        setIdPersonnage(perso,id_to_put);
-        setZoneCourante(perso,nz);
-        setZonePrecedente(perso,-1);
-        setDeNbPas(perso,1);
-        setToursRestantsBonusPas(perso,0);
-        setPeutSeDeplacer(perso,1);
-        setNbDeTourDisparuRestant(perso,0);
-    }
-    if(n==1){
-        setType(perso,n);
-        setStatut(perso,1);
-        setIdPersonnage(perso,id_to_put);
-        setZoneCourante(perso,nz);
-        setZonePrecedente(perso,-1);
-        setDeNbPas(perso,1);
-        setToursRestantsBonusPas(perso,0);
-        setPeutSeDeplacer(perso,1);
-        setNbDeTourDisparuRestant(perso,0);
-    }
-    if(n==2){
-        setType(perso,n);
-        setStatut(perso,1);
-        setIdPersonnage(perso,id_to_put);
-        setZoneCourante(perso,nz);
-        setZonePrecedente(perso,-1);
-        setDeNbPas(perso,1);
-        setToursRestantsBonusPas(perso,0);
-        setPeutSeDeplacer(perso,1);
-        setNbDeTourDisparuRestant(perso,0);
-    }
+    setType(perso,n); // 0 pour monstre, 1 pour joueur 1, 2 pour joueur 2
+    setStatut(perso,1); // 1 car vivant
+    setIdPersonnage(perso,id_to_put); // id du personnage
+    setZoneCourante(perso,nz);
+    setZonePrecedente(perso,-1);
+    setDeNbPas(perso,1);
+    setToursRestantsBonusPas(perso,0);
+    setPeutSeDeplacer(perso,1);
+    setNbDeTourDisparuRestant(perso,0);
     return perso;
 }
 
