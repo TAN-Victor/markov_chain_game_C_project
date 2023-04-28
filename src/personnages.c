@@ -218,6 +218,7 @@ personnage nouveauPersonnage(int n, int id_to_put, int nz){
     personnage perso=malloc(sizeof(struct _personnage));
     setType(perso,n);
     setStatut(perso,1); // 1 car vivant
+    setInvicibleCeTour(perso,0); // N'est pas invincible le tour du début
     setIdPersonnage(perso,id_to_put); // id du personnage
     setZoneCourante(perso,nz);
     setZonePrecedente(perso,-1); // -1 car vient d'être créé
