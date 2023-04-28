@@ -366,15 +366,13 @@ void free_joueuse(joueuse pj){
 */
 joueuse tour_joueuse(joueuse pj1, joueuse pj2){
     if((getTour(pj1)==0 && getTour(pj2)==0) || (getTour(pj1)==1 && getTour(pj2)==1) ){ // Utile pour un futur débugage
-        fprintf(stderr,"tour_joueuse : le tour des 2 joueuses est à 0 ou 1");
+        fprintf(stderr,"tour_joueuse : le tour des 2 joueuses est à 0 ou 1\n");
         exit(2);
     }
     else if(getTour(pj1)==1 && getTour(pj2)==0){
-        printf("C'est le tour de la joueuse %d",getIdJoueuse(pj1));
         return pj1;
     }
     else {
-        printf("C'est le tour de la joueuse %d",getIdJoueuse(pj1));
         return pj2;
     }
 }
@@ -386,15 +384,14 @@ joueuse tour_joueuse(joueuse pj1, joueuse pj2){
 */
 int nb_membre_ecole(joueuse pj){
     if(getTaille(pj)>7){
-        fprintf(stderr,"nb_membre_ecole : joueuse %d possède plus de 7 membres",getIdJoueuse(pj));
+        fprintf(stderr,"nb_membre_ecole : joueuse %d possède plus de 7 membres\n",getIdJoueuse(pj));
         exit(3);
     }
     else if(getTaille(pj)<0){
-        fprintf(stderr,"nb_membre_ecole : joueuse %d possède en dessous de 0 membres",getIdJoueuse(pj));
+        fprintf(stderr,"nb_membre_ecole : joueuse %d possède en dessous de 0 membres\n",getIdJoueuse(pj));
         exit(4);
     }
     else {
-        printf("Le nombre de membre de la joueuse %d est %d",getIdJoueuse(pj),getTaille(pj));
         return getTaille(pj);
     }
 }
@@ -418,7 +415,7 @@ int tous_manges(joueuse pj){
         return 1;
     }
     else if(getTaille(pj)<0){
-        fprintf(stderr,"tous_manges : joueuse %d possède en dessous de 0 membres",getIdJoueuse(pj));
+        fprintf(stderr,"tous_manges : joueuse %d possède en dessous de 0 membres\n",getIdJoueuse(pj));
         exit(5);
     }
     else {
@@ -452,25 +449,11 @@ void utilise_capital(joueuse pj, int capital){
 
 /**
  * @brief la carte c est retirer de la main du joueur et on applique les effets de la carte (il faut aussi s'assurer que le joueur possède la carte)
- * @param liste_joueuses liste des joueuses dont monstres
- * @param liste_zones liste des zones du jeu
+ * @param liste_jou la joueuse
  * @param c la carte que la joueuse souhaite jouer
 */
-void utilise_carte(joueuse* liste_joueuses, zones liste_zones, carte c){
-    int exist_carte=0;
-    for(int i=0;i<getNbCartes(getMain(liste_joueuses[0]));i++){
-        if(lecture_cartes(getMain(liste_joueuses[0]),i)==c){
-            exist_carte=1;
-            break;
-        }
-    }
-    if(exist_carte==1){
-        wrapper_pouvoir_carte(liste_joueuses,liste_zones,getNom(c));
-        suppr_cartes(liste_joueuses[0],c);
-    }
-    else{
-         printf("La carte utilisé n'est pas dans votre main, joueuse %d",getIdJoueuse(liste_joueuses[0]));
-    }
+void utilise_carte(joueuse jou, carte c){
+    suppr_cartes(getMain(jou),c);
 }
 
 

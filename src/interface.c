@@ -31,12 +31,16 @@
 */
 void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
 
-        printf("\033[2J"); // Nettoyer le terminal
-        printf("===================================================\n");
-        printf("======= C'est le tour de la joueuse n° %d ! =======\n", getIdJoueuse(j1));
-        printf("===================================================\n"); 
+        //printf("\033[2J"); // Nettoyer le terminal
+        printf("=======================================================================================\n");
+        printf("========================= C'est le tour de la joueuse n° %d ! =========================\n", getIdJoueuse(j1));
+        printf("=======================================================================================\n"); 
         printf("Votre capital actuel: %d crédit(s)\n", getCapital(j1));
-        printf("Votre main de cartes: \n");
+        printf("Votre main de cartes: ");
+        for (int i = 0; i < getNbCartes(j1->main_du_joueur); i += 1) {
+            printf("[%d] %s; ", i+1, getNom(lecture_cartes(j1->main_du_joueur, i)));
+        }
+        printf("\n");
         printf("Il vous reste actuellement %d membre(s)\n", getTaille(j1));
         printf("---------------------------------------------------\n");
         
@@ -52,7 +56,7 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         if (getToursRestantsJouer(j1) > 1) {
             printf("Vous pouvez jouer %d tour(s)\n", getToursRestantsJouer(j1));
         }
-        if (getBonusTemporaire(j1) != NULL) {
+        if (getBonusTemporaire(j1) != 0) {
             printf("Vous avez un bonus temporaire: %d\n", getBonusTemporaire(j1));
         }
         printf("---------------------------------------------------\n");
@@ -65,15 +69,18 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         for (int i = 0; i < getTaille(j1); i += 1) {
             printf("%2d", getZoneCourante(getMembres(j1)[i]));
         }
+        printf("\n");
         printf("Les membres d'école adverse sont sur les zones: \n");
         for (int i = 0; i < getTaille(j2); i += 1) {
             printf("%2d", getZoneCourante(getMembres(j2)[i]));
         }
+        printf("\n");
         printf("Le(s) monstre(s) sont sur les zones: \n");
         for (int i = 0; i < getTaille(m); i += 1) {
             printf("%2d", getZoneCourante(getMembres(m)[i]));
         }
-        printf("Il y a %d zones. \n", getTailleMatrice(getMatrice(liste_zones))); // TODO
+        printf("\n");
+        printf("Il y a %d zones. \n", getTailleMatrice(getMatrice(liste_zones)));
 
         printf("---------------------------------------------------\n");
 }
@@ -93,12 +100,14 @@ int demander_capital(joueuse j1) {
     int capital = getCapital(j1);
     printf("Vous avez actuellement un capital de %d crédit(s): \n", capital);
     printf("Combien de capital voulez-vous utiliser ?\n Entrez un entier négatif ou nul pour annuler\n");
-    scanf("%d", &montant);
-
-    if (montant <= 0) {
-        return 0;
+    while (scanf("%d", &montant) != 1 || montant < 0) {
+        if (isdigit(montant)) {
+            fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
+        } else {
+            fprintf(stderr, "Attention, vous devez entrer un montant positif supérieur à 0\n");
+        }
+        while (getchar() != '\n');
     }
-    else {
         if (capital < montant) {
             fprintf(stderr, "Attention, vous n'avez pas assez de capital pour réaliser l'action.\n");
             return 0;
@@ -106,7 +115,7 @@ int demander_capital(joueuse j1) {
         else {
             return montant;
         }
-    }
+    
 }
 
 
@@ -123,12 +132,14 @@ carte demander_carte(joueuse j1) {
         printf("%d] %s\n", i+1, getNom(lecture_cartes(getMain(j1), i)));
     }
     printf("\n Quelle carte voulez-vous utiliser ?\n");
-    scanf("%d", &choix);
-
-    if (choix <= 0) {
-        return 0;
+    while (scanf("%d", &choix) != 1 || choix <= 0) {
+        if (isdigit(choix)) {
+            fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
+        } else {
+            fprintf(stderr, "Attention, vous devez entrer un nombre positif supérieur à 0\n");
+        }
+        while (getchar() != '\n');
     }
-    else {
         if (taille_main_cartes < choix) {
             fprintf(stderr, "Attention, vous n'avez pas cette carte.\n");
             return 0;
@@ -136,7 +147,7 @@ carte demander_carte(joueuse j1) {
         else {
             return lecture_cartes(getMain(j1), choix-1);
         }
-    }
+
 }
 
 
@@ -147,14 +158,21 @@ carte demander_carte(joueuse j1) {
 */
 int demander_zones_depart(zones liste_zones) {
     int choix_depart = -1;
-    int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones)); //TODO
+    int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones));
     printf("Choissez une zone de départ entre 1 et %d: \n", nombre_de_zones);
-    scanf("%d", &choix_depart);
-    if (choix_depart <= 0 || choix_depart > nombre_de_zones) {
+    while (scanf("%d", &choix_depart) != 1 || choix_depart <= 0) {
+        if (isdigit(choix_depart)) {
+            fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
+        } else {
+            fprintf(stderr, "Attention, vous devez entrer un nombre positif supérieur à 0\n");
+        }
+        while (getchar() != '\n');
+    }
+    if (choix_depart > nombre_de_zones) {
         fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
         return -1;
     }
-    return choix_depart;
+    return (choix_depart-1);
 }
 
 /**
@@ -164,15 +182,21 @@ int demander_zones_depart(zones liste_zones) {
 */
 int demander_zones_arrivee_augmenter(zones liste_zones) {
     int choix_a_augmenter = -1;
-    int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones)); //TODO
+    int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones));
     printf("Choisissez une zone dont vous souhaitez AUGMENTER la probabilité entre 1 et %d: \n", nombre_de_zones);
-    scanf("%d", &choix_a_augmenter);
-
-    if (choix_a_augmenter <= 0 || choix_a_augmenter > nombre_de_zones) {
+    while (scanf("%d", &choix_a_augmenter) != 1 || choix_a_augmenter <= 0) {
+        if (isdigit(choix_a_augmenter)) {
+            fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
+        } else {
+            fprintf(stderr, "Attention, vous devez entrer un nombre positif supérieur à 0\n");
+        }
+        while (getchar() != '\n');
+    }
+    if (choix_a_augmenter > nombre_de_zones) {
         fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
         return -1;
     }
-    return choix_a_augmenter;
+    return (choix_a_augmenter-1);
 }
 
 /**
@@ -183,13 +207,21 @@ int demander_zones_arrivee_augmenter(zones liste_zones) {
 */
 int demander_zones_arrivee_diminuer(zones liste_zones, int zone_augmentee) {
     int choix_a_diminuer = -1;
-    int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones)); //TODO
+    int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones));
     printf("Choisissez une zone dont vous souhaitez DIMINUER la probabilité entre 1 et %d (%d exclu): \n", nombre_de_zones, zone_augmentee);
-        if (choix_a_diminuer <= 0 || choix_a_diminuer > nombre_de_zones || choix_a_diminuer == zone_augmentee) {
-            fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
-            return -1;
+    while (scanf("%d", &choix_a_diminuer) != 1 || choix_a_diminuer <= 0) {
+        if (isdigit(choix_a_diminuer)) {
+            fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
+        } else {
+            fprintf(stderr, "Attention, vous devez entrer un nombre positif supérieur à 0\n");
         }
-        return choix_a_diminuer;
+        while (getchar() != '\n');
+    }
+    if (choix_a_diminuer > nombre_de_zones) {
+        fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
+        return -1;
+    }
+    return (choix_a_diminuer-1);
 }
 
 /**
@@ -200,13 +232,21 @@ int demander_zones_arrivee_diminuer(zones liste_zones, int zone_augmentee) {
 */
 int demander_zones_autre(zones liste_zones, int zone_depart) {
     int choix = -1;
-    int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones)); //TODO
+    int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones));
     printf("Choisissez une autre zone entre 1 et %d (%d exclu): \n", nombre_de_zones, zone_depart);
-        if (choix <= 0 || choix > nombre_de_zones || choix == zone_depart) {
-            fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
-            return -1;
+    while (scanf("%d", &choix) != 1 || choix <= 0) {
+        if (isdigit(choix)) {
+            fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
+        } else {
+            fprintf(stderr, "Attention, vous devez entrer un nombre positif supérieur à 0\n");
         }
-        return choix;
+        while (getchar() != '\n');
+    }
+    if (choix > nombre_de_zones) {
+        fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
+        return -1;
+    }
+    return (choix-1);
 }
 
 
@@ -219,12 +259,19 @@ int demander_personnage(joueuse j1) {
     int choix = -1;
     int taille = getTaille(j1);
     printf("Choissez une zone de départ entre 1 et %d: \n", taille);
-    scanf("%d", &choix);
-    if (choix <= 0 || choix > taille) {
+    while (scanf("%d", &choix) != 1 || choix <= 0) {
+        if (isdigit(choix)) {
+            fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
+        } else {
+            fprintf(stderr, "Attention, vous devez entrer un nombre positif supérieur à 0\n");
+        }
+        while (getchar() != '\n');
+    }
+    if (choix > taille) {
         fprintf(stderr, "Attention, vous n'avez pas entré un personnage (ou monstre) correct.\n");
         return -1;
     }
-    return choix;
+    return (choix-1);
 }
 
 
@@ -235,9 +282,16 @@ int demander_personnage(joueuse j1) {
 int demander_proba_par_capital() {
     int choix = -1;
     printf("Choisissez une probabilité par capital entre 0.1 et 1: \n");
-    scanf("%d", &choix);
-    if (choix < 0.1 || choix > 1) {
-        fprintf(stderr, "Attention, vous n'avez pas entré une probabilité par capital correcte.\n");
+    while (scanf("%d", &choix) != 1 || choix <= 0) {
+        if (isdigit(choix)) {
+            fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
+        } else {
+            fprintf(stderr, "Attention, vous devez entrer un nombre positif supérieur à 0\n");
+        }
+        while (getchar() != '\n');
+    }
+    if (choix > 1 || choix % 0.1 != 0) {
+        fprintf(stderr, "Attention, vous n'avez pas entré une probabilité par capital correcte. Il doit être multiple de 0.1\n");
         return -1;
     }
     return choix;
