@@ -449,25 +449,11 @@ void utilise_capital(joueuse pj, int capital){
 
 /**
  * @brief la carte c est retirer de la main du joueur et on applique les effets de la carte (il faut aussi s'assurer que le joueur possède la carte)
- * @param liste_joueuses liste des joueuses dont monstres
- * @param liste_zones liste des zones du jeu
+ * @param liste_jou la joueuse
  * @param c la carte que la joueuse souhaite jouer
 */
-void utilise_carte(joueuse* liste_joueuses, zones liste_zones, carte c){
-    int exist_carte=0;
-    for(int i=0;i<getNbCartes(getMain(liste_joueuses[0]));i++){
-        if(lecture_cartes(getMain(liste_joueuses[0]),i)==c){
-            exist_carte=1;
-            break;
-        }
-    }
-    if(exist_carte==1){
-        wrapper_pouvoir_carte(liste_joueuses,liste_zones,getNom(c));
-        suppr_cartes(liste_joueuses[0],c);
-    }
-    else{
-         printf("La carte utilisé n'est pas dans votre main, joueuse %d",getIdJoueuse(liste_joueuses[0]));
-    }
+void utilise_carte(joueuse jou, carte c){
+    suppr_cartes(getMain(jou),c);
 }
 
 

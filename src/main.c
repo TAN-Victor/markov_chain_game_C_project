@@ -97,6 +97,7 @@ int main() {
                 if (c != NULL) { // Si la joueuse veut jouer une carte
                     message_generique(5, liste_joueuses[i], NULL, c);  // voir avec interface.c
                     utilise_carte(liste_joueuses, liste_zones, c); 
+                    wrapper_pouvoir_carte(liste_joueuses, liste_zones, getNom(c));
                 }
             }
 
