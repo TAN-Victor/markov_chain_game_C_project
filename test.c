@@ -189,7 +189,7 @@ void test_init_zones(){
         return;
     }
     for (int i=0; i<10; i++){
-    if (getTabZones(z)[i] == NULL){
+        if (getTabZones(z)[i] == NULL){
             fprintf(stderr,"pb zone %d\n",i);
             libereZones(z);
             return;
