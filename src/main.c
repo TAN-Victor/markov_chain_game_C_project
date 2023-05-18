@@ -23,6 +23,7 @@ int main() {
     liste_cartes liste_cartes_global = creer_liste_cartes_global();
         for (int i = 0; i < 20; i += 1) {
         printf("CARTE %d : %s \n",i, getNom(getCartes(liste_cartes_global)[i]));
+        printf("EFFET: %s \n", getDescription(getCartes(liste_cartes_global)[i]));
         fflush(stdout);
     }
     /**
@@ -41,12 +42,7 @@ int main() {
      */
     zones liste_zones = nouvellesZones();
     message_generique(2, NULL, NULL, NULL); // Le message dit que les zones sont bien créees.
-    for (int i = 0; i < getTailleMatrice(getMatrice(liste_zones)); i += 1) {
-        for (int j = 0; j < getTailleMatrice(getMatrice(liste_zones)); j += 1) {
-            printf("%f ", lecture_probas(getMatrice(liste_zones), i, j));
-        }
-        getNumero(liste_zones[i]);
-    }
+
 
 
     int i = -1; // Va valoir 0 si c'est le tour de la joueuse 1, 1 si c'est le tour de la joueuse 2
@@ -140,6 +136,7 @@ int main() {
             }
         }
         message_generique(6, NULL, NULL, NULL); // Dit simplement que les personnages se sont déplacés mais pas où
+        afficher_toute_info(liste_joueuses[i], liste_joueuses[(i+1)%2],liste_joueuses[2], liste_zones); // Affiche les joueuses, les monstres, les zones et qui sont sur les zones
 
 
         /**

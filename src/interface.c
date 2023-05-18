@@ -83,6 +83,16 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         printf("Il y a %d zones. \n", getTailleMatrice(getMatrice(liste_zones)));
 
         printf("---------------------------------------------------\n");
+
+        for (int i = 0; i < getTailleMatrice(getMatrice(liste_zones)); i += 1) {
+            printf("%d: ",getNumero(getTabZones(liste_zones)[i]));
+            for (int j = 0; j < getTailleMatrice(getMatrice(liste_zones)); j += 1) {
+                printf("%f ", lecture_probas(getMatrice(liste_zones), i, j));
+                fflush(stdout);
+            }
+            printf("\n");
+        }
+    printf("---------------------------------------------------\n");
 }
 
     
@@ -100,11 +110,15 @@ int demander_capital(joueuse j1) {
     int capital = getCapital(j1);
     printf("Vous avez actuellement un capital de %d crédit(s): \n", capital);
     printf("Combien de capital voulez-vous utiliser ?\n Entrez un entier négatif ou nul pour annuler\n");
-    while (scanf("%d", &montant) != 1 || montant < 0) {
+    while (scanf("%d", &montant) != 1) {
         if (isdigit(montant)) {
             fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
-        } else {
-            fprintf(stderr, "Attention, vous devez entrer un montant positif supérieur à 0\n");
+            if (montant < 0) {
+                return 0;
+            }
+        }
+        else {
+            fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
         }
         while (getchar() != '\n');
     }
