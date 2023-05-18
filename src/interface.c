@@ -67,12 +67,18 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         
         printf("Vos membres d'école sont sur les zones: \n");  // Pourrait être modifiée par une meilleure interface
         for (int i = 0; i < getTaille(j1); i += 1) {
-            printf("%2d", getZoneCourante(getMembres(j1)[i]));
+            printf("         %d (", getStatut(getMembres(j1)[i]));
+            if (getStatut(getMembres(j1)[i]) == 1 || getStatut(getMembres(j1)[i]) == 3) {   //Si le membre est en vie
+                printf("%2d", getZoneCourante(getMembres(j1)[i]));
+            }
         }
         printf("\n");
         printf("Les membres d'école adverse sont sur les zones: \n");
         for (int i = 0; i < getTaille(j2); i += 1) {
-            printf("%2d", getZoneCourante(getMembres(j2)[i]));
+            printf("          %d (", getStatut(getMembres(j2)[i]));
+            if (getStatut(getMembres(j2)[i]) == 1 || getStatut(getMembres(j2)[i]) == 3) {  //Si le membre est en vie
+                printf("%2d", getZoneCourante(getMembres(j2)[i]));
+            }
         }
         printf("\n");
         printf("Le(s) monstre(s) sont sur les zones: \n");
@@ -85,9 +91,9 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         printf("---------------------------------------------------\n");
 
         for (int i = 0; i < getTailleMatrice(getMatrice(liste_zones)); i += 1) {
-            printf("%d: ",getNumero(getTabZones(liste_zones)[i]));
+            printf("%d: ",getNumero(getTabZones(liste_zones)[i]) + 1);
             for (int j = 0; j < getTailleMatrice(getMatrice(liste_zones)); j += 1) {
-                printf("%f ", lecture_probas(getMatrice(liste_zones), i, j));
+                printf("%.2f ", lecture_probas(getMatrice(liste_zones), i, j));
                 fflush(stdout);
             }
             printf("\n");
@@ -109,26 +115,21 @@ int demander_capital(joueuse j1) {
     int montant;
     int capital = getCapital(j1);
     printf("Vous avez actuellement un capital de %d crédit(s): \n", capital);
-    printf("Combien de capital voulez-vous utiliser ?\n Entrez un entier négatif ou nul pour annuler\n");
-    while (scanf("%d", &montant) != 1) {
-        if (isdigit(montant)) {
+    while (1)  {
+        printf("Combien de capital voulez-vous utiliser ?\n Entrez un entier négatif ou nul pour annuler\n");
+        if (scanf("%d", &montant) != 1) {
             fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
-            if (montant < 0) {
-                return 0;
-            }
-        }
-        else {
-            fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
-        }
-        while (getchar() != '\n');
-    }
-        if (capital < montant) {
+            while (getchar() != '\n');
+        } else if (montant > capital) {
             fprintf(stderr, "Attention, vous n'avez pas assez de capital pour réaliser l'action.\n");
+        } else if (montant <= 0) {
+            fprintf(stderr, "Vous avez décidé de ne pas utiliser de capital.\n");
             return 0;
+        } else {
+            break;
         }
-        else {
-            return montant;
-        }
+    }
+    return montant;
     
 }
 
@@ -145,46 +146,47 @@ carte demander_carte(joueuse j1) {
     for (int i = 0; i < taille_main_cartes; i += 1) {
         printf("%d] %s\n", i+1, getNom(lecture_cartes(getMain(j1), i)));
     }
-    printf("\n Quelle carte voulez-vous utiliser ?\n");
-    while (scanf("%d", &choix) != 1 || choix <= 0) {
-        if (isdigit(choix)) {
+    while (1) {
+        printf("\n Quelle carte voulez-vous utiliser ?\n");
+        if (scanf("%d", &choix) != 1) {
             fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
-        } else {
-            fprintf(stderr, "Attention, vous devez entrer un nombre positif supérieur à 0\n");
+            while (getchar() != '\n');
         }
-        while (getchar() != '\n');
-    }
-        if (taille_main_cartes < choix) {
+        else if (taille_main_cartes < choix) {
             fprintf(stderr, "Attention, vous n'avez pas cette carte.\n");
-            return 0;
+        }
+        else if (choix <= 0) {
+            fprintf(stderr, "Vous avez décidé de ne pas utiliser de carte.\n");
+            return NULL;
         }
         else {
-            return lecture_cartes(getMain(j1), choix-1);
+            break;
         }
-
+    }
+    return lecture_cartes(getMain(j1), choix-1);
 }
 
 
 /**
  * \brief Demande à une joueuse le numéro de la zone de départ dont elle veut modifier les probabilités d'accéder à une autre zone 
  * \param zones afin de savoir sur quelle zone intéragir
- * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1; -1 sinon
+ * \return le numéro de la zone entre 1 et la taille de la liste - 1 pour avoir son indice dans la liste
 */
 int demander_zones_depart(zones liste_zones) {
     int choix_depart = -1;
     int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones));
-    printf("Choissez une zone de départ entre 1 et %d: \n", nombre_de_zones);
-    while (scanf("%d", &choix_depart) != 1 || choix_depart <= 0) {
-        if (isdigit(choix_depart)) {
+    while (1) {
+        printf("Choissez une zone de départ entre 1 et %d: \n", nombre_de_zones);
+        if (scanf("%d", &choix_depart) != 1) {
             fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
-        } else {
-            fprintf(stderr, "Attention, vous devez entrer un nombre positif supérieur à 0\n");
+            while (getchar() != '\n');
         }
-        while (getchar() != '\n');
-    }
-    if (choix_depart > nombre_de_zones) {
-        fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
-        return -1;
+        else if (choix_depart <= 0 || choix_depart > nombre_de_zones) {
+            fprintf(stderr, "Attention, cette zone n'existe pas.\n");
+        }
+        else {
+            break;
+        }
     }
     return (choix_depart-1);
 }
@@ -192,23 +194,23 @@ int demander_zones_depart(zones liste_zones) {
 /**
  * \brief Demande à une joueuse le numéro de la zone d'arrivée dont elle veut augmenter les probabilités d'accéder à cette zone
  * \param zones afin de savoir sur quelle zone intéragir
- * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1; ou -1 sinon
+ * \return le numéro de la zone entre 1 et la taille de la liste - 1 pour avoir son indice dans la liste
 */
 int demander_zones_arrivee_augmenter(zones liste_zones) {
     int choix_a_augmenter = -1;
     int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones));
-    printf("Choisissez une zone dont vous souhaitez AUGMENTER la probabilité entre 1 et %d: \n", nombre_de_zones);
-    while (scanf("%d", &choix_a_augmenter) != 1 || choix_a_augmenter <= 0) {
-        if (isdigit(choix_a_augmenter)) {
+    while (1) {
+        printf("Choisissez une zone dont vous souhaitez AUGMENTER la probabilité entre 1 et %d: \n", nombre_de_zones);
+        if (scanf("%d", &choix_a_augmenter) != 1) {
             fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
-        } else {
-            fprintf(stderr, "Attention, vous devez entrer un nombre positif supérieur à 0\n");
+            while (getchar() != '\n');
         }
-        while (getchar() != '\n');
-    }
-    if (choix_a_augmenter > nombre_de_zones) {
-        fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
-        return -1;
+        else if (choix_a_augmenter <= 0 || choix_a_augmenter > nombre_de_zones) {
+            fprintf(stderr, "Attention, cette zone n'existe pas.\n");
+        }
+        else {
+            break;
+        }
     }
     return (choix_a_augmenter-1);
 }
@@ -217,23 +219,26 @@ int demander_zones_arrivee_augmenter(zones liste_zones) {
  * \brief Demande à une joueuse le numéro de la zone d'arrivée dont elle veut diminuer les probabilités d'accéder à une autre zone
  *          La zone doit être différente de la zone d'arrivée dont on veut augmenter la probabilité
  * \param zones afin de savoir sur quelle zone intéragir
- * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1; -1 sinon
+ * \return le numéro de la zone entre 1 et la taille de la liste - 1 pour avoir son indice dans la liste
 */
 int demander_zones_arrivee_diminuer(zones liste_zones, int zone_augmentee) {
     int choix_a_diminuer = -1;
     int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones));
-    printf("Choisissez une zone dont vous souhaitez DIMINUER la probabilité entre 1 et %d (%d exclu): \n", nombre_de_zones, zone_augmentee);
-    while (scanf("%d", &choix_a_diminuer) != 1 || choix_a_diminuer <= 0) {
-        if (isdigit(choix_a_diminuer)) {
+    while (1) {
+        printf("Choisissez une zone dont vous souhaitez DIMINUER la probabilité entre 1 et %d (%d exclu): \n", nombre_de_zones, zone_augmentee + 1);
+        if (scanf("%d", &choix_a_diminuer) != 1) {
             fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
-        } else {
-            fprintf(stderr, "Attention, vous devez entrer un nombre positif supérieur à 0\n");
+            while (getchar() != '\n');
         }
-        while (getchar() != '\n');
-    }
-    if (choix_a_diminuer > nombre_de_zones) {
-        fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
-        return -1;
+        else if (choix_a_diminuer <= 0 || choix_a_diminuer > nombre_de_zones) {
+            fprintf(stderr, "Attention, cette zone n'existe pas.\n");
+        }
+        else if (choix_a_diminuer == zone_augmentee + 1) {
+            fprintf(stderr, "Attention, vous ne pouvez pas choisir la même zone que celle dont vous voulez augmenter la probabilité.\n");
+        }
+        else {
+            break;
+        }
     }
     return (choix_a_diminuer-1);
 }
@@ -242,23 +247,26 @@ int demander_zones_arrivee_diminuer(zones liste_zones, int zone_augmentee) {
  * \brief Demande à une joueuse le numéro d'une autre zone que zone_depart
  * \param zones afin de savoir sur quelle zone intéragir
  * \param zone_depart afin de savoir quelle zone ne pas proposer
- * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1; -1 sinon
+ * \return le numéro de la zone entre 1 et la taille de la liste - 1 pour avoir son indice dans la liste
 */
 int demander_zones_autre(zones liste_zones, int zone_depart) {
     int choix = -1;
     int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones));
-    printf("Choisissez une autre zone entre 1 et %d (%d exclu): \n", nombre_de_zones, zone_depart);
-    while (scanf("%d", &choix) != 1 || choix <= 0) {
-        if (isdigit(choix)) {
+    while (1) {
+        printf("Choissez une zone entre 1 et %d (%d exclu): \n", nombre_de_zones, zone_depart);
+        if (scanf("%d", &choix) != 1) {
             fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
-        } else {
-            fprintf(stderr, "Attention, vous devez entrer un nombre positif supérieur à 0\n");
+            while (getchar() != '\n');
         }
-        while (getchar() != '\n');
-    }
-    if (choix > nombre_de_zones) {
-        fprintf(stderr, "Attention, vous n'avez pas entré une zone correcte.\n");
-        return -1;
+        else if (choix <= 0 || choix > nombre_de_zones) {
+            fprintf(stderr, "Attention, cette zone n'existe pas.\n");
+        }
+        else if (choix == zone_depart) {
+            fprintf(stderr, "Attention, vous ne pouvez pas choisir la même zone que celle de départ.\n");
+        }
+        else {
+            break;
+        }
     }
     return (choix-1);
 }
@@ -267,23 +275,23 @@ int demander_zones_autre(zones liste_zones, int zone_depart) {
 /**
  * \brief Demande à une joueuse le numéro d'un personnage de la joueuse (ou liste de monstres) 
  * \param joueuse afin de savoir sur quelle joueuse ou liste de monstres intéragir
- * \return le numéro du personnage entre 1 et la taille de la liste, donc l'indice du personnage + 1; -1 sinon
+ * \return le numéro du personnage entre 1 et la taille de la liste - 1 pour avoir son indice dans la liste
 */
 int demander_personnage(joueuse j1) {
     int choix = -1;
     int taille = getTaille(j1);
-    printf("Choissez une zone de départ entre 1 et %d: \n", taille);
-    while (scanf("%d", &choix) != 1 || choix <= 0) {
-        if (isdigit(choix)) {
+    while (1) {
+        printf("Choissez un personnage entre 1 et %d: \n", taille);
+        if (scanf("%d", &choix) != 1) {
             fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
-        } else {
-            fprintf(stderr, "Attention, vous devez entrer un nombre positif supérieur à 0\n");
+            while (getchar() != '\n');
         }
-        while (getchar() != '\n');
-    }
-    if (choix > taille) {
-        fprintf(stderr, "Attention, vous n'avez pas entré un personnage (ou monstre) correct.\n");
-        return -1;
+        else if (choix <= 0 || choix > taille) {
+            fprintf(stderr, "Attention, ce personnage n'existe pas.\n");
+        }
+        else {
+            break;
+        }
     }
     return (choix-1);
 }
@@ -291,27 +299,27 @@ int demander_personnage(joueuse j1) {
 
 /**
  * \brief Demande à une joueuse quelle probabilité par capital elle souhaite avoir entre 0.1 et 1
- * \return la valeur de probabilité par capital que la joueuse souhaite avoir, 0 sinon
+ * \return la valeur de probabilité par capital que la joueuse souhaite avoir
 */
 float demander_proba_par_capital() {
     float choix = -1.;
-    printf("Choisissez une probabilité par capital entre 0.1 et 1: \n");
-    while (scanf("%e", &choix) != 1 || choix <= 0.) {
-        if (isdigit(choix)) {
-            fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
-        } else {
-            fprintf(stderr, "Attention, vous devez entrer un nombre positif supérieur à 0\n");
+    while (1) {
+        printf("Choissez une probabilité par capital entre 0.1 et 1: \n");
+        if (scanf("%f", &choix) != 1) {
+            fprintf(stderr, "Erreur : la saisie doit être un nombre décimal multiple de 0.1\n");
+            while (getchar() != '\n');
         }
-        while (getchar() != '\n');
-    }
-    if (choix > 1.0) {
-        fprintf(stderr, "Attention, vous n'avez pas entré une probabilité par capital correcte. Il doit être multiple de 0.1\n");
-        return -1;
-    }
-    if (fabs(choix * 10.0 - floor(choix * 10.0)) < 1e-6) {
-        fprintf(stderr, "Attention, vous n'avez pas entré une probabilité par capital correcte. Il doit être multiple de 0.1\n");
-    }    
-    return choix;
+        else if (choix < 0.1 || choix > 1) {
+            fprintf(stderr, "Attention, cette probabilité n'est pas comprise entre 0.1 et 1.\n");
+        }
+        else if (fabs( choix * 10 - floor(choix * 10)) > 0.0001) {
+            fprintf(stderr, "Attention, cette probabilité n'est pas multiple de 0.1.\n");
+        }
+        else {
+            break;
+        }
+    }   
+    return 0.1 * floor(choix * 10); // Pour convertir en un multiple de 0.1 exactement
 }
 
 
@@ -321,15 +329,27 @@ float demander_proba_par_capital() {
  * \return rien
 */
 void message_fin_du_jeu(joueuse j1, joueuse j2) {
-    printf("\033[2J"); // Nettoyer le terminal
+    //printf("\033[2J"); // Nettoyer le terminal
     printf("===================================================\n");
     printf("============ La partie est terminée !! ============\n");
     printf("===================================================\n");
     if (tous_manges(j1)) {
-        printf("C'est la joueuse 2 qui gagne ! Il lui reste %d personnages !\n", getTaille(j2));
+        int sum = 0;
+        for (int i = 0; i < getTaille(j1); i++) {
+            if (getStatut(getMembres(j2)[i]) != 0) {
+                sum  += 1;
+            }
+        }
+        printf("C'est la joueuse 2 qui gagne ! Il lui reste %d personnages !\n", sum);
     } 
     else {
-        printf("C'est la joueuse 1 qui gagne ! Il lui reste %d personnages !\n", getTaille(j1));
+        int sum = 0;
+        for (int i = 0; i < getTaille(j1); i++) {
+            if (getStatut(getMembres(j2)[i]) != 0) {
+                sum  += 1;
+            }
+        }
+        printf("C'est la joueuse 1 qui gagne ! Il lui reste %d personnages !\n", sum);
     }
 }
 
@@ -347,7 +367,7 @@ void message_generique(int n, joueuse j1, int* option, carte option2) {
                 break;
         case 3: printf("La joueuse n° %d a utilisé %d de capital. \n", getIdJoueuse(j1), option[0]);
                 break;
-        case 4: printf("La probabilité de passer de la zone %d à la zone %d a changé de %d. \n", option[0], option[1], option[2]);
+        case 4: printf("La probabilité de passer de la zone %d à la zone %d a changé de %.2f. \n", option[0], option[1], option[2]*0.1);
                 break;
         case 5: printf("La joueuse n° %d a utilisé la carte %s", getIdJoueuse(j1), getNom(option2));
                 break;
@@ -360,6 +380,8 @@ void message_generique(int n, joueuse j1, int* option, carte option2) {
         case 9: fprintf(stderr, "Les personnages ont été correctement libéré par free(). \n");
                 break;
         case 10: fprintf(stderr, "Les zones ont été correctement libérées par free(). \n");
+                break;
+        case 100: fprintf(stderr, "Attention, la probabilité de la zone n'est plus dans l'intervalle [0, 1]. L'action a été annulée. \n");
                 break;
     }
 }
