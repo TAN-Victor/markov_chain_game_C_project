@@ -84,18 +84,25 @@ int main() {
                 int zone_depart = demander_zones_depart(liste_zones);
                 int zone_arrivee_augmenter = demander_zones_arrivee_augmenter(liste_zones); // Zone vers laquelle la proba d'aller à partir de zone_depart augmente
                 int zone_arrivee_diminuer = demander_zones_arrivee_diminuer(liste_zones, zone_arrivee_augmenter); // Zone vers laquelle la proba d'aller à partir de zone_depart diminue
-                utilise_capital(liste_joueuses[i], n); // Retire le capital demandé
-                message_generique(3, liste_joueuses[i], &n, NULL); // Message générique qui dit que la joueuse a utilisé son capital
-                int proba_par_capital = getProbaParCapital(liste_joueuses[i]); // Récupère le nombre de proba par capital de la joueuse, qui peut être modifié par une carte
-                int m = n * proba_par_capital; // m est la proba à ajouter ou à retirer
-                modifierZone(liste_zones, zone_depart, zone_arrivee_augmenter, m, 1); // Augmentation de la probabilité d'aller de la zone 0 à la zone 1
-                modifierZone(liste_zones, zone_depart, zone_arrivee_diminuer, m, 0); // Réduction de la probabilité d'aller de la zone 0 à la zone 2
-                int triplet_augmenter[3] = {zone_depart, zone_arrivee_augmenter, m}; // Triplet qui sera utilisé aux lignes 88 et 89
-                int triplet_diminuer[3] = {zone_depart, zone_arrivee_diminuer, -m};
-                message_generique(4, NULL, triplet_augmenter, NULL);
-                message_generique(4, NULL, triplet_diminuer, NULL);
+                float proba_par_capital = getProbaParCapital(liste_joueuses[i]); // Récupère le nombre de proba par capital de la joueuse, qui peut être modifié par une carte
+                float m = n * proba_par_capital; // m est la proba à ajouter ou à retirer
+                if (lecture_probas(getMatrice(liste_zones), zone_depart, zone_arrivee_augmenter) + m <= 1 && lecture_probas(getMatrice(liste_zones), zone_depart, zone_arrivee_diminuer) - m >= 0) { 
+                    // Si la proba d'aller de zone_depart à zone_arrivee_augmenter va être inférieur à 1, et la proba d'aller de zone_depart à zone_arrivee_diminuer va être supérieur à 0, on effectue l'action          
+                    utilise_capital(liste_joueuses[i], n); // Retire le capital demandé
+                    message_generique(3, liste_joueuses[i], &n, NULL); // Message générique qui dit que la joueuse a utilisé son capital
+                    modifierZone(liste_zones, zone_depart, zone_arrivee_augmenter, m, 1); // Augmentation de la probabilité d'aller de la zone 0 à la zone 1
+                    modifierZone(liste_zones, zone_depart, zone_arrivee_diminuer, m, 0); // Réduction de la probabilité d'aller de la zone 0 à la zone 2
+                    int triplet_augmenter[3] = {zone_depart, zone_arrivee_augmenter, m*10}; // Triplet qui sera utilisé aux lignes 88 et 89
+                    int triplet_diminuer[3] = {zone_depart, zone_arrivee_diminuer, -m*10};
+                    message_generique(4, NULL, triplet_augmenter, NULL);
+                    message_generique(4, NULL, triplet_diminuer, NULL);
+                } 
+                else {
+                    message_generique(100, NULL, NULL, NULL); // Message générique qui dit que la joueuse ne peut pas utiliser son capital
+                    n = 0; // Pour que la joueuse puisse rejouer une carte à la place
+                }
             }
-            else { // Exclusion, ne peut pas jouer de carte si le capital a été dépensé
+            if (n == 0) { // Exclusion, ne peut pas jouer de carte si le capital a été dépensé
                 carte c = demander_carte(liste_joueuses[i]); // Doit vérifier si la carte est jouable
                 if (c != NULL) { // Si la joueuse veut jouer une carte
                     message_generique(5, liste_joueuses[i], NULL, c);  // voir avec interface.c
@@ -151,6 +158,7 @@ int main() {
                             // Si le personnage n'est pas invincible et (qu'il est vivant ou qu'il est un FIPA)
                             estMange(getMembres(liste_joueuses[l])[m]);
                             message_generique(7, liste_joueuses[l], &m, NULL); // Dit quel personnage a été mangé
+                            printf("%d, statut:", getStatut(getMembres(liste_joueuses[l])[m]));
                         }
                     }
                 }
@@ -173,6 +181,7 @@ int main() {
         }
         if (tours_restants_jouer > 0) {
             setToursRestantsJouer(liste_joueuses[i], tours_restants_jouer - 1); // Diminution du nombre de tours restants pour jouer
+            tours_restants_jouer -= 1;
         }
         if (tours_restants_jouer == 0) { // Si le nombre de tours restants pour jouer est égal à 0, c'est au tour de l'autre joueuse
             setTour(liste_joueuses[i], 0);
@@ -186,18 +195,18 @@ int main() {
         }
         setBonusTemporaire(liste_joueuses[i], 0); // Réinitialisation du bonus temporaire
 
-        for (int j = 0; j < getTaille(liste_joueuses[i]); i += 1) { // Permet aux FIPA de se déplacer (ou non) + permet aux personnages vivants qui ne pouvaient pas se déplacer, de se déplacer
-            if (getStatut(getMembres(liste_joueuses[i])[j]) == 3) {
-                setPeutSeDeplacer(getMembres(liste_joueuses[i])[j], (getPeutSeDeplacer(getMembres(liste_joueuses[i])[j]) + 1)%2); // Inversion de la possibilité de jouer du FIPA
-            }
-            if (getStatut(getMembres(liste_joueuses[i])[j]) == 1 && getPeutSeDeplacer(getMembres(liste_joueuses[i])[j]) == 0) {
-                setPeutSeDeplacer(getMembres(liste_joueuses[i])[j], 1); // Re-permet aux personnages vivants de se déplacer
-            }
-        }
+        // for (int j = 0; j < getTaille(liste_joueuses[i]); i += 1) { // Permet aux FIPA de se déplacer (ou non) + permet aux personnages vivants qui ne pouvaient pas se déplacer, de se déplacer
+        //     if (getStatut(getMembres(liste_joueuses[i])[j]) == 3) {
+        //         setPeutSeDeplacer(getMembres(liste_joueuses[i])[j], (getPeutSeDeplacer(getMembres(liste_joueuses[i])[j]) + 1)%2); // Inversion de la possibilité de jouer du FIPA
+        //     }
+        //     if (getStatut(getMembres(liste_joueuses[i])[j]) == 1 && getPeutSeDeplacer(getMembres(liste_joueuses[i])[j]) == 0) {
+        //         setPeutSeDeplacer(getMembres(liste_joueuses[i])[j], 1); // Re-permet aux personnages vivants de se déplacer
+        //     }
+        // }
 
         message_generique(8, NULL, NULL, NULL);            
 
-    } while(!tous_manges(liste_joueuses[0]) || !tous_manges(liste_joueuses[1]));
+    } while(!tous_manges(liste_joueuses[0]) && !tous_manges(liste_joueuses[1]));
 
 
     /**
