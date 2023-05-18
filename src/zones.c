@@ -27,7 +27,7 @@ void modifierZone(zones z, int n1, int n2, float proba, int action) {
 zones nouvellesZones(){
     // on alloue la mémoire nécessaire pour les zones
     zones zos=(zones)malloc(sizeof(struct _zones));
-    zos->tab_zones=(zone*)malloc(NB_DE_ZONES*sizeof(struct _zone));
+    zos->tab_zones=(zone*)malloc(NB_DE_ZONES * sizeof(zone));
     // on alloue la mémoire nécessaire pour la matrice de probas
     zos->matrice=creer_matrice(NB_DE_ZONES);
 
@@ -37,6 +37,9 @@ zones nouvellesZones(){
         for (int j=0; j<NB_DE_ZONES; j++) {
             modifier_proba(zos->matrice, i, j, prob);
         }
+        zos->tab_zones[i]=(zone)malloc(sizeof(struct _zone));
+        setNumero(zos->tab_zones[i], i);
+        setEstAutorise(zos->tab_zones[i], 0);
     }
     return zos;
 }

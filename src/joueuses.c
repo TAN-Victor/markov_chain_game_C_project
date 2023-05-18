@@ -313,8 +313,8 @@ joueuse creation_joueuse(int n, liste_cartes liste_cartes_global){
         addMembres(jou, monstre);
     }
     else {
+        srand(time(NULL));
         for (int i = 1; i < 6; i += 1) {
-            srand(time(NULL));
             int random = 2*n + rand()%2;
             personnage nouveau = nouveauPersonnage(n, i, random);
             addMembres(jou, nouveau); // Devra appeler realloc
