@@ -431,7 +431,6 @@ int tous_manges(joueuse pj){
 */
 void reinitialise_capital(joueuse pj){
     setCapital(pj,CAPITAL_DE_BASE);
-    setBonusTemporaire(pj,1);
 }
 
 /**
