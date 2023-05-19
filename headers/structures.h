@@ -85,14 +85,14 @@ carte lecture_cartes(liste_cartes liste, int index);
 
 /**
  * @brief Alloue la mémoire à la liste_cartes_global
-  * @author Adam Ouzegdouh
+  
 */
 liste_cartes creer_liste_cartes_global();
 
 
 /**
  * @brief Libère la mémoire de liste_cartes_global
- * @author Adam Ouzegdouh
+ 
 */
 void free_listes_cartes_global();
 
