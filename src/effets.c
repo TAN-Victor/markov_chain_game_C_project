@@ -90,6 +90,8 @@ void wrapper_pouvoir_carte(joueuse* liste_joueuses, zones liste_zones, char* nom
 void pouvoir_carte_Merabet(joueuse jou) {
     setToursRestantsBonusCapital(jou, 3);
     setCapital(jou, getCapital(jou) + 2);
+    int options[2] = {getCapital(jou), getToursRestantsBonusCapital(jou)};
+    message_generique(201, NULL, options, NULL);
 }
 
 /**
@@ -106,9 +108,13 @@ void pouvoir_carte_Bannour(zones liste_zones, joueuse* liste_joueuses) {
         for (int j = 0; j < getTaille(liste_joueuses[i]); j += 1) {
             if (getZoneCourante(getMembres(liste_joueuses[i])[j]) == zone_1) {
                 setZoneCourante(getMembres(liste_joueuses[i])[j], zone_2); 
+                int options[3] = {j, zone_1, zone_2};
+                message_generique(202, liste_joueuses[i], options, NULL);
             }
             else if (getZoneCourante(getMembres(liste_joueuses[i])[j]) == zone_2) {
                 setZoneCourante(getMembres(liste_joueuses[i])[j], zone_1);
+                int options[3] = {j, zone_2, zone_1};
+                message_generique(202, liste_joueuses[i], options, NULL);
             }
         }
     }
@@ -122,7 +128,7 @@ void pouvoir_carte_Bannour(zones liste_zones, joueuse* liste_joueuses) {
  * @return rien
  */
 void pouvoir_carte_Honore(joueuse* liste_joueuses_dont_monstres, zones liste_zones) {
-    for (int i = 0; i < 2; i += 1) { // 2 déplacements car les monstres vont de nouveau se déplacer juste après
+    for (int i = 0; i < 3; i += 1) { // 3 déplacements et on bloque le déplacement des monstres pendant 1 tour pour éviter un 4eme déplacement
         for (int j = 0; j < getTaille(liste_joueuses_dont_monstres[2]); j += 1) { // pour chaque monstre
             deplacer(getMembres(liste_joueuses_dont_monstres[2])[j], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses_dont_monstres[2])[j]))));
             for (int k = 0; k < 2; k += 1) { // pour chaque joueuse
@@ -135,6 +141,9 @@ void pouvoir_carte_Honore(joueuse* liste_joueuses_dont_monstres, zones liste_zon
                 }
             }
         }
+    }
+    for (int j = 0; j < getTaille(liste_joueuses_dont_monstres[2]); j += 1) { // pour chaque monstre
+        setPeutSeDeplacer(getMembres(liste_joueuses_dont_monstres[2])[j], 0);
     }
 }
 
@@ -270,19 +279,12 @@ void pouvoir_carte_Munante(joueuse* liste_joueuses) {
  * @return rien
 */
 void pouvoir_carte_Benezet(joueuse* liste_joueuses, zones liste_zones) {
-    // joueuse monstres = liste_joueuses[2];
-    // int choix = demander_personnage(monstres);
-    // setPeutSeDeplacer(getMembres(monstres)[choix - 1], 0);
-    // int zone = demander_zones_depart(liste_zones);
-    // setZonePrecedente(getMembres(monstres)[choix - 1], getZoneCourante(getMembres(monstres)[choix - 1]));
-    // setZoneCourante(getMembres(monstres)[choix - 1], zone);
-    // for (int i = 0; i < 2; i += 1) {
-    //     for (int j = 0; j < getTaille(liste_joueuses[i]); j += 1) {
-    //         if (getZoneCourante(getMembres(liste_joueuses[i])[j]) == zone) {
-    //             setToursRestantsInvincibilite(getMembres(liste_joueuses[i])[j], 1);
-    //         }
-    //     }
-    // }
+    joueuse monstres = liste_joueuses[2];
+    int choix = demander_personnage(monstres);
+    setPeutSeDeplacer(getMembres(monstres)[choix - 1], 0);
+    int zone = demander_zones_depart(liste_zones);
+    setZonePrecedente(getMembres(monstres)[choix - 1], getZoneCourante(getMembres(monstres)[choix - 1]));
+    setZoneCourante(getMembres(monstres)[choix - 1], zone);
 }
 
 /**
