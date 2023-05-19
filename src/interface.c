@@ -48,7 +48,7 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
             printf("Votre bonus de capital dure encore %d tour(s)\n", getToursRestantsBonusCapital(j1));
         }
         if (getProbaParCapital(j1) > 0.1) {
-            printf("Chaque unité de capital investi modifie de %f les probabilités\n", getProbaParCapital(j1));
+            printf("Chaque unité de capital investi modifie de %.1f les probabilités\n", getProbaParCapital(j1));
         }
         if (getToursInvincibilite(j1) > 0) {
             printf("Votre bonus d'invincibilité dure encore %d tour(s)\n", getToursInvincibilite(j1));
@@ -67,7 +67,7 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         
         printf("Vos membres d'école sont sur les zones: \n");  // Pourrait être modifiée par une meilleure interface
         for (int i = 0; i < getTaille(j1); i += 1) {
-            printf("         %d (", getStatut(getMembres(j1)[i]));
+            printf("      Statut: %d (", getStatut(getMembres(j1)[i]));
             if (getStatut(getMembres(j1)[i]) == 1 || getStatut(getMembres(j1)[i]) == 3) {   //Si le membre est en vie
                 printf("%2d", getZoneCourante(getMembres(j1)[i]));
             }
@@ -75,7 +75,7 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         printf("\n");
         printf("Les membres d'école adverse sont sur les zones: \n");
         for (int i = 0; i < getTaille(j2); i += 1) {
-            printf("          %d (", getStatut(getMembres(j2)[i]));
+            printf("      Statut: %d (", getStatut(getMembres(j2)[i]));
             if (getStatut(getMembres(j2)[i]) == 1 || getStatut(getMembres(j2)[i]) == 3) {  //Si le membre est en vie
                 printf("%2d", getZoneCourante(getMembres(j2)[i]));
             }
@@ -90,10 +90,15 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
 
         printf("---------------------------------------------------\n");
 
+        printf("Les probabilités actuelles sont: \n   ");
+        for (int k = 1; k <= getTailleMatrice(getMatrice(liste_zones)); k += 1) {
+            printf("%3d ", k);
+        }
+        printf("\n");
         for (int i = 0; i < getTailleMatrice(getMatrice(liste_zones)); i += 1) {
-            printf("%d: ",getNumero(getTabZones(liste_zones)[i]) + 1);
+            printf("%2d: ",getNumero(getTabZones(liste_zones)[i]) + 1);
             for (int j = 0; j < getTailleMatrice(getMatrice(liste_zones)); j += 1) {
-                printf("%.2f ", lecture_probas(getMatrice(liste_zones), i, j));
+                printf("%.1f ", lecture_probas(getMatrice(liste_zones), i, j));
                 fflush(stdout);
             }
             printf("\n");
@@ -253,7 +258,7 @@ int demander_zones_autre(zones liste_zones, int zone_depart) {
     int choix = -1;
     int nombre_de_zones = getTailleMatrice(getMatrice(liste_zones));
     while (1) {
-        printf("Choissez une zone entre 1 et %d (%d exclu): \n", nombre_de_zones, zone_depart);
+        printf("Choissez une zone entre 1 et %d (%d exclu): \n", nombre_de_zones, zone_depart +1);
         if (scanf("%d", &choix) != 1) {
             fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
             while (getchar() != '\n');
@@ -261,7 +266,7 @@ int demander_zones_autre(zones liste_zones, int zone_depart) {
         else if (choix <= 0 || choix > nombre_de_zones) {
             fprintf(stderr, "Attention, cette zone n'existe pas.\n");
         }
-        else if (choix == zone_depart) {
+        else if (choix == zone_depart +1) {
             fprintf(stderr, "Attention, vous ne pouvez pas choisir la même zone que celle de départ.\n");
         }
         else {
@@ -369,7 +374,7 @@ void message_generique(int n, joueuse j1, int* option, carte option2) {
                 break;
         case 4: printf("La probabilité de passer de la zone %d à la zone %d a changé de %.2f. \n", option[0], option[1], option[2]*0.1);
                 break;
-        case 5: printf("La joueuse n° %d a utilisé la carte %s", getIdJoueuse(j1), getNom(option2));
+        case 5: printf("La joueuse n° %d a utilisé la carte %s. \n", getIdJoueuse(j1), getNom(option2));
                 break;
         case 6: printf("Tous les personnages ont bougé. \n");
                 break;
@@ -382,6 +387,10 @@ void message_generique(int n, joueuse j1, int* option, carte option2) {
         case 10: fprintf(stderr, "Les zones ont été correctement libérées par free(). \n");
                 break;
         case 100: fprintf(stderr, "Attention, la probabilité de la zone n'est plus dans l'intervalle [0, 1]. L'action a été annulée. \n");
+                break;
+        case 201: printf("Votre nouveau capital est de %d pour %d tours. \n", option[0], option[1]);
+                break;
+        case 202: printf("Le personnage n° %d de la joueuse n° %d a été déplacé de la zone %d à la zone %d. \n", option[0], getIdJoueuse(j1), option[1], option[2]);
                 break;
     }
 }
