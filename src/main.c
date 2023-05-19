@@ -109,6 +109,8 @@ int main() {
                     utilise_carte(liste_joueuses[i], c); 
                     wrapper_pouvoir_carte(liste_joueuses, liste_zones, getNom(c));
                 }
+                afficher_toute_info(liste_joueuses[i], liste_joueuses[(i+1)%2],liste_joueuses[2], liste_zones); // Affiche les joueuses, les monstres, les zones et qui sont sur les zones
+
             }
 
 
@@ -195,14 +197,28 @@ int main() {
         }
         setBonusTemporaire(liste_joueuses[i], 0); // Réinitialisation du bonus temporaire
 
-        // for (int j = 0; j < getTaille(liste_joueuses[i]); i += 1) { // Permet aux FIPA de se déplacer (ou non) + permet aux personnages vivants qui ne pouvaient pas se déplacer, de se déplacer
-        //     if (getStatut(getMembres(liste_joueuses[i])[j]) == 3) {
-        //         setPeutSeDeplacer(getMembres(liste_joueuses[i])[j], (getPeutSeDeplacer(getMembres(liste_joueuses[i])[j]) + 1)%2); // Inversion de la possibilité de jouer du FIPA
-        //     }
-        //     if (getStatut(getMembres(liste_joueuses[i])[j]) == 1 && getPeutSeDeplacer(getMembres(liste_joueuses[i])[j]) == 0) {
-        //         setPeutSeDeplacer(getMembres(liste_joueuses[i])[j], 1); // Re-permet aux personnages vivants de se déplacer
-        //     }
-        // }
+        for (int j = 0; j < getTaille(liste_joueuses[i]); j += 1) { // Permet aux FIPA de se déplacer (ou non) + permet aux personnages vivants qui ne pouvaient pas se déplacer, de se déplacer
+            if (getStatut(getMembres(liste_joueuses[i])[j]) == 3) {
+                setPeutSeDeplacer(getMembres(liste_joueuses[i])[j], (getPeutSeDeplacer(getMembres(liste_joueuses[i])[j]) + 1)%2); // Inversion de la possibilité de jouer du FIPA
+            }
+            if (getStatut(getMembres(liste_joueuses[i])[j]) == 1 && getPeutSeDeplacer(getMembres(liste_joueuses[i])[j]) == 0) {
+                setPeutSeDeplacer(getMembres(liste_joueuses[i])[j], 1); // Re-permet aux personnages vivants de se déplacer
+            }
+        }
+        for (int k = 0; k < getTaille(liste_joueuses[2]); k += 1) {
+            if (getStatut(getMembres(liste_joueuses[2])[k]) == -1) {
+                if (getNbTourDisparuRestant(getMembres(liste_joueuses[2])[k]) > 0) {
+                    setNbDeTourDisparuRestant(getMembres(liste_joueuses[2])[k], getNbTourDisparuRestant(getMembres(liste_joueuses[2])[k]) - 1); // Diminution du nombre de tours restants pour réapparaître
+                }
+                if (getNbTourDisparuRestant(getMembres(liste_joueuses[2])[k]) == 0) {
+                    setStatut(getMembres(liste_joueuses[2])[k], 1); // Réapparition du monstre
+                }
+            }
+            if (getPeutSeDeplacer(getMembres(liste_joueuses[2])[k]) == 0) {
+                setPeutSeDeplacer(getMembres(liste_joueuses[2])[k], 1); // Repermet au monstre de se déplacer
+            }
+        }
+
 
         message_generique(8, NULL, NULL, NULL);            
 
