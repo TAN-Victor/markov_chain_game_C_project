@@ -242,36 +242,7 @@ void setMatrice(zones z, matrice_probas m){
  * @param z les zones du jeu
  */
 void addZone(zones z) {
-    matrice_probas matrice = malloc(sizeof(struct matrice_probas));
-    int new_taille = getMatrice(z)->taille_matrice + 1;
-    setTailleMatrice(matrice, new_taille);
-
-    /* on alloue la nouvelle zone */
-    matrice->proba = realloc(matrice->proba, new_taille * sizeof(float*));
-    matrice->proba[new_taille - 1] = malloc(new_taille * sizeof(float));
-
-    /* on initialise les probas de la nouvelle zone */
-    for (int i = 0; i < new_taille-1; i++){
-        matrice->proba[new_taille - 1][i] = 0;
-    }
-    matrice->proba[new_taille - 1][new_taille - 1] = 1;
-
-    /* on initialise les probas des zones existantes */
-    for (int i = 0; i < new_taille-1; i++){
-        matrice->proba[i] = realloc(matrice->proba[i], new_taille * sizeof(float));
-        matrice->proba[i][new_taille - 1] = 0;
-    }
-
-    /* on met à jour la matrice */
-    setMatrice(z, matrice);
-
-    /* on met à jour la nouvelle zone */
-    zone new_zone = malloc(sizeof(zone));
-    setNumero(new_zone, new_taille);
-    setEstAutorise(new_zone,0);
-
-    /* on met à jour le tableau de zones */
-    z->tab_zones = realloc(z->tab_zones, new_taille * sizeof(zone));
-    z->tab_zones[new_taille - 1] = new_zone;
-
+    int taille = getTailleMatrice(getMatrice(z));
+    z->tab_zones = realloc(z->tab_zones, (taille + 1) * sizeof(zone));
+    z->matrice = realloc(z->matrice, (taille + 1) * sizeof(float*));
 }

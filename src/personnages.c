@@ -208,7 +208,7 @@ void setToursRestantsBonusPas(personnage p, int toursRestantsBonusPas){
             - membre d'école de jouese 2 si n = 2,
           le place sur la zone z passée en argument
           et initialise son statut sur vivant (ie 1)
- * @author Adam Ouzegdouh
+ 
  * @param n le type de personnage
  * @param id_to_put l'id à mettre qui sera généré aléatoirement, vaut 0 si le personnage est un monstre
  * @param nz le numéro de la zone
