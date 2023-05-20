@@ -392,6 +392,9 @@ void message_generique(int n, joueuse j1, int* option, carte option2) {
                 break;
         case 202: printf("Le personnage n° %d de la joueuse n° %d a été déplacé de la zone %d à la zone %d. \n", option[0], getIdJoueuse(j1), option[1], option[2]);
                 break;
+                
+        case 216: printf("La probabilité de passer de la zone %d à la zone %d est passée à %.2f. \n", option[0], option[1], option[2]*0.1);
+                break;
     }
 }
 
