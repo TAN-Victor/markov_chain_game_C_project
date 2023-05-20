@@ -123,7 +123,7 @@ int main() {
         for (int j = 0; j < nombre_monstre; j += 1) {
             if (getPeutSeDeplacer(getMembres(liste_joueuses[2])[j]) == 1 && getStatut(getMembres(liste_joueuses[2])[j]) == 1) {
                 for (int k = 0; k < getNbPas(getMembres(liste_joueuses[2])[j]); k += 1) { // Le monstre se déplace nb_pas fois
-                    deplacer(getMembres(liste_joueuses[2])[j], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[2])[j])))); // Déplacement des monstres vers leur prochaine zone
+                    deplacer(getMembres(liste_joueuses[2])[j], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[2])[j])-1))); // Déplacement des monstres vers leur prochaine zone
                 }
             }
         }
@@ -139,7 +139,7 @@ int main() {
                 if (getPeutSeDeplacer(getMembres(liste_joueuses[j])[k]) == 1 && (getStatut(getMembres(liste_joueuses[j])[k]) == 1 || getStatut(getMembres(liste_joueuses[j])[k]) == 3) ) {
                     // Si le personnage peut se déplacer et ( qu'il est vivant ou (qu'il est un FIPA))
                     for (int l = 0; l < getNbPas(getMembres(liste_joueuses[j])[k]); l += 1) {    
-                        deplacer(getMembres(liste_joueuses[j])[k], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[i])[j])))); // Déplacement des personnages vers leur prochaine zone
+                        deplacer(getMembres(liste_joueuses[j])[k], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[i])[j]) - 1))); // Déplacement des personnages vers leur prochaine zone
                     }
                 }
             }
