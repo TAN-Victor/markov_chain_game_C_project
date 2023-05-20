@@ -397,11 +397,15 @@ void pouvoir_carte_Salhab(joueuse jou) {
 void pouvoir_carte_PulidoNino(zones zo, joueuse monstres) {
     matrice_probas matrice = getMatrice(zo);
     for (int i = 0; i < getTaille(monstres); i += 1) {
-        int j = getZoneCourante(getMembres(monstres)[i]);
+        int j = getZoneCourante(getMembres(monstres)[i]) - 1;
         for (int k = 0; k < getTailleMatrice(getMatrice(zo)); k += 1) {
             modifier_proba(matrice, j, k, 0);
+            int options[3] = {j + 1, k + 1, 0};
+            message_generique(216, NULL, options, NULL);
         }
         modifier_proba(matrice, j, j, 1);
+        int options2[3] = {j + 1, j + 1, 10};
+        message_generique(216, NULL, options2, NULL);
     }
 }
 
