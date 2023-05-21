@@ -309,20 +309,20 @@ joueuse creation_joueuse(int n, liste_cartes liste_cartes_global){
     jou->membres = liste_membres;
     setTaille(jou, 0);
     if (n == 0) {
-        personnage monstre = nouveauPersonnage(n, 1, 1);
+        personnage monstre = nouveauPersonnage(n, 1, 0);
         addMembres(jou, monstre);
     }
     else {
         srand(time(NULL));
         for (int i = 1; i < 6; i += 1) {
-            int random = 2*n + rand()%2;
+            int random = 2*n + rand()%2 - 1;
             personnage nouveau = nouveauPersonnage(n, i, random);
             addMembres(jou, nouveau); // Devra appeler realloc
         }
     }
     setToursRestantsBonusCapital(jou, 0);
     setToursRestantsInvincibilite(jou, 0);
-    setToursRestantsJouer(jou, 1);
+    setToursRestantsJouer(jou, 0);
     setProbaParCapital(jou, PROBA_PAR_CAPITAL);
     setBonusTemporaire(jou, 0);
     setToursRestantsBonusProbaParCapital(jou, 0);
