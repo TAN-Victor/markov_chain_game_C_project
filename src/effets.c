@@ -131,9 +131,11 @@ void pouvoir_carte_Honore(joueuse* liste_joueuses_dont_monstres, zones liste_zon
     for (int i = 0; i < 3; i += 1) { // 3 déplacements et on bloque le déplacement des monstres pendant 1 tour pour éviter un 4eme déplacement
         for (int j = 0; j < getTaille(liste_joueuses_dont_monstres[2]); j += 1) { // pour chaque monstre
             deplacer(getMembres(liste_joueuses_dont_monstres[2])[j], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses_dont_monstres[2])[j]))));
+            int options[2] = {j, getZoneCourante(getMembres(liste_joueuses_dont_monstres[2])[j])};
+            message_generique(203, NULL, options, NULL);
             for (int k = 0; k < 2; k += 1) { // pour chaque joueuse
                 for (int l = 0; l < getTaille(liste_joueuses_dont_monstres[k]); l += 1) { // pour chaque membre d'école
-                    if (getZoneCourante(getMembres(liste_joueuses_dont_monstres[k])[l]) == getZoneCourante(getMembres(liste_joueuses_dont_monstres[2])[j]) && (getStatut(getMembres(liste_joueuses_dont_monstres[k])[l]) == 1 || getStatut(getMembres(liste_joueuses_dont_monstres[k])[l]) == 3)) {
+                    if (getZoneCourante(getMembres(liste_joueuses_dont_monstres[k])[l]) + 1 == getZoneCourante(getMembres(liste_joueuses_dont_monstres[2])[j]) + 1 && (getStatut(getMembres(liste_joueuses_dont_monstres[k])[l]) == 1 || getStatut(getMembres(liste_joueuses_dont_monstres[k])[l]) == 3)) {
                         // Si le membre d'école est dans la même zone que le monstre et (qu'il est en vie ou qu'il est FIPA)
                         estMange(getMembres(liste_joueuses_dont_monstres[k])[l]);
                         message_generique(7, liste_joueuses_dont_monstres[k], &l, NULL);
@@ -158,21 +160,21 @@ void pouvoir_carte_Honore(joueuse* liste_joueuses_dont_monstres, zones liste_zon
  */
 void pouvoir_carte_Rioboo(joueuse adverse, zones zo) {
     int capital = getCapital(adverse);
+    float proba_par_capital = getProbaParCapital(adverse);
     for (int i = 0; i < capital; i += 1) {
         int nombre_zones = getTailleMatrice(getMatrice(zo)); // TODO: changer le nombre de zones
-        srand(time(NULL));
-        int zone_1 = rand() % nombre_zones + 1;
-        int zone_2 = rand() % nombre_zones + 1;
-        int zone_3 = rand() % nombre_zones + 1;
-        while (zone_1 == zone_2 || zone_1 == zone_3 || zone_2 == zone_3) {
-            zone_1 = rand() % nombre_zones + 1;
-            zone_2 = rand() % nombre_zones + 1;
-            zone_3 = rand() % nombre_zones + 1;
+        int zone_1 = rand() % nombre_zones;
+        int zone_2 = rand() % nombre_zones;
+        int zone_3 = rand() % nombre_zones;
+        while (zone_2 == zone_3 || lecture_probas(getMatrice(zo), zone_1, zone_2) + proba_par_capital > 1 || lecture_probas(getMatrice(zo), zone_1, zone_3) - proba_par_capital < 0) {
+            zone_1 = rand() % nombre_zones;
+            zone_2 = rand() % nombre_zones;
+            zone_3 = rand() % nombre_zones;
         }
         modifierZone(zo, zone_1, zone_2, getProbaParCapital(adverse), 1);
         modifierZone(zo, zone_1, zone_3, getProbaParCapital(adverse), 0);
-        int triplet_augmenter[3] = {zone_1, zone_2, 1};
-        int triplet_diminuer[3] = {zone_1, zone_3, 1};
+        int triplet_augmenter[3] = {zone_1, zone_2, proba_par_capital*10};
+        int triplet_diminuer[3] = {zone_1, zone_3, -proba_par_capital*10};
         message_generique(4, NULL, triplet_augmenter, NULL);
         message_generique(4, NULL, triplet_diminuer, NULL);
     }
@@ -189,12 +191,14 @@ void pouvoir_carte_Rioboo(joueuse adverse, zones zo) {
  */
 void pouvoir_carte_Goilard(joueuse* liste_joueuses) {
     for (int i = 0; i < 2; i += 1) {
-        setToursRestantsJouer(liste_joueuses[i], 2);
+        setToursRestantsJouer(liste_joueuses[i], getToursRestantsJouer(liste_joueuses[i]) + 2);
+        int option[1] = {getToursRestantsJouer(liste_joueuses[i])};
+        message_generique(205, liste_joueuses[i], option, NULL);
     }
 }
 
 
-/**
+/** 206
  * @brief Execute le pouvoir de la carte Laurence Bourard
  * Lors du prochain déplacement, si deux membres d'écoles adverses se retrouvent sur la même zone,
  * ils se déplacent de nouveau. Si ces deux membres sont sur la zone du monstre avant le second déplacement,
@@ -235,8 +239,8 @@ void pouvoir_carte_Bourard(joueuse* liste_joueuses, zones liste_zones) {
                 if (getZoneCourante(getMembres(liste_joueuses[0])[i]) == getZoneCourante(getMembres(liste_joueuses[1])[j])) {
                     continuer = 1;
                     nb_tour += 1;
-                    deplacer(getMembres(liste_joueuses[0])[i], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[0])[i])))); // Déplacement des joueuses vers leur prochaine zone
-                    deplacer(getMembres(liste_joueuses[1])[j], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[1])[j])))); // Déplacement des joueuses vers leur prochaine zone
+                    deplacer(getMembres(liste_joueuses[0])[i], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[0])[i])))); // Déplacement des personnages vers leur prochaine zone
+                    deplacer(getMembres(liste_joueuses[1])[j], trouveZone(liste_zones, prochaineZone(liste_zones, zonePersonnage(getMembres(liste_joueuses[1])[j])))); // Déplacement des personnages vers leur prochaine zone
                 }
             }
         }
@@ -252,7 +256,7 @@ void pouvoir_carte_Bourard(joueuse* liste_joueuses, zones liste_zones) {
 
 }
 
-/**
+/** 207
  * @brief Execute le pouvoir de la carte Denisse Munante
  * Les membres d'écoles présents sur la zone où était un monstre avant son dernier déplacement sont mangés.
  * @param liste_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
@@ -262,7 +266,7 @@ void pouvoir_carte_Munante(joueuse* liste_joueuses) {
     for (int i = 0; i < getTaille(liste_joueuses[2]); i += 1) {
         for (int j = 0; j < 2; j += 1) {
             for (int k = 0; k < getTaille(liste_joueuses[j]); k += 1) {
-                if (getZoneCourante(getMembres(liste_joueuses[j])[k]) == getZonePrecedente(getMembres(liste_joueuses[2])[i]) && (getStatut(getMembres(liste_joueuses[j])[k]) == 1 || getStatut(getMembres(liste_joueuses[j])[k]) == 3)) {
+                if (getZoneCourante(getMembres(liste_joueuses[j])[k])  + 1 == getZonePrecedente(getMembres(liste_joueuses[2])[i]) + 1 && (getStatut(getMembres(liste_joueuses[j])[k]) == 1 || getStatut(getMembres(liste_joueuses[j])[k]) == 3)) {
                     estMange(getMembres(liste_joueuses[j])[k]);
                     message_generique(7, liste_joueuses[j], &k, NULL);
                 }
@@ -271,7 +275,7 @@ void pouvoir_carte_Munante(joueuse* liste_joueuses) {
     }
 }
 
-/**
+/** 208
  * @brief Execute le pouvoir de la carte Cyril Benezet
  * Déplacez un des monstres sur la zone de votre choix. Si un membre d'école se trouve sur la zone du monstre, il n'est pas mangé.
  * @param liste_joueuses permet d'avoir la liste de tous les joueuses
@@ -281,13 +285,13 @@ void pouvoir_carte_Munante(joueuse* liste_joueuses) {
 void pouvoir_carte_Benezet(joueuse* liste_joueuses, zones liste_zones) {
     joueuse monstres = liste_joueuses[2];
     int choix = demander_personnage(monstres);
-    setPeutSeDeplacer(getMembres(monstres)[choix - 1], 0);
+    setPeutSeDeplacer(getMembres(monstres)[choix], 0);
     int zone = demander_zones_depart(liste_zones);
-    setZonePrecedente(getMembres(monstres)[choix - 1], getZoneCourante(getMembres(monstres)[choix - 1]));
-    setZoneCourante(getMembres(monstres)[choix - 1], zone);
+    setZonePrecedente(getMembres(monstres)[choix], getZoneCourante(getMembres(monstres)[choix]));
+    setZoneCourante(getMembres(monstres)[choix], zone);
 }
 
-/**
+/** 209
  * @brief Execute le pouvoir de la carte Anne-Laure Ligozat
  * Choisissez un membre de votre école, il effectue désormais deux déplacements au lieu d'un à chaque tour.
  * @param jou permet d'avoir la joueuse
@@ -397,14 +401,14 @@ void pouvoir_carte_Salhab(joueuse jou) {
 void pouvoir_carte_PulidoNino(zones zo, joueuse monstres) {
     matrice_probas matrice = getMatrice(zo);
     for (int i = 0; i < getTaille(monstres); i += 1) {
-        int j = getZoneCourante(getMembres(monstres)[i]) - 1;
+        int j = getZoneCourante(getMembres(monstres)[i]);
         for (int k = 0; k < getTailleMatrice(getMatrice(zo)); k += 1) {
             modifier_proba(matrice, j, k, 0);
-            int options[3] = {j + 1, k + 1, 0};
+            int options[3] = {j, k, 0};
             message_generique(216, NULL, options, NULL);
         }
         modifier_proba(matrice, j, j, 1);
-        int options2[3] = {j + 1, j + 1, 10};
+        int options2[3] = {j, j, 10};
         message_generique(216, NULL, options2, NULL);
     }
 }
