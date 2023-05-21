@@ -69,7 +69,7 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         for (int i = 0; i < getTaille(j1); i += 1) {
             printf("      Statut: %d (", getStatut(getMembres(j1)[i]));
             if (getStatut(getMembres(j1)[i]) == 1 || getStatut(getMembres(j1)[i]) == 3) {   //Si le membre est en vie
-                printf("%2d", getZoneCourante(getMembres(j1)[i]));
+                printf("%2d", getZoneCourante(getMembres(j1)[i]) + 1);
             }
         }
         printf("\n");
@@ -77,13 +77,13 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         for (int i = 0; i < getTaille(j2); i += 1) {
             printf("      Statut: %d (", getStatut(getMembres(j2)[i]));
             if (getStatut(getMembres(j2)[i]) == 1 || getStatut(getMembres(j2)[i]) == 3) {  //Si le membre est en vie
-                printf("%2d", getZoneCourante(getMembres(j2)[i]));
+                printf("%2d", getZoneCourante(getMembres(j2)[i]) + 1);
             }
         }
         printf("\n");
         printf("Le(s) monstre(s) sont sur les zones: \n");
         for (int i = 0; i < getTaille(m); i += 1) {
-            printf("%2d", getZoneCourante(getMembres(m)[i]));
+            printf("%2d", getZoneCourante(getMembres(m)[i]) + 1);
         }
         printf("\n");
         printf("Il y a %d zones. \n", getTailleMatrice(getMatrice(liste_zones)));
@@ -372,13 +372,13 @@ void message_generique(int n, joueuse j1, int* option, carte option2) {
                 break;
         case 3: printf("La joueuse n° %d a utilisé %d de capital. \n", getIdJoueuse(j1), option[0]);
                 break;
-        case 4: printf("La probabilité de passer de la zone %d à la zone %d a changé de %.2f. \n", option[0], option[1], option[2]*0.1);
+        case 4: printf("La probabilité de passer de la zone %d à la zone %d a changé de %.2f. \n", option[0]+1, option[1]+1, option[2]*0.1);
                 break;
         case 5: printf("La joueuse n° %d a utilisé la carte %s. \n", getIdJoueuse(j1), getNom(option2));
                 break;
         case 6: printf("Tous les personnages ont bougé. \n");
                 break;
-        case 7: printf("Le personnage n° %d de la joueuse n° %d est décédé. \n", option[0], getIdJoueuse(j1));
+        case 7: printf("Le personnage n° %d de la joueuse n° %d est décédé. \n", option[0]+1, getIdJoueuse(j1));
                 break;
         case 8: printf("Le tour est terminé, le capital et les effets des joueuses ont été réintialisés. \n");
                 break;
@@ -390,10 +390,13 @@ void message_generique(int n, joueuse j1, int* option, carte option2) {
                 break;
         case 201: printf("Votre nouveau capital est de %d pour %d tours. \n", option[0], option[1]);
                 break;
-        case 202: printf("Le personnage n° %d de la joueuse n° %d a été déplacé de la zone %d à la zone %d. \n", option[0], getIdJoueuse(j1), option[1], option[2]);
+        case 202: printf("Le personnage n° %d de la joueuse n° %d a été déplacé de la zone %d à la zone %d. \n", option[0]+1, getIdJoueuse(j1), option[1]+1, option[2]+1);
                 break;
-                
-        case 216: printf("La probabilité de passer de la zone %d à la zone %d est passée à %.2f. \n", option[0], option[1], option[2]*0.1);
+        case 203: printf("Le monstre %d s'est déplacé à la zone %d. \n", option[0]+1, option[1]+1);
+                break;
+        case 205: printf("Le nombre de tours restants de la joueuse %d est passé à %d. \n", getIdJoueuse(j1), option[0]);
+                break;
+        case 216: printf("La probabilité de passer de la zone %d à la zone %d est passée à %.2f. \n", option[0]+1, option[1]+1, option[2]*0.1);
                 break;
     }
 }
