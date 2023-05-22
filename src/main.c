@@ -110,8 +110,6 @@ int main() {
                     utilise_carte(liste_joueuses[i], c); 
                     wrapper_pouvoir_carte(liste_joueuses, liste_zones, getNom(c));
                 }
-                afficher_toute_info(liste_joueuses[i], liste_joueuses[(i+1)%2],liste_joueuses[2], liste_zones); // Affiche les joueuses, les monstres, les zones et qui sont sur les zones
-
             }
 
 
@@ -146,8 +144,6 @@ int main() {
             }
         }
         message_generique(6, NULL, NULL, NULL); // Dit simplement que les personnages se sont déplacés mais pas où
-        afficher_toute_info(liste_joueuses[i], liste_joueuses[(i+1)%2],liste_joueuses[2], liste_zones); // Affiche les joueuses, les monstres, les zones et qui sont sur les zones
-
 
         /**
          * @brief Vérification de la présence des personnages dans les zones des monstres; pour les manger
