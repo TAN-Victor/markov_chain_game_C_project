@@ -243,6 +243,19 @@ void setMatrice(zones z, matrice_probas m){
  */
 void addZone(zones z) {
     int taille = getTailleMatrice(getMatrice(z));
-    z->tab_zones = realloc(z->tab_zones, (taille + 1) * sizeof(zone));
-    z->matrice = realloc(z->matrice, (taille + 1) * sizeof(float*));
+    z->tab_zones = (zone*) realloc(z->tab_zones, (taille+1)*sizeof(zone));
+    z->matrice = (matrice_probas) realloc(z->matrice, (taille+1)*sizeof(struct matrice_probas));
+    
+    z->tab_zones[taille] = (zone) malloc(sizeof(struct _zone));
+    setNumero(z->tab_zones[taille], taille);
+    setEstAutorise(z->tab_zones[taille], 0);
+
+    z->matrice->taille_matrice = taille+1;
+    z->matrice->proba = (float**) realloc(z->matrice->proba, (taille+1)*sizeof(float*));
+    for (int i = 0; i < (taille+1); i+= 1){
+        z->matrice->proba[i] = (float*) realloc(z->matrice->proba[i], (taille+1) * sizeof(float));
+        modifier_proba(z->matrice, i, taille, 0.0);
+        modifier_proba(z->matrice, taille, i, 0.0);
+    }
+
 }
