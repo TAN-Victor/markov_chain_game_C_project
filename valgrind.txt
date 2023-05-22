@@ -1,247 +1,45 @@
-==174== Memcheck, a memory error detector
-==174== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==174== Using Valgrind-3.21.0 and LibVEX; rerun with -h for copyright info
-==174== Command: ./bin/prog
-==174== Parent PID: 9
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1095A7: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b71098 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1095A7: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Conditional jump or move depends on uninitialised value(s)
-==174==    at 0x483E7AD: realloc (vg_replace_malloc.c:1649)
-==174==    by 0x10934B: ajout_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1095BE: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1095D1: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b71138 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1095D1: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1095FB: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b711d8 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1095FB: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x109625: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b71288 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x109625: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10964F: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b71338 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10964F: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x109679: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b713f8 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x109679: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1096A3: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b714b8 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1096A3: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1096CD: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b71588 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1096CD: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1096F7: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b71658 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1096F7: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x109721: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b71738 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x109721: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10974B: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b71818 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10974B: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x109775: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b71908 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x109775: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10979F: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b719f8 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10979F: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1097C9: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b71af8 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1097C9: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1097F3: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b71bf8 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1097F3: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10981D: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b71d08 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10981D: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10984D: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b71e18 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10984D: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10987D: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b71f38 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10987D: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1098AD: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b72058 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1098AD: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid write of size 8
-==174==    at 0x109266: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1098DD: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b72188 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1098DD: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== Invalid read of size 8
-==174==    at 0x10928D: getDescription (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DDC8: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==  Address 0x4b71098 is 0 bytes after a block of size 8 alloc'd
-==174==    at 0x483977B: malloc (vg_replace_malloc.c:431)
-==174==    by 0x10924E: creer_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x1095A7: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DD53: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== 
-==174== Process terminating with default action of signal 2 (SIGINT)
-==174==    at 0x4A8584E: read (read.c:26)
-==174==    by 0x4A17899: _IO_file_underflow@@GLIBC_2.2.5 (fileops.c:517)
-==174==    by 0x4A18B01: _IO_default_uflow (genops.c:362)
-==174==    by 0x49EF137: __vfscanf_internal (vfscanf-internal.c:627)
-==174==    by 0x49EE18D: __isoc99_scanf (isoc99_scanf.c:30)
-==174==    by 0x10B655: demander_capital (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174==    by 0x10DF18: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
-==174== 
-==174== HEAP SUMMARY:
-==174==     in use at exit: 3,816 bytes in 71 blocks
-==174==   total heap usage: 132 allocs, 61 frees, 7,384 bytes allocated
-==174== 
-==174== LEAK SUMMARY:
-==174==    definitely lost: 0 bytes in 0 blocks
-==174==    indirectly lost: 0 bytes in 0 blocks
-==174==      possibly lost: 0 bytes in 0 blocks
-==174==    still reachable: 3,816 bytes in 71 blocks
-==174==         suppressed: 0 bytes in 0 blocks
-==174== Reachable blocks (those to which a pointer was found) are not shown.
-==174== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==174== 
-==174== Use --track-origins=yes to see where uninitialised values come from
-==174== For lists of detected and suppressed errors, rerun with: -s
-==174== ERROR SUMMARY: 41 errors from 22 contexts (suppressed: 0 from 0)
+==192== Memcheck, a memory error detector
+==192== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==192== Using Valgrind-3.21.0 and LibVEX; rerun with -h for copyright info
+==192== Command: ./bin/prog
+==192== Parent PID: 24
+==192== 
+==192== Conditional jump or move depends on uninitialised value(s)
+==192==    at 0x483E7AD: realloc (vg_replace_malloc.c:1649)
+==192==    by 0x10934B: ajout_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
+==192==    by 0x1095BE: creer_liste_cartes_global (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
+==192==    by 0x10E56A: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
+==192== 
+==192== 
+==192== HEAP SUMMARY:
+==192==     in use at exit: 120 bytes in 3 blocks
+==192==   total heap usage: 131 allocs, 128 frees, 7,512 bytes allocated
+==192== 
+==192== 40 bytes in 1 blocks are definitely lost in loss record 1 of 3
+==192==    at 0x483E80C: realloc (vg_replace_malloc.c:1649)
+==192==    by 0x10934B: ajout_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
+==192==    by 0x10ACD2: creation_joueuse (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
+==192==    by 0x10E632: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
+==192== 
+==192== 40 bytes in 1 blocks are definitely lost in loss record 2 of 3
+==192==    at 0x483E80C: realloc (vg_replace_malloc.c:1649)
+==192==    by 0x10934B: ajout_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
+==192==    by 0x10ACD2: creation_joueuse (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
+==192==    by 0x10E647: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
+==192== 
+==192== 40 bytes in 1 blocks are definitely lost in loss record 3 of 3
+==192==    at 0x483E80C: realloc (vg_replace_malloc.c:1649)
+==192==    by 0x10934B: ajout_carte (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
+==192==    by 0x10ACD2: creation_joueuse (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
+==192==    by 0x10E65C: main (in /mnt/c/Users/Victo/Documents/Cours/S2/projectinfo/group_8_project_1a/bin/prog)
+==192== 
+==192== LEAK SUMMARY:
+==192==    definitely lost: 120 bytes in 3 blocks
+==192==    indirectly lost: 0 bytes in 0 blocks
+==192==      possibly lost: 0 bytes in 0 blocks
+==192==    still reachable: 0 bytes in 0 blocks
+==192==         suppressed: 0 bytes in 0 blocks
+==192== 
+==192== Use --track-origins=yes to see where uninitialised values come from
+==192== For lists of detected and suppressed errors, rerun with: -s
+==192== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)
