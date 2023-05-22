@@ -81,7 +81,7 @@ void wrapper_pouvoir_carte(joueuse* liste_joueuses, zones liste_zones, char* nom
 
 
 
-/**
+/** 1
  * @brief Execute le pouvoir de la carte Massinissa Merabet
  * Pendant vos 3 prochains tours, votre capital augmente de 2
  * @param jou Pour savoir sur quelle joueuse intéragir
@@ -94,7 +94,7 @@ void pouvoir_carte_Merabet(joueuse jou) {
     message_generique(201, NULL, options, NULL);
 }
 
-/**
+/** 2
  * @brief Execute le pouvoir de la carte Fetia Bannour
  * Choisissez deux zones, les personnages présents sur ces deux zones sont échangés
  * @param zones la liste des zones
@@ -120,7 +120,7 @@ void pouvoir_carte_Bannour(zones liste_zones, joueuse* liste_joueuses) {
     }
 }
 
-/**
+/** 3
  * @brief Execute le pouvoir de la carte  Valentin Honoré
  * Chaque montre se déplace 3 fois. Chaque membre d'école qu'un monstre rencontre est mangé
  * @param liste_joueuses_dont_monstres La liste de tout les joueurs et monstres afin de savoir la zone courante de chacun des personnages de chaque joueur
@@ -149,7 +149,7 @@ void pouvoir_carte_Honore(joueuse* liste_joueuses_dont_monstres, zones liste_zon
     }
 }
 
-/**
+/** 4
  * @brief Execute le pouvoir de la carte Renaud Rioboo
  * Lors du prochain tour, la joueuse adverse ne choisit pas comment est utilisé son capital. Chaque 
  * point de capital est utilisé aléatoirement: pour chaque point, choisissez les trois zones Z1, Z2 et 
@@ -182,7 +182,7 @@ void pouvoir_carte_Rioboo(joueuse adverse, zones zo) {
     message_generique(3, adverse, &capital, NULL);
 }
 
-/**
+/** 5
  * @brief Execute le pouvoir de la carte Kevin Goilard
  * Lors du prochain tour et du suivant, c'est vous qui jouez. Lors des deux 
  * tours suivant, c'est la joueuse adverse qui joue.
@@ -198,7 +198,7 @@ void pouvoir_carte_Goilard(joueuse* liste_joueuses) {
 }
 
 
-/** 206
+/** 6
  * @brief Execute le pouvoir de la carte Laurence Bourard
  * Lors du prochain déplacement, si deux membres d'écoles adverses se retrouvent sur la même zone,
  * ils se déplacent de nouveau. Si ces deux membres sont sur la zone du monstre avant le second déplacement,
@@ -256,7 +256,7 @@ void pouvoir_carte_Bourard(joueuse* liste_joueuses, zones liste_zones) {
 
 }
 
-/** 207
+/** 7
  * @brief Execute le pouvoir de la carte Denisse Munante
  * Les membres d'écoles présents sur la zone où était un monstre avant son dernier déplacement sont mangés.
  * @param liste_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
@@ -275,7 +275,7 @@ void pouvoir_carte_Munante(joueuse* liste_joueuses) {
     }
 }
 
-/** 208
+/** 8
  * @brief Execute le pouvoir de la carte Cyril Benezet
  * Déplacez un des monstres sur la zone de votre choix. Si un membre d'école se trouve sur la zone du monstre, il n'est pas mangé.
  * @param liste_joueuses permet d'avoir la liste de tous les joueuses
@@ -289,9 +289,11 @@ void pouvoir_carte_Benezet(joueuse* liste_joueuses, zones liste_zones) {
     int zone = demander_zones_depart(liste_zones);
     setZonePrecedente(getMembres(monstres)[choix], getZoneCourante(getMembres(monstres)[choix]));
     setZoneCourante(getMembres(monstres)[choix], zone);
+    int options[2] = {choix, zone};
+    message_generique(203, NULL, options, NULL);
 }
 
-/** 209
+/** 9
  * @brief Execute le pouvoir de la carte Anne-Laure Ligozat
  * Choisissez un membre de votre école, il effectue désormais deux déplacements au lieu d'un à chaque tour.
  * @param jou permet d'avoir la joueuse
@@ -299,24 +301,34 @@ void pouvoir_carte_Benezet(joueuse* liste_joueuses, zones liste_zones) {
 */
 void pouvoir_carte_Ligozat(joueuse jou) {
     int choix = demander_personnage(jou);
-    setDeNbPas(getMembres(jou)[choix - 1], 1);
+    setDeNbPas(getMembres(jou)[choix], 2);
+    message_generique(209, NULL, &choix, NULL);
 }
 
-/**
+/** 10
  * @brief Execute le pouvoir de la carte Christophe Mouilleron
  * Choisissez un membre de l'école de la joueuse adverse. Ce membre devient un membre de votre école.
  * @param liste_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
  * @return rien
 */
 void pouvoir_carte_Mouilleron(joueuse* liste_joueuses) {
-    int choix = demander_personnage(liste_joueuses[1]);
-    setType(getMembres(liste_joueuses[1])[choix - 1], getIdJoueuse(liste_joueuses[0]));
-    addMembres(liste_joueuses[0], getMembres(liste_joueuses[1])[choix - 1]);
-    setIdPersonnage(getMembres(liste_joueuses[1])[choix - 1], getTaille(liste_joueuses[0]));
-    removeMembres(liste_joueuses[1], choix - 1);
+    int i;
+    if (getTour(liste_joueuses[0]) == 1) {
+        i = 0;
+    }
+    else {
+        i = 1;
+    }
+    int choix = demander_personnage(liste_joueuses[(i+1)%2]);
+    setType(getMembres(liste_joueuses[(i+1)%2])[choix], getIdJoueuse(liste_joueuses[i]));
+    addMembres(liste_joueuses[i], getMembres(liste_joueuses[(i+1)%2])[choix]);
+    setIdPersonnage(getMembres(liste_joueuses[(i+1)%2])[choix], getTaille(liste_joueuses[i]));
+    removeMembres(liste_joueuses[(i+1)%2], choix+1);
+    int options[4] = {choix, getIdJoueuse(liste_joueuses[i]), getTaille(liste_joueuses[i]), getIdJoueuse(liste_joueuses[(i+1)%2])};
+    message_generique(210, NULL, options, NULL);
 }
 
-/**
+/** 11
  * @brief Execute le pouvoir de la carte Djibril-Aurelien Dembele-Cabot
  * Sacrifiez un membre de votre école de votre choix. Vous avez 15 points de capital en plus à votre
  * prochain tour.
@@ -326,11 +338,12 @@ void pouvoir_carte_Mouilleron(joueuse* liste_joueuses) {
 void pouvoir_carte_DembeleCabot(joueuse jou) {
     int choix = demander_personnage(jou);
     setBonusTemporaire(jou, getBonusTemporaire(jou) + 15);
-    estMange(getMembres(jou)[choix - 1]);
+    message_generique(211, NULL, NULL, NULL);
+    estMange(getMembres(jou)[choix]);
     message_generique(7, jou, &choix, NULL);
 }
 
-/**
+/** 12
  * @brief Execute le pouvoir de la carte Lucienne Pacave
  * Créez une nouvelle zone. Les membres de votre école sont les seuls à pouvoir se déplacer sur cette zone.
  * Un membre de l'école de l'autre joueuse qui devrait se déplacer sur cette zone ne se déplace pas.
@@ -341,11 +354,12 @@ void pouvoir_carte_DembeleCabot(joueuse jou) {
  */
 void pouvoir_carte_Pacave(zones zo, joueuse jou) {
     addZone(zo);
+    message_generique(212, NULL, NULL, NULL);
     setEstAutorise(getTabZones(zo)[getTailleMatrice(getMatrice(zo)) - 1], getIdJoueuse(jou));
     modifier_proba(getMatrice(zo), getTailleMatrice(getMatrice(zo)) - 1, getTailleMatrice(getMatrice(zo)) - 1, 1);
 }
 
-/**
+/** 13
  * @brief Execute le pouvoir de la carte Jerome Huet
  * Chaque zone effectue une rotation de probabilité. La probabilité d'aller de la zone i à la zone j devient la 
  * probabilité d'aller de la zone i à la zone j + 1. La probabilité d'aller de la zone i à la zone 10 devient la
@@ -357,15 +371,16 @@ void pouvoir_carte_Huet(zones zo) {
     matrice_probas matrice = getMatrice(zo);
     int taille = getTailleMatrice(getMatrice(zo));
     for (int i = 0; i < taille; i += 1) {
-         float proba = lecture_probas(matrice, i, taille - 1);
+         float proba = lecture_probas(matrice, i, i);
         for (int j = 0; j < taille - 1; j += 1) {
             modifier_proba(matrice, i, j, lecture_probas(matrice, i, j + 1));
         }
         modifier_proba(matrice, i, taille - 1, proba);
     }
+    message_generique(213, NULL, NULL, NULL);
 }
 
-/**
+/** 14
  * @brief Execute le pouvoir de la carte Christine Matias
  * Chaque monstre disparaît pendant 2 tours. Il réapparaîtra sur la zone d'où il est parti.
  * @param liste_monstres permet d'avoir l'ensemble des monstres
@@ -374,11 +389,12 @@ void pouvoir_carte_Huet(zones zo) {
 void pouvoir_carte_Matias(joueuse liste_monstres) {
     for (int i = 0; i < getTaille(liste_monstres); i += 1) {
         setIdPersonnage(getMembres(liste_monstres)[i], -1);
-        setNbDeTourDisparuRestant(getMembres(liste_monstres)[i], 2);
+        setNbDeTourDisparuRestant(getMembres(liste_monstres)[i], 3); // Les 2 prochains tours après l'utilisation de cette carte
     }
+    message_generique(214, NULL, NULL, NULL);
 }
 
-/**
+/** 15
  * @brief Execute le pouvoir de la carte Katrin Salhab
  * Pendant vos 3 prochains tours, un point de capital permet de déplacer une quantité 
  * 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ou 1 de probabilité.
@@ -388,10 +404,12 @@ void pouvoir_carte_Matias(joueuse liste_monstres) {
 void pouvoir_carte_Salhab(joueuse jou) {
     int proba_par_capital = getProbaParCapital(jou);
     setProbaParCapital(jou, proba_par_capital);
+    int option[1] = {proba_par_capital*10};
+    message_generique(215, NULL, option, NULL);
     setToursRestantsBonusProbaParCapital(jou, 4); // 4 car 1 tour sera perdu après l'utilisation de cette carte
 }
 
-/**
+/** 16
  * @brief Execute le pouvoir de la carte Sergio Pulido-Nino
  * Mettez à 0 les probabilités permettant de sortir de la zone de chaque monstre et mettez à 1 la probabilité de rester dans la zone de chaque monstre.
  * @param zo permet d'avoir l'ensemble des zones
@@ -413,7 +431,7 @@ void pouvoir_carte_PulidoNino(zones zo, joueuse monstres) {
     }
 }
 
-/**
+/** 17
  * @brief Execute le pouvoir de la carte Dimitri Watel
  * Choisissez un membre de votre école, il devient FISA et effectue désormais son déplacement un tour sur deux.
  * @param jou permet d'avoir la joueuse
@@ -422,9 +440,10 @@ void pouvoir_carte_PulidoNino(zones zo, joueuse monstres) {
 void pouvoir_carte_Watel(joueuse jou) {
     int choix = demander_personnage(jou);
     setStatut(getMembres(jou)[choix - 1], 3);
+    message_generique(217, jou, &choix, NULL);
 }
 
-/**
+/** 18
  * @brief Execute le pouvoir de la carte Marie Szafranski
  * Ajoutez un monstre sur la zone 1, un membre de votre école sur la zone 2 et un membre de l'école adverse sur 
  * la zone 3. Si un membre d'école se trouve sur la même zone qu'un monstre, il n'est pas mangé.
