@@ -239,7 +239,10 @@ int main() {
     free_joueuse(liste_joueuses[2]);
     message_generique(9, NULL, NULL, NULL);
     libereZones(liste_zones);
+    message_generique(11, NULL, NULL, NULL);
     message_generique(10, NULL, NULL, NULL);
+    libere_liste_cartes(liste_cartes_global);
+    message_generique(12, NULL, NULL, NULL);
     return 0;
 
 }
