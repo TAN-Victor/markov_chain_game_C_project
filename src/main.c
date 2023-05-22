@@ -30,6 +30,7 @@ int main() {
      * @brief Création de 3 "joueuses"; l'ensemble des monstres correspondra à une joueuse 
      * 
      */
+    srand(time(NULL));
     joueuse joueuse_1 = creation_joueuse(1, liste_cartes_global); // 1 pour dire que l'on crée une joueuse jouable n°1
     joueuse joueuse_2 = creation_joueuse(2, liste_cartes_global); // 2 pour dire que l'on crée une joueuse jouable n°2
     joueuse monstres = creation_joueuse(0, liste_cartes_global); // 0 pour dire que l'on crée une liste de monstres, il n'y aura qu'un seul monstre au début
@@ -194,7 +195,15 @@ int main() {
         if (tours_restants_bonus_proba_par_capital == 0) {
             setProbaParCapital(liste_joueuses[i], PROBA_PAR_CAPITAL); // Réinitialisation du bonus de probabilité par capital si le nombre de tours restants pour le bonus de probabilité par capital est égal à 0
         }
-        setBonusTemporaire(liste_joueuses[i], 0); // Réinitialisation du bonus temporaire
+        if (getBonusTemporaire(liste_joueuses[i]) != 0) {
+            setCapital(liste_joueuses[i], getBonusTemporaire(liste_joueuses[i]) + getCapital(liste_joueuses[i])); // Ajout du bonus temporaire au capital
+            if (getBonusTemporaire(liste_joueuses[i]) > 0) {
+                setBonusTemporaire(liste_joueuses[i], -getBonusTemporaire(liste_joueuses[i])); // Mis en négatif pour savoir qu'il faudra le soustraire au prochain tour
+            }
+            else {
+                setBonusTemporaire(liste_joueuses[i], 0); // Réinitialisation du bonus temporaire
+            }
+        } 
 
         for (int j = 0; j < getTaille(liste_joueuses[i]); j += 1) { // Permet aux FIPA de se déplacer (ou non) + permet aux personnages vivants qui ne pouvaient pas se déplacer, de se déplacer
             if (getStatut(getMembres(liste_joueuses[i])[j]) == 3) {
