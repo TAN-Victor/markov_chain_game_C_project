@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2023-03-13" view-index="1" gantt-divider-location="413" resource-divider-location="300" version="2.8.10" locale="fr">
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2023-03-17" view-index="0" gantt-divider-location="413" resource-divider-location="300" version="2.8.10" locale="fr">
     <description/>
     <view zooming-state="default:3" id="gantt-chart">
         <field id="tpd3" name="Nom" width="196" order="0"/>
@@ -71,14 +71,14 @@
             </task>
             <task id="77" name="Finition A4" color="#8cb6ce" meeting="false" start="2023-03-05" duration="9" complete="0" thirdDate="2023-03-07" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="78" name="tâche_B1" color="#ffcccc" meeting="false" start="2023-03-21" duration="62" complete="59" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
+        <task id="78" name="tâche_B1" color="#ffcccc" meeting="false" start="2023-03-21" duration="62" complete="94" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
             <task id="106" name="Création branche lot_b" color="#8cb6ce" meeting="true" start="2023-03-21" duration="0" complete="0" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true"/>
             <task id="110" name="Makefile" color="#8cb6ce" meeting="false" start="2023-03-21" duration="18" complete="100" thirdDate="2023-03-20" thirdDate-constraint="0" expand="true"/>
             <task id="115" name="Modification Git pour les dossiers" color="#8cb6ce" meeting="true" start="2023-03-21" duration="0" complete="0" thirdDate="2023-03-20" thirdDate-constraint="0" expand="true"/>
             <task id="118" name="Premiers ajouts du lot_b au Gantt" color="#8cb6ce" meeting="false" start="2023-03-21" duration="13" complete="100" thirdDate="2023-03-22" thirdDate-constraint="0" expand="true"/>
             <task id="153" name="Création read_me" color="#8cb6ce" meeting="false" start="2023-03-27" duration="3" complete="100" thirdDate="2023-03-27" thirdDate-constraint="0" expand="true"/>
             <task id="149" name="Recompilation du main.c" color="#8cb6ce" meeting="false" start="2023-04-09" duration="15" complete="100" thirdDate="2023-04-03" thirdDate-constraint="0" expand="true"/>
-            <task id="151" name="Validation lot_b" color="#8cb6ce" meeting="false" start="2023-04-21" duration="31" complete="0" thirdDate="2023-03-31" thirdDate-constraint="0" expand="true"/>
+            <task id="151" name="Validation lot_b" color="#8cb6ce" meeting="false" start="2023-05-21" duration="1" complete="0" thirdDate="2023-03-31" thirdDate-constraint="0" expand="true"/>
         </task>
         <task id="82" name="tâche_B2" color="#ccccff" meeting="false" start="2023-03-21" duration="34" complete="94" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
             <task id="121" name="Création des premiers tests" color="#8cb6ce" meeting="false" start="2023-03-21" duration="27" complete="100" thirdDate="2023-03-14" thirdDate-constraint="0" expand="true"/>
@@ -93,9 +93,9 @@
         <task id="95" name="tâche_B5" color="#ffccff" meeting="false" start="2023-03-21" duration="34" complete="100" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
             <task id="131" name="Création des getters et setters" color="#8cb6ce" meeting="false" start="2023-03-21" duration="34" complete="100" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="98" name="tâche_B6" color="#ffcccc" meeting="false" start="2023-03-21" duration="62" complete="81" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
+        <task id="98" name="tâche_B6" color="#ffcccc" meeting="false" start="2023-03-21" duration="62" complete="85" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
             <task id="133" name="Création des fichiers .c" color="#8cb6ce" meeting="false" start="2023-03-21" duration="14" complete="100" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true"/>
-            <task id="135" name="Implémentation des .c" color="#8cb6ce" meeting="false" start="2023-03-21" duration="34" complete="41" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true"/>
+            <task id="135" name="Implémentation des .c" color="#8cb6ce" meeting="false" start="2023-03-30" duration="25" complete="41" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true"/>
             <task id="157" name="Réimplémentation des .c" color="#8cb6ce" meeting="false" start="2023-03-21" duration="62" complete="100" thirdDate="2023-04-04" thirdDate-constraint="0" expand="true" cost-manual-value="0.0" cost-calculated="true"/>
         </task>
         <task id="101" name="tâche_B7" color="#ffcccc" meeting="false" start="2023-03-21" duration="62" complete="100" thirdDate="2023-02-28" thirdDate-constraint="0" expand="true">
