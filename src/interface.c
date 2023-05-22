@@ -399,6 +399,10 @@ void message_generique(int n, joueuse j1, int* option, carte option2) {
                 break;
         case 10: fprintf(stderr, "Les zones ont été correctement libérées par free(). \n");
                 break;
+        case 11: fprintf(stderr, "La matrice des zones a été correctement libérée par free(). \n");
+                break;
+        case 12: fprintf(stderr, "Les cartes ont été correctement libérées par free(). \n");
+                break;
         case 100: fprintf(stderr, "Attention, la probabilité de la zone n'est plus dans l'intervalle [0, 1]. L'action a été annulée. \n");
                 break;
         case 201: printf("Votre nouveau capital est de %d pour %d tours. \n", option[0], option[1]);
