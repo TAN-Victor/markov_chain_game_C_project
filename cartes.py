@@ -14,16 +14,38 @@ class Carte:
 class Merabet(Carte):
     def __init__(self):
         super().__init__("Merabet", "Pendant vos 3 prochains tours, votre capital augmente de 2.")
+    def use(self, joueuse):
+        joueuse.setToursRestantsBonusCapital(3)
+        joueuse.setBonusTemporaire(2)
+        return joueuse
+
 
 
 class Bannour(Carte):
     def __init__(self):
         super().__init__("Bannour", "Choisissez deux zones, les personnages présents sur ces deux zones sont échangés.")
 
+    def use(self, liste_des_joueuses, liste_des_zones):
+        zone1 = input("Choisissez la première zone: ")
+        zone2 = input("Choisissez la deuxième zone: ")
+        for joueuse in liste_des_joueuses:
+            for membre in joueuse.getMembres():
+                if membre.getZone() == zone1:
+                    membre.setZone(zone2)
+                elif membre.getZone() == zone2:
+                    membre.setZone(zone1)
+        return liste_des_joueuses, liste_des_zones
+
+
+
 
 class Honoré(Carte):
     def __init__(self):
         super().__init__("Honoré", "Chaque monstre se déplace 3 fois. Chaque membre d'école qu'un monstre rencontre est mangé.")
+
+    def use(self, liste_des_joueuses_dont_monstre, liste_des_zones):
+        #TODO: faire en sorte que les monstres se déplacent 3 fois on a encore de besoin du code de Adam
+
 
 
 class Riobo(Carte):
@@ -31,9 +53,13 @@ class Riobo(Carte):
         super().__init__("Riobo", "Lors du prochain tour, la joueuse adverse ne choisit pas comment est utilisé son capital. Chaque point de capital est utilisé aléatoirement: pour chaque point, choisissez les trois zones Z1, Z2 et Z3 uniformément parmi les triplets pouvant être choisis.")
 
 
+
+
 class Goilard(Carte):
     def __init__(self):
         super().__init__("Goilard", "Lors du prochain tour et du suivant, c'est vous qui jouez. Lors des deux tours suivant, c'est la joueuse adverse qui joue.")
+
+
 
 
 class Bourard(Carte):
@@ -80,10 +106,7 @@ class Huet(Carte):
 class Matias(Carte):
     def __init__(self):
         super().__init__("Matias", "Chaque monstre disparaît pendant 2 tours. Il réapparaîtra sur la zone d'où il est parti.")
-
-
-class Salhab(Carte):
-    def __init__(self):
+Choisissez deux zones, les personnages présents sur ces deux zones sont échangés.f):
         super().__init__("Salhab", "Pendant vos 3 prochains tours, un point de capital permet de déplacer une quantité 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ou 1 de probabilité.")
 
 
