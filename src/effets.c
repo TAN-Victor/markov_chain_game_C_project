@@ -69,7 +69,7 @@ void wrapper_pouvoir_carte(joueuse* liste_joueuses, zones liste_zones, char* nom
         pouvoir_carte_Watel(liste_joueuses[0]);
     }
     else if (strcmp(nom_carte, "Marie Szafranski") == 0) {
-        pouvoir_carte_Szafranski(liste_joueuses, liste_zones);
+        pouvoir_carte_Szafranski(liste_joueuses);
     }
     else if (strcmp(nom_carte, "Julien Forest") == 0) {
         pouvoir_carte_Forest(liste_zones, liste_joueuses[2]);
@@ -439,7 +439,7 @@ void pouvoir_carte_PulidoNino(zones zo, joueuse monstres) {
  */
 void pouvoir_carte_Watel(joueuse jou) {
     int choix = demander_personnage(jou);
-    setStatut(getMembres(jou)[choix - 1], 3);
+    setStatut(getMembres(jou)[choix], 3);
     message_generique(217, jou, &choix, NULL);
 }
 
@@ -448,18 +448,18 @@ void pouvoir_carte_Watel(joueuse jou) {
  * Ajoutez un monstre sur la zone 1, un membre de votre école sur la zone 2 et un membre de l'école adverse sur 
  * la zone 3. Si un membre d'école se trouve sur la même zone qu'un monstre, il n'est pas mangé.
  * @param liste_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
- * @param zo permet d'avoir l'ensemble des zones
  * @return rien
  */
-void pouvoir_carte_Szafranski(joueuse* liste_joueuses, zones zo) {
+void pouvoir_carte_Szafranski(joueuse* liste_joueuses) {
     for (int i = 0; i < 3; i += 1) {
         int id = getTaille(liste_joueuses[i]);
-        personnage nouveau = nouveauPersonnage(i, id+1, getNumero(getTabZones(zo)[i+1]));
+        personnage nouveau = nouveauPersonnage(i, id+1, i+1);
         addMembres(liste_joueuses[i], nouveau); 
     }
+    message_generique(218, NULL, NULL, NULL);
 }
 
-/**
+/** 19
  * @brief Execute le pouvoir de la carte Julien Forest
  * Mettez toutes les probabilités à 0. Puis, pour chaque zone, la probabilité de se déplacer de cette zone vers la zone contenant
  *  le monstre passe à 0.5 (s'il y a plusieurs monstres, un des monstres est choisi au hasard) ; et la probabilité de se déplacer de cette zone vers une autre zone ne contenant pas de monstre choisie aléatoirement passe également à 0.5.
@@ -484,9 +484,10 @@ void pouvoir_carte_Forest(zones zo, joueuse monstres) {
         }
         modifier_proba(matrice, i, random2, 0.5);
     }
+    message_generique(219, NULL, NULL, NULL);
 }
 
-/**
+/** 20
  * @brief Execute le pouvoir de la carte Laurent Prével
  * Pendant 4 tours, les membres de votre école ne peuvent être mangés par un monstre. S'ils sont sur 
  * sa zone à la fin du tour, rien ne se passe, ils restent sur cette case.
@@ -495,5 +496,6 @@ void pouvoir_carte_Forest(zones zo, joueuse monstres) {
 */
 void pouvoir_carte_Prevel(joueuse jou) {
     setToursRestantsInvincibilite(jou, 4);
+    message_generique(220, jou, NULL, NULL);
 }
 

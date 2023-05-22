@@ -179,10 +179,9 @@ void pouvoir_carte_Watel(joueuse jou);
  * Ajoutez un monstre sur la zone 1, un membre de votre école sur la zone 2 et un membre de l'école adverse sur 
  * la zone 3. Si un membre d'école se trouve sur la même zone qu'un monstre, il n'est pas mangé.
  * @param liste_joueuses permet d'avoir l'ensemble des 2 joueuses et des monstres
- * @param zo permet d'avoir l'ensemble des zones
  * @return rien
  */
-void pouvoir_carte_Szafranski(joueuse* liste_joueuses, zones zo);
+void pouvoir_carte_Szafranski(joueuse* liste_joueuses);
 
 /**
  * @brief Execute le pouvoir de la carte Julien Forest
