@@ -28,7 +28,9 @@ void afficher_toute_info(joueuse,joueuse,joueuse,zones);
 
 /**
  * \brief Demande à une joueuse combien de capital elle souhaite utiliser (elle peut répondre ne pas vouloir en utiliser)
- * \param joueuse afin de savoir à quelle joueuse demander
+ *          Si la réponse est négative ou nulle, aucune action n'est réalisée
+ *          Si la réponse est supérieure au capital de la joueuse, aucune action n'est réalisée
+ * \param j1, la joueuse auquelle on pose la question
  * \return le nombre de capital que la joueuse souhaite dépenser, 0 sinon
 */
 int demander_capital(joueuse);
@@ -36,7 +38,7 @@ int demander_capital(joueuse);
 
 /**
  * \brief Demande à une joueuse si elle veut jouer une carte qu'elle possède et si oui, laquelle
- * \param joueuse afin de savoir à quelle joueuse demander (les cartes associées sont déjà dans les fonctions de joueuses.h)
+ * \param j1, la joueuse auquelle on pose la question
  * \return la carte correspondante, NULL sinon
 */
 carte demander_carte(joueuse);
@@ -44,14 +46,14 @@ carte demander_carte(joueuse);
 /**
  * \brief Demande à une joueuse le numéro de la zone de départ dont elle veut modifier les probabilités d'accéder à une autre zone 
  * \param zones afin de savoir sur quelle zone intéragir
- * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1
+ * \return le numéro de la zone entre 0 et la taille de la liste - 1 pour avoir son indice dans la liste
 */
 int demander_zones_depart(zones);
 
 /**
  * \brief Demande à une joueuse le numéro de la zone d'arrivée dont elle veut augmenter les probabilités d'accéder à cette zone
  * \param zones afin de savoir sur quelle zone intéragir
- * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1
+ * \return le numéro de la zone entre 0 et la taille de la liste - 1 pour avoir son indice dans la liste
 */
 int demander_zones_arrivee_augmenter(zones);
 
@@ -59,7 +61,7 @@ int demander_zones_arrivee_augmenter(zones);
  * \brief Demande à une joueuse le numéro de la zone d'arrivée dont elle veut diminuer les probabilités d'accéder à une autre zone
  *          La zone doit être différente de la zone d'arrivée dont on veut augmenter la probabilité
  * \param zones afin de savoir sur quelle zone intéragir
- * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1; -1 sinon
+ * \return le numéro de la zone entre 0 et la taille de la liste - 1 pour avoir son indice dans la liste
 */
 int demander_zones_arrivee_diminuer(zones, int);
 
@@ -67,20 +69,20 @@ int demander_zones_arrivee_diminuer(zones, int);
  * \brief Demande à une joueuse le numéro d'une autre zone que zone_depart
  * \param zones afin de savoir sur quelle zone intéragir
  * \param zone_depart afin de savoir quelle zone ne pas proposer
- * \return le numéro de la zone entre 1 et la taille de la liste, donc l'indice de la zone + 1; -1 sinon
+ * \return le numéro de la zone entre 0 et la taille de la liste - 1 pour avoir son indice dans la liste
 */
 int demander_zones_autre(zones liste_zones, int zone_depart);
 
 /**
- * \brief Demande à une joueuse le numéro d'un personnage de la joueuse (ou liste de monstres) 
+ * \brief Demande à une joueuse l'ID d'un personnage de la joueuse (ou liste de monstres) 
  * \param joueuse afin de savoir sur quelle joueuse ou liste de monstres intéragir
- * \return le numéro du personnage entre 1 et la taille de la liste, donc l'indice du personnage + 1; -1 sinon
+ * \return le numéro du personnage entre 0 et la taille de la liste - 1 pour avoir son indice dans la liste
 */
 int demander_personnage(joueuse j1);
 
 /**
  * \brief Demande à une joueuse quelle probabilité par capital elle souhaite avoir entre 0.1 et 1
- * \return la valeur de probabilité par capital que la joueuse souhaite avoir, 0 sinon
+ * \return la valeur de probabilité par capital que la joueuse souhaite avoir
 */
 float demander_proba_par_capital();
 
