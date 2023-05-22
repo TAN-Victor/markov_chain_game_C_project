@@ -67,7 +67,7 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         
         printf("Vos membres d'école sont sur les zones: \n");  // Pourrait être modifiée par une meilleure interface
         for (int i = 0; i < getTaille(j1); i += 1) {
-            printf("      Statut: %d (", getStatut(getMembres(j1)[i]));
+            printf("      Id: %d] ", getIdPersonnage(getMembres(j1)[i]));
             if (getStatut(getMembres(j1)[i]) == 1 || getStatut(getMembres(j1)[i]) == 3) {   //Si le membre est en vie
                 printf("%2d", getZoneCourante(getMembres(j1)[i]) + 1);
             }
@@ -75,7 +75,7 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         printf("\n");
         printf("Les membres d'école adverse sont sur les zones: \n");
         for (int i = 0; i < getTaille(j2); i += 1) {
-            printf("      Statut: %d (", getStatut(getMembres(j2)[i]));
+            printf("      Id: %d] ", getIdPersonnage(getMembres(j2)[i]));
             if (getStatut(getMembres(j2)[i]) == 1 || getStatut(getMembres(j2)[i]) == 3) {  //Si le membre est en vie
                 printf("%2d", getZoneCourante(getMembres(j2)[i]) + 1);
             }
@@ -83,6 +83,7 @@ void afficher_toute_info(joueuse j1, joueuse j2, joueuse m, zones liste_zones) {
         printf("\n");
         printf("Le(s) monstre(s) sont sur les zones: \n");
         for (int i = 0; i < getTaille(m); i += 1) {
+                        printf("      Id: %d] ", getIdPersonnage(getMembres(m)[i]));
             printf("%2d", getZoneCourante(getMembres(m)[i]) + 1);
         }
         printf("\n");
@@ -175,7 +176,7 @@ carte demander_carte(joueuse j1) {
 /**
  * \brief Demande à une joueuse le numéro de la zone de départ dont elle veut modifier les probabilités d'accéder à une autre zone 
  * \param zones afin de savoir sur quelle zone intéragir
- * \return le numéro de la zone entre 1 et la taille de la liste - 1 pour avoir son indice dans la liste
+ * \return le numéro de la zone entre 0 et la taille de la liste - 1 pour avoir son indice dans la liste
 */
 int demander_zones_depart(zones liste_zones) {
     int choix_depart = -1;
@@ -199,7 +200,7 @@ int demander_zones_depart(zones liste_zones) {
 /**
  * \brief Demande à une joueuse le numéro de la zone d'arrivée dont elle veut augmenter les probabilités d'accéder à cette zone
  * \param zones afin de savoir sur quelle zone intéragir
- * \return le numéro de la zone entre 1 et la taille de la liste - 1 pour avoir son indice dans la liste
+ * \return le numéro de la zone entre 0 et la taille de la liste - 1 pour avoir son indice dans la liste
 */
 int demander_zones_arrivee_augmenter(zones liste_zones) {
     int choix_a_augmenter = -1;
@@ -224,7 +225,7 @@ int demander_zones_arrivee_augmenter(zones liste_zones) {
  * \brief Demande à une joueuse le numéro de la zone d'arrivée dont elle veut diminuer les probabilités d'accéder à une autre zone
  *          La zone doit être différente de la zone d'arrivée dont on veut augmenter la probabilité
  * \param zones afin de savoir sur quelle zone intéragir
- * \return le numéro de la zone entre 1 et la taille de la liste - 1 pour avoir son indice dans la liste
+ * \return le numéro de la zone entre 0 et la taille de la liste - 1 pour avoir son indice dans la liste
 */
 int demander_zones_arrivee_diminuer(zones liste_zones, int zone_augmentee) {
     int choix_a_diminuer = -1;
@@ -252,7 +253,7 @@ int demander_zones_arrivee_diminuer(zones liste_zones, int zone_augmentee) {
  * \brief Demande à une joueuse le numéro d'une autre zone que zone_depart
  * \param zones afin de savoir sur quelle zone intéragir
  * \param zone_depart afin de savoir quelle zone ne pas proposer
- * \return le numéro de la zone entre 1 et la taille de la liste - 1 pour avoir son indice dans la liste
+ * \return le numéro de la zone entre 0 et la taille de la liste - 1 pour avoir son indice dans la liste
 */
 int demander_zones_autre(zones liste_zones, int zone_depart) {
     int choix = -1;
@@ -278,27 +279,40 @@ int demander_zones_autre(zones liste_zones, int zone_depart) {
 
 
 /**
- * \brief Demande à une joueuse le numéro d'un personnage de la joueuse (ou liste de monstres) 
+ * \brief Demande à une joueuse l'ID d'un personnage de la joueuse (ou liste de monstres) 
  * \param joueuse afin de savoir sur quelle joueuse ou liste de monstres intéragir
- * \return le numéro du personnage entre 1 et la taille de la liste - 1 pour avoir son indice dans la liste
+ * \return le numéro du personnage entre 0 et la taille de la liste - 1 pour avoir son indice dans la liste
 */
 int demander_personnage(joueuse j1) {
-    int choix = -1;
+    int choix = 0;
+    int id = -1;
     int taille = getTaille(j1);
     while (1) {
-        printf("Choissez un personnage entre 1 et %d: \n", taille);
-        if (scanf("%d", &choix) != 1) {
+        printf("Choisissez l'id d'un personnage (en vie) entre 1 et %d: \n", taille);
+        if (scanf("%d", &id) != 1) {
             fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
             while (getchar() != '\n');
         }
-        else if (choix <= 0 || choix > taille) {
+        else if (id <= 0 || id > taille) {
             fprintf(stderr, "Attention, ce personnage n'existe pas.\n");
         }
         else {
-            break;
+            for (choix = 0; choix < taille; choix += 1) {
+                if (getIdPersonnage(getMembres(j1)[choix]) == id) {
+                    if (getStatut(getMembres(j1)[choix]) != 1 && getStatut(getMembres(j1)[choix]) != 3) {
+                        fprintf(stderr, "Attention, ce personnage est mort.\n");
+                    }
+                    else {
+                        return choix;
+                    }
+                }
+                else {
+                    fprintf(stderr, "Attention, ce personnage n'existe pas.\n");            
+                }
+            }
         }
     }
-    return (choix-1);
+    exit(EXIT_FAILURE); // normalement on ne devrait jamais arriver ici
 }
 
 
@@ -396,7 +410,23 @@ void message_generique(int n, joueuse j1, int* option, carte option2) {
                 break;
         case 205: printf("Le nombre de tours restants de la joueuse %d est passé à %d. \n", getIdJoueuse(j1), option[0]);
                 break;
+        case 209: printf("Le nombre de déplacements par tour de votre personnage %d est passé à 2. \n", option[0]+1);
+                break;
+        case 210: printf("Le personnage n° %d de la joueuse n° %d est devenu le personnage n° %d de la joueuse n° %d. \n", option[0]+1, option[1], option[2], option[3]);
+                break;
+        case 211: printf("Vous avez obtenu 15 points de capital supplémentaire pour 1 seul tour. \n");
+                break;
+        case 212 : printf("Une nouvelle zone a été créee. \n");
+                break;
+        case 213: printf("Les probabilités ont subient une rotation. \n");
+                break;
+        case 214: printf("Les monstres sont devenus invisibles pour 2 tours. \n");
+                break;
+        case 215: printf("La probabilité par capital est passé à %.2f pour 3 tours. \n", option[0]*0.1);
+                break;
         case 216: printf("La probabilité de passer de la zone %d à la zone %d est passée à %.2f. \n", option[0]+1, option[1]+1, option[2]*0.1);
+                break;
+        case 217: printf("Le personnage %d de la joueuse %d est devenu un FISA. \n", option[0]+1, getIdJoueuse(j1));
                 break;
     }
 }
