@@ -293,21 +293,20 @@ int demander_personnage(joueuse j1) {
             fprintf(stderr, "Erreur : la saisie doit être un nombre entier\n");
             while (getchar() != '\n');
         }
-        else if (id <= 0 || id > taille) {
-            fprintf(stderr, "Attention, ce personnage n'existe pas.\n");
-        }
         else {
-            for (choix = 0; choix < taille; choix += 1) {
-                if (getIdPersonnage(getMembres(j1)[choix]) == id) {
-                    if (getStatut(getMembres(j1)[choix]) != 1 && getStatut(getMembres(j1)[choix]) != 3) {
-                        fprintf(stderr, "Attention, ce personnage est mort.\n");
+            if (id <= 0 || id > taille) {
+                fprintf(stderr, "Attention, ce personnage n'existe pas (1).\n");
+            }
+            else {
+                for (choix = 0; choix < taille; choix += 1) {
+                    if (getIdPersonnage(getMembres(j1)[choix]) == id) {
+                        if (getStatut(getMembres(j1)[choix]) != 1 && getStatut(getMembres(j1)[choix]) != 3) {
+                            fprintf(stderr, "Attention, ce personnage est mort.\n");
+                        }
+                        else {
+                            return choix;
+                        }
                     }
-                    else {
-                        return choix;
-                    }
-                }
-                else {
-                    fprintf(stderr, "Attention, ce personnage n'existe pas.\n");            
                 }
             }
         }
@@ -427,6 +426,12 @@ void message_generique(int n, joueuse j1, int* option, carte option2) {
         case 216: printf("La probabilité de passer de la zone %d à la zone %d est passée à %.2f. \n", option[0]+1, option[1]+1, option[2]*0.1);
                 break;
         case 217: printf("Le personnage %d de la joueuse %d est devenu un FISA. \n", option[0]+1, getIdJoueuse(j1));
+                break;
+        case 218: printf("Un nouveau personnage a été attribué à chaque joueuse, et un monstre a été ajouté. \n");
+                break;
+        case 219: printf("Les probabilités de passer de toutes les zones à celle d'un monstre (choisi aléatoirement) est passé à 0.5. \n");
+                break;
+        case 220: printf("Les membres de la joueuse %d sont invincibles pour 4 tours. \n", getIdJoueuse(j1));
                 break;
     }
 }
