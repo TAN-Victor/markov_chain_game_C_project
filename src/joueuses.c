@@ -237,7 +237,7 @@ void setBonusTemporaire(joueuse j, int bonus){
  * @param p : le personnage à ajouter
  */
 void addMembres(joueuse j, personnage p){
-    j->membres = realloc(j->membres, (j->taille+1)*sizeof(personnage*));
+    j->membres = realloc(j->membres, (j->taille+1)*sizeof(personnage));
     setTaille(j,getTaille(j)+1);
     j->membres[j->taille-1] = p;
 }
@@ -249,15 +249,11 @@ void addMembres(joueuse j, personnage p){
  * @param id : l'id du personnage à supprimer
  */
 void removeMembres(joueuse j, int id){
-    int i;
-    for(i=0; i<j->taille; i++){
-        if(getIdPersonnage(j->membres[i]) == id){
-            j->membres[i] = j->membres[j->taille-1];
-            j->taille--;
-            j->membres = realloc(j->membres, j->taille*sizeof(personnage*));
-            break;
-        }
+    for (int i = id-1; i < getTaille(j); i +=1) {
+        j->membres[i] = j->membres[i+1];
     }
+    setTaille(j,getTaille(j)-1);
+    j->membres = realloc(j->membres, (j->taille)*sizeof(personnage));
 }
 
 /**
@@ -313,7 +309,6 @@ joueuse creation_joueuse(int n, liste_cartes liste_cartes_global){
         addMembres(jou, monstre);
     }
     else {
-        srand(time(NULL));
         for (int i = 1; i < 6; i += 1) {
             int random = 2*n + rand()%2 - 1;
             personnage nouveau = nouveauPersonnage(n, i, random);
