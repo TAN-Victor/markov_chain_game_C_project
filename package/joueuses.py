@@ -117,6 +117,16 @@ class Joueuse(ListePNJ):
             carte.use()
         else:
             print("La joueuse ne possède pas cette carte")
+    
+    def tous_manges(self):
+        if getTaille() == 0:
+            return True
+        elif getTaille() < 0:
+            print("Erreur: la taille de la liste de membres est négative")
+            return False
+        else:
+            for membre in self.getMembres():
+                if get_statut()
 
 
 class ListeMonstre(ListePNJ):

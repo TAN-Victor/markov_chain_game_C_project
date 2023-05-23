@@ -33,7 +33,8 @@ class Personnage:
 
     def getZoneCourante(self):
         """Renvoie la zone courante du personnage."""
-        return self.zone_courante
+        return self.zone_courantegetVivant():
+                    return False
 
     def getZonePrecedente(self):
         """Renvoie la zone précédente du personnage."""
@@ -55,7 +56,8 @@ class Personnage:
         """Renvoie un booléen indiquant si le personnage est invincible ce tour ou non."""
         return self.invincible_ce_tour
 
-    def getToursRestantsBonusPas(self):
+    def getToursRestantsBonusPas(self):getVivant():
+                    return False
         """Renvoie le nombre de tours restant avant que le bonus de pas ne disparaisse."""
         return self.tours_restants_bonus_pas
 

@@ -61,6 +61,8 @@ class Riobo(Carte):
         super().__init__("Riobo", "Lors du prochain tour, la joueuse adverse ne choisit pas comment est utilisé son capital. Chaque point de capital est utilisé aléatoirement: pour chaque point, choisissez les trois zones Z1, Z2 et Z3 uniformément parmi les triplets pouvant être choisis.")
 
     def use(self, joueuse, liste_zones):
+        capital = joueuse.getCapital()
+
         
 
 
@@ -143,3 +145,5 @@ class Forest(Carte):
 class Prével(Carte):
     def __init__(self):
         super().__init__("Prével", "Pendant 4 tours, les membres de votre école ne peuvent être mangés par un monstre. S'ils sont sur sa zone à la fin du tour, rien ne se passe, ils restent sur cette case.")
+
+
