@@ -19,8 +19,6 @@ class ListePNJ:
         return self.tours_restants_jouer
     
     #Setters:
-    def setMembres(self, liste_membres):
-        self.liste_membres = liste_membres
     
     def setId(self, id):
         self.id = id

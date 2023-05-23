@@ -110,59 +110,140 @@ class Munante(Carte):
     def __init__(self):
         super().__init__("Munante", "Les membres d'écoles présents sur la zone où était un monstre avant son dernier déplacement sont mangés.")
 
+    def use(self, liste_des_joueuses, liste_des_monstres):
+        for monstre in liste_des_monstres:
+            for joueuse in liste_des_joueuses:
+                for membre in joueuse.getMembres():
+                    if membre.zone == monstre.zone:
+                        membre.statut = 0
 
 class Benezet(Carte):
     def __init__(self):
         super().__init__("Benezet", "Déplacez un des monstres sur la zone de votre choix. Si un membre d'école se trouve sur la zone du monstre, il n'est pas mangé.")   
+
+    def use(self, liste_des_monstres, liste_des_joueuses):
+        num_monstre = input("Choisissez le monstre à déplacer: ")
+        num_zone = input("Choisissez la zone où déplacer le monstre: ")
+        liste_des_monstres[num_monstre].deplacer(num_zone)
+
 
 
 class Ligozat(Carte):
     def __init__(self):
         super().__init__("Ligozat", "Choisissez un membre de votre école, il effectue désormais deux déplacements au lieu d'un à chaque tour.")
 
+    def use(self, joueuse):
+        num_membre = input("Choisissez le membre à déplacer deux fois: ")
+        joueuse.getMembres()[num_membre].nb_de_pas = 2
+
+
 
 class Mouilleron(Carte):
     def __init__(self):
         super().__init__("Mouilleron", "Choisissez un membre de l'école de la joueuse adverse. Ce membre devient un membre de votre école.")
+
+    def use(self,adversaire, joueuse):
+        num_membre = input("Choisissez le membre à déplacer: ")
+        if joueuse.getTaille()<=6:
+            joeuse.liste_membres.append(adversaire.liste_membres[num_membre])
+            adversaire.liste_membres.remove(adversaire.liste_membres[num_membre])
+        else:
+            print("Vous ne pouvez pas avoir plus de 7 membres dans votre école")
+
 
 
 class Demebele_Cabot(Carte):
     def __init__(self):
         super().__init__("Demebele_Cabot", "Sacrifiez un membre de votre école de votre choix. Vous avez 15 points de capital en plus à votre prochain tour.")
 
+    def use(self, joueuse):
+        num_membre = input("Choisissez le membre à sacrifier: ")
+        joueuse.liste_membres.remove(joueuse.liste_membres[num_membre])
+        joueuse.setCapital(joueuse.getCapital()+15)
+
+
 
 class Pacave(Carte):
     def __init__(self):
         super().__init__("Pacave", "Créez une nouvelle zone. Les membres de votre école sont les seuls à pouvoir se déplacer sur cette zone. Un membre de l'école de l'autre joueuse qui devrait se déplacer sur cette zone ne se déplace pas. La probabilité d'aller sur cette zone est de 0. Depuis cette zone, la probabilité de rester sur cette zone est 1.")
+
+    def use(self, joueuse, zones):
+        zones.addZone()
+        zones.setEstAutorise(zones.getTabZones()[zones.getMatrice().getTailleMatrice()-1], joueuse.getId)
+        zones.getMatrice().modifier_proba(zones.getTabZones()[zones.getMatrice().getTailleMatrice()-1], zones.getTabZones()[zones.getMatrice().getTailleMatrice()-1], 1)
+
 
 
 class Huet(Carte):
     def __init__(self):
         super().__init__("Huet", "Chaque zone effectue une rotation de probabilité. La probabilité d'aller de la zone i à la zone j devient la probabilité d'aller de la zone i à la zone j + 1. La probabilité d'aller de la zone i à la zone 10 devient la probabilité d'aller de la zone i à la zone 1.")
 
+    def use(self, zones):
+        taille = zones.getMatrice().getTailleMatrice()
+        matrice = zones.getMatrice().getMatrice()
+        for i in range(taille):
+            proba = matrice[i][i]
+            for j in range(taille - 1):
+                matrice[i][j] = matrice[i][j+1]
+            matrice[i][taille - 1] = proba
+    
+
+
 
 class Matias(Carte):
     def __init__(self):
         super().__init__("Matias", "Chaque monstre disparaît pendant 2 tours. Il réapparaîtra sur la zone d'où il est parti.")
 
+    def use(self, liste_des_monstres):
+        for monstre in liste_des_monstres:
+            monstre.nb_de_tour_disparu_restant = 3  #Les 2 prochains tours + le tour où la carte est jouée
+
+
+
 class Salhab(Carte):
-def __init__(self):
+    def __init__(self):
         super().__init__("Salhab", "Pendant vos 3 prochains tours, un point de capital permet de déplacer une quantité 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ou 1 de probabilité.")
+
+    def use(self, joueuse):
+        proba_par_capital = input("Choisissez la probabilité par capital parmi 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ,0.8, 0.9 ou 1: ")
+        joueuse.setToursRestantsBonusProbaParCapital(4) #Les 3 prochains tours + le tour où la carte est jouée
+        joueuse.setProbaParCapital(proba_par_capital)
+
 
 
 class Pulido_Nino(Carte):
     def __init__(self):
         super().__init__("Pulido_Nino", "Mettez à 0 les probabilités permettant de sortir de la zone de chaque monstre et mettez à 1 la probabilité de rester dans la zone de chaque monstre.")
 
+    def use(self, liste_des_monstres):
+        matrice = getMatrice()
+        for monstre in liste_des_monstres:
+            for i in range(matrice.getTailleMatrice()):
+                matrice.modifier_proba(monstre.zone_courante.numero, i, 0)
+            matrice.modifier_proba(i,i,1)
+
+
+
 
 class Watel(Carte):
     def __init__(self):
-        super().__init__("Watel", "Mettez à 0 les probabilités permettant de sortir de la zone de chaque monstre et mettez à 1 la probabilité de rester dans la zone de chaque monstre.")
+        super().__init__("Watel", "Choisissez un membre de votre école, il devient FISA et effectue désormais son déplacement un tour sur deux.")
+
+    def use(self, joueuse):
+        num_membre = input("Choisissez le membre à transformer en FISA: ")
+        joueuse.liste_membres[num_membre].statut = 3
+
 
 
 class Szanfranski(Carte):
     def __init__(self):
         super().__init__("Szanfranski", "Ajoutez un monstre sur la zone 1, un membre de votre école sur la zone 2 et un membre de l'école adverse sur la zone 3. Si un membre d'école se trouve sur la même zone qu'un monstre, il n'est pas mangé.")
+
+    def use(self, joueuse, adversaire, liste_des_monstres):
+        liste_des_monstres.append(Personnage(0,listes_des_monstres.getTaille()+1,1))
+        joueuse.liste_membres.append(Membre(joueuse.getId(),joueuse.getTaille()+1, 2))
+        adversaire.liste_membres.append(Membre(adversaire.getId(),adversaire.getTaille()+1, 3))
+
 
 
 class Forest(Carte):
