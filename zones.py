@@ -30,8 +30,8 @@ class Zones:
         elif action == 0:
             self.matrice.modifier_proba(n1, n2, self.matrice.lecture_probas(n1, n2) - proba)
 
-    def trouveZone(self, n):
-        taille_matrice = self.matrice.getTailleMatrice()
+    def trouveZone(z, n):
+        taille_matrice = z.matrice.getTailleMatrice()
         
         # On vérifie la taille de la matrice
         if taille_matrice == 10:
@@ -41,8 +41,8 @@ class Zones:
                 sys.exit(n)
             else:
                 for i in range(taille_matrice):
-                    if self.tab_zones[i].numero == n:
-                        return self.tab_zones[i]
+                    if z.tab_zones[i].numero == n:
+                        return z.tab_zones[i]
                 
                 print(f"trouveZone : aucune zone trouvée pour n={n}", file=sys.stderr)
                 sys.exit(n)
@@ -53,8 +53,8 @@ class Zones:
                 sys.exit(n)
             else:
                 for i in range(taille_matrice):
-                    if self.tab_zones[i].numero == n:
-                        return self.tab_zones[i]
+                    if z.tab_zones[i].numero == n:
+                        return z.tab_zones[i]
                 
                 print(f"trouveZone : aucune zone trouvée pour n={n}", file=sys.stderr)
                 sys.exit(n)

@@ -118,7 +118,9 @@ class Huet(Carte):
 class Matias(Carte):
     def __init__(self):
         super().__init__("Matias", "Chaque monstre disparaît pendant 2 tours. Il réapparaîtra sur la zone d'où il est parti.")
-Choisissez deux zones, les personnages présents sur ces deux zones sont échangés.f):
+
+class Salhab(Carte):
+    def __init__(self):
         super().__init__("Salhab", "Pendant vos 3 prochains tours, un point de capital permet de déplacer une quantité 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ou 1 de probabilité.")
 
 
