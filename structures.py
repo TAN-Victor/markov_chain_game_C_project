@@ -12,3 +12,26 @@ class MatriceProbas:
     
     def modifier_proba(self, i, j, proba):
         self.matrice[i][j] = proba
+
+
+    def produit_matrice(matrice1, matrice2):
+        if matrice1.taille_matrice != matrice2.taille_matrice:
+            return None
+        
+        taille_matrice = matrice1.taille_matrice
+        matrice = MatriceProbas(taille_matrice) #on crée une nouvelle matrice de probabilités
+        
+        for i in range(taille_matrice):
+            for j in range(taille_matrice):
+                somme = 0
+                for k in range(taille_matrice):
+                    somme += matrice1.proba[i][k] * matrice2.proba[k][j]
+                matrice.proba[i][j] = somme
+        
+        return matrice
+
+    def getTailleMatrice(self):
+        return self.taille_matrice
+    
+    def setTailleMatrice(self, taille):
+        self.taille_matrice = taille

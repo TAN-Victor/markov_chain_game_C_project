@@ -38,7 +38,7 @@ class Bannour(Carte):
 
 
 
-class Honoré(Carte):
+class Honore(Carte):
     def __init__(self):
         super().__init__("Honoré", "Chaque monstre se déplace 3 fois. Chaque membre d'école qu'un monstre rencontre est mangé.")
 
