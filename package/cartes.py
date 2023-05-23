@@ -1,3 +1,8 @@
+import random
+import sys
+from zones.py import Zone
+from zones.py import Zones
+
 class Carte:
     def __init__ (self, nom, description):
         self.nom = nom
@@ -30,10 +35,10 @@ class Bannour(Carte):
         zone2 = input("Choisissez la deuxième zone: ")
         for joueuse in liste_des_joueuses:
             for membre in joueuse.getMembres():
-                if membre.getZone() == zone1:
-                    membre.setZone(zone2)
-                elif membre.getZone() == zone2:
-                    membre.setZone(zone1)
+                if membre.zone == zone1:
+                    membre.deplacer(zone2)
+                elif membre.zone == zone2:
+                    membre.deplacer(zone1)
 
 
 
@@ -48,8 +53,8 @@ class Honoré(Carte):
             for monstre in liste_des_monstres:
                 for joueuse in liste_des_joueuses:
                     for membre in joueuse.getMembres():
-                        if membre.getZone() == monstre.getZone():
-                            membre.setStatut(0)
+                        if membre.zone == monstre.zone:
+                            membre.statut=0
     
 
 
@@ -60,9 +65,21 @@ class Riobo(Carte):
     def __init__(self):
         super().__init__("Riobo", "Lors du prochain tour, la joueuse adverse ne choisit pas comment est utilisé son capital. Chaque point de capital est utilisé aléatoirement: pour chaque point, choisissez les trois zones Z1, Z2 et Z3 uniformément parmi les triplets pouvant être choisis.")
 
-    def use(self, joueuse, liste_zones):
-        capital = joueuse.getCapital()
-
+    def use(self, adversaire, zones,capital):
+        if capital<0 or capital>adversaire.getCapital:
+            print("veuiilez entrer un nombre valide")
+        else:
+            proba_par_capital = adversaire.getProbaParCapital()
+            zone1 = random.choice(zones.getTabZones())
+            zone2 = random.choice(zones.getTabZones())
+            zone3 = random.choice(zones.getTabZones())
+            while (zone2.numero == zone3.numero or lecture_probas(zones.getMatrice(), zone1.numero, zone2.numero) + proba_par_capital > 1 or lecture_probas(zones.getMatrice(), zone1.numero, zone3.numero) - proba_par_capital < 0):
+                zone1 = random.choice(zones.getTabZones())
+                zone2 = random.choice(zones.getTabZones())
+                zone3 = random.choice(zones.getTabZones())
+            zones.modifierZone(zone1.numero, zone2.numero, adversaire.getProbaParCapital(),1)
+            zones.modifierZone(zone1.numero, zone3.numero, adversaire.getProbaParCapital(),0)
+            adversaire.setCapital(adversaire.getCapital()-capital)
         
 
 
@@ -71,12 +88,21 @@ class Goilard(Carte):
     def __init__(self):
         super().__init__("Goilard", "Lors du prochain tour et du suivant, c'est vous qui jouez. Lors des deux tours suivant, c'est la joueuse adverse qui joue.")
 
+    def use(self, joueuse, adversaire):
+        joueuse.setToursRestantsJouer(2)
+        adversaire.setToursRestantsJouer(2)
 
 
 
 class Bourard(Carte):
     def __init__(self):
         super().__init__("Bourard", "Lors du prochain déplacement, si deux membres d'écoles adverses se retrouvent sur la même zone, ils se déplacent de nouveau. Si ces deux membres sont sur la zone du monstre avant le second déplacement, ils ne sont pas mangés. On recommence l'opération au plus 100 fois, jusqu'à ce que les membres des écoles adverses soient sur des zones distinctes.")
+
+    def use(self, adversaire, liste_monstres, liste_des_joueuses):
+        i=0
+        while i<100:
+
+
 
 
 
@@ -120,7 +146,7 @@ class Matias(Carte):
         super().__init__("Matias", "Chaque monstre disparaît pendant 2 tours. Il réapparaîtra sur la zone d'où il est parti.")
 
 class Salhab(Carte):
-    def __init__(self):
+def __init__(self):
         super().__init__("Salhab", "Pendant vos 3 prochains tours, un point de capital permet de déplacer une quantité 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ou 1 de probabilité.")
 
 
