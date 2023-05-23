@@ -16,7 +16,7 @@ class Personnage:
         self.zone_precedente = -1  # -1 car vient d'être créé
         self.nb_de_pas = 1
         self.tours_restants_bonus_pas = 0
-        self.peut_se_deplacer = 1
+        self.peut_se_deplacer = True
         self.nb_de_tour_disparu_restant = 0
 
     def deplacer(self, zone):
@@ -46,5 +46,5 @@ class Personnage:
         Met à jour le statut du personnage lorsqu'il est mangé.
         """
         self.statut = 0
-        self.peut_se_deplacer = 0
+        self.peut_se_deplacer = False
 
