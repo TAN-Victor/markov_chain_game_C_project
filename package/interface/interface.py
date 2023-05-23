@@ -11,6 +11,7 @@ pygame.init()
 clock = pygame.time.Clock()
 
 current_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
+os.chdir(current_dir)
 
 
 
@@ -31,10 +32,23 @@ fenetre = pygame.display.set_mode((longueur, largeur))
 
 # Zones du jeu
 def zones_jeu():
+    """
+    Dessine le rectangle des zones du jeu
+    Taille: 70% de la longueur et 80% de la largeur de l'écran (en 1080p par défaut)
+    Couleur de fond: (200, 200, 200) Gris clair
+    """
     pygame.draw.rect(fenetre, (200, 200, 200), (10, 10, longueur*70/100, largeur*80/100))
 
 # Joueuses
 def joueuses():
+    """
+    Dessine le fond de l'UI des joueuses (personnages et cartes)
+    Taille: 30% de la longueur et 80% de la largeur de l'écran(en 1080p par défaut)
+    Couleur de fond: (200, 200, 200) Gris clair
+    Nombre de joueuses: 2 + 1 pour les monstres
+    Nombre de personnages par joueuse au maximum: 7
+    Nombre de cartes par joueuse au maximum: 5
+    """
     pygame.draw.rect(fenetre, (200, 200, 200), (longueur*70/100 + 20, 10, longueur*30/100 - 30, largeur*80/100))
     for i in range(1, 3):
         pygame.draw.line(fenetre, (0, 0, 0), (longueur*(70 + i * 10)/100 + 20, 10), (longueur*(70 + i * 10)/100 + 20, largeur*80/100 + 9), 3) # Séparation des joueuses
@@ -206,7 +220,6 @@ class BoutonValeur(Bouton):
     def action(self):
         print("Click sur le bouton {}".format(self.texte))
         if (self.texte == "+"):
-            print("BUJGKBHGK")
             self.changer_valeur(1)
         if (self.texte == "-"):
             self.changer_valeur(-1)
