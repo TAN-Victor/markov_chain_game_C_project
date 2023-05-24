@@ -1,5 +1,10 @@
 from cartes.py import Carte
 
+# Création des constantes 
+NB_CARTES_MAIN_JOUEUSE = 5
+NB_DE_ZONES = 10
+
+# Classe matrice de probabilités
 class MatriceProbas:
     def __init__(self, matrice, taille_matrice):
         self.matrice = matrice
@@ -38,6 +43,7 @@ class MatriceProbas:
         self.taille_matrice = taille
 
 
+# Classe liste de cartes
 class ListeCartes:
     def __init__(self):
         self.nb_cartes = 0 #nombre de cartes

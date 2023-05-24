@@ -3,11 +3,13 @@ from structures.py import ListeCartes
 import random
 import sys
 
+# Classe zone
 class Zone:
     def __init__(self, numero, est_autorise):
         self.numero = numero
         self.est_autorise = est_autorise #vaut 0 si tous les personnages sont autorisés, 1 si uniquement ceux de joueuse 1, 2 si ceux de joueuse 2
 
+# Classe zones
 class Zones:
     def __init__(self, nb_zones):
         self.tab_zones = [Zone(i, 0) for i in range(nb_zones)] #tableau de zones
