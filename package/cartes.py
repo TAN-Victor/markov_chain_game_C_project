@@ -98,11 +98,35 @@ class Bourard(Carte):
     def __init__(self):
         super().__init__("Bourard", "Lors du prochain déplacement, si deux membres d'écoles adverses se retrouvent sur la même zone, ils se déplacent de nouveau. Si ces deux membres sont sur la zone du monstre avant le second déplacement, ils ne sont pas mangés. On recommence l'opération au plus 100 fois, jusqu'à ce que les membres des écoles adverses soient sur des zones distinctes.")
 
-    def use(self, adversaire, liste_monstres, liste_des_joueuses):
-        i=0
-        while i<100:
+    def use(self, liste_monstres, liste_des_joueuses, liste_zones):
+        nb_monstre = liste_monstres.getTaille()
+        for i in range(nb_monstre):
+            if liste_monstres.getMembres()[i].peut_se_deplacer and liste_monstres.getMembres()[i].statut == 1:
+                for k in range(liste_des_joueuses.getMembres()[i].nb_de_pas):
+                    liste_monstres.getMembres()[i].deplacer(liste_zones.trouveZone(liste_zones.prochaineZone(liste_monstres.getMembres()[i].zone_courante)))
+                liste_monstres.getMembres()[i].peut_se_deplacer = False
+        
+        for i in range(2):
+            nb_membres = liste_des_joueuses[i].getTaille()
+            for j in range(nb_membres):
+                if liste_des_joueuses[i].peut_se_deplacer and liste_des_joueuses[i].getMembres()[j].statut == 1:
+                    for k in range(liste_des_joueuses[i].getMembres()[j].nb_de_pas):
+                        liste_des_joueuses[i].getMembres()[j].deplacer(liste_zones.trouveZone(liste_zones.prochaineZone(liste_des_joueuses[i].getMembres()[j].zone_courante)))
 
-
+        continuer = True
+        nb_tour = 0
+        while continuer and nb_tour < 100:
+            for i in range(liste_des_joueuses[0].getTaille()):
+                for j in range(liste_des_joueuses[1].getTaille()):
+                    if liste_des_joueuses[0].getMembres()[i].zone_courante == liste_des_joueuses[1].getMembres()[j].zone_courante:
+                        continuer = True
+                        nb_tour += 1
+                        liste_des_joueuses[0].getMembres()[i].deplacer(liste_zones.trouveZone(liste_zones.prochaineZone(liste_des_joueuses[0].getMembres()[i].zone_courante)))
+                        liste_des_joueuses[1].getMembres()[j].deplacer(liste_zones.trouveZone(liste_zones.prochaineZone(liste_des_joueuses[1].getMembres()[j].zone_courante)))
+        
+        for i in range(2):
+            for j in range(liste_des_joueuses[i].getTaille()):
+                liste_des_joueuses[i].getMembres()[j].peut_se_deplacer = False
 
 
 
@@ -180,7 +204,7 @@ class Huet(Carte):
 
     def use(self, zones):
         taille = zones.getMatrice().getTailleMatrice()
-        matrice = zones.getMatrice().getMatrice()
+        matrice = zones.getMatrice()
         for i in range(taille):
             proba = matrice[i][i]
             for j in range(taille - 1):
@@ -250,9 +274,27 @@ class Forest(Carte):
     def __init__(self):
         super().__init__("Forest", "Mettez toutes les probabilités à 0. Puis, pour chaque zone, la probabilité de se déplacer de cette zone vers la zone contenant le monstre passe à 0.5 (s'il y a plusieurs monstres, un des monstres est choisi aléatoirement) ; et la probabilité de se déplacer de cette zone vers une autre zone ne contenant pas de monstre choisie aléatoirement passe également à 0.5.")
 
+    def use(self, zones, liste_des_monstres):
+        matrice = zones.getMatrice()
+        for i in range(matrice.getTailleMatrice()):
+            for j in range(matrice.getTailleMatrice()):
+                matrice.modifier_proba(i,j,0)
+        monstre = liste_des_monstres.getMembres()[randint(0, liste_des_monstres.getTaille() -1)]
+        for i in range(matrice.getTailleMatrice()):
+            matrice.modifier_proba(i,monstre.zone_courante.numero,0.5)
+            random2 = randint(0, matrice.getTailleMatrice())
+            while random2 == monstre.zone_courante.numero:
+                random2 = randint(0, matrice.getTailleMatrice())
+            matrice.modifier_proba(i,random2,0.5)
+
+
+
+
 
 class Prével(Carte):
     def __init__(self):
         super().__init__("Prével", "Pendant 4 tours, les membres de votre école ne peuvent être mangés par un monstre. S'ils sont sur sa zone à la fin du tour, rien ne se passe, ils restent sur cette case.")
 
+    def use(self, joueuse):
+        joueuse.setToursRestantsImmune(4)
 
