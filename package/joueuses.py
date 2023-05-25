@@ -4,7 +4,7 @@ from personnage.py import Personnage
 class ListePNJ:
     def __init__(self, id, liste_membres, taille, tours_restants_jouer):
         self.id = id #permet d'idendifier la joueuse: 0 si c'est le monstre, 1 si c'est la joueuse 1, 2 si c'est la joueuse 2
-        self.liste_personnages = liste_personnages #une liste de personnages correspondant aux membres de la joueuse (de taille 7 = taille max de l'équipe)
+        self.liste_membres = liste_membres #une liste de personnages correspondant aux membres de la joueuse (de taille 7 = taille max de l'équipe)
         self.taille = taille #nombre de membres dans la liste de membres (doit être toujours inférieur à 7)
         self.tours_restants_jouer = tours_restants_jouer #tours restants pendant lesquels la joueuse / le monstre peut faire des déplacements (nombres de tours d'affilés)
 
@@ -49,7 +49,7 @@ class Joueuse(ListePNJ):
         self.capital = 5
         self.liste_cartes = liste_cartes #cartes contenue dans la main de la joueuse
         self.tour = tour #permet de savoir si c'est le tour de la joueuse ou non
-        self.tour_restants_bonus_capital = 1 #nombre de tours restants pendant lesquels la joueuse peut recevoir plus de capital
+        self.tour_restants_bonus_capital = 0 #nombre de tours restants pendant lesquels la joueuse peut recevoir plus de capital
         self.tours_restants_invincibilite = 0 #nombre de tours restants pendant lesquels les membres de la joueuse ne peut pas être mangée par un monstre
         self.proba_par_capital = 0.1 #la valeur de la modification de la probabilitée par une joeuse, par unité de capital (cf Katrin Salhab)
         self.bonus_temporaire = 0 #vaut un entier strctement positif si le bonus est actif, correspond à la valeur du bonus de capital pendant un tour uniquement, et est remis à 0 au tour suivant. Vaut 0 si aucun bonus de capuital n'est actif
@@ -75,7 +75,7 @@ class Joueuse(ListePNJ):
         return self.tours_restants_invincibilite
 
     def getInvincibilite(self):
-        return getToursRestantsInvincibilite() > 0
+        return self.getToursRestantsInvincibilite() > 0
     
     def getProbaParCapital(self):
         return self.proba_par_capital
@@ -128,17 +128,17 @@ class Joueuse(ListePNJ):
             print("La joueuse ne possède pas cette carte")
     
     def tous_manges(self):
-        if getTaille() == 0:
+        if self.getTaille() == 0:
             return True
-        elif getTaille() < 0:
+        elif self.getTaille() < 0:
             print("Erreur: la taille de la liste de membres est négative")
             return False
         else:
             manges = 0
-            for membre in getMembres():
+            for membre in self.getMembres():
                 if membre.statut == 0:
                     manges += 1
-            if manges == getTaille():
+            if manges == self.getTaille():
                 return True
 
 
@@ -147,5 +147,5 @@ class Joueuse(ListePNJ):
 
 class ListeMonstre(ListePNJ):
     def __init__(self, liste_membres, taille, tours_restants_jouer):
-        super().__init__(0, liste_monstres, taille, tours_restants_jouer)
+        super().__init__(0, liste_membres, taille, tours_restants_jouer)
 
