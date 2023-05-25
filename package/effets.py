@@ -59,7 +59,7 @@ class Riobo(Carte):
             zone1 = random.choice(zones.getTabZones())
             zone2 = random.choice(zones.getTabZones())
             zone3 = random.choice(zones.getTabZones())
-            while (zone2.numero == zone3.numero or lecture_probas(zones.getMatrice(), zone1.numero, zone2.numero) + proba_par_capital > 1 or lecture_probas(zones.getMatrice(), zone1.numero, zone3.numero) - proba_par_capital < 0):
+            while (zone2.numero == zone3.numero or zones.getMatrice().lecture_probas(zone1.numero, zone2.numero) + proba_par_capital > 1 or zones.getMatrice().lecture_probas(zone1.numero, zone3.numero) - proba_par_capital < 0):
                 zone1 = random.choice(zones.getTabZones())
                 zone2 = random.choice(zones.getTabZones())
                 zone3 = random.choice(zones.getTabZones())
@@ -155,7 +155,7 @@ class Mouilleron(Carte):
     def use(self,adversaire, joueuse):
         num_membre = input("Choisissez le membre à déplacer: ")
         if joueuse.getTaille()<=6:
-            joeuse.addMembre(adversaire.liste_membres[num_membre])
+            joueuse.addMembre(adversaire.liste_membres[num_membre])
             adversaire.removeMembre(adversaire.liste_membres[num_membre])
         else:
             print("Vous ne pouvez pas avoir plus de 7 membres dans votre école")
@@ -225,8 +225,8 @@ class Pulido_Nino(Carte):
     def __init__(self):
         super().__init__("Pulido_Nino", "Mettez à 0 les probabilités permettant de sortir de la zone de chaque monstre et mettez à 1 la probabilité de rester dans la zone de chaque monstre.")
 
-    def use(self, liste_des_monstres):
-        matrice = getMatrice()
+    def use(self, zones, liste_des_monstres):
+        matrice = zones.getMatrice()
         for monstre in liste_des_monstres:
             for i in range(matrice.getTailleMatrice()):
                 matrice.modifier_proba(monstre.zone_courante.numero, i, 0)
@@ -250,9 +250,9 @@ class Szanfranski(Carte):
         super().__init__("Szanfranski", "Ajoutez un monstre sur la zone 1, un membre de votre école sur la zone 2 et un membre de l'école adverse sur la zone 3. Si un membre d'école se trouve sur la même zone qu'un monstre, il n'est pas mangé.")
 
     def use(self, joueuse, adversaire, liste_des_monstres):
-        liste_des_monstres.addMembre(Personnage(0,listes_des_monstres.getTaille()+1,1))
-        joueuse.addMembre(Membre(joueuse.getId(),joueuse.getTaille()+1, 2))
-        adversaire.addMembre(Membre(adversaire.getId(),adversaire.getTaille()+1, 3))
+        liste_des_monstres.addMembre(Personnage(0,liste_des_monstres.getTaille()+1,1))
+        joueuse.addMembre(Personnage(joueuse.getId(),joueuse.getTaille()+1, 2))
+        adversaire.addMembre(Personnage(adversaire.getId(),adversaire.getTaille()+1, 3))
 
 
 
@@ -265,12 +265,12 @@ class Forest(Carte):
         for i in range(matrice.getTailleMatrice()):
             for j in range(matrice.getTailleMatrice()):
                 matrice.modifier_proba(i,j,0)
-        monstre = liste_des_monstres.getMembres()[randint(0, liste_des_monstres.getTaille() -1)]
+        monstre = liste_des_monstres.getMembres()[random.randint(0, liste_des_monstres.getTaille() -1)]
         for i in range(matrice.getTailleMatrice()):
             matrice.modifier_proba(i,monstre.zone_courante.numero,0.5)
-            random2 = randint(0, matrice.getTailleMatrice())
+            random2 = random.randint(0, matrice.getTailleMatrice())
             while random2 == monstre.zone_courante.numero:
-                random2 = randint(0, matrice.getTailleMatrice())
+                random2 = random.randint(0, matrice.getTailleMatrice())
             matrice.modifier_proba(i,random2,0.5)
 
 
