@@ -167,9 +167,9 @@ class Mouilleron(Carte):
 
 
 
-class Demebele_Cabot(Carte):
+class Dembele_Cabot(Carte):
     def __init__(self):
-        super().__init__("Demebele-Cabot", "Sacrifiez un membre de votre école de votre choix. Vous avez 15 points de capital en plus à votre prochain tour.")
+        super().__init__("Dembele-Cabot", "Sacrifiez un membre de votre école de votre choix. Vous avez 15 points de capital en plus à votre prochain tour.")
 
     def use(self, joueuse):
         num_membre = input("Choisissez le membre à sacrifier: ")
