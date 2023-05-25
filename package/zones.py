@@ -1,7 +1,4 @@
-from structures.py import MatriceProbas
-from structures.py import ListeCartes
-import random
-import sys
+import structrures
 
 # Classe zone
 class Zone:

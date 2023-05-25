@@ -1,3 +1,6 @@
+import zones
+
+
 class Personnage:
     def __init__(self, type_perso, id, zone_courante):
         """

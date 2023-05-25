@@ -1,4 +1,4 @@
-from personnage.py import Personnage
+import personnage
 
 
 class ListePNJ:

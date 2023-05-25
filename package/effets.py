@@ -1,6 +1,6 @@
 import random
 import sys
-from carte import Carte
+import interface
 
 class Merabet(Carte):
     def __init__(self):
