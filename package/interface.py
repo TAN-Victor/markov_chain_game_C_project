@@ -12,9 +12,8 @@ from joueuses import *
 
 pygame.init()
 clock = pygame.time.Clock()
-
 current_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
-os.chdir(current_dir)
+print(current_dir)
 
 
 
