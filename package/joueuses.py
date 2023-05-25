@@ -157,6 +157,6 @@ class Joueuse(ListePNJ):
 
 
 class ListeMonstre(ListePNJ):
-    def __init__(self, liste_membres, taille, tours_restants_jouer):
-        super().__init__(0, liste_membres, taille, tours_restants_jouer)
+    def __init__(self):
+        super().__init__(self, 0)
 
