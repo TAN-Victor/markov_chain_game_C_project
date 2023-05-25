@@ -75,7 +75,9 @@ class ListeCartes:
             index += 1
         if index < self.getNbCartes():
             self.setNbCartes(self.getNbCartes() - 1)
-            del self.cartes[index]
+            for i in range(index, self.getNbCartes()):
+                self.cartes[i] = self.cartes[i+1]
+            del self.cartes[self.getNbCartes()]
 
     def libere_liste_cartes(self):
         for carte in self.cartes:
