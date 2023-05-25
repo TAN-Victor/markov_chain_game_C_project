@@ -277,7 +277,7 @@ class Forest(Carte):
 
 
 
-class Prével(Carte):
+class Prevel(Carte):
     def __init__(self):
         super().__init__("Prével", "Pendant 4 tours, les membres de votre école ne peuvent être mangés par un monstre. S'ils sont sur sa zone à la fin du tour, rien ne se passe, ils restent sur cette case.")
 
