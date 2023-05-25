@@ -169,8 +169,8 @@ class Mouilleron(Carte):
     def use(self,adversaire, joueuse):
         num_membre = input("Choisissez le membre à déplacer: ")
         if joueuse.getTaille()<=6:
-            joeuse.liste_membres.append(adversaire.liste_membres[num_membre])
-            adversaire.liste_membres.remove(adversaire.liste_membres[num_membre])
+            joeuse.addMembre(adversaire.liste_membres[num_membre])
+            adversaire.removeMembre(adversaire.liste_membres[num_membre])
         else:
             print("Vous ne pouvez pas avoir plus de 7 membres dans votre école")
 
@@ -264,9 +264,9 @@ class Szanfranski(Carte):
         super().__init__("Szanfranski", "Ajoutez un monstre sur la zone 1, un membre de votre école sur la zone 2 et un membre de l'école adverse sur la zone 3. Si un membre d'école se trouve sur la même zone qu'un monstre, il n'est pas mangé.")
 
     def use(self, joueuse, adversaire, liste_des_monstres):
-        liste_des_monstres.append(Personnage(0,listes_des_monstres.getTaille()+1,1))
-        joueuse.liste_membres.append(Membre(joueuse.getId(),joueuse.getTaille()+1, 2))
-        adversaire.liste_membres.append(Membre(adversaire.getId(),adversaire.getTaille()+1, 3))
+        liste_des_monstres.addMembre(Personnage(0,listes_des_monstres.getTaille()+1,1))
+        joueuse.addMembre(Membre(joueuse.getId(),joueuse.getTaille()+1, 2))
+        adversaire.addMembre(Membre(adversaire.getId(),adversaire.getTaille()+1, 3))
 
 
 

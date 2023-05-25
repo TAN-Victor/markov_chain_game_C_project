@@ -1,3 +1,6 @@
+from personnage.py import Personnage
+
+
 class ListePNJ:
     def __init__(self, id, liste_membres, taille, tours_restants_jouer):
         self.id = id #permet d'idendifier la joueuse: 0 si c'est le monstre, 1 si c'est la joueuse 1, 2 si c'est la joueuse 2
@@ -29,6 +32,14 @@ class ListePNJ:
     def setToursRestantsJouer(self, tours_restants_jouer):
         self.tours_restants_jouer = tours_restants_jouer
 
+    #Méthodes:
+    def addMembre(self, membre):
+        self.liste_membres.append(membre)
+        self.taille += 1
+
+    def removeMembre(self, membre):
+        self.liste_membres.remove(membre)
+        self.taille -= 1
 
 
 class Joueuse(ListePNJ):
@@ -123,8 +134,15 @@ class Joueuse(ListePNJ):
             print("Erreur: la taille de la liste de membres est négative")
             return False
         else:
-            for membre in self.getMembres():
-                if get_statut()
+            manges = 0
+            for membre in getMembres():
+                if membre.statut == 0:
+                    manges += 1
+            if manges == getTaille():
+                return True
+
+
+    
 
 
 class ListeMonstre(ListePNJ):
