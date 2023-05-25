@@ -2,10 +2,18 @@ from personnage import *
 
 
 class ListePNJ:
-    def __init__(self, id, liste_membres, taille, tours_restants_jouer):
+    def __init__(self, id):
         self.id = id #permet d'idendifier la joueuse: 0 si c'est le monstre, 1 si c'est la joueuse 1, 2 si c'est la joueuse 2
-        self.liste_membres = liste_membres #une liste de personnages correspondant aux membres de la joueuse (de taille 7 = taille max de l'équipe)
-        self.taille = taille #nombre de membres dans la liste de membres (doit être toujours inférieur à 7)
+        if id == 1:
+            self.liste_membres = [Personnage(id,11,random.randint(2,3)), Personnage(id,12,random.randint(2,3)), Personnage(id,13,random.randint(2,3)), Personnage(id,14,random.randint(2,3)), Personnage(id,15,random.randint(2,3))]
+            self.taille = 5 #nombre de membres dans la liste de membres (doit être toujours inférieur à 7)
+        elif id == 2:
+            self.taille = 5 #nombre de membres dans la liste de membres (doit être toujours inférieur à 7)
+            self.liste_membres = [Personnage(id,21,random.randint(4,5)), Personnage(id,22,random.randint(4,5)), Personnage(id,23,random.randint(4,5)), Personnage(id,24,random.randint(4,5)), Personnage(id,25,random.randint(4,5))] 
+        elif id == 0:
+            self.liste_membres = [Personnage(id,11,1)]
+            self.taille = 1 #nombre de membres dans la liste de membres (doit être toujours inférieur à 7)
+        
         self.tours_restants_jouer = tours_restants_jouer #tours restants pendant lesquels la joueuse / le monstre peut faire des déplacements (nombres de tours d'affilés)
 
     #Getters:
@@ -44,11 +52,14 @@ class ListePNJ:
 
 class Joueuse(ListePNJ):
     
-    def __init__(self, capital, liste_membres, liste_cartes, id, tour, taille, tour_restants_bonus_capital, tours_restants_invincibilite, tours_restants_jouer, proba_par_capital, bonus_temporaire, tours_restants_bonus_proba_par_capital):
-        super().__init__(id, liste_membres, 5, tours_restants_jouer)
+    def __init__(self, id, liste_des_cartes):
+        super().__init__(self, id)
         self.capital = 5
-        self.liste_cartes = liste_cartes #cartes contenue dans la main de la joueuse
-        self.tour = tour #permet de savoir si c'est le tour de la joueuse ou non
+        self.liste_cartes = random.sample(liste_des_cartes,5) #cartes contenue dans la main de la joueuse
+        if id == 1:
+            self.tour = True #permet de savoir si c'est le tour de la joueuse ou non
+        elif id == 2:
+            self.tour = False #permet de savoir si c'est le tour de la joueuse ou non
         self.tour_restants_bonus_capital = 0 #nombre de tours restants pendant lesquels la joueuse peut recevoir plus de capital
         self.tours_restants_invincibilite = 0 #nombre de tours restants pendant lesquels les membres de la joueuse ne peut pas être mangée par un monstre
         self.proba_par_capital = 0.1 #la valeur de la modification de la probabilitée par une joeuse, par unité de capital (cf Katrin Salhab)
