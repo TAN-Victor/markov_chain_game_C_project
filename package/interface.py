@@ -394,3 +394,72 @@ while continuer:
 
     pygame.display.flip() # Rafraichissement de l'écran
     clock.tick(60) # 60 FPS
+
+
+
+
+
+##==============================================================================================
+# Messages génériques
+##==============================================================================================
+
+def message_generique(n: int, joueuse: ListePNJ, option: list, option2: Carte):
+    if n == 1:
+        print("Les personnages ont été correctement initialisés.")
+    elif n == 2:
+        print("Les zones ont été correctement initialisées.")
+    elif n == 3:
+        print(f"La joueuse n°{joueuse.getId()} a utilisé {option[0]} de capital.")
+    elif n == 4:
+        print(f"La probabilité de passer de la zone {option[0]+1} à la zone {option[1]+1} a changé de {option[2]*0.1}.")
+    elif n == 5:
+        print(f"La joueuse n°{joueuse.getId()} a utilisé la carte {option2.getNom()}.")
+    elif n == 6:
+        print("Tous les personnages ont bougé.")
+    elif n == 7:
+        print(f"Le personnage n°{option[0]+1} de la joueuse n°{joueuse.getId()} est décédé.")
+    elif n == 8:
+        print("Le tour est terminé, le capital et les effets des joueuses ont été réinitialisés.")
+    elif n == 9:
+        print("Les personnages ont été correctement libérés par free().")
+    elif n == 10:
+        print("Les zones ont été correctement libérées par free().")
+    elif n == 11:
+        print("La matrice des zones a été correctement libérée par free().")
+    elif n == 12:
+        print("Les cartes ont été correctement libérées par free().")
+    elif n == 100:
+        print("Attention, la probabilité de la zone n'est plus dans l'intervalle [0, 1]. L'action a été annulée.")
+    elif n == 201:
+        print(f"Votre nouveau capital est de {option[0]} pour {option[1]} tours.")
+    elif n == 202:
+        print(f"Le personnage n°{option[0]+1} de la joueuse n°{joueuse.getId()} a été déplacé de la zone {option[1]+1} à la zone {option[2]+1}.")
+    elif n == 203:
+        print(f"Le monstre {option[0]+1} s'est déplacé à la zone {option[1]+1}.")
+    elif n == 205:
+        print(f"Le nombre de tours restants de la joueuse {joueuse.getId()} est passé à {option[0]}.")
+    elif n == 209:
+        print(f"Le nombre de déplacements par tour de votre personnage {option[0]+1} est passé à 2.")
+    elif n == 210:
+        print(f"Le personnage n°{option[0]+1} de la joueuse n°{option[1]} est devenu le personnage n°{option[2]} de la joueuse n°{option[3]}.")
+    elif n == 211:
+        print("Vous avez obtenu 15 points de capital supplémentaires pour 1 seul tour.")
+    elif n == 212:
+        print("Une nouvelle zone a été créée.")
+    elif n == 213:
+        print("Les probabilités ont subi une rotation.")
+    elif n == 214:
+        print("Les monstres sont devenus invisibles pour 2 tours.")
+    elif n == 215:
+        print(f"La probabilité par capital est passée à {option[0]*0.1} pour 3 tours.")
+    elif n == 216:
+        print(f"La probabilité de passer de la zone {option[0]+1} à la zone {option[1]+1} est passée à {option[2]*0.1}.")
+    elif n == 217:
+        print(f"Le personnage {option[0]+1} de la joueuse {joueuse.getId()} est devenu un FISA.")
+    elif n == 218:
+        print("Un nouveau personnage a été attribué à chaque joueuse, et un monstre a été ajouté.")
+    elif n == 219:
+        print("Les probabilités de passer de toutes les zones à celle d'un monstre (choisi aléatoirement) est passé à 0.5.")
+    elif n == 220:
+        print(f"Les membres de la joueuse {joueuse.getId()} sont invincibles pour 4 tours.")
+    
