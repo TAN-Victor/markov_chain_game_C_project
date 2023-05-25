@@ -53,9 +53,11 @@ class ListePNJ:
 class Joueuse(ListePNJ):
     
     def __init__(self, id, liste_des_cartes):
-        super().__init__(self, id)
+        super().__init__(id)
         self.capital = 5
         self.liste_cartes = random.sample(liste_des_cartes,5) #cartes contenue dans la main de la joueuse
+        for carte in self.liste_cartes:
+            liste_des_cartes.remove(carte)
         if id == 1:
             self.tour = True #permet de savoir si c'est le tour de la joueuse ou non
         elif id == 2:
@@ -158,5 +160,5 @@ class Joueuse(ListePNJ):
 
 class ListeMonstre(ListePNJ):
     def __init__(self):
-        super().__init__(self, 0)
+        super().__init__(0)
 
