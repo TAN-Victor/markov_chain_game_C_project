@@ -14,7 +14,7 @@ class ListePNJ:
             self.liste_membres = [Personnage(id,11,1)]
             self.taille = 1 #nombre de membres dans la liste de membres (doit être toujours inférieur à 7)
         
-        self.tours_restants_jouer = tours_restants_jouer #tours restants pendant lesquels la joueuse / le monstre peut faire des déplacements (nombres de tours d'affilés)
+        self.tours_restants_jouer = 0 #tours restants pendant lesquels la joueuse / le monstre peut faire des déplacements (nombres de tours d'affilés)
 
     #Getters:
     def getMembres(self):
