@@ -4,6 +4,7 @@
 # Necessités: Python 3.11, Pygame 2.4.0
 ##==============================================================================================
 
+import joueuses
 import pygame
 import os
 import sys
