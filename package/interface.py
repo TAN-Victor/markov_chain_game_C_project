@@ -4,7 +4,6 @@
 # Necessités: joueuses.py
 ##==============================================================================================
 
-import joueuses
 import pygame
 import os
 import sys
@@ -174,6 +173,8 @@ initialiser_objets()
 
 class Bouton:
 
+    state = 0 # 0 = Menu principal, 1 = Utiliser du Capital, 2 = Utiliser une carte, 3 = ...
+
     def __init__(self, position, dimensions, texte, couleur, couleur_texte, alignement="centre", radius=1, visible=False):
         self.rect = pygame.Rect(position[0], position[1], dimensions[0], dimensions[1])
         self.position = position
@@ -212,7 +213,7 @@ class Bouton:
     def montrer(self):
         self.visible = True
 
-    def clic(self, event):
+    def clic(self, event, joueuse: Joueuse):
         if self.visible and self.actif:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.rect.collidepoint(event.pos):
@@ -223,7 +224,7 @@ class Bouton:
                 self.clicked = False
                 self.position = (self.position[0] +5, self.position[1] -5)
                 self.rect = pygame.Rect(self.position[0], self.position[1], self.dimensions[0], self.dimensions[1])
-                self.action()
+                self.action(joueuse)
 
     def activer(self):
         self.actif = True
@@ -235,11 +236,11 @@ class BoutonValeur(Bouton):
     
     valeur = "0"
 
-    def action(self):
+    def action(self, joueuse: Joueuse):
         print("Click sur le bouton {}".format(self.texte))
-        if (self.texte == "+"):
+        if (self.texte == "+" and int(self.valeur) < joueuse.getCapital()):
             self.changer_valeur(1)
-        if (self.texte == "-"):
+        if (self.texte == "-" and int(self.valeur) > 0):
             self.changer_valeur(-1)
 
     @classmethod
@@ -249,19 +250,24 @@ class BoutonValeur(Bouton):
         
 class BoutonAnnuler(Bouton):
 
-    def action(self):
+    def action(self, joueuse: Joueuse):
         print("Annulation")
         self.actif = False
 
 class BoutonValider(Bouton):
 
-    def action(self):
+    def action(self, joueuse: Joueuse):
         print("Validation")
+        print(self.__class__.state)
         self.actif = False
+        if self.__class__.state == 1:
+            self.__class__.state = 0
+            print("Utilisation de capital")
+            print(self.__class__.state)
 
 class BoutonChoix(Bouton):
 
-    def action(self):
+    def action(self, joueuse: Joueuse):
         if self.texte == "Choix d'un personnage 1":
             print("Choix d'un personnage 1")
         elif self.texte == "Choix d'un personnage 2":
@@ -270,19 +276,21 @@ class BoutonChoix(Bouton):
             print("Choix d'un monstre")
         elif self.texte == "Utiliser carte":
             print("Choix d'une carte")
+            self.__class__.state = 2
         elif self.texte == "Choix d'une zone":
             print("Choix d'une zone")
         elif self.texte == "Choix d'une autre zone":
             print("Choix d'une autre zone")
         elif self.texte == "Utiliser capital":
             print("Choix de capital")
-            demander_capital()
+            self.__class__.state = 1
+            demander_capital(joueuse)
         elif self.texte == "Ne rien faire":
             print("Ne rien faire")
 
 class BoutonZone(Bouton):
 
-    def action(self):
+    def action(self, joueuse: Joueuse):
         print("Choix de la zone {}".format(self.texte))
 
 
@@ -292,9 +300,9 @@ map_boutons["bouton_valider"] = BoutonValider((longueur*70/100 + 30, largeur*92/
 map_boutons["bouton_choix_capital"] = BoutonChoix((longueur*70/100 + 30, largeur*83/100 + 40), (longueur*10/100 - 20, largeur*10/100 - 10), "Utiliser capital", (140, 215, 140), (0, 0, 0))
 map_boutons["bouton_choix_carte"] = BoutonChoix((longueur*80/100 + 30, largeur*83/100 + 40), (longueur*10/100 - 20, largeur*10/100 - 10), "Utiliser carte", (140, 215, 140), (0, 0, 0))
 map_boutons["bouton_choix_rien"] = BoutonChoix((longueur*90/100 + 30, largeur*83/100 + 40), (longueur*8/100 - 10, largeur*10/100 - 10), "Ne rien faire", (227, 140, 140), (0, 0, 0))
-map_boutons["boutons_plus"] = BoutonValeur((longueur*90/100 + 30, largeur*82/100 + 40), (longueur*8/100 - 20, largeur*6/100 - 10), "+", (140, 140, 215), (0, 0, 0))
-map_boutons["boutons_moins"] = BoutonValeur((longueur*72/100 + 30, largeur*82/100 + 40), (longueur*8/100 - 20, largeur*6/100 - 10), "-", (140, 140, 215), (0, 0, 0))
-map_boutons["boutons_valeur"] = BoutonValeur((longueur*80/100 + 30, largeur*82/100 + 40), (longueur*10/100 - 20, largeur*6/100 - 10), BoutonValeur.valeur, (140, 140, 215), (0, 0, 0))
+map_boutons["bouton_plus"] = BoutonValeur((longueur*90/100 + 30, largeur*82/100 + 40), (longueur*8/100 - 20, largeur*6/100 - 10), "+", (140, 140, 215), (0, 0, 0))
+map_boutons["bouton_moins"] = BoutonValeur((longueur*72/100 + 30, largeur*82/100 + 40), (longueur*8/100 - 20, largeur*6/100 - 10), "-", (140, 140, 215), (0, 0, 0))
+map_boutons["bouton_valeur"] = BoutonValeur((longueur*80/100 + 30, largeur*82/100 + 40), (longueur*10/100 - 20, largeur*6/100 - 10), BoutonValeur.valeur, (140, 140, 215), (0, 0, 0))
 
 couleurs_zones = [(230, 138, 143), (180, 205, 147), (163, 181, 204), (237, 210, 136), (190, 149, 170), (177, 214, 206), (217, 183, 139), (199, 203, 178), (210, 178, 200), (174, 207, 169), (216, 170, 185)]
 for i in range(0, 3):
@@ -320,7 +328,7 @@ def demander_action():
     map_boutons["bouton_choix_carte"].activer()
     map_boutons["bouton_choix_carte"].montrer()
 
-def demander_capital(): # TODO: Add joueuses
+def demander_capital(joueuse: Joueuse):
     """
     Doit être appelé par le bouton "Utiliser capital"
 
@@ -337,62 +345,22 @@ def demander_capital(): # TODO: Add joueuses
     map_boutons["bouton_choix_carte"].desactiver()
     map_boutons["bouton_choix_carte"].cacher()
 
-    map_boutons["boutons_plus"].activer()
-    map_boutons["boutons_moins"].activer()
-    map_boutons["boutons_plus"].montrer()
-    map_boutons["boutons_moins"].montrer()
-    map_boutons["boutons_valeur"].activer()
-    map_boutons["boutons_valeur"].montrer()
+    map_boutons["bouton_plus"].activer()
+    map_boutons["bouton_moins"].activer()
+    map_boutons["bouton_plus"].montrer()
+    map_boutons["bouton_moins"].montrer()
+    map_boutons["bouton_valeur"].activer()
+    map_boutons["bouton_valeur"].montrer()
     map_boutons["bouton_valider"].activer()
     map_boutons["bouton_valider"].montrer()
     map_boutons["bouton_annuler"].activer()
     map_boutons["bouton_annuler"].montrer()
 
 
+
 demander_action()
 
-##==============================================================================================
-# Boucle de jeu
-##==============================================================================================
 
-continuer = True
-while continuer:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            continuer = False
-
-        elif event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP:
-            x, y = pygame.mouse.get_pos()
-            print(f"Clic en ({x}, {y})")
-            for boutons in map_boutons.values():
-                boutons.clic(event)
-                boutons.afficher(fenetre)
-            for objets in map_objets.values():
-                objets.clic(event)
-                objets.afficher(fenetre)
-                
-
-        fenetre.fill((0, 0, 0)) # Couleur de fond
-        joueuses()
-        actions()
-        zones_jeu()
-        console()
-
-        for objets in map_objets.values():
-            objets.afficher(fenetre)
-
-
-        for boutons in map_boutons.values():
-            boutons.afficher(fenetre)
-
-
-
-
-
-
-
-    pygame.display.flip() # Rafraichissement de l'écran
-    clock.tick(60) # 60 FPS
 
 
 

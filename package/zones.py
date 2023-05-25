@@ -11,19 +11,13 @@ class Zone:
 # Classe zones
 class Zones:
     def __init__(self, nb_zones):
-        self.tab_zones = [Zone(i, 0) for i in range(nb_zones)] #tableau de zones
-        self.matrice = MatriceProbas(nb_zones) #matrice de probabilités
-
-    @staticmethod
-    def nouvellesZones(nb_zones):
         prob = 1 / nb_zones #probabilité de chaque case
-        zones_obj = Zones(nb_zones) #création de l'objet zones
-
+        self.tab_zones = [Zone(i, 0) for i in range(nb_zones)] #tableau de zones
+        tmp = MatriceProbas(nb_zones) #matrice de probabilités
         for i in range(nb_zones):
             for j in range(nb_zones):
-                zones_obj.matrice.modifier_proba(i, j, prob) #modification de la probabilité de chaque case
-
-        return zones_obj
+                tmp.modifier_proba(i, j, prob) #modification de la probabilité de chaque case
+        self.matrice = tmp
 
     def modifierZone(self, n1, n2, proba, action):
         if action == 1:
