@@ -1,4 +1,4 @@
-from cartes.py import Carte
+from carte import *
 
 # Création des constantes 
 NB_CARTES_MAIN_JOUEUSE = 5

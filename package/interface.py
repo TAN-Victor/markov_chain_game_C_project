@@ -7,7 +7,7 @@
 import pygame
 import os
 import sys
-#import joueuses
+from joueuses import *
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -26,6 +26,7 @@ largeur = 1080
 longueur = 1920
 pygame.display.set_caption("Jeu de la survie des IIENS")
 fenetre = pygame.display.set_mode((longueur, largeur))
+couleur_fond = (200, 200, 200)
 
 
 ##==============================================================================================
@@ -39,7 +40,7 @@ def zones_jeu():
     Taille: 70% de la longueur et 80% de la largeur de l'écran (en 1080p par défaut)
     Couleur de fond: (200, 200, 200) Gris clair
     """
-    pygame.draw.rect(fenetre, (200, 200, 200), (10, 10, longueur*70/100, largeur*80/100))
+    pygame.draw.rect(fenetre, couleur_fond, (10, 10, longueur*70/100, largeur*80/100))
 
 # Joueuses
 def joueuses():
@@ -51,7 +52,7 @@ def joueuses():
     Nombre de personnages par joueuse au maximum: 7
     Nombre de cartes par joueuse au maximum: 5
     """
-    pygame.draw.rect(fenetre, (200, 200, 200), (longueur*70/100 + 20, 10, longueur*30/100 - 30, largeur*80/100))
+    pygame.draw.rect(fenetre, couleur_fond, (longueur*70/100 + 20, 10, longueur*30/100 - 30, largeur*80/100))
     for i in range(1, 3):
         pygame.draw.line(fenetre, (0, 0, 0), (longueur*(70 + i * 10)/100 + 20, 10), (longueur*(70 + i * 10)/100 + 20, largeur*80/100 + 9), 3) # Séparation des joueuses
     pygame.draw.line(fenetre, (0, 0, 0), (longueur*70/100 + 20, 70), (longueur - 11, 70), 5)
@@ -69,7 +70,7 @@ def actions():
     Taille: 30% de la longueur et 20% de la largeur de l'écran (en 1080p par défaut)
     Couleur de fond: (200, 200, 200) Gris clair
     """
-    pygame.draw.rect(fenetre, (200, 200, 200), (longueur*70/100 + 20, largeur*80/100 + 20, longueur*30/100 - 30, largeur*20/100 - 30)) 
+    pygame.draw.rect(fenetre, couleur_fond, (longueur*70/100 + 20, largeur*80/100 + 20, longueur*30/100 - 30, largeur*20/100 - 30)) 
 
 # Console
 def console():
@@ -78,7 +79,7 @@ def console():
     Taille: 70% de la longueur et 20% de la largeur de l'écran (en 1080p par défaut)
     Couleur de fond: (200, 200, 200) Gris clair
     """
-    pygame.draw.rect(fenetre, (200, 200, 200), (10, largeur*80/100 + 20, longueur*70/100, largeur*20/100 - 30))
+    pygame.draw.rect(fenetre, couleur_fond, (10, largeur*80/100 + 20, longueur*70/100, largeur*20/100 - 30))
 
 
 
@@ -156,13 +157,18 @@ class ObjetStatut(ObjetFixe):
 
 
 map_objets = {}
-for i in range (0, 3):
-    for j in range(0, 6):
-        map_objets["personnage_" + str(i+1) + "_" + str(j+1) + "liste"] = (ObjetPersonnageListe(longueur*(70 + i * 10)/100 + 25, 65 + j * 50, 50, "interface/images/" + str(j+1) + "_" + str(i) + ".png", [j+1, "Joueuse n°" + str(i+1)]))
-        map_objets["statut_" + str(i+1) + "_" + str(j+1) + "liste"] = (ObjetStatut(longueur*(70 + i * 10)/100 + 85, 75 + j * 50, 100, "interface/images/" + "En vie" + "_" + str(i) + ".png", [j+1, "Joueuse n°" + str(i+1), "En vie"]))
-        if (j == 5 or (i == 2 and j != 0)):
-            map_objets["personnage_" + str(i+1) + "_" + str(j+1) + "liste"].cacher()
-            map_objets["statut_" + str(i+1) + "_" + str(j+1) + "liste"].cacher()
+
+
+def initialiser_objets():
+    for i in range (0, 3):
+        for j in range(0, 6):
+            map_objets["personnage_" + str(i+1) + "_" + str(j+1) + "liste"] = (ObjetPersonnageListe(longueur*(70 + i * 10)/100 + 25, 65 + j * 50, 50, "interface/images/" + str(j+1) + "_" + str(i) + ".png", [j+1, "Joueuse n°" + str(i+1)]))
+            map_objets["statut_" + str(i+1) + "_" + str(j+1) + "liste"] = (ObjetStatut(longueur*(70 + i * 10)/100 + 85, 75 + j * 50, 100, "interface/images/" + "En vie" + "_" + str(i) + ".png", [j+1, "Joueuse n°" + str(i+1), "En vie"]))
+            if (j == 5 or (i == 2 and j != 0)):
+                map_objets["personnage_" + str(i+1) + "_" + str(j+1) + "liste"].cacher()
+                map_objets["statut_" + str(i+1) + "_" + str(j+1) + "liste"].cacher()
+
+initialiser_objets()
 
 #================================================================================================
 

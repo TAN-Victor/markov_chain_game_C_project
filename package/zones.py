@@ -1,5 +1,4 @@
-from structures.py import MatriceProbas
-from structures.py import ListeCartes
+from structures import *
 import random
 import sys
 
