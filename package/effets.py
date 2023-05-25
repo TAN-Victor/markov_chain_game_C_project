@@ -47,9 +47,9 @@ class Honore(Carte):
 
 
 
-class Riobo(Carte):
+class Rioboo(Carte):
     def __init__(self):
-        super().__init__("Riobo", "Lors du prochain tour, la joueuse adverse ne choisit pas comment est utilisé son capital. Chaque point de capital est utilisé aléatoirement: pour chaque point, choisissez les trois zones Z1, Z2 et Z3 uniformément parmi les triplets pouvant être choisis.")
+        super().__init__("Rioboo", "Lors du prochain tour, la joueuse adverse ne choisit pas comment est utilisé son capital. Chaque point de capital est utilisé aléatoirement: pour chaque point, choisissez les trois zones Z1, Z2 et Z3 uniformément parmi les triplets pouvant être choisis.")
 
     def use(self, adversaire, zones,capital):
         if capital<0 or capital>adversaire.getCapital:
