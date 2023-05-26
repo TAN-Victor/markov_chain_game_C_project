@@ -329,7 +329,7 @@ class BoutonAnnulerCarte(Bouton):
 # Actions
 ##==============================================================================================
 
-def demander_action(map_boutons: dict):
+def demander_action(map_boutons: dict, map_objets: dict, joueuse: Joueuse):
     """
     Affiche les boutons d'action principaux: Utiliser du capital, Utiliser une carte, Ne rien faire
     Les rend cliquables (actifs)
@@ -340,6 +340,8 @@ def demander_action(map_boutons: dict):
     map_boutons["bouton_choix_capital"].montrer()
     map_boutons["bouton_choix_carte"].activer()
     map_boutons["bouton_choix_carte"].montrer()
+
+
 
 def demander_capital(map_boutons:dict, joueuse: Joueuse):
     """
@@ -392,6 +394,25 @@ def demander_carte(map_boutons: dict, map_objets: dict, joueuse: Joueuse):
         map_boutons["bouton_carte_valider"].montrer()
         map_boutons["bouton_carte_annuler"].activer()
         map_boutons["bouton_carte_annuler"].montrer()
+
+
+
+def ne_rien_faire(map_boutons: dict):
+    """
+    Doit être appelé par le bouton "Ne rien faire"
+
+    Désaffiche et désactive les boutons d'action principaux #see demander_action()
+    Appelle la fonction pour déplacer les monstres et les personnages
+
+    N'affiche aucun bouton
+    """
+    map_boutons["bouton_choix_rien"].desactiver()
+    map_boutons["bouton_choix_rien"].cacher()
+    map_boutons["bouton_choix_capital"].desactiver()
+    map_boutons["bouton_choix_capital"].cacher()
+    map_boutons["bouton_choix_carte"].desactiver()
+    map_boutons["bouton_choix_carte"].cacher()
+
 
 
 

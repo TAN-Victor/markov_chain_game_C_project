@@ -6,6 +6,7 @@
 
 import sys
 import os
+import threading
 
 import pygame
 
@@ -39,7 +40,8 @@ def main():
 
 
     i = 0 # // Va valoir 0 si c'est le tour de la joueuse 1, 1 si c'est le tour de la joueuse 2
-
+    etat = 0 # // Va valoir 0 si on est dans la sélection principale, 1 si on choisi le capital, 2 si on choisit une carte, 3 si on choisit une zone, 4 si on est dans un effet de
+                # carte, 5 si on est dans un effet de zone, 6 si on est en déplacement
 
     ##================================================================================================
     # Initialisation de la fenêtre
@@ -86,11 +88,11 @@ def main():
 
 
 
+        demander_action(map_boutons, map_objets, liste_joueuses[0])
 
 
 
 
-        demander_action(map_boutons)
 
     initialiser_objets()
 
@@ -104,25 +106,32 @@ def main():
     continuer = True
     while continuer:
         for event in pygame.event.get():
+            fenetre.fill((0, 0, 0)) # Couleur de fond
+            joueuses()
+            actions()
+            zones_jeu()
+            console()
+
+            if (liste_joueuses[0].getTour() == True):
+                i = 0
+            else:
+                i = 1
+
+
             if event.type == pygame.QUIT:
                 continuer = False
-
             elif event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP:
                 x, y = pygame.mouse.get_pos()
                 print(f"Clic en ({x}, {y})")
                 for boutons in map_boutons.values():
-                    boutons.clic(event, map_boutons, map_objets, joueuse_1)
+                    boutons.clic(event, map_boutons, map_objets, liste_joueuses[i])
                     boutons.afficher(fenetre)
                 for objets in map_objets.values():
                     objets.clic(event)
                     objets.afficher(fenetre)
                     
 
-            fenetre.fill((0, 0, 0)) # Couleur de fond
-            joueuses()
-            actions()
-            zones_jeu()
-            console()
+
 
             for objets in map_objets.values():
                 objets.afficher(fenetre)
@@ -132,20 +141,10 @@ def main():
                 boutons.afficher(fenetre)
 
 
-        if liste_joueuses[0].getTour() == 1:
-            i = 0
-        else:
-            i = 1
-        
-
-
 
 
 
         pygame.display.flip() # Rafraichissement de l'écran
         clock.tick(60) # 60 FPS
-
-
-
 
 main()
