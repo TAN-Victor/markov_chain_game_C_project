@@ -56,7 +56,7 @@ def main():
     def initialiser_objets():
         for i in range (0, 3):
             for j in range(0, 6):
-                map_objets["personnage_" + str(i+1) + "_" + str(j+1) + "liste"] = (ObjetPersonnageListe(longueur*(70 + i * 10)/100 + 25, 65 + j * 50, 50, "interface/images/" + str(j+1) + "_" + str(i) + ".png", [j+1, "Joueuse n°" + str(i+1)]))
+                map_objets["personnage_" + str(i+1) + "_" + str(j+1) + "liste"] = (ObjetPersonnageListe(longueur*(70 + i * 10)/100 + 25, 65 + j * 50, 50, "interface/images/" + str(i) + "_" + str(j+1) + ".png", [j+1, "Joueuse n°" + str(i+1)]))
                 map_objets["statut_" + str(i+1) + "_" + str(j+1) + "liste"] = (ObjetStatut(longueur*(70 + i * 10)/100 + 85, 75 + j * 50, 100, "interface/images/" + "En vie" + "_" + str(i) + ".png", [j+1, "Joueuse n°" + str(i+1), "En vie"]))
                 if (j == 5 or (i == 2 and j != 0)):
                     map_objets["personnage_" + str(i+1) + "_" + str(j+1) + "liste"].cacher()
@@ -92,7 +92,13 @@ def main():
         
         demander_action(map_boutons, map_objets, liste_joueuses[0])
 
-
+        nb_zones = liste_zones.getMatrice().getTailleMatrice()
+        for i in range(nb_zones):
+            compteur = 0
+            for j in range(joueuse_1.taille):
+                if joueuse_1.getMembres()[j].zone_courante == i+1:
+                    map_objets["personnage_" + str(joueuse_1.getId()) + "_" + str(j+1)] = ObjetPersonnageListe(40 + i%3 * 420 + compteur * 60, 60 + i//3 * 200, 75, "interface/images/" + str(joueuse_1.getId()-1) + "_" + str(j+1) + ".png", [j+1, "Joueuse n°" + str(i+1)])
+                    compteur += 1
 
         
 
@@ -100,9 +106,6 @@ def main():
 
     initialiser_objets()
  
-
-
-
 
     ##==============================================================================================
     # Boucle de jeu
@@ -120,7 +123,7 @@ def main():
 
             info_joueuse(liste_joueuses[0])
             info_joueuse(liste_joueuses[1])
-            
+
 
             if (liste_joueuses[0].getTour() == True):
                 i = 0
@@ -189,18 +192,19 @@ def main():
                     print("Déplacements")
                     for j in range (0, liste_joueuses[i].getTaille()):
                         print("Personnage {} en zone {}".format(j, liste_joueuses[i].getMembres()[j].zone_personnage()))
-                    for indice_monstre in range (0, liste_joueuses[2]):
+                    for indice_monstre in range (0, liste_joueuses[2].getTaille()):
                         if (liste_joueuses[2].getMembres()[indice_monstre].peut_se_deplacer and liste_joueuses[2].getMembres()[indice_monstre].statut == 1):
                             for nombre_de_deplacement in range (0, liste_joueuses[2].getMembres()[indice_monstre].nb_de_pas):
                                 prochaine_zone = liste_zones.trouveZone(liste_zones.prochaineZone(liste_joueuses[2].getMembres()[indice_monstre].zone_personnage()))
                                 liste_joueuses[2].getMembres()[indice_monstre].deplacer(prochaine_zone)
 
+            for boutons in map_boutons.values():
+                boutons.afficher(fenetre)
             for objets in map_objets.values():
                 objets.afficher(fenetre)
 
 
-            for boutons in map_boutons.values():
-                boutons.afficher(fenetre)
+
 
 
 
