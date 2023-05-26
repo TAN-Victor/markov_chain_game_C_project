@@ -37,6 +37,18 @@ class MatriceProbas:
         
         return matrice
 
+    def ajouterLigneColonne(self):
+        nbl = len(self.matrice)
+        nbc = len(self.matrice[0])
+
+        # Ajouter une ligne de zéros
+        nouvelle_ligne = [0] * (nbc + 1)
+        self.matrice.append(nouvelle_ligne)
+
+        # Ajouter les lignes existantes avec une colonne de zéros
+        for i in range(nbl):
+            self.matrice[i].append(0)
+
     def getTailleMatrice(self):
         return self.taille_matrice
     

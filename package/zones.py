@@ -15,48 +15,62 @@ class Zones:
         self.matrice = MatriceProbas(nb_zones) #matrice de probabilités
 
     def modifierZone(self, n1, n2, proba, action):
+        """
+        Modifie la probabilité de la matrice de probabilités
+        n1 : numéro de la zone de départ
+        n2 : numéro de la zone d'arrivée
+        proba : probabilité à ajouter ou à retirer
+        action : 1 pour ajouter, 0 pour retirer
+        """
         if action == 1:
             self.matrice.modifier_proba(n1, n2, self.matrice.lecture_probas(n1, n2) + proba)
         elif action == 0:
             self.matrice.modifier_proba(n1, n2, self.matrice.lecture_probas(n1, n2) - proba)
 
     def trouveZone(self, n):
+        """
+        Renvoie la zone correspondant au numéro n
+        """
         taille_matrice = self.matrice.getTailleMatrice()
         
         # On vérifie la taille de la matrice
         if taille_matrice == 10:
             # On vérifie si le numéro de zone est valide
             if n < 0 or n > 9:
-                print(f"trouveZone : n<0 ou n>9, en effet, n={n}", file=sys.stderr)
+                print("trouveZone : n<0 ou n>9, en effet, n={n}", file=sys.stderr)
                 sys.exit(n)
             else:
                 for i in range(taille_matrice):
                     if self.tab_zones[i].numero == n:
                         return self.tab_zones[i]
                 
-                print(f"trouveZone : aucune zone trouvée pour n={n}", file=sys.stderr)
+                print("trouveZone : aucune zone trouvée pour n={n}", file=sys.stderr)
                 sys.exit(n)
         else: # Le nombre de zones vaut 11
             # On vérifie si le numéro de zone est valide
             if n < 0 or n > 10:
-                print(f"trouveZone : n<0 ou n>11, en effet, n={n}", file=sys.stderr)
+                print("trouveZone : n<0 ou n>11, en effet, n={n}", file=sys.stderr)
                 sys.exit(n)
             else:
                 for i in range(taille_matrice):
                     if self.tab_zones[i].numero == n:
                         return self.tab_zones[i]
                 
-                print(f"trouveZone : aucune zone trouvée pour n={n}", file=sys.stderr)
+                print("trouveZone : aucune zone trouvée pour n={n}", file=sys.stderr)
                 sys.exit(n)
 
     def prochaineZone(self, nz):
+        """
+        Renvoie le numéro de la prochaine zone
+        -1 en cas d'erreur
+        """
         taille_matrice = self.matrice.getTailleMatrice()
 
         # On vérifie la taille de la matrice
         if taille_matrice == 10:
             # On vérifie si le numéro de zone est valide
             if nz < 0 or nz > 9:
-                print(f"prochaineZone : nz<0 ou nz>9, en effet, nz={nz}", file=sys.stderr)
+                print("prochaineZone : nz<0 ou nz>9, en effet, nz={nz}", file=sys.stderr)
                 return -1
 
             x = random.random()  # Générer un nombre aléatoire entre 0 et 1
@@ -76,7 +90,7 @@ class Zones:
         else:  # Le nombre de zones vaut 11 dans ce cas-là
             # On vérifie si le numéro de la zone est valide
             if nz < 0 or nz > 10:
-                print(f"prochaineZone : nz<0 ou nz>10, en effet, nz={nz}", file=sys.stderr)
+                print("prochaineZone : nz<0 ou nz>10, en effet, nz={nz}", file=sys.stderr)
                 return -1
 
             x = random.random()  # Générer un nombre aléatoire entre 0 et 1
@@ -116,6 +130,5 @@ class Zones:
 
     def addZone(self):
         taille = len(self.tab_zones)
-        self.tab_zones.append(Zone(taille, 0))
-        self.matrice.ajouterLigne()
-        self.matrice.ajouterColonne()
+        self.tab_zones.append(Zone(taille, 0)) # on ajoute une zone à la fin du tableau
+        self.matrice.ajouterLigneColonne() # on ajoute une ligne et une colonne de 0 à la matrice de probabilités
