@@ -11,7 +11,6 @@ class Zone:
 # Classe zones
 class Zones:
     def __init__(self, nb_zones):
-        prob = 1 / nb_zones #probabilité de chaque case
         self.tab_zones = [Zone(i, 0) for i in range(nb_zones)] #tableau de zones
         self.matrice = MatriceProbas(nb_zones) #matrice de probabilités
 
