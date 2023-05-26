@@ -184,7 +184,7 @@ class Pacave(Carte):
 
     def use(self, joueuse, zones):
         zones.addZone()
-        zones.setEstAutorise(zones.getTabZones()[zones.getMatrice().getTailleMatrice()-1], joueuse.getId)
+        zones.setEstAutorise(zones.getTabZones()[zones.getMatrice().getTailleMatrice()-1], joueuse.getId())
         zones.getMatrice().modifier_proba(zones.getTabZones()[zones.getMatrice().getTailleMatrice()-1], zones.getTabZones()[zones.getMatrice().getTailleMatrice()-1], 1)
 
 
