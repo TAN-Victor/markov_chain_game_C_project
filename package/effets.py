@@ -250,9 +250,9 @@ class Watel(Carte):
 
 
 
-class Szanfranski(Carte):
+class Szafranski(Carte):
     def __init__(self):
-        super().__init__("Szanfranski", "Ajoutez un monstre sur la zone 1, un membre de votre école sur la zone 2 et un membre de l'école adverse sur la zone 3. Si un membre d'école se trouve sur la même zone qu'un monstre, il n'est pas mangé.")
+        super().__init__("Szafranski", "Ajoutez un monstre sur la zone 1, un membre de votre école sur la zone 2 et un membre de l'école adverse sur la zone 3. Si un membre d'école se trouve sur la même zone qu'un monstre, il n'est pas mangé.")
 
     def use(self, joueuse, adversaire, liste_des_monstres):
         liste_des_monstres.addMembre(Personnage(0,liste_des_monstres.getTaille()+1,1))

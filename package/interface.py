@@ -101,11 +101,16 @@ class ObjetFixe:
             self.rect = pygame.Rect(x, y, longueur, longueur/3)
         self.visible = True
         self.selected = False
-        self.actif = True
+        self.actif = False
 
     def redimensionner(self, nouvelle_longueur):
         ratio = self.image.get_width() / self.image.get_height()
-        return pygame.transform.scale(self.image, (nouvelle_longueur, int(nouvelle_longueur / ratio)))
+        if nouvelle_longueur > 0:
+            return pygame.transform.scale(self.image, (nouvelle_longueur, int(nouvelle_longueur / ratio)))
+        else: # Si nouvelle_longueur < 0, on redimensionne en fonction de la longueur de l'objet
+            return pygame.transform.scale(self.image, (int(-nouvelle_longueur * ratio), -nouvelle_longueur))
+
+
 
     def afficher(self, fenetre):
         if self.visible:
@@ -223,7 +228,7 @@ class Bouton:
     def montrer(self):
         self.visible = True
 
-    def clic(self, event, joueuse: Joueuse):
+    def clic(self, event, map_boutons: dict, map_objets: dict, joueuse: Joueuse):
         if self.visible and self.actif:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.rect.collidepoint(event.pos):
@@ -234,7 +239,7 @@ class Bouton:
                 self.clicked = False
                 self.position = (self.position[0] +5, self.position[1] -5)
                 self.rect = pygame.Rect(self.position[0], self.position[1], self.dimensions[0], self.dimensions[1])
-                self.action(joueuse)
+                self.action(map_boutons, map_objets, joueuse)
 
     def activer(self):
         self.actif = True
@@ -246,7 +251,7 @@ class BoutonValeur(Bouton):
     
     valeur = "0"
 
-    def action(self, joueuse: Joueuse):
+    def action(self, map_boutons, map_objets, joueuse: Joueuse):
         print("Click sur le bouton {}".format(self.texte))
         if (self.texte == "+" and int(self.valeur) < joueuse.getCapital()):
             self.changer_valeur(1)
@@ -277,7 +282,7 @@ class BoutonValeur(Bouton):
 
 class BoutonChoix(Bouton):
 
-    def action(self, joueuse: Joueuse):
+    def action(self, map_boutons, map_objets, joueuse: Joueuse):
         if self.texte == "Choix d'un personnage 1":
             print("Choix d'un personnage 1")
         elif self.texte == "Choix d'un personnage 2":
@@ -286,51 +291,45 @@ class BoutonChoix(Bouton):
             print("Choix d'un monstre")
         elif self.texte == "Utiliser carte":
             print("Choix d'une carte")
+            demander_carte(map_boutons, map_objets, joueuse)
         elif self.texte == "Choix d'une zone":
             print("Choix d'une zone")
         elif self.texte == "Choix d'une autre zone":
             print("Choix d'une autre zone")
         elif self.texte == "Utiliser capital":
             print("Choix de capital")
-            demander_capital(joueuse)
+            demander_capital(map_boutons, joueuse)
         elif self.texte == "Ne rien faire":
             print("Ne rien faire")
 
 class BoutonZone(Bouton):
 
-    def action(self, joueuse: Joueuse):
+    def action(self, map_boutons, map_objets, joueuse: Joueuse):
         print("Choix de la zone {}".format(self.texte))
 
 
+class BoutonValiderCarte(Bouton):
+
+    def action(self, map_boutons, map_objets: dict, joueuse: Joueuse):
+        for objet in map_objets.values():
+            if objet.__class__.__name__ == "ObjetCarte" and objet.selected:
+                print("Carte {} validée".format(objet.nom))
+
+class BoutonAnnulerCarte(Bouton):
+
+    def action(self, map_boutons, map_objets: dict, joueuse: Joueuse):
+        for objet in map_objets.values():
+            if objet.__class__.__name__ == "ObjetCarte" and objet.selected:
+                print("Carte {} annulée".format(objet.nom))
+
 #================================================================================================
-
-
-map_boutons = {}
-
-map_boutons["bouton_choix_capital"] = BoutonChoix((longueur*70/100 + 30, largeur*83/100 + 40), (longueur*10/100 - 20, largeur*10/100 - 10), "Utiliser capital", (140, 215, 140), (0, 0, 0))
-map_boutons["bouton_choix_carte"] = BoutonChoix((longueur*80/100 + 30, largeur*83/100 + 40), (longueur*10/100 - 20, largeur*10/100 - 10), "Utiliser carte", (140, 215, 140), (0, 0, 0))
-map_boutons["bouton_choix_rien"] = BoutonChoix((longueur*90/100 + 30, largeur*83/100 + 40), (longueur*8/100 - 10, largeur*10/100 - 10), "Ne rien faire", (227, 140, 140), (0, 0, 0))
-
-map_boutons["bouton_plus"] = BoutonValeur((longueur*90/100 + 30, largeur*82/100 + 40), (longueur*8/100 - 20, largeur*6/100 - 10), "+", (140, 140, 215), (0, 0, 0))
-map_boutons["bouton_moins"] = BoutonValeur((longueur*72/100 + 30, largeur*82/100 + 40), (longueur*8/100 - 20, largeur*6/100 - 10), "-", (140, 140, 215), (0, 0, 0))
-map_boutons["bouton_valeur"] = BoutonValeur((longueur*80/100 + 30, largeur*82/100 + 40), (longueur*10/100 - 20, largeur*6/100 - 10), BoutonValeur.valeur, (140, 140, 215), (0, 0, 0))
-map_boutons["bouton_valeur_valider"] = BoutonValeur((longueur*70/100 + 30, largeur*92/100 + 20), (longueur*15/100 - 50, largeur*8/100 - 30), "Valider", (50, 227, 50), (0, 0, 0))
-map_boutons["bouton_valeur_annuler"] = BoutonValeur((longueur*85/100 + 30, largeur*92/100 + 20), (longueur*15/100 - 50, largeur*8/100 - 30), "Annuler", (227, 50, 50), (0, 0, 0))
-
-
-couleurs_zones = [(230, 138, 143), (180, 205, 147), (163, 181, 204), (237, 210, 136), (190, 149, 170), (177, 214, 206), (217, 183, 139), (199, 203, 178), (210, 178, 200), (174, 207, 169), (216, 170, 185)]
-for i in range(0, 3):
-    for j in range(0, 3):
-        map_boutons["zone_" + str(i+3*j+1)] = BoutonZone((40 + i * 420, 40 +j *200), (400, 180), "Zone n°" + str(i+3*j+1), couleurs_zones[i+3*j], (0, 0, 0), "haut_centre", 0, True)
-for i in range(0, 2):
-    map_boutons["zone_" + str(i+10)] = BoutonZone((250 + i * 420, 640), (400, 180), "Zone n°" + str(i+10), couleurs_zones[i+9], (0, 0, 0), "haut_centre", 0, True)
 
 
 ##==============================================================================================
 # Actions
 ##==============================================================================================
 
-def demander_action():
+def demander_action(map_boutons: dict):
     """
     Affiche les boutons d'action principaux: Utiliser du capital, Utiliser une carte, Ne rien faire
     Les rend cliquables (actifs)
@@ -342,15 +341,13 @@ def demander_action():
     map_boutons["bouton_choix_carte"].activer()
     map_boutons["bouton_choix_carte"].montrer()
 
-def demander_capital(joueuse: Joueuse):
+def demander_capital(map_boutons:dict, joueuse: Joueuse):
     """
     Doit être appelé par le bouton "Utiliser capital"
 
     Désaffiche et désactive les boutons d'action principaux #see demander_action()
     Affiche les boutons d'action du capital: +, -, valeur, valider, annuler
     Les rend cliquables (actifs)
-
-    Bloque les boutons afin que le capital soit entre 0 et le capital de la joueuse
     """
     map_boutons["bouton_choix_rien"].desactiver()
     map_boutons["bouton_choix_rien"].cacher()
@@ -371,18 +368,30 @@ def demander_capital(joueuse: Joueuse):
     map_boutons["bouton_valeur_annuler"].montrer()
 
 
-def demander_carte(joueuse: Joueuse):
+def demander_carte(map_boutons: dict, map_objets: dict, joueuse: Joueuse):
     """
     Doit être appelé par le bouton "Utiliser carte"	
     
     Désaffiche et désactive les boutons d'action principaux #see demander_action()
-    Permet de sélectionner une carte d'une joueuse
-    
-    
+    Permet de sélectionner une carte de la joueuse qui est en argument
+    Affiche les boutons valider, annuler
+    Les rend cliquables (actifs)
     """
+    map_boutons["bouton_choix_rien"].desactiver()
+    map_boutons["bouton_choix_rien"].cacher()
+    map_boutons["bouton_choix_capital"].desactiver()
+    map_boutons["bouton_choix_capital"].cacher()
+    map_boutons["bouton_choix_carte"].desactiver()
+    map_boutons["bouton_choix_carte"].cacher()
 
+    i = joueuse.getId()
+    for j in range(0, len(joueuse.getCartes())):
+        map_objets["carte_" + str(i) + "_" + str(j+1)].activer()
 
-
+        map_boutons["bouton_carte_valider"].activer()
+        map_boutons["bouton_carte_valider"].montrer()
+        map_boutons["bouton_carte_annuler"].activer()
+        map_boutons["bouton_carte_annuler"].montrer()
 
 
 
