@@ -79,7 +79,7 @@ class Zones:
 
             # Parcourir le tableau des probabilités et accumuler les probabilités
             for i in range(taille_matrice):
-                somme += self.matrice.proba[nz][i]
+                somme += self.matrice.lecture_probas(nz, i)
                 if somme >= x:
                     prochaine_case = i
                     break
