@@ -193,6 +193,15 @@ class ObjetCarte(ObjetFixe):
     def action(self):
         print("Carte n° {} de {} sélectionnée".format(self.info[0], self.info[1]))
 
+class ObjetPersonnage(ObjetFixe):
+
+    def __init__(self, x, y, longueur, image_path, info):
+        super().__init__(x, y, longueur, image_path)
+        self.info = info
+
+    def action(self):
+        print("Personnage n° {} de {} sélectionné".format(self.info[0], self.info[1]))
+
 
 #================================================================================================
 
@@ -380,13 +389,16 @@ def info_joueuse_hover_afficher(joueuse: Joueuse):
     fenetre.blit(texte, (x, y + 60))
 
 
-def info_zones(zones: Zones, map_bouton: Bouton):
+def info_zones(zones: Zones, map_bouton: Bouton, map_objets: dict):
     """
     Affiche les informations des zones et désaffiche les zones
     """
     for bouton in map_bouton.values():
-        if  isinstance(bouton, BoutonZone):
+        if isinstance(bouton, BoutonZone):
             bouton.cacher()
+    for objet in map_objets.values():
+        if isinstance(objet, ObjetPersonnage):
+            objet.cacher()
     taille = zones.getMatrice().getTailleMatrice()
     x, y = (130, 30)
     font = pygame.font.SysFont("Source Sans Pro", 60)

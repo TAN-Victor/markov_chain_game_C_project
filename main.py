@@ -97,8 +97,8 @@ def main():
         for i in range(nb_zones):
             for nb in range(0, 3):
                 for j in range(liste_joueuses[nb].taille):
-                    if liste_joueuses[nb].getMembres()[j].zone_courante == i+1:
-                        map_objets["personnage_" + str(nb) + "_" + str(j+1)] = ObjetPersonnageListe(40 + i%3 * 420 + liste_compteur[i] * 60, 60 + i//3 * 200, 75, "interface/images/" + str(nb) + "_" + str(j+1) + ".png", [j+1, "Joueuse n°" + str(nb + 1)])
+                    if liste_joueuses[nb].getMembres()[j].zone_courante == i:
+                        map_objets["personnage_" + str(nb) + "_" + str(j+1)] = ObjetPersonnage(40 + i%3 * 420 + liste_compteur[i] * 60, 60 + i//3 * 200, 75, "interface/images/" + str(nb) + "_" + str(j+1) + ".png", [j+1, "Joueuse n°" + str(nb + 1)])
                         liste_compteur[i] += 1
 
         
@@ -140,11 +140,14 @@ def main():
                 elif Zone_joueuse2.collidepoint(event.pos):
                     info_joueuse_hover_afficher(liste_joueuses[1])
                 elif Zone_Zones.collidepoint(event.pos):
-                    info_zones(liste_zones, map_boutons)
+                    info_zones(liste_zones, map_boutons, map_objets)
                 else:
                     for bouton in map_boutons.values():
                         if isinstance(bouton, BoutonZone):
                             bouton.montrer()
+                    for objet in map_objets.values():
+                        if isinstance(objet, ObjetPersonnage):
+                            objet.montrer()
             elif event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP:
                 x, y = pygame.mouse.get_pos()
                 print(f"Clic en ({x}, {y})")
@@ -200,7 +203,10 @@ def main():
                                 prochaine_zone = (liste_zones.prochaineZone(liste_joueuses[2].getMembres()[indice_monstre].zone_personnage()))
                                 liste_joueuses[2].getMembres()[indice_monstre].deplacer(prochaine_zone)
                             liste_compteur[zone_actuelle] -= 1
-                            map_objets["personnage_2_" + str(indice_monstre + 1)].deplacer(40 + prochaine_zone%3 * 420 + liste_compteur[prochaine_zone] * 60, 60 + prochaine_zone//3 * 200)                       
+                            if prochaine_zone//3 > 2: # Zone 10 ou 11
+                                map_objets["personnage_2_" + str(indice_monstre + 1)].deplacer(250 + prochaine_zone%3 * 420 + liste_compteur[prochaine_zone] * 60, 60 + prochaine_zone//3 * 200)                       
+                            else:
+                                map_objets["personnage_2_" + str(indice_monstre + 1)].deplacer(40 + prochaine_zone%3 * 420 + liste_compteur[prochaine_zone] * 60, 60 + prochaine_zone//3 * 200)                       
                             liste_compteur[prochaine_zone] += 1
                         print("Monstre en position : ", liste_joueuses[2].getMembres()[indice_monstre].zone_personnage() + 1)
 
