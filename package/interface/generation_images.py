@@ -16,7 +16,7 @@ for chiffre in range(1, 8):
 
     for i in range(3):
         draw.text((0, 0), str(chiffre) + ")", font=font, fill=couleurs_texte[i])
-        image.save("images/" + str(chiffre) + "_" + str(i) + ".png", "PNG")
+        image.save("images/" + str(i) + "_" + str(chiffre) + ".png", "PNG")
 
 
 liste_cartes = ["Merabet", "Bannour", "Honoré", "Rioboo", "Goilard", "Bourard", "Munante", "Benezet", "Ligozat", "Mouilleron",
