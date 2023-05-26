@@ -13,11 +13,7 @@ class Zones:
     def __init__(self, nb_zones):
         prob = 1 / nb_zones #probabilité de chaque case
         self.tab_zones = [Zone(i, 0) for i in range(nb_zones)] #tableau de zones
-        tmp = MatriceProbas(nb_zones) #matrice de probabilités
-        for i in range(nb_zones):
-            for j in range(nb_zones):
-                tmp.modifier_proba(i, j, prob) #modification de la probabilité de chaque case
-        self.matrice = tmp
+        self.matrice = MatriceProbas(nb_zones) #matrice de probabilités
 
     def modifierZone(self, n1, n2, proba, action):
         if action == 1:
