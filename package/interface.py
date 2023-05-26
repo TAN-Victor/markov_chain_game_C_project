@@ -400,19 +400,6 @@ def info_zones(zones: Zones, map_bouton: Bouton):
             fenetre.blit(texte, (x + i*100, y + (j+1)*60))
 
 
-def position(joueuse: Joueuse, zones: Zones, map_objets: dict):
-    """
-    Affiche la position des personnages de la joueuse
-    """
-    font = pygame.font.SysFont("Source Sans Pro", 24)
-    nb_zones = zones.getMatrice().getTailleMatrice()
-    for i in range(nb_zones):
-        compteur = 0
-        for j in range(joueuse.taille):
-            if joueuse.getMembres()[j].zone_courante == i:
-                map_objets["personnage_" + str(joueuse.getId()) + "_" + str(j+1)] = ObjetPersonnageListe(40 + i%3 * 420 + compteur * 20, 40 + i//3 * 200, 75, "interface/images/" + str(j+1) + "_" + str(i) + ".png", [j+1, "Joueuse n°" + str(i+1)])
-                compteur += 1
-
 
 ##==============================================================================================
 # Actions

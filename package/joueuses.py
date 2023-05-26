@@ -5,13 +5,13 @@ class ListePNJ:
     def __init__(self, id):
         self.id = id #permet d'idendifier la joueuse: 0 si c'est le monstre, 1 si c'est la joueuse 1, 2 si c'est la joueuse 2
         if id == 1:
-            self.liste_membres = [Personnage(id,11,random.randint(2,3)), Personnage(id,12,random.randint(2,3)), Personnage(id,13,random.randint(2,3)), Personnage(id,14,random.randint(2,3)), Personnage(id,15,random.randint(2,3))]
+            self.liste_membres = [Personnage(id,11,random.randint(1,2)), Personnage(id,12,random.randint(1,2)), Personnage(id,13,random.randint(1,2)), Personnage(id,14,random.randint(1,2)), Personnage(id,15,random.randint(1,2))]
             self.taille = 5 #nombre de membres dans la liste de membres (doit être toujours inférieur à 7)
         elif id == 2:
             self.taille = 5 #nombre de membres dans la liste de membres (doit être toujours inférieur à 7)
-            self.liste_membres = [Personnage(id,21,random.randint(4,5)), Personnage(id,22,random.randint(4,5)), Personnage(id,23,random.randint(4,5)), Personnage(id,24,random.randint(4,5)), Personnage(id,25,random.randint(4,5))] 
+            self.liste_membres = [Personnage(id,21,random.randint(3,4)), Personnage(id,22,random.randint(3,4)), Personnage(id,23,random.randint(3,4)), Personnage(id,24,random.randint(3,4)), Personnage(id,25,random.randint(3,4))] 
         elif id == 0:
-            self.liste_membres = [Personnage(id,11,1)]
+            self.liste_membres = [Personnage(id,11,0)]
             self.taille = 1 #nombre de membres dans la liste de membres (doit être toujours inférieur à 7)
         
         self.tours_restants_jouer = 0 #tours restants pendant lesquels la joueuse / le monstre peut faire des déplacements (nombres de tours d'affilés)

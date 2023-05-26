@@ -36,6 +36,7 @@ def main():
     message_generique(1, None, None, None)
 
     liste_zones = Zones(10)
+    liste_compteur = [0]*10
     message_generique(2, None, None, None)
 
 
@@ -94,11 +95,11 @@ def main():
 
         nb_zones = liste_zones.getMatrice().getTailleMatrice()
         for i in range(nb_zones):
-            compteur = 0
-            for j in range(joueuse_1.taille):
-                if joueuse_1.getMembres()[j].zone_courante == i+1:
-                    map_objets["personnage_" + str(joueuse_1.getId()) + "_" + str(j+1)] = ObjetPersonnageListe(40 + i%3 * 420 + compteur * 60, 60 + i//3 * 200, 75, "interface/images/" + str(joueuse_1.getId()-1) + "_" + str(j+1) + ".png", [j+1, "Joueuse n°" + str(i+1)])
-                    compteur += 1
+            for nb in range(0, 3):
+                for j in range(liste_joueuses[nb].taille):
+                    if liste_joueuses[nb].getMembres()[j].zone_courante == i+1:
+                        map_objets["personnage_" + str(nb) + "_" + str(j+1)] = ObjetPersonnageListe(40 + i%3 * 420 + liste_compteur[i] * 60, 60 + i//3 * 200, 75, "interface/images/" + str(nb) + "_" + str(j+1) + ".png", [j+1, "Joueuse n°" + str(nb + 1)])
+                        liste_compteur[i] += 1
 
         
 
@@ -190,14 +191,22 @@ def main():
                     
                 if etat == 6: #Déplacements
                     print("Déplacements")
-                    for j in range (0, liste_joueuses[i].getTaille()):
-                        print("Personnage {} en zone {}".format(j, liste_joueuses[i].getMembres()[j].zone_personnage()))
-                    for indice_monstre in range (0, liste_joueuses[2].getTaille()):
-                        if (liste_joueuses[2].getMembres()[indice_monstre].peut_se_deplacer and liste_joueuses[2].getMembres()[indice_monstre].statut == 1):
-                            for nombre_de_deplacement in range (0, liste_joueuses[2].getMembres()[indice_monstre].nb_de_pas):
-                                prochaine_zone = liste_zones.trouveZone(liste_zones.prochaineZone(liste_joueuses[2].getMembres()[indice_monstre].zone_personnage()))
-                                liste_joueuses[2].getMembres()[indice_monstre].deplacer(prochaine_zone)
 
+                    for indice_monstre in range (0, liste_joueuses[2].getTaille()):
+                        print("Monstre en position : ", liste_joueuses[2].getMembres()[indice_monstre].zone_personnage() + 1)
+                        if (liste_joueuses[2].getMembres()[indice_monstre].peut_se_deplacer and liste_joueuses[2].getMembres()[indice_monstre].statut == 1):
+                            zone_actuelle = liste_joueuses[2].getMembres()[indice_monstre].zone_personnage()
+                            for nombre_de_deplacement in range (0, liste_joueuses[2].getMembres()[indice_monstre].nb_de_pas):
+                                prochaine_zone = (liste_zones.prochaineZone(liste_joueuses[2].getMembres()[indice_monstre].zone_personnage()))
+                                liste_joueuses[2].getMembres()[indice_monstre].deplacer(prochaine_zone)
+                            liste_compteur[zone_actuelle] -= 1
+                            map_objets["personnage_2_" + str(indice_monstre + 1)].deplacer(40 + prochaine_zone%3 * 420 + liste_compteur[prochaine_zone] * 60, 60 + prochaine_zone//3 * 200)                       
+                            liste_compteur[prochaine_zone] += 1
+                        print("Monstre en position : ", liste_joueuses[2].getMembres()[indice_monstre].zone_personnage() + 1)
+
+                    etat = 0
+            
+            
             for boutons in map_boutons.values():
                 boutons.afficher(fenetre)
             for objets in map_objets.values():
