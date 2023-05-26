@@ -24,7 +24,7 @@ def main():
     ##================================================================================================
 
     liste_cartes_globale = [Merabet(), Bannour(), Honore(), Rioboo(), Goilard(), Bourard(), Munante(), Benezet(), Ligozat(), Mouilleron(),
-                                      Demebele_Cabot(),  Pacave(), Huet(), Matias(), Salhab(), Pulido_Nino(), Watel(), Szanfranski(), Forest(), Prevel()]
+                                      Dembele_Cabot(),  Pacave(), Huet(), Matias(), Salhab(), Pulido_Nino(), Watel(), Szanfranski(), Forest(), Prevel()]
 
 
     joueuse_1 = Joueuse(1, liste_cartes_globale)
