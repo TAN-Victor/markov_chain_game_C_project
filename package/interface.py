@@ -88,14 +88,17 @@ def console():
 
 class ObjetFixe:
 
-    def __init__(self, x, y, longueur, image_path, info: list):
+    def __init__(self, x, y, longueur, image_path):
         self.x = x
         self.y = y
         self.longueur = longueur
-        self.info = info
-        self.image = pygame.image.load(image_path)
-        self.image = self.redimensionner(longueur)
-        self.rect = pygame.Rect(x-5, y+5, self.image.get_width(), self.image.get_height())
+        if image_path != None:
+            self.image = pygame.image.load(image_path)
+            self.image = self.redimensionner(longueur)
+            self.rect = pygame.Rect(x-5, y+5, self.image.get_width(), self.image.get_height())
+        else:
+            self.image = None
+            self.rect = pygame.Rect(x, y, longueur, longueur/3)
         self.visible = True
         self.selected = False
         self.actif = True
@@ -106,7 +109,10 @@ class ObjetFixe:
 
     def afficher(self, fenetre):
         if self.visible:
-            fenetre.blit(self.image, (self.x, self.y))
+            if self.image == None:
+                pygame.draw.rect(fenetre, (215, 0, 0), self.rect, 2)
+            else:
+                fenetre.blit(self.image, (self.x, self.y))
             if self.selected:
                 pygame.draw.rect(fenetre, (255, 255, 153), self.rect, 3)
             
@@ -141,8 +147,15 @@ class ObjetFixe:
 
     def desactiver(self):
         self.actif = False
+    
+    def action(self):
+        pass
 
 class ObjetPersonnageListe(ObjetFixe):
+
+    def __init__(self, x, y, longueur, image_path, info):
+        super().__init__(x, y, longueur, image_path)
+        self.info = info
 
     def action(self):
         print("Personnage n° {} de {} sélectionné".format(self.info[0], self.info[1]))
@@ -150,30 +163,27 @@ class ObjetPersonnageListe(ObjetFixe):
 
 class ObjetStatut(ObjetFixe):
 
+    def __init__(self, x, y, longueur, image_path, info):
+        super().__init__(x, y, longueur, image_path)
+        self.info = info
+
     def action(self):
         print("Statut du personnage n° {} de {} sélectionné: {}".format(self.info[0], self.info[1], self.info[2]))
 
 
+class ObjetCarte(ObjetFixe):
 
-map_objets = {}
+    def __init__(self, x, y, longueur, image_path, info):
+        super().__init__(x, y, longueur, image_path)
+        self.info = info
 
+    def action(self):
+        print("Carte n° {} de {} sélectionnée".format(self.info[0], self.info[1]))
 
-def initialiser_objets():
-    for i in range (0, 3):
-        for j in range(0, 6):
-            map_objets["personnage_" + str(i+1) + "_" + str(j+1) + "liste"] = (ObjetPersonnageListe(longueur*(70 + i * 10)/100 + 25, 65 + j * 50, 50, "interface/images/" + str(j+1) + "_" + str(i) + ".png", [j+1, "Joueuse n°" + str(i+1)]))
-            map_objets["statut_" + str(i+1) + "_" + str(j+1) + "liste"] = (ObjetStatut(longueur*(70 + i * 10)/100 + 85, 75 + j * 50, 100, "interface/images/" + "En vie" + "_" + str(i) + ".png", [j+1, "Joueuse n°" + str(i+1), "En vie"]))
-            if (j == 5 or (i == 2 and j != 0)):
-                map_objets["personnage_" + str(i+1) + "_" + str(j+1) + "liste"].cacher()
-                map_objets["statut_" + str(i+1) + "_" + str(j+1) + "liste"].cacher()
-
-initialiser_objets()
 
 #================================================================================================
 
 class Bouton:
-
-    state = 0 # 0 = Menu principal, 1 = Utiliser du Capital, 2 = Utiliser une carte, 3 = ...
 
     def __init__(self, position, dimensions, texte, couleur, couleur_texte, alignement="centre", radius=1, visible=False):
         self.rect = pygame.Rect(position[0], position[1], dimensions[0], dimensions[1])
@@ -242,28 +252,28 @@ class BoutonValeur(Bouton):
             self.changer_valeur(1)
         if (self.texte == "-" and int(self.valeur) > 0):
             self.changer_valeur(-1)
+        if (self.texte == "Valider"):
+            self.valider()
+        if (self.texte == "Annuler"):
+            self.annuler()
 
     @classmethod
     def changer_valeur(cls, incr):
         cls.valeur = str(int(cls.valeur) + incr)
         print(cls.valeur)
-        
-class BoutonAnnuler(Bouton):
 
-    def action(self, joueuse: Joueuse):
-        print("Annulation")
-        self.actif = False
-
-class BoutonValider(Bouton):
-
-    def action(self, joueuse: Joueuse):
-        print("Validation")
-        print(self.__class__.state)
-        self.actif = False
-        if self.__class__.state == 1:
-            self.__class__.state = 0
-            print("Utilisation de capital")
-            print(self.__class__.state)
+    @classmethod
+    def valider(cls):
+        tmp = int(cls.valeur)
+        cls.valeur = "0"
+        print("Valeur validée : {}".format(tmp))
+        return tmp
+    
+    @classmethod
+    def annuler(cls):
+        cls.valeur = "0"
+        return 0
+    
 
 class BoutonChoix(Bouton):
 
@@ -276,14 +286,12 @@ class BoutonChoix(Bouton):
             print("Choix d'un monstre")
         elif self.texte == "Utiliser carte":
             print("Choix d'une carte")
-            self.__class__.state = 2
         elif self.texte == "Choix d'une zone":
             print("Choix d'une zone")
         elif self.texte == "Choix d'une autre zone":
             print("Choix d'une autre zone")
         elif self.texte == "Utiliser capital":
             print("Choix de capital")
-            self.__class__.state = 1
             demander_capital(joueuse)
         elif self.texte == "Ne rien faire":
             print("Ne rien faire")
@@ -294,15 +302,21 @@ class BoutonZone(Bouton):
         print("Choix de la zone {}".format(self.texte))
 
 
+#================================================================================================
+
+
 map_boutons = {}
-map_boutons["bouton_annuler"] = BoutonAnnuler((longueur*85/100 + 30, largeur*92/100 + 20), (longueur*15/100 - 50, largeur*8/100 - 30), "Annuler", (227, 50, 50), (0, 0, 0))
-map_boutons["bouton_valider"] = BoutonValider((longueur*70/100 + 30, largeur*92/100 + 20), (longueur*15/100 - 50, largeur*8/100 - 30), "Valider", (50, 227, 50), (0, 0, 0))
+
 map_boutons["bouton_choix_capital"] = BoutonChoix((longueur*70/100 + 30, largeur*83/100 + 40), (longueur*10/100 - 20, largeur*10/100 - 10), "Utiliser capital", (140, 215, 140), (0, 0, 0))
 map_boutons["bouton_choix_carte"] = BoutonChoix((longueur*80/100 + 30, largeur*83/100 + 40), (longueur*10/100 - 20, largeur*10/100 - 10), "Utiliser carte", (140, 215, 140), (0, 0, 0))
 map_boutons["bouton_choix_rien"] = BoutonChoix((longueur*90/100 + 30, largeur*83/100 + 40), (longueur*8/100 - 10, largeur*10/100 - 10), "Ne rien faire", (227, 140, 140), (0, 0, 0))
+
 map_boutons["bouton_plus"] = BoutonValeur((longueur*90/100 + 30, largeur*82/100 + 40), (longueur*8/100 - 20, largeur*6/100 - 10), "+", (140, 140, 215), (0, 0, 0))
 map_boutons["bouton_moins"] = BoutonValeur((longueur*72/100 + 30, largeur*82/100 + 40), (longueur*8/100 - 20, largeur*6/100 - 10), "-", (140, 140, 215), (0, 0, 0))
 map_boutons["bouton_valeur"] = BoutonValeur((longueur*80/100 + 30, largeur*82/100 + 40), (longueur*10/100 - 20, largeur*6/100 - 10), BoutonValeur.valeur, (140, 140, 215), (0, 0, 0))
+map_boutons["bouton_valeur_valider"] = BoutonValeur((longueur*70/100 + 30, largeur*92/100 + 20), (longueur*15/100 - 50, largeur*8/100 - 30), "Valider", (50, 227, 50), (0, 0, 0))
+map_boutons["bouton_valeur_annuler"] = BoutonValeur((longueur*85/100 + 30, largeur*92/100 + 20), (longueur*15/100 - 50, largeur*8/100 - 30), "Annuler", (227, 50, 50), (0, 0, 0))
+
 
 couleurs_zones = [(230, 138, 143), (180, 205, 147), (163, 181, 204), (237, 210, 136), (190, 149, 170), (177, 214, 206), (217, 183, 139), (199, 203, 178), (210, 178, 200), (174, 207, 169), (216, 170, 185)]
 for i in range(0, 3):
@@ -351,14 +365,23 @@ def demander_capital(joueuse: Joueuse):
     map_boutons["bouton_moins"].montrer()
     map_boutons["bouton_valeur"].activer()
     map_boutons["bouton_valeur"].montrer()
-    map_boutons["bouton_valider"].activer()
-    map_boutons["bouton_valider"].montrer()
-    map_boutons["bouton_annuler"].activer()
-    map_boutons["bouton_annuler"].montrer()
+    map_boutons["bouton_valeur_valider"].activer()
+    map_boutons["bouton_valeur_valider"].montrer()
+    map_boutons["bouton_valeur_annuler"].activer()
+    map_boutons["bouton_valeur_annuler"].montrer()
 
 
+def demander_carte(joueuse: Joueuse):
+    """
+    Doit être appelé par le bouton "Utiliser carte"	
+    
+    Désaffiche et désactive les boutons d'action principaux #see demander_action()
+    Permet de sélectionner une carte d'une joueuse
+    
+    
+    """
 
-demander_action()
+
 
 
 

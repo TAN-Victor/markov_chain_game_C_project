@@ -167,9 +167,9 @@ class Mouilleron(Carte):
 
 
 
-class Demebele_Cabot(Carte):
+class Dembele_Cabot(Carte):
     def __init__(self):
-        super().__init__("Demebele_Cabot", "Sacrifiez un membre de votre école de votre choix. Vous avez 15 points de capital en plus à votre prochain tour.")
+        super().__init__("Dembele-Cabot", "Sacrifiez un membre de votre école de votre choix. Vous avez 15 points de capital en plus à votre prochain tour.")
 
     def use(self, joueuse):
         num_membre = input("Choisissez le membre à sacrifier: ")
@@ -228,7 +228,7 @@ class Salhab(Carte):
 
 class Pulido_Nino(Carte):
     def __init__(self):
-        super().__init__("Pulido_Nino", "Mettez à 0 les probabilités permettant de sortir de la zone de chaque monstre et mettez à 1 la probabilité de rester dans la zone de chaque monstre.")
+        super().__init__("Pulido-Nino", "Mettez à 0 les probabilités permettant de sortir de la zone de chaque monstre et mettez à 1 la probabilité de rester dans la zone de chaque monstre.")
 
     def use(self, zones, liste_des_monstres):
         matrice = zones.getMatrice()

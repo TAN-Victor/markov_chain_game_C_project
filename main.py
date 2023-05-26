@@ -38,7 +38,36 @@ def main():
     message_generique(2, None, None, None)
 
 
-    i = -1 # // Va valoir 0 si c'est le tour de la joueuse 1, 1 si c'est le tour de la joueuse 2
+    i = 0 # // Va valoir 0 si c'est le tour de la joueuse 1, 1 si c'est le tour de la joueuse 2
+
+
+    ##================================================================================================
+    # Initialisation de la fenêtre
+    ##================================================================================================
+
+    map_objets = {}
+
+
+    def initialiser_objets():
+        for i in range (0, 3):
+            for j in range(0, 6):
+                map_objets["personnage_" + str(i+1) + "_" + str(j+1) + "liste"] = (ObjetPersonnageListe(longueur*(70 + i * 10)/100 + 25, 65 + j * 50, 50, "interface/images/" + str(j+1) + "_" + str(i) + ".png", [j+1, "Joueuse n°" + str(i+1)]))
+                map_objets["statut_" + str(i+1) + "_" + str(j+1) + "liste"] = (ObjetStatut(longueur*(70 + i * 10)/100 + 85, 75 + j * 50, 100, "interface/images/" + "En vie" + "_" + str(i) + ".png", [j+1, "Joueuse n°" + str(i+1), "En vie"]))
+                if (j == 5 or (i == 2 and j != 0)):
+                    map_objets["personnage_" + str(i+1) + "_" + str(j+1) + "liste"].cacher()
+                    map_objets["statut_" + str(i+1) + "_" + str(j+1) + "liste"].cacher()
+        map_objets["tour"] = (ObjetFixe(longueur*(70)/100 + 25, 10, longueur*10/100 -20, None))
+        
+        for i in range(0, 2):
+            for j in range(0, 5):
+                map_objets["carte_" + str(i+1) + "_" + str(j+1)] = ObjetCarte(longueur*(70 + i * 10)/100 + 25, 260 + j * 50, 100, "interface/images/" + liste_joueuses[i].liste_cartes[j].getNom() + "_" + str(i) + ".png", [j+1, "Joueuse n°" + str(i+1)])
+        
+        
+        demander_action()
+
+    initialiser_objets()
+
+
 
 
     ##==============================================================================================
@@ -76,6 +105,11 @@ def main():
                 boutons.afficher(fenetre)
 
 
+        if liste_joueuses[0].getTour() == 1:
+            i = 0
+        else:
+            i = 1
+        
 
 
 
