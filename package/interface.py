@@ -75,13 +75,21 @@ def actions():
 def console():
     """
     Dessine le fond de l'UI de la console
-    Taille: 70% de la longueur et 20% de la largeur de l'écran (en 1080p par défaut)
+    Taille: 50% de la longueur et 20% de la largeur de l'écran (en 1080p par défaut)
     Couleur de fond: (200, 200, 200) Gris clair
     """
-    pygame.draw.rect(fenetre, couleur_fond, (10, largeur*80/100 + 20, longueur*70/100, largeur*20/100 - 30))
+    pygame.draw.rect(fenetre, couleur_fond, (10, largeur*80/100 + 20, longueur*50/100, largeur*20/100 - 30))
 
-
-
+# Probalités
+def probabilites():
+    """
+    Dessine le fond de l'UI des probabilités
+    Taille: 20% de la longueur et 20% de la largeur de l'écran (en 1080p par défaut)
+    Couleur de fond: (200, 200, 200) Gris clair
+    """
+    pygame.draw.rect(fenetre, couleur_fond, (longueur*50/100 + 20, largeur*80/100 + 20, longueur*20/100 -10, largeur*20/100 - 30))
+    texte = pygame.font.SysFont("Source Sans Pro", 30).render("Voir les probabilités", True, (0, 0, 0))
+    fenetre.blit(texte, (longueur*54/100 + 30, largeur*86/100 + 30))
 ##==============================================================================================
 # UI Dynamique
 ##==============================================================================================
@@ -239,7 +247,7 @@ class Bouton:
                 self.clicked = False
                 self.position = (self.position[0] +5, self.position[1] -5)
                 self.rect = pygame.Rect(self.position[0], self.position[1], self.dimensions[0], self.dimensions[1])
-                self.action(map_boutons, map_objets, joueuse)
+                return self.action(map_boutons, map_objets, joueuse)
 
     def activer(self):
         self.actif = True
@@ -258,25 +266,29 @@ class BoutonValeur(Bouton):
         if (self.texte == "-" and int(self.valeur) > 0):
             self.changer_valeur(-1)
         if (self.texte == "Valider"):
-            self.valider()
+            return (self.valider(map_boutons, map_objets, joueuse))
         if (self.texte == "Annuler"):
-            self.annuler()
+            self.annuler(map_boutons, map_objets, joueuse)
 
     @classmethod
     def changer_valeur(cls, incr):
         cls.valeur = str(int(cls.valeur) + incr)
-        print(cls.valeur)
 
     @classmethod
-    def valider(cls):
+    def valider(cls, map_boutons, map_objets, joueuse: Joueuse):
         tmp = int(cls.valeur)
         cls.valeur = "0"
         print("Valeur validée : {}".format(tmp))
-        return tmp
+        if tmp > 0:
+            return tmp
+        else:
+            demander_action(map_boutons, map_objets, joueuse)
+            return 0
     
     @classmethod
-    def annuler(cls):
+    def annuler(cls, map_boutons, map_objets, joueuse: Joueuse):
         cls.valeur = "0"
+        demander_action(map_boutons, map_objets, joueuse)
         return 0
     
 
@@ -323,6 +335,83 @@ class BoutonAnnulerCarte(Bouton):
                 print("Carte {} annulée".format(objet.nom))
 
 #================================================================================================
+# Informations du jeu
+#================================================================================================
+
+def info_joueuse(joueuse: Joueuse):
+    """
+    Affiche les informations principales de la joueuse
+    """
+    x, y = (longueur*(70 + (joueuse.getId() - 1) * 10)/100 + 20, 75 + 12 * 50)
+    font = pygame.font.SysFont("Source Sans Pro", 24)
+    texte = font.render("Capital: {}".format(joueuse.capital), True, (0, 0, 0))
+    fenetre.blit(texte, (x, y))
+    texte = font.render("Nombre personnages: {}".format(joueuse.taille), True, (0, 0, 0))
+    fenetre.blit(texte, (x, y + 20))
+    texte = font.render("Tours restants à jouer: {}".format(joueuse.getToursRestantsJouer()), True, (0, 0, 0))
+    fenetre.blit(texte, (x, y + 40))
+    texte = font.render("Proba par capital: {}".format(joueuse.getProbaParCapital()), True, (0, 0, 0))
+    fenetre.blit(texte, (x, y + 60))
+    invincibilite = joueuse.getInvincibilite()
+    if invincibilite:
+        texte = font.render("Invincibilité: Oui", True, (0, 0, 0))
+    else:
+        texte = font.render("Invincibilité: Non", True, (0, 0, 0))
+    fenetre.blit(texte, (x, y + 80))
+    texte = font.render("    BONUS", True, (0, 0, 0))
+    fenetre.blit(texte, (x, y + 140))    
+
+def info_joueuse_hover_afficher(joueuse: Joueuse):
+    """
+    Affiche les informations bonus de la joueuse
+    """
+    x, y = (longueur*(60 + (joueuse.getId() - 1) * 10)/100 + 20, 75 + 13 * 50)
+    pygame.draw.rect(fenetre, couleur_fond, (x-20, y-20, 500, 200))
+    pygame.draw.rect(fenetre, (0, 0, 0), (x-20, y-20, 500, 200), 2)
+    
+    font = pygame.font.SysFont("Source Sans Pro", 24)
+    texte = font.render("Tours restants Bonus Capital: {} tour(s)".format(joueuse.getTourRestantsBonusCapital()), True, (0, 0, 0))
+    fenetre.blit(texte, (x, y))
+    texte = font.render("Tours restants Bonus Invincibilité: {} tour(s)".format(joueuse.getToursRestantsInvincibilite()), True, (0, 0, 0))
+    fenetre.blit(texte, (x, y + 20))
+    texte = font.render("Tours restants Bonus Probabilité par Capital: {} tour(s)".format(joueuse.getToursRestantsBonusProbaParCapital()), True, (0, 0, 0))
+    fenetre.blit(texte, (x, y + 40))
+    texte = font.render("Bonus temporaire de capital: {}".format(joueuse.getBonusTemporaire()), True, (0, 0, 0))
+    fenetre.blit(texte, (x, y + 60))
+
+
+def info_zones(zones: Zones, map_bouton: Bouton):
+    """
+    Affiche les informations des zones et désaffiche les zones
+    """
+    for bouton in map_bouton.values():
+        if  isinstance(bouton, BoutonZone):
+            bouton.cacher()
+    taille = zones.getMatrice().getTailleMatrice()
+    x, y = (130, 30)
+    font = pygame.font.SysFont("Source Sans Pro", 60)
+    for i in range(taille):
+        texte = font.render(str(i+1), True, (0, 0, 0))
+        fenetre.blit(texte, (x + i*100, y))
+        texte = font.render(str(i+1), True, (0, 0, 0))
+        fenetre.blit(texte, (x - 100, y + (i+1)*60))
+        for j in range(taille):
+            texte = font.render(str(zones.getMatrice().lecture_probas(i, j)), True, (0, 0, 0))
+            fenetre.blit(texte, (x + i*100, y + (j+1)*60))
+
+
+def position(joueuse: Joueuse, zones: Zones):
+    """
+    Affiche la position des personnages de la joueuse
+    """
+    font = pygame.font.SysFont("Source Sans Pro", 24)
+    nb_zones = zones.getMatrice().getTailleMatrice()
+    for i in range(nb_zones):
+        compteur = 0
+        for j in range(joueuse.taille):
+            if joueuse.getMembres[j].getZone() == i:
+                texte = font.render(str(joueuse.getMembres[j].id), True, (0, 0, 0))
+                compteur += 1
 
 
 ##==============================================================================================
@@ -334,6 +423,11 @@ def demander_action(map_boutons: dict, map_objets: dict, joueuse: Joueuse):
     Affiche les boutons d'action principaux: Utiliser du capital, Utiliser une carte, Ne rien faire
     Les rend cliquables (actifs)
     """
+    for bouton in map_boutons.values():
+        if not isinstance(bouton, BoutonZone):
+            bouton.desactiver()
+            bouton.cacher()
+
     map_boutons["bouton_choix_rien"].activer()
     map_boutons["bouton_choix_rien"].montrer()
     map_boutons["bouton_choix_capital"].activer()

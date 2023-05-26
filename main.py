@@ -41,7 +41,7 @@ def main():
 
     i = 0 # // Va valoir 0 si c'est le tour de la joueuse 1, 1 si c'est le tour de la joueuse 2
     etat = 0 # // Va valoir 0 si on est dans la sélection principale, 1 si on choisi le capital, 2 si on choisit une carte, 3 si on choisit une zone, 4 si on est dans un effet de
-                # carte, 5 si on est dans un effet de zone, 6 si on est en déplacement
+                # carte, 5 si on est dans un effet de zone, 6 si on est en déplacement, 7 si on change les proba
 
     ##================================================================================================
     # Initialisation de la fenêtre
@@ -49,7 +49,9 @@ def main():
 
     map_objets = {}
     map_boutons = {}
-
+    Zone_joueuse1 = pygame.Rect((longueur*70/100 + 30, largeur*70/100 + 40), (longueur*10/100 - 20, largeur*5/100 - 10))
+    Zone_joueuse2 = pygame.Rect((longueur*80/100 + 30, largeur*70/100 + 40), (longueur*10/100 - 20, largeur*5/100 - 10))
+    Zone_Zones = pygame.Rect((longueur*50/100 + 30, largeur*80/100 + 40), (longueur*20/100 - 20, largeur*20/100 - 10))
 
     def initialiser_objets():
         for i in range (0, 3):
@@ -87,14 +89,17 @@ def main():
             map_boutons["zone_" + str(i+10)] = BoutonZone((250 + i * 420, 640), (400, 180), "Zone n°" + str(i+10), couleurs_zones[i+9], (0, 0, 0), "haut_centre", 0, True)
 
 
-
+        
         demander_action(map_boutons, map_objets, liste_joueuses[0])
 
 
 
+        
+
 
 
     initialiser_objets()
+ 
 
 
 
@@ -111,6 +116,11 @@ def main():
             actions()
             zones_jeu()
             console()
+            probabilites()
+
+            info_joueuse(liste_joueuses[0])
+            info_joueuse(liste_joueuses[1])
+            
 
             if (liste_joueuses[0].getTour() == True):
                 i = 0
@@ -120,18 +130,70 @@ def main():
 
             if event.type == pygame.QUIT:
                 continuer = False
+            elif event.type == pygame.MOUSEMOTION:
+                if Zone_joueuse1.collidepoint(event.pos):
+                    info_joueuse_hover_afficher(liste_joueuses[0])
+                elif Zone_joueuse2.collidepoint(event.pos):
+                    info_joueuse_hover_afficher(liste_joueuses[1])
+                elif Zone_Zones.collidepoint(event.pos):
+                    info_zones(liste_zones, map_boutons)
+                else:
+                    for bouton in map_boutons.values():
+                        if isinstance(bouton, BoutonZone):
+                            bouton.montrer()
             elif event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP:
                 x, y = pygame.mouse.get_pos()
                 print(f"Clic en ({x}, {y})")
-                for boutons in map_boutons.values():
-                    boutons.clic(event, map_boutons, map_objets, liste_joueuses[i])
-                    boutons.afficher(fenetre)
-                for objets in map_objets.values():
-                    objets.clic(event)
-                    objets.afficher(fenetre)
+
+                if etat == 0: # Menu principal
+                    demander_action(map_boutons, map_objets, liste_joueuses[0])
+                    if map_boutons["bouton_choix_capital"].rect.collidepoint(event.pos):
+                        map_boutons["bouton_choix_capital"].clic(event, map_boutons, map_objets, liste_joueuses[i])
+                        map_boutons["bouton_choix_capital"].afficher(fenetre)
+                        if event.type == pygame.MOUSEBUTTONUP:    
+                            etat = 1
+                    elif map_boutons["bouton_choix_carte"].rect.collidepoint(event.pos):
+                        map_boutons["bouton_choix_carte"].clic(event, map_boutons, map_objets, liste_joueuses[i])
+                        map_boutons["bouton_choix_carte"].afficher(fenetre)
+                        etat = 2
+                    elif map_boutons["bouton_choix_rien"].rect.collidepoint(event.pos):
+                        map_boutons["bouton_choix_rien"].clic(event, map_boutons, map_objets, liste_joueuses[i])
+                        map_boutons["bouton_choix_rien"].afficher(fenetre)
+                        if event.type == pygame.MOUSEBUTTONUP:    
+                            etat = 6
+
+                if etat == 1: # Choix du capital
+                    if map_boutons["bouton_moins"].rect.collidepoint(event.pos):
+                        map_boutons["bouton_moins"].clic(event, map_boutons, map_objets, liste_joueuses[i])
+                        map_boutons["bouton_moins"].afficher(fenetre)
+                        map_boutons["bouton_valeur"].afficher(fenetre)
+                    elif map_boutons["bouton_plus"].rect.collidepoint(event.pos):
+                        map_boutons["bouton_plus"].clic(event, map_boutons, map_objets, liste_joueuses[i])
+                        map_boutons["bouton_plus"].afficher(fenetre)
+                        map_boutons["bouton_valeur"].afficher(fenetre)
+                    elif map_boutons["bouton_valeur_valider"].rect.collidepoint(event.pos):
+                        capital_utilise = map_boutons["bouton_valeur_valider"].clic(event, map_boutons, map_objets, liste_joueuses[i])
+                        map_boutons["bouton_valeur_valider"].afficher(fenetre)
+                        if event.type == pygame.MOUSEBUTTONUP:  
+                            if capital_utilise > 0:
+                                etat = 7
+                            else:
+                                etat = 0    
+                    elif map_boutons["bouton_valeur_annuler"].rect.collidepoint(event.pos):
+                        map_boutons["bouton_valeur_annuler"].clic(event, map_boutons, map_objets, liste_joueuses[i])
+                        map_boutons["bouton_valeur_annuler"].afficher(fenetre)
+                        if event.type == pygame.MOUSEBUTTONUP:    
+                            etat = 0
                     
-
-
+                if etat == 6: #Déplacements
+                    print("Déplacements")
+                    for j in range (0, liste_joueuses[i].getTaille()):
+                        print("Personnage {} en zone {}".format(j, liste_joueuses[i].getMembres()[j].zone_personnage()))
+                    for indice_monstre in range (0, liste_joueuses[2]):
+                        if (liste_joueuses[2].getMembres()[indice_monstre].peut_se_deplacer and liste_joueuses[2].getMembres()[indice_monstre].statut == 1):
+                            for nombre_de_deplacement in range (0, liste_joueuses[2].getMembres()[indice_monstre].nb_de_pas):
+                                prochaine_zone = liste_zones.trouveZone(liste_zones.prochaineZone(liste_joueuses[2].getMembres()[indice_monstre].zone_personnage()))
+                                liste_joueuses[2].getMembres()[indice_monstre].deplacer(prochaine_zone)
 
             for objets in map_objets.values():
                 objets.afficher(fenetre)
