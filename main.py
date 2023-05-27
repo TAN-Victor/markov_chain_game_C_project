@@ -98,7 +98,7 @@ def main():
             for nb in range(0, 3):
                 for j in range(liste_joueuses[nb].taille):
                     if liste_joueuses[nb].getMembres()[j].zone_courante == i:
-                        map_objets["personnage_" + str(nb) + "_" + str(j+1)] = ObjetPersonnage(40 + i%3 * 420 + liste_compteur[i] * 60, 60 + i//3 * 200, 75, "interface/images/" + str(nb) + "_" + str(j+1) + ".png", [j+1, "Joueuse n°" + str(nb + 1)])
+                        map_objets["personnage_" + str(nb) + "_" + str(j+1)] = ObjetPersonnage(40 + i%3 * 420 + liste_compteur[i] * 60, 60 + i//3 * 200, 75, "interface/images/" + str(nb) + "_" + str(j+1) + ".png", [j+1, "Joueuse n°" + str(nb + 1)], i, liste_compteur[i])
                         liste_compteur[i] += 1
 
         
@@ -194,22 +194,64 @@ def main():
                     
                 if etat == 6: #Déplacements
                     print("Déplacements")
+                    print(liste_compteur)
 
                     for indice_monstre in range (0, liste_joueuses[2].getTaille()):
-                        print("Monstre en position : ", liste_joueuses[2].getMembres()[indice_monstre].zone_personnage() + 1)
                         if (liste_joueuses[2].getMembres()[indice_monstre].peut_se_deplacer and liste_joueuses[2].getMembres()[indice_monstre].statut == 1):
                             zone_actuelle = liste_joueuses[2].getMembres()[indice_monstre].zone_personnage()
                             for nombre_de_deplacement in range (0, liste_joueuses[2].getMembres()[indice_monstre].nb_de_pas):
                                 prochaine_zone = (liste_zones.prochaineZone(liste_joueuses[2].getMembres()[indice_monstre].zone_personnage()))
                                 liste_joueuses[2].getMembres()[indice_monstre].deplacer(prochaine_zone)
-                            liste_compteur[zone_actuelle] -= 1
-                            if prochaine_zone//3 > 2: # Zone 10 ou 11
-                                map_objets["personnage_2_" + str(indice_monstre + 1)].deplacer(250 + prochaine_zone%3 * 420 + liste_compteur[prochaine_zone] * 60, 60 + prochaine_zone//3 * 200)                       
-                            else:
-                                map_objets["personnage_2_" + str(indice_monstre + 1)].deplacer(40 + prochaine_zone%3 * 420 + liste_compteur[prochaine_zone] * 60, 60 + prochaine_zone//3 * 200)                       
-                            liste_compteur[prochaine_zone] += 1
-                        print("Monstre en position : ", liste_joueuses[2].getMembres()[indice_monstre].zone_personnage() + 1)
+                            if prochaine_zone != zone_actuelle:
+                                liste_compteur[zone_actuelle] -= 1
+                                position = map_objets["personnage_2_" + str(indice_monstre + 1)].position
+                                if prochaine_zone//3 > 2: # Zone 10 ou 11
+                                    map_objets["personnage_2_" + str(indice_monstre + 1)].deplacer(250 + prochaine_zone%3 * 420 + liste_compteur[prochaine_zone] * 60, 60 + prochaine_zone//3 * 200, prochaine_zone, liste_compteur[prochaine_zone])                       
+                                else:
+                                    map_objets["personnage_2_" + str(indice_monstre + 1)].deplacer(40 + prochaine_zone%3 * 420 + liste_compteur[prochaine_zone] * 60, 60 + prochaine_zone//3 * 200, prochaine_zone, liste_compteur[prochaine_zone])                       
+                                liste_compteur[prochaine_zone] += 1
+                                print("Monstre " + str(indice_monstre + 1) + " déplacé de " + str(zone_actuelle+1) + " à " + str(prochaine_zone+1))
 
+
+                                for cle, objet in map_objets.items(): # Décalage des personnages sur les zones pour éviter supeposition
+                                        if isinstance(objet, ObjetPersonnage):
+                                            if objet.zone == zone_actuelle and objet.position > position:
+                                                objet.position -= 1
+                                                map_objets[cle].deplacer(objet.x - 60, objet.y, objet.zone, objet.position)
+                                                print(cle + " décalé de " + str(objet.position + 1) + " à " + str(objet.position) + " dans la zone " + str(objet.zone+1))
+
+                    
+                    for j in range (2):
+                        nombre_personnage = liste_joueuses[j].getTaille()
+                        for k in range(nombre_personnage):
+                            if liste_joueuses[j].getMembres()[k].peut_se_deplacer and (liste_joueuses[j].getMembres()[k].statut == 1 or liste_joueuses[j].getMembres()[k].statut == 3):
+                                # Si le personnage peut se dépalcer et ( qu'il est vivant ou qu'il soit un FIPA)
+                                zone_actuelle = liste_joueuses[j].getMembres()[k].zone_personnage()
+                                for nombre_de_deplacement in range (0, liste_joueuses[j].getMembres()[k].nb_de_pas):
+                                    prochaine_zone = (liste_zones.prochaineZone(liste_joueuses[j].getMembres()[k].zone_personnage()))
+                                    liste_joueuses[j].getMembres()[k].deplacer(prochaine_zone)
+                                if prochaine_zone != zone_actuelle:
+                                    liste_compteur[zone_actuelle] -= 1
+                                    position = map_objets["personnage_" + str(j) + "_" + str(k + 1)].position
+                                    if prochaine_zone//3 > 2: # Zone 10 ou 11
+                                        map_objets["personnage_" + str(j) + "_" + str(k + 1)].deplacer(250 + prochaine_zone%3 * 420 + liste_compteur[prochaine_zone] * 60, 60 + prochaine_zone//3 * 200, prochaine_zone, liste_compteur[prochaine_zone])
+                                    else:
+                                        map_objets["personnage_" + str(j) + "_" + str(k + 1)].deplacer(40 + prochaine_zone%3 * 420 + liste_compteur[prochaine_zone] * 60, 60 + prochaine_zone//3 * 200, prochaine_zone, liste_compteur[prochaine_zone])
+                                    liste_compteur[prochaine_zone] += 1
+                                    print("Personnage " + str(j) + " " + str(k + 1) + " déplacé de " + str(zone_actuelle+1) + " à " + str(prochaine_zone+1) + " avec position " + str(liste_compteur[prochaine_zone]-1))
+
+                                    for cle, objet in map_objets.items(): # Décalage des personnages sur les zones pour éviter supeposition
+                                        if isinstance(objet, ObjetPersonnage):
+                                            if objet.zone == zone_actuelle and objet.position > position:
+                                                objet.position -= 1
+                                                map_objets[cle].deplacer(objet.x - 60, objet.y, objet.zone, objet.position)
+                                                print(cle + " décalé de " + str(objet.position + 1) + " à " + str(objet.position) + " dans la zone " + str(objet.zone+1))
+
+
+                    print("---------------------")
+                    print(liste_compteur)
+                    
+                    
                     etat = 0
             
             

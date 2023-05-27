@@ -195,13 +195,20 @@ class ObjetCarte(ObjetFixe):
 
 class ObjetPersonnage(ObjetFixe):
 
-    def __init__(self, x, y, longueur, image_path, info):
+    def __init__(self, x, y, longueur, image_path, info, zone, position):
         super().__init__(x, y, longueur, image_path)
         self.info = info
+        self.zone = zone
+        self.position = position # Position dans la zone, à partir de 0
 
     def action(self):
         print("Personnage n° {} de {} sélectionné".format(self.info[0], self.info[1]))
 
+    def deplacer(self, x, y, zone, position):
+        self.x = x
+        self.y = y
+        self.zone = zone
+        self.position = position
 
 #================================================================================================
 
