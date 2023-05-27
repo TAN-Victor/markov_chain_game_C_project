@@ -40,7 +40,7 @@ largeur_3 = 700
 longueur_3 = 1
 
 for mot in liste_mots:
-    longueur_3 = len(mot) * 310
+    longueur_3 = len(mot) * 340
     image = Image.new("RGBA", (longueur_3, largeur_3), (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
     font = ImageFont.truetype("C:\\Windows\\fonts\\segoepr.ttf", 550)

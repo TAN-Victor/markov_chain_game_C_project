@@ -42,7 +42,7 @@ def main():
 
     i = 0 # // Va valoir 0 si c'est le tour de la joueuse 1, 1 si c'est le tour de la joueuse 2
     etat = 0 # // Va valoir 0 si on est dans la sélection principale, 1 si on choisi le capital, 2 si on choisit une carte, 3 si on choisit une zone, 4 si on est dans un effet de
-                # carte, 5 si on est dans un effet de zone, 6 si on est en déplacement, 7 si on change les proba
+                # carte, 5 si on est dans un effet de zone, 6 si on est en déplacement, 7 si on vérifie les morts, 8 si on est en fin de tour, 9 si on est en fin de partie
 
     ##================================================================================================
     # Initialisation de la fenêtre
@@ -183,7 +183,7 @@ def main():
                         map_boutons["bouton_valeur_valider"].afficher(fenetre)
                         if event.type == pygame.MOUSEBUTTONUP:  
                             if capital_utilise > 0:
-                                etat = 7
+                                etat = 3
                             else:
                                 etat = 0    
                     elif map_boutons["bouton_valeur_annuler"].rect.collidepoint(event.pos):
@@ -192,6 +192,20 @@ def main():
                         if event.type == pygame.MOUSEBUTTONUP:    
                             etat = 0
                     
+                if etat == 3: # Choix de la zone
+                    zn_zones = liste_zones.getMatrice().getTailleMatrice()
+                    for indice_zone in range(zn_zones):
+                        map_boutons["zone_" + str(indice_zone+1)].actif = True
+                        if map_boutons["zone_" + str(indice_zone+1)].rect.collidepoint(event.pos):
+                            map_boutons["zone_" + str(indice_zone+1)].clic(event, map_boutons, map_objets, liste_joueuses[i])
+                            map_boutons["zone_" + str(indice_zone+1)].afficher(fenetre)
+                            if event.type == pygame.MOUSEBUTTONUP:    
+                                zone_choisie = indice_zone+1
+                                map_boutons["zone_" + str(indice_zone+1)].clic(event, map_boutons, map_objets, liste_joueuses[i])
+                                map_boutons["zone_" + str(indice_zone+1)].afficher(fenetre)
+
+
+
                 if etat == 6: #Déplacements
                     print("Déplacements")
                     print(liste_compteur)
@@ -252,8 +266,105 @@ def main():
                     print(liste_compteur)
                     
                     
+                    etat = 7
+
+                if etat == 7: # Vérification des présences et morts
+                    for indice_monstre in range(0, liste_joueuses[2].getTaille()):
+                        for indice_joueuse in range(0, 2):
+                            for indice_personnage in range(0, liste_joueuses[indice_joueuse].getTaille()):
+                                if liste_joueuses[indice_joueuse].getMembres()[indice_personnage].zone_personnage() == liste_joueuses[2].getMembres()[indice_monstre].zone_personnage():
+                                    if not liste_joueuses[indice_joueuse].getInvincibilite() and (liste_joueuses[indice_joueuse].getMembres()[indice_personnage].statut == 1 or liste_joueuses[indice_joueuse].getMembres()[indice_personnage].statut == 3):
+                                        liste_joueuses[indice_joueuse].getMembres()[indice_personnage].est_mange()
+                                        map_objets["statut_" + str(indice_joueuse+1) + "_" + str(indice_personnage + 1) + "liste"].changer_image("interface/images/Mort_" + str(indice_joueuse) + ".png")
+                                        message_generique(7, liste_joueuses[indice_joueuse], [indice_personnage], None)
+
+                                        liste_compteur[liste_joueuses[indice_joueuse].getMembres()[indice_personnage].zone_personnage()] -= 1
+                                        position = map_objets["personnage_" + str(indice_joueuse) + "_" + str(indice_personnage + 1)].position
+                                        del map_objets["personnage_" + str(indice_joueuse) + "_" + str(indice_personnage + 1)]
+                                        for cle, objet in map_objets.items(): # Décalage des personnages sur les zones pour éviter supeposition
+                                            if isinstance(objet, ObjetPersonnage):
+                                                if objet.zone == liste_joueuses[indice_joueuse].getMembres()[indice_personnage].zone_personnage() and objet.position > position:
+                                                    objet.position -= 1
+                                                    map_objets[cle].deplacer(objet.x - 60, objet.y, objet.zone, objet.position)
+                                                    print(cle + " décalé de " + str(objet.position + 1) + " à " + str(objet.position) + " dans la zone " + str(objet.zone+1))
+
+                    tous_manges_joueuse1 = liste_joueuses[0].tous_manges()
+                    tous_manges_joueuse2 = liste_joueuses[1].tous_manges()
+                    if tous_manges_joueuse1 or tous_manges_joueuse2:
+                        print(tous_manges_joueuse1)
+                        print(tous_manges_joueuse2)
+                        etat = 9
+                    else:
+                        etat = 8
+
+                if etat == 8: # Fin de tour
+
+                    tours_restants_jouer = liste_joueuses[i].getToursRestantsJouer()
+                    tours_restants_invincibilite = liste_joueuses[i].getToursRestantsInvincibilite()
+                    tours_restants_bonus_capital = liste_joueuses[i].getTourRestantsBonusCapital()
+                    tours_restants_bonus_proba_par_capital = liste_joueuses[i].getToursRestantsBonusProbaParCapital()
+
+                    if tours_restants_bonus_capital == 0:
+                        liste_joueuses[i].setCapital(5)
+                    if tours_restants_bonus_capital > 0:
+                        liste_joueuses[i].setTourRestantsBonusCapital(tours_restants_bonus_capital - 1)
+
+                    if tours_restants_bonus_proba_par_capital == 0:
+                        liste_joueuses[i].setProbaParCapital(0.1)
+                    if tours_restants_bonus_proba_par_capital > 0:
+                        liste_joueuses[i].setToursRestantsBonusProbaParCapital(tours_restants_bonus_proba_par_capital - 1)
+
+                    if tours_restants_jouer == 0:
+                        liste_joueuses[i].setTour(False)
+                        liste_joueuses[(i+1)%2].setTour(True)
+                        map_objets["tour"].deplacer(longueur*70/100 + 25 + (i+1)%2 * (longueur*10/100 + 5), 10)
+                        map_objets["tour"].afficher(fenetre)
+                    if tours_restants_jouer > 0:
+                        liste_joueuses[i].setToursRestantsJouer(tours_restants_jouer - 1)
+
+                    if tours_restants_invincibilite > 0:
+                        liste_joueuses[i].setToursRestantsInvincibilite(tours_restants_invincibilite - 1)
+
+                    
+                    if liste_joueuses[i].getBonusTemporaire() != 0:
+                        liste_joueuses[i].setCapital(liste_joueuses[i].getCapital() + liste_joueuses[i].getBonusTemporaire())
+                        if liste_joueuses[i].getBonusTemporaire() > 0:
+                            liste_joueuses[i].setBonusTemporaire(-liste_joueuses[i].getBonusTemporaire()) #Mis en négatif pour savoir qu'il faudra le soustraire au prochain tour
+                        else:
+                            liste_joueuses[i].setBonusTemporaire(0)
+
+                    for j in range(0, liste_joueuses[i].getTaille()):
+                        if liste_joueuses[i].getMembres()[j].statut == 3:
+                            liste_joueuses[i].getMembres()[j].peut_se_deplacer = not liste_joueuses[i].getMembres()[j].peut_se_deplacer
+                        if liste_joueuses[i].getMembres()[j].statut == 1 and liste_joueuses[i].getMembres()[j].peut_se_deplacer == False: # Cas où les personnages vivants non FIPA ne pouvaient pas se déplacer pour 1 tour
+                            liste_joueuses[i].getMembres()[j].peut_se_deplacer = True
+
+                    for k in range(0, liste_joueuses[2].getTaille()):
+                        if liste_joueuses[2].getMembres()[k].statut == -1: #Monstres disparus
+                            if liste_joueuses[2].getMembres()[k].nb_de_tour_disparu_restant == 0:
+                                liste_joueuses[2].getMembres()[k].statut = 1
+                            elif liste_joueuses[2].getMembres()[k].nb_de_tour_disparu_restant > 0:
+                                liste_joueuses[2].getMembres()[k].nb_de_tour_disparu_restant -= 1
+                        elif liste_joueuses[2].getMembres()[k].peut_se_deplacer == False: # Cas où les monstres ne pouvaient pas se déplacer pour 1 tour
+                            liste_joueuses[2].getMembres()[k].peut_se_deplacer = True
+
+
+                    message_generique(8, None, None, None)
                     etat = 0
-            
+
+                if etat == 9: # Fin de partie
+                    if liste_joueuses[0].tous_manges() and not liste_joueuses[1].tous_manges():
+                        message = "La joueuse 2 a gagné !"
+                    elif liste_joueuses[1].tous_manges() and not liste_joueuses[0].tous_manges():
+                        message = "La joueuse 1 a gagné !"
+                    else:
+                        message = "Egalité !"
+                    fin(map_objets, map_boutons, message)
+
+
+
+
+
             
             for boutons in map_boutons.values():
                 boutons.afficher(fenetre)

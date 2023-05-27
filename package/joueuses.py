@@ -153,6 +153,8 @@ class Joueuse(ListePNJ):
                     manges += 1
             if manges == self.getTaille():
                 return True
+            else:
+                return False
 
 
     

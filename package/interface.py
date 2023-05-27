@@ -104,6 +104,7 @@ class ObjetFixe:
             self.image = pygame.image.load(image_path)
             self.image = self.redimensionner(longueur)
             self.rect = pygame.Rect(x-5, y+5, self.image.get_width(), self.image.get_height())
+            self.largeur = self.image.get_height()
         else:
             self.image = None
             self.rect = pygame.Rect(x, y, longueur, longueur/3)
@@ -133,10 +134,15 @@ class ObjetFixe:
     def deplacer(self, x, y):
         self.x = x
         self.y = y
+        if self.image != None:
+            self.rect = pygame.Rect(x-5, y+5, self.image.get_width(), self.image.get_height())
+        else:
+            self.rect = pygame.Rect(x, y, self.longueur, self.longueur/3)
+
 
     def changer_image(self, image_path):
         self.image = pygame.image.load(image_path)
-        self.image = self.redimensionner(self.longueur)
+        self.image = self.redimensionner(-self.largeur)
 
     def cacher(self):
         self.visible = False
@@ -394,7 +400,10 @@ def info_joueuse_hover_afficher(joueuse: Joueuse):
     fenetre.blit(texte, (x, y + 40))
     texte = font.render("Bonus temporaire de capital: {}".format(joueuse.getBonusTemporaire()), True, (0, 0, 0))
     fenetre.blit(texte, (x, y + 60))
-
+    texte = font.render("Tour: {}".format(joueuse.getTour()), True, (0, 0, 0))
+    fenetre.blit(texte, (x, y + 80))
+    texte = font.render("Statuts: {}".format([joueuse.getMembres()[i].statut for i in range(joueuse.getTaille())]), True, (0, 0, 0))
+    fenetre.blit(texte, (x, y + 100))
 
 def info_zones(zones: Zones, map_bouton: Bouton, map_objets: dict):
     """
@@ -419,6 +428,21 @@ def info_zones(zones: Zones, map_bouton: Bouton, map_objets: dict):
             fenetre.blit(texte, (x + i*100, y + (j+1)*60))
 
 
+def fin(map_objets: dict, map_boutons: dict, message: str):
+    for objets in map_objets.values():
+        objets.cacher()
+        del objets
+    for boutons in map_boutons.values():
+        boutons.cacher()
+        del boutons
+    
+    pygame.draw.rect(fenetre, couleur_fond, (100, 100, longueur -200, largeur - 200))
+    pygame.draw.rect(fenetre, (0, 0, 0), (100, 100, longueur -200, largeur - 200), 2)
+    font = pygame.font.SysFont("Source Sans Pro", 130)
+    texte = font.render("La partie est terminée !", True, (0, 0, 0))
+    fenetre.blit(texte, (longueur*40/100, largeur*10/100))
+    texte = font.render(message, True, (0, 0, 0))
+    fenetre.blit(texte, (longueur*40/100, largeur*40/100))
 
 ##==============================================================================================
 # Actions
