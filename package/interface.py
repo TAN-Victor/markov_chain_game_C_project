@@ -239,9 +239,10 @@ class Bouton:
                 int(self.texte)
                 self.texte = self.valeur
             except:
-                if type(self.texte) != str:
-                    if type(self.texte) == list:
-                        self.texte = (self.valeur)
+                if isinstance(self, BoutonValeur):
+                    if type(self.texte) != str:
+                        if type(self.texte) == list:
+                            self.texte = (self.valeur)
             if self.radius == 1:
                 pygame.draw.rect(fenetre, self.couleur, self.rect, border_radius= int (min(self.dimensions)//6))
                 pygame.draw.rect(fenetre, (0, 0, 0), self.rect, 3, border_radius= int (min(self.dimensions)//6))
@@ -304,6 +305,10 @@ class BoutonValeur(Bouton):
         cls.valeur = (val)
 
     @classmethod
+    def changer_valeur_str(cls, val: str):
+        cls.valeur = (val)
+
+    @classmethod
     def valider(cls, map_boutons, map_objets, joueuse: Joueuse):
         try:
             tmp = int(cls.valeur)
@@ -315,10 +320,19 @@ class BoutonValeur(Bouton):
                 demander_action(map_boutons, map_objets, joueuse)
                 return 0
         except:
-            tmp = cls.valeur
-            cls.valeur = "0"
-            if len(tmp) == 3:
-                return tmp
+            if type(cls.valeur) == list:
+                print("TENTATIVE ?")
+                if type(cls.valeur[0]) == str:
+                    print("TENTATIVE 1")
+                    tmp = cls.valeur
+                    cls.valeur = "0"
+                    return tmp
+                else:
+                    tmp = cls.valeur
+                    cls.valeur = "0"
+                    if len(tmp) == 3:
+                        return tmp
+            
     
     @classmethod
     def annuler(cls, map_boutons, map_objets, joueuse: Joueuse):
@@ -338,7 +352,7 @@ class BoutonChoix(Bouton):
             print("Choix d'un monstre")
         elif self.texte == "Utiliser carte":
             print("Choix d'une carte")
-            demander_carte(map_boutons, map_objets, joueuse)
+            demander_carte(map_boutons, joueuse)
         elif self.texte == "Choix d'une zone":
             print("Choix d'une zone")
         elif self.texte == "Choix d'une autre zone":
@@ -515,7 +529,7 @@ def demander_capital(map_boutons:dict, joueuse: Joueuse):
     map_boutons["bouton_valeur_annuler"].montrer()
 
 
-def demander_carte(map_boutons: dict, map_objets: dict, joueuse: Joueuse):
+def demander_carte(map_boutons: dict, joueuse: Joueuse):
     """
     Doit être appelé par le bouton "Utiliser carte"	
     
@@ -531,14 +545,12 @@ def demander_carte(map_boutons: dict, map_objets: dict, joueuse: Joueuse):
     map_boutons["bouton_choix_carte"].desactiver()
     map_boutons["bouton_choix_carte"].cacher()
 
-    i = joueuse.getId()
-    for j in range(0, len(joueuse.getCartes())):
-        map_objets["carte_" + str(i) + "_" + str(j+1)].activer()
-
-        map_boutons["bouton_carte_valider"].activer()
-        map_boutons["bouton_carte_valider"].montrer()
-        map_boutons["bouton_carte_annuler"].activer()
-        map_boutons["bouton_carte_annuler"].montrer()
+    map_boutons["bouton_valeur"].activer()
+    map_boutons["bouton_valeur"].montrer()
+    map_boutons["bouton_valeur_valider"].activer()
+    map_boutons["bouton_valeur_valider"].montrer()
+    map_boutons["bouton_valeur_annuler"].activer()
+    map_boutons["bouton_valeur_annuler"].montrer()
 
 
 
