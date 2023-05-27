@@ -235,22 +235,25 @@ class Bouton:
 
     def afficher(self, fenetre):
         if self.visible:
+            try:
+                int(self.texte)
+                self.texte = self.valeur
+            except:
+                if type(self.texte) != str:
+                    if type(self.texte) == list:
+                        self.texte = (self.valeur)
             if self.radius == 1:
                 pygame.draw.rect(fenetre, self.couleur, self.rect, border_radius= int (min(self.dimensions)//6))
                 pygame.draw.rect(fenetre, (0, 0, 0), self.rect, 3, border_radius= int (min(self.dimensions)//6))
             else:
                 pygame.draw.rect(fenetre, self.couleur, self.rect)
                 pygame.draw.rect(fenetre, (0, 0, 0), self.rect, 3)
-            texte = pygame.font.SysFont("Source Sans Pro", 30).render(self.texte, True, self.couleur_texte)
+            texte = pygame.font.SysFont("Source Sans Pro", 30).render(str(self.texte), True, self.couleur_texte)
             if self.alignement == "centre":
                 fenetre.blit(texte, texte.get_rect(center=self.rect.center))
             if self.alignement == "haut_centre":
                 fenetre.blit(texte, (texte.get_rect(midtop=self.rect.midtop).x, texte.get_rect(midtop=self.rect.midtop).y + 5))
-            try:
-                int(self.texte)
-                self.texte = self.valeur
-            except:
-                pass
+
     
     def cacher(self):
         self.visible = False
@@ -297,15 +300,25 @@ class BoutonValeur(Bouton):
         cls.valeur = str(int(cls.valeur) + incr)
 
     @classmethod
+    def changer_valeur_liste(cls, val: list):
+        cls.valeur = (val)
+
+    @classmethod
     def valider(cls, map_boutons, map_objets, joueuse: Joueuse):
-        tmp = int(cls.valeur)
-        cls.valeur = "0"
-        print("Valeur validée : {}".format(tmp))
-        if tmp > 0:
-            return tmp
-        else:
-            demander_action(map_boutons, map_objets, joueuse)
-            return 0
+        try:
+            tmp = int(cls.valeur)
+            cls.valeur = "0"
+            print("Valeur validée : {}".format(tmp))
+            if tmp > 0:
+                return tmp
+            else:
+                demander_action(map_boutons, map_objets, joueuse)
+                return 0
+        except:
+            tmp = cls.valeur
+            cls.valeur = "0"
+            if len(tmp) == 3:
+                return tmp
     
     @classmethod
     def annuler(cls, map_boutons, map_objets, joueuse: Joueuse):
@@ -356,6 +369,10 @@ class BoutonAnnulerCarte(Bouton):
             if objet.__class__.__name__ == "ObjetCarte" and objet.selected:
                 print("Carte {} annulée".format(objet.nom))
 
+class BoutonFin(Bouton):
+
+    def action(self, map_boutons, map_objets, joueuse: Joueuse):
+        pygame.quit()
 #================================================================================================
 # Informations du jeu
 #================================================================================================
@@ -424,7 +441,8 @@ def info_zones(zones: Zones, map_bouton: Bouton, map_objets: dict):
         texte = font.render(str(i+1), True, (0, 0, 0))
         fenetre.blit(texte, (x - 100, y + (i+1)*60))
         for j in range(taille):
-            texte = font.render(str(zones.getMatrice().lecture_probas(i, j)), True, (0, 0, 0))
+            val = round(zones.getMatrice().lecture_probas(j, i), 1)
+            texte = font.render(str(val), True, (0, 0, 0))
             fenetre.blit(texte, (x + i*100, y + (j+1)*60))
 
 
@@ -433,9 +451,9 @@ def fin(map_objets: dict, map_boutons: dict, message: str):
         objets.cacher()
         del objets
     for boutons in map_boutons.values():
-        boutons.cacher()
-        del boutons
-    
+        if not isinstance(boutons, BoutonFin):
+            boutons.cacher()
+            del boutons
     pygame.draw.rect(fenetre, couleur_fond, (100, 100, longueur -200, largeur - 200))
     pygame.draw.rect(fenetre, (0, 0, 0), (100, 100, longueur -200, largeur - 200), 2)
     font = pygame.font.SysFont("Source Sans Pro", 130)
@@ -443,7 +461,10 @@ def fin(map_objets: dict, map_boutons: dict, message: str):
     fenetre.blit(texte, (longueur*40/100, largeur*10/100))
     texte = font.render(message, True, (0, 0, 0))
     fenetre.blit(texte, (longueur*40/100, largeur*40/100))
-
+    map_boutons["bouton_fin"].montrer()
+    map_boutons["bouton_fin"].activer()
+    map_boutons["bouton_fin"].afficher(fenetre)
+    
 ##==============================================================================================
 # Actions
 ##==============================================================================================
@@ -547,63 +568,77 @@ def ne_rien_faire(map_boutons: dict):
 # Messages génériques
 ##==============================================================================================
 
-def message_generique(n: int, joueuse: ListePNJ, option: list, option2: Carte):
-    if n == 1:
-        print("Les personnages ont été correctement initialisés.")
+def message_generique(n: int, joueuse: ListePNJ, option: list, option2: Carte, console_phrase: list):
+    if n == 0:
+        console_phrase.append("La partie est terminée. C'est la joueuse n°" + str(joueuse.getId()) + " qui a gagné.")
+    elif n == -1:
+        console_phrase.append("La partie est terminée. Egalité !")
+    elif n == 1:
+        console_phrase.append("Les personnages ont été correctement initialisés.")
     elif n == 2:
-        print("Les zones ont été correctement initialisées.")
+        console_phrase.append("Les zones ont été correctement initialisées.")
     elif n == 3:
-        print(f"La joueuse n°{joueuse.getId()} a utilisé {option[0]} de capital.")
+        console_phrase.append(f"La joueuse n°{joueuse.getId()} a utilisé {option[0]} de capital.")
     elif n == 4:
-        print(f"La probabilité de passer de la zone {option[0]+1} à la zone {option[1]+1} a changé de {option[2]*0.1}.")
+        console_phrase.append(f"La probabilité de passer de la zone {option[0]+1} à la zone {option[1]+1} a changé de {option[2]*0.1}.")
     elif n == 5:
-        print(f"La joueuse n°{joueuse.getId()} a utilisé la carte {option2.getNom()}.")
+        console_phrase.append(f"La joueuse n°{joueuse.getId()} a utilisé la carte {option2.getNom()}.")
     elif n == 6:
-        print("Tous les personnages ont bougé.")
+        console_phrase.append("Tous les personnages ont bougé.")
     elif n == 7:
-        print(f"Le personnage n°{option[0]+1} de la joueuse n°{joueuse.getId()} est décédé.")
+        console_phrase.append(f"Le personnage n°{option[0]+1} de la joueuse n°{joueuse.getId()} est décédé.")
     elif n == 8:
-        print("Le tour est terminé, le capital et les effets des joueuses ont été réinitialisés.")
+        console_phrase.append("Le tour est terminé, le capital et les effets des joueuses ont été réinitialisés.")
     elif n == 9:
-        print("Les personnages ont été correctement libérés par free().")
+        console_phrase.append("Les personnages ont été correctement libérés par free().")
     elif n == 10:
-        print("Les zones ont été correctement libérées par free().")
+        console_phrase.append("Les zones ont été correctement libérées par free().")
     elif n == 11:
-        print("La matrice des zones a été correctement libérée par free().")
+        console_phrase.append("La matrice des zones a été correctement libérée par free().")
     elif n == 12:
-        print("Les cartes ont été correctement libérées par free().")
+        console_phrase.append("Les cartes ont été correctement libérées par free().")
     elif n == 100:
-        print("Attention, la probabilité de la zone n'est plus dans l'intervalle [0, 1]. L'action a été annulée.")
+        console_phrase.append("Attention, la probabilité de la zone n'est plus dans l'intervalle [0, 1]. L'action a été annulée.")
     elif n == 201:
-        print(f"Votre nouveau capital est de {option[0]} pour {option[1]} tours.")
+        console_phrase.append(f"Votre nouveau capital est de {option[0]} pour {option[1]} tours.")
     elif n == 202:
-        print(f"Le personnage n°{option[0]+1} de la joueuse n°{joueuse.getId()} a été déplacé de la zone {option[1]+1} à la zone {option[2]+1}.")
+        console_phrase.append(f"Le personnage n°{option[0]+1} de la joueuse n°{joueuse.getId()} a été déplacé de la zone {option[1]+1} à la zone {option[2]+1}.")
     elif n == 203:
-        print(f"Le monstre {option[0]+1} s'est déplacé à la zone {option[1]+1}.")
+        console_phrase.append(f"Le monstre {option[0]+1} s'est déplacé à la zone {option[1]+1}.")
     elif n == 205:
-        print(f"Le nombre de tours restants de la joueuse {joueuse.getId()} est passé à {option[0]}.")
+        console_phrase.append(f"Le nombre de tours restants de la joueuse {joueuse.getId()} est passé à {option[0]}.")
     elif n == 209:
-        print(f"Le nombre de déplacements par tour de votre personnage {option[0]+1} est passé à 2.")
+        console_phrase.append(f"Le nombre de déplacements par tour de votre personnage {option[0]+1} est passé à 2.")
     elif n == 210:
-        print(f"Le personnage n°{option[0]+1} de la joueuse n°{option[1]} est devenu le personnage n°{option[2]} de la joueuse n°{option[3]}.")
+        console_phrase.append(f"Le personnage n°{option[0]+1} de la joueuse n°{option[1]} est devenu le personnage n°{option[2]} de la joueuse n°{option[3]}.")
     elif n == 211:
-        print("Vous avez obtenu 15 points de capital supplémentaires pour 1 seul tour.")
+        console_phrase.append("Vous avez obtenu 15 points de capital supplémentaires pour 1 seul tour.")
     elif n == 212:
-        print("Une nouvelle zone a été créée.")
+        console_phrase.append("Une nouvelle zone a été créée.")
     elif n == 213:
-        print("Les probabilités ont subi une rotation.")
+        console_phrase.append("Les probabilités ont subi une rotation.")
     elif n == 214:
-        print("Les monstres sont devenus invisibles pour 2 tours.")
+        console_phrase.append("Les monstres sont devenus invisibles pour 2 tours.")
     elif n == 215:
-        print(f"La probabilité par capital est passée à {option[0]*0.1} pour 3 tours.")
+        console_phrase.append(f"La probabilité par capital est passée à {option[0]*0.1} pour 3 tours.")
     elif n == 216:
-        print(f"La probabilité de passer de la zone {option[0]+1} à la zone {option[1]+1} est passée à {option[2]*0.1}.")
+        console_phrase.append(f"La probabilité de passer de la zone {option[0]+1} à la zone {option[1]+1} est passée à {option[2]*0.1}.")
     elif n == 217:
-        print(f"Le personnage {option[0]+1} de la joueuse {joueuse.getId()} est devenu un FISA.")
+        console_phrase.append(f"Le personnage {option[0]+1} de la joueuse {joueuse.getId()} est devenu un FISA.")
     elif n == 218:
-        print("Un nouveau personnage a été attribué à chaque joueuse, et un monstre a été ajouté.")
+        console_phrase.append("Un nouveau personnage a été attribué à chaque joueuse, et un monstre a été ajouté.")
     elif n == 219:
-        print("Les probabilités de passer de toutes les zones à celle d'un monstre (choisi aléatoirement) est passé à 0.5.")
+        console_phrase.append("Les probabilités de passer de toutes les zones à celle d'un monstre (choisi aléatoirement) est passé à 0.5.")
     elif n == 220:
-        print(f"Les membres de la joueuse {joueuse.getId()} sont invincibles pour 4 tours.")
-    
+        console_phrase.append(f"Les membres de la joueuse {joueuse.getId()} sont invincibles pour 4 tours.")
+    console()
+    afficher_console_phrase(console_phrase)
+
+def afficher_console_phrase(console_phrase: list):
+    font = pygame.font.SysFont("Source Sans Pro", 24)
+    x, y = 20, largeur*80/100 + 30,
+    if len(console_phrase) > 8:
+        console_phrase.pop(0)
+    for i in range(len(console_phrase)):
+        texte = font.render(console_phrase[i], True, (0, 0, 0))
+        fenetre.blit(texte, (x, y + 20*i))
