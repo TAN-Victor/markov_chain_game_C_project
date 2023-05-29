@@ -7,12 +7,6 @@ from interface import *
 
 
 
-def wrapper_pouvoir_carte(liste_joueuses, liste_zones, nom_carte):
-    
-
-
-
-
 class Merabet(Carte):
     def __init__(self):
         super().__init__("Merabet", "Pendant vos 3 prochains tours, votre capital augmente de 2.")
