@@ -21,9 +21,11 @@ class Bannour(Carte):
     def __init__(self):
         super().__init__("Bannour", "Choisissez deux zones, les personnages présents sur ces deux zones sont échangés.")
 
-    def use(self, liste_des_joueuses, liste_des_zones):
-        zone1 = input("Choisissez la première zone: ")
-        zone2 = input("Choisissez la deuxième zone: ")
+    def use(self):
+        demander_zone()
+        demander_zone()
+
+    def use2(self, liste_des_joueuses, zone1, zone2):
         for joueuse in liste_des_joueuses:
             for membre in joueuse.getMembres():
                 if membre.zone == zone1:
@@ -56,7 +58,8 @@ class Rioboo(Carte):
     def __init__(self):
         super().__init__("Rioboo", "Lors du prochain tour, la joueuse adverse ne choisit pas comment est utilisé son capital. Chaque point de capital est utilisé aléatoirement: pour chaque point, choisissez les trois zones Z1, Z2 et Z3 uniformément parmi les triplets pouvant être choisis.")
 
-    def use(self, adversaire, zones,capital):
+    def use(self, adversaire, zones):
+        capital  = adversaire.getCapital()
         if capital<0 or capital>adversaire.getCapital:
             print("veuiilez entrer un nombre valide")
         else:
@@ -136,10 +139,12 @@ class Benezet(Carte):
     def __init__(self):
         super().__init__("Benezet", "Déplacez un des monstres sur la zone de votre choix. Si un membre d'école se trouve sur la zone du monstre, il n'est pas mangé.")   
 
-    def use(self, liste_des_monstres, liste_des_joueuses):
-        num_monstre = input("Choisissez le monstre à déplacer: ")
-        num_zone = input("Choisissez la zone où déplacer le monstre: ")
-        liste_des_monstres[num_monstre].deplacer(num_zone)
+    def use(self):
+        demander_monstre()
+        demander_zone()
+
+    def use2(self, num_monstre, zone):
+        monstres[num_monstre].deplacer(num_zone)
 
 
 
@@ -147,8 +152,10 @@ class Ligozat(Carte):
     def __init__(self):
         super().__init__("Ligozat", "Choisissez un membre de votre école, il effectue désormais deux déplacements au lieu d'un à chaque tour.")
 
-    def use(self, joueuse):
-        num_membre = input("Choisissez le membre à déplacer deux fois: ")
+    def use(self):
+        demander_membre()
+    
+    def use2(self, joueuse, num_membre):
         joueuse.getMembres()[num_membre].nb_de_pas = 2
 
 
@@ -157,8 +164,10 @@ class Mouilleron(Carte):
     def __init__(self):
         super().__init__("Mouilleron", "Choisissez un membre de l'école de la joueuse adverse. Ce membre devient un membre de votre école.")
 
-    def use(self,adversaire, joueuse):
-        num_membre = input("Choisissez le membre à déplacer: ")
+    def use(self):
+        demander_membre()
+    
+    def use2(self,adversaire, joueuse, num_membre):
         if joueuse.getTaille()<=6:
             joueuse.addMembre(adversaire.liste_membres[num_membre])
             adversaire.removeMembre(adversaire.liste_membres[num_membre])
@@ -170,9 +179,11 @@ class Mouilleron(Carte):
 class Dembele_Cabot(Carte):
     def __init__(self):
         super().__init__("Dembele-Cabot", "Sacrifiez un membre de votre école de votre choix. Vous avez 15 points de capital en plus à votre prochain tour.")
+    
+    def use(self):
+        demander_membre()
 
-    def use(self, joueuse):
-        num_membre = input("Choisissez le membre à sacrifier: ")
+    def use(self, joueuse, num_membre):
         joueuse.liste_membres.remove(joueuse.liste_membres[num_membre])
         joueuse.setCapital(joueuse.getCapital()+15)
 
@@ -219,8 +230,10 @@ class Salhab(Carte):
     def __init__(self):
         super().__init__("Salhab", "Pendant vos 3 prochains tours, un point de capital permet de déplacer une quantité 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ou 1 de probabilité.")
 
-    def use(self, joueuse):
-        proba_par_capital = input("Choisissez la probabilité par capital parmi 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ,0.8, 0.9 ou 1: ")
+    def use(self):
+        demander_proba()
+
+    def use2(self, joueuse, proba_par_capital):
         joueuse.setToursRestantsBonusProbaParCapital(4) #Les 3 prochains tours + le tour où la carte est jouée
         joueuse.setProbaParCapital(proba_par_capital)
 
@@ -243,9 +256,11 @@ class Pulido_Nino(Carte):
 class Watel(Carte):
     def __init__(self):
         super().__init__("Watel", "Choisissez un membre de votre école, il devient FISA et effectue désormais son déplacement un tour sur deux.")
-
-    def use(self, joueuse):
-        num_membre = input("Choisissez le membre à transformer en FISA: ")
+    
+    def use(self):
+        demander_membre()
+    
+    def use2(self, joueuse, num_membre):
         joueuse.liste_membres[num_membre].statut = 3
 
 
