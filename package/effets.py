@@ -28,9 +28,9 @@ class Bannour(Carte):
     def use2(self, liste_des_joueuses, zone1, zone2):
         for joueuse in liste_des_joueuses:
             for membre in joueuse.getMembres():
-                if membre.zone == zone1:
+                if membre.zone_courante == zone1:
                     membre.deplacer(zone2)
-                elif membre.zone == zone2:
+                elif membre.zone_courante == zone2:
                     membre.deplacer(zone1)
 
 
@@ -46,7 +46,7 @@ class Honore(Carte):
             for monstre in liste_des_monstres:
                 for joueuse in liste_des_joueuses:
                     for membre in joueuse.getMembres():
-                        if membre.zone == monstre.zone:
+                        if membre.zone_courante == monstre.zone_courante:
                             membre.statut=0
     
 
@@ -132,7 +132,7 @@ class Munante(Carte):
         for monstre in liste_des_monstres:
             for joueuse in liste_des_joueuses:
                 for membre in joueuse.getMembres():
-                    if membre.zone == monstre.zone:
+                    if membre.zone_courante == monstre.zone_courante:
                         membre.statut = 0
 
 class Benezet(Carte):
