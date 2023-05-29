@@ -322,7 +322,10 @@ class Bouton:
                 if isinstance(self, BoutonValeur):
                     if type(self.texte) != str:
                         if type(self.texte) == list and type(self.valeur) == list:
-                            self.texte = (self.valeur[1])
+                            try :
+                                self.texte = (self.valeur[1]) # zone
+                            except:
+                                self.texte = (self.valeur)
             if self.radius == 1:
                 pygame.draw.rect(fenetre, self.couleur, self.rect, border_radius= int (min(self.dimensions)//6))
                 pygame.draw.rect(fenetre, (0, 0, 0), self.rect, 3, border_radius= int (min(self.dimensions)//6))
@@ -730,7 +733,10 @@ def message_generique(n: int, joueuse: ListePNJ, option: list, option2: Carte, c
     elif n == 201:
         phrase = (f"Votre nouveau capital est de {option[0]} pour {option[1]} tours.")
     elif n == 202:
-        phrase = (f"Le personnage n°{option[0]+1} de la joueuse n°{joueuse.getId()} a été déplacé de la zone {option[1]+1} à la zone {option[2]+1}.")
+        if joueuse.getId() != 0:
+            phrase = (f"Le personnage n°{option[0]} de la joueuse n°{joueuse.getId()} a été déplacé de la zone {option[1]+1} à la zone {option[2]+1}.")
+        else:
+            phrase = (f"Le monstre n°{option[0]} a été déplacé de la zone {option[1]+1} à la zone {option[2]+1}.")
     elif n == 203:
         phrase = (f"Le monstre {option[0]+1} s'est déplacé à la zone {option[1]+1}.")
     elif n == 205:

@@ -11,7 +11,7 @@ class ListePNJ:
             self.taille = 5 #nombre de membres dans la liste de membres (doit être toujours inférieur à 7)
             self.liste_membres = [Personnage(id,21,random.randint(3,4)), Personnage(id,22,random.randint(3,4)), Personnage(id,23,random.randint(3,4)), Personnage(id,24,random.randint(3,4)), Personnage(id,25,random.randint(3,4))] 
         elif id == 0:
-            self.liste_membres = [Personnage(id,11,0)]
+            self.liste_membres = [Personnage(id,1,0)]
             self.taille = 1 #nombre de membres dans la liste de membres (doit être toujours inférieur à 7)
         
         self.tours_restants_jouer = 0 #tours restants pendant lesquels la joueuse / le monstre peut faire des déplacements (nombres de tours d'affilés)
