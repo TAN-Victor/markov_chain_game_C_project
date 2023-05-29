@@ -23,7 +23,7 @@ def main():
     ##================================================================================================
     # Initialisation des variables
     ##================================================================================================
-    console_phrase = []
+    
 
     liste_cartes_globale = [Merabet(), Bannour(), Honore(), Rioboo(), Goilard(), Bourard(), Munante(), Benezet(), Ligozat(), Mouilleron(),
                                       Dembele_Cabot(),  Pacave(), Huet(), Matias(), Salhab(), Pulido_Nino(), Watel(), Szafranski(), Forest(), Prevel()]
@@ -106,10 +106,9 @@ def main():
                         map_boutons["bouton_choix_carte"].clic(event, map_boutons, map_objets, liste_joueuses[i])
                         map_boutons["bouton_choix_carte"].afficher(fenetre)
                         if event.type == pygame.MOUSEBUTTONUP:
-                            pass
-                            # etat = 2 TODO: Attendre que les cartes et les effets soient correctement implémentés
-                            # choix_carte = []
-                            # indice_carte = -1
+                            choix_carte = []
+                            indice_carte = -1
+                            etat = 2
                     elif map_boutons["bouton_choix_rien"].rect.collidepoint(event.pos):
                         map_boutons["bouton_choix_rien"].clic(event, map_boutons, map_objets, liste_joueuses[i])
                         map_boutons["bouton_choix_rien"].afficher(fenetre)
@@ -131,6 +130,7 @@ def main():
                         map_boutons["bouton_valeur_valider"].afficher(fenetre)
                         if event.type == pygame.MOUSEBUTTONUP:  
                             if capital_utilise > 0:
+                                demander_zone(map_boutons, liste_zones.getMatrice().getTailleMatrice(), 3)
                                 etat = 3
                                 choix_zones = []
                             else:
@@ -158,27 +158,26 @@ def main():
                         if map_boutons["bouton_valeur_valider"].clic(event, map_boutons, map_objets, liste_joueuses[i]) == choix_carte:
                             map_boutons["bouton_valeur_valider"].afficher(fenetre)
                             if event.type == pygame.MOUSEBUTTONUP:
+                                print("0")
+                                print(choix_carte)
                                 etat = 4
 
 
 
                 if etat == 3: # Choix de la zone
-                    map_boutons["bouton_moins"].cacher()
-                    map_boutons["bouton_plus"].cacher()
-                    map_boutons["bouton_valeur"].changer_valeur_liste(choix_zones)
+                    
                     zn_zones = liste_zones.getMatrice().getTailleMatrice()
                     for indice_zone in range(zn_zones):
-                        map_boutons["zone_" + str(indice_zone+1)].actif = True
-                        if map_boutons["zone_" + str(indice_zone+1)].rect.collidepoint(event.pos) and len(choix_zones) < 3:
+                        if map_boutons["zone_" + str(indice_zone+1)].rect.collidepoint(event.pos) and len(map_boutons["bouton_valeur"].valeur[1]) < map_boutons["bouton_valeur"].valeur[0]:
                             map_boutons["zone_" + str(indice_zone+1)].clic(event, map_boutons, map_objets, liste_joueuses[i])
                             map_boutons["zone_" + str(indice_zone+1)].afficher(fenetre)
                             if event.type == pygame.MOUSEBUTTONUP:    
-                                choix_zones.append(indice_zone+1)
+                                map_boutons["bouton_valeur"].valeur[1].append(indice_zone+1)
                                 map_boutons["zone_" + str(indice_zone+1)].clic(event, map_boutons, map_objets, liste_joueuses[i])
                                 map_boutons["zone_" + str(indice_zone+1)].afficher(fenetre)
                     print(map_boutons["bouton_valeur"].texte)
                     map_boutons["bouton_valeur"].afficher(fenetre)
-                    print(choix_zones)
+                    choix_zones = map_boutons["bouton_valeur"].valeur[1]
                     if map_boutons["bouton_valeur_valider"].rect.collidepoint(event.pos):
                         if map_boutons["bouton_valeur_valider"].clic(event, map_boutons, map_objets, liste_joueuses[i]) == choix_zones:
                             map_boutons["bouton_valeur_valider"].afficher(fenetre)
@@ -202,40 +201,47 @@ def main():
                             etat = 0
 
 
-                # if etat == 4: # Effet de la carte TODO : Attendre que les cartes et les effets soient correctemetn implémentés
+                if etat == 4: # Effet de la carte
 
-                #     if choix_carte == "Merabet":
-                #         liste_joueuses[i].liste_cartes[j].use(liste_joueuses[0])
-                    # elif choix_carte == "Bannour":
-                    #     liste_joueuses[i].liste_cartes[j].use(map_boutons)
-                    #     zn_zones = liste_zones.getMatrice().getTailleMatrice()
-                    # for indice_zone in range(zn_zones):
-                    #     map_boutons["zone_" + str(indice_zone+1)].actif = True
-                    #     if map_boutons["zone_" + str(indice_zone+1)].rect.collidepoint(event.pos) and len(choix_zones) < 3:
-                    #         map_boutons["zone_" + str(indice_zone+1)].clic(event, map_boutons, map_objets, liste_joueuses[i])
-                    #         map_boutons["zone_" + str(indice_zone+1)].afficher(fenetre)
-                    #         if event.type == pygame.MOUSEBUTTONUP:    
-                    #             choix_zones.append(indice_zone+1)
-                    #             map_boutons["zone_" + str(indice_zone+1)].clic(event, map_boutons, map_objets, liste_joueuses[i])
-                    #             map_boutons["zone_" + str(indice_zone+1)].afficher(fenetre)
-                    # print(map_boutons["bouton_valeur"].texte)
-                    # map_boutons["bouton_valeur"].afficher(fenetre)
-                    # print(choix_zones)
-                    # if map_boutons["bouton_valeur_valider"].rect.collidepoint(event.pos):
-                    #     if map_boutons["bouton_valeur_valider"].clic(event, map_boutons, map_objets, liste_joueuses[i]) == choix_zones:
-                    #         map_boutons["bouton_valeur_valider"].afficher(fenetre)
-                    #         if event.type == pygame.MOUSEBUTTONUP:
-                    #             zone1 = choix_zones[0] -1
-                    #             zone2 = choix_zones[1] -1
-                    #             liste_joueuses[i].liste_cartes[j].use2(liste_joueuses, zone1, zone2)
-                    #             else:
-                    #                 message_generique(100, None, None, None, console_phrase)
-                    #                 etat = 0 
-                    # elif map_boutons["bouton_valeur_annuler"].rect.collidepoint(event.pos):
-                    #     map_boutons["bouton_valeur_annuler"].clic(event, map_boutons, map_objets, liste_joueuses[i])
-                    #     map_boutons["bouton_valeur_annuler"].afficher(fenetre)
-                    #     if event.type == pygame.MOUSEBUTTONUP:    
-                    #         etat = 0
+                    if choix_carte == ["Merabet"]:
+                        liste_joueuses[i].liste_cartes[indice_carte].use(liste_joueuses[0])
+
+                    elif choix_carte == ["Bannour"]:
+                        liste_joueuses[i].liste_cartes[indice_carte].use(map_boutons, liste_zones.getMatrice().getTailleMatrice())
+                        zn_zones = liste_zones.getMatrice().getTailleMatrice()
+                        etat = 5
+
+                    
+
+
+
+
+            
+                if etat == 5: # Effet de la carte (2)
+
+                    if choix_carte == ["Bannour"]:
+                        for indice_zone in range(zn_zones):
+                            if map_boutons["zone_" + str(indice_zone+1)].rect.collidepoint(event.pos) and len(map_boutons["bouton_valeur"].valeur[1]) < map_boutons["bouton_valeur"].valeur[0]:
+                                map_boutons["zone_" + str(indice_zone+1)].clic(event, map_boutons, map_objets, liste_joueuses[i])
+                                map_boutons["zone_" + str(indice_zone+1)].afficher(fenetre)
+                                if event.type == pygame.MOUSEBUTTONUP:    
+                                    map_boutons["bouton_valeur"].valeur[1].append(indice_zone+1)
+                                    map_boutons["zone_" + str(indice_zone+1)].clic(event, map_boutons, map_objets, liste_joueuses[i])
+                                    map_boutons["zone_" + str(indice_zone+1)].afficher(fenetre)
+                        map_boutons["bouton_valeur"].afficher(fenetre)  
+                        choix_zones = map_boutons["bouton_valeur"].valeur[1]
+                        if map_boutons["bouton_valeur_valider"].rect.collidepoint(event.pos):
+                            if map_boutons["bouton_valeur_valider"].clic(event, map_boutons, map_objets, liste_joueuses[i]) == choix_zones:
+                                map_boutons["bouton_valeur_valider"].afficher(fenetre)
+                                if event.type == pygame.MOUSEBUTTONUP:
+                                    if choix_zones[0] != choix_zones[1]:
+                                        print("33")
+                                        liste_joueuses[i].liste_cartes[indice_carte].use2(liste_joueuses, choix_zones[0]-1, choix_zones[1]-1)
+                                        print("44")
+                                        etat = 6
+                                    else:
+                                        message_generique(101, None, None, None, console_phrase)
+
 
 
 
