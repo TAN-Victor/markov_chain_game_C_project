@@ -21,17 +21,20 @@ class Bannour(Carte):
     def __init__(self):
         super().__init__("Bannour", "Choisissez deux zones, les personnages présents sur ces deux zones sont échangés.")
 
-    def use(self):
-        demander_zone()
-        demander_zone()
+    def use(self, nb_zones):
+        demander_zone(map_boutons, nb_zones, 2)
 
     def use2(self, liste_des_joueuses, zone1, zone2):
         for joueuse in liste_des_joueuses:
             for membre in joueuse.getMembres():
-                if membre.zone == zone1:
+                if membre.zone_courante == zone1:
                     membre.deplacer(zone2)
-                elif membre.zone == zone2:
+                    message_generique(202, joueuse, [membre.id, zone1.numero, zone2.numero], None, console_phrase)
+                elif membre.zone_courante == zone2:
                     membre.deplacer(zone1)
+                    message_generique(202, joueuse, [membre.id, zone2.numero, zone1.numero], None, console_phrase)
+
+
 
 
 

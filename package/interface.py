@@ -102,6 +102,8 @@ Zone_joueuse1 = pygame.Rect((longueur*70/100 + 30, largeur*70/100 + 40), (longue
 Zone_joueuse2 = pygame.Rect((longueur*80/100 + 30, largeur*70/100 + 40), (longueur*10/100 - 20, largeur*5/100 - 10))
 Zone_Zones = pygame.Rect((longueur*50/100 + 30, largeur*80/100 + 40), (longueur*20/100 - 20, largeur*20/100 - 10))
 liste_compteur = [0]*10
+choix_zones = []
+console_phrase = []
 
 def initialiser_objets(liste_joueuses, liste_zones):
     for i in range (0, 3):
@@ -319,8 +321,8 @@ class Bouton:
             except:
                 if isinstance(self, BoutonValeur):
                     if type(self.texte) != str:
-                        if type(self.texte) == list:
-                            self.texte = (self.valeur)
+                        if type(self.texte) == list and type(self.valeur) == list:
+                            self.texte = (self.valeur[1])
             if self.radius == 1:
                 pygame.draw.rect(fenetre, self.couleur, self.rect, border_radius= int (min(self.dimensions)//6))
                 pygame.draw.rect(fenetre, (0, 0, 0), self.rect, 3, border_radius= int (min(self.dimensions)//6))
@@ -399,14 +401,14 @@ class BoutonValeur(Bouton):
                 return 0
         except:
             if type(cls.valeur) == list:
-                if type(cls.valeur[0]) == str:
+                if type(cls.valeur[0]) == str: # carte
                     tmp = cls.valeur
                     cls.valeur = "0"
                     return tmp
                 else:
-                    tmp = cls.valeur
-                    cls.valeur = "0"
-                    if len(tmp) == 3:
+                    tmp = cls.valeur[1] # zone
+                    if len(tmp) == cls.valeur[0]:
+                        cls.valeur = "0"
                         return tmp
             
     
@@ -647,9 +649,40 @@ def ne_rien_faire(map_boutons: dict):
     map_boutons["bouton_choix_carte"].cacher()
 
 
+def demander_zone(map_boutons: dict, nb_zones, nombre_demande: int):
+    """
+    Doit être appelé par le bouton "Valider" de "Utiliser Capital" pour choisir des zones,
+    ou par une carte
+
+    Désaffiche et désactive les boutons d'action du capital #see demander_capital()
+    Affiche les boutons de choix de zone
+
+    nombre_demande permet de savoir combien de zone il faut choisir
+    """
+    map_boutons["bouton_moins"].cacher()
+    map_boutons["bouton_plus"].cacher()
+    choix_zones = [nombre_demande, []]
+    map_boutons["bouton_valeur"].changer_valeur_liste(choix_zones)
+    for indice_zone in range(nb_zones):
+        map_boutons["zone_" + str(indice_zone+1)].actif = True
 
 
+def demander_personnage(map_objets: dict, map_boutons: dict, joueuse: Joueuse):
+    """
+    Doit être appelé par une carte
 
+    Affiche les boutons pour valider ou annuler
+    Permet de sélectionner les personnages
+    """
+    map_boutons["bouton_valeur"].changer_valeur_str("Choix d'un personnage")
+    for objet in map_objets.values():
+        if isinstance(objet, ObjetPersonnage):
+            objet.actif = True
+            objet.montrer()
+            objet.cacher()
+    for i in range(joueuse.getTaille()):
+        map_objets["personnage_" + str(joueuse.getId()) + "_" + str(i+1)].actif = True
+        map_objets["personnage_" + str(joueuse.getId()) + "_" + str(i+1)].montrer()
 
 
 ##==============================================================================================
@@ -691,7 +724,9 @@ def message_generique(n: int, joueuse: ListePNJ, option: list, option2: Carte, c
         phrase = ("Que voulez-vous faire ? Utiliser du capital, une carte ou simplement ne rien faire ?")
     elif n == 100:
         phrase = ("Attention, la probabilité de la zone n'est plus dans l'intervalle [0, 1]. L'action a été annulée.")
-    
+    elif n == 101:
+        phrase = ("Attention, la carte n'a pas pu s'activer. L'action a été annulée.")
+
     elif n == 201:
         phrase = (f"Votre nouveau capital est de {option[0]} pour {option[1]} tours.")
     elif n == 202:
