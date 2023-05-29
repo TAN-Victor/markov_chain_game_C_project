@@ -136,7 +136,6 @@ class Joueuse(ListePNJ):
     def utiliseCarte(self, carte):
         if carte in self.getCartes():
             self.getCartes().remove(carte)
-            carte.use()
         else:
             print("La joueuse ne possède pas cette carte")
     
