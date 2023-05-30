@@ -106,9 +106,10 @@ def main():
                         map_boutons["bouton_choix_carte"].clic(event, map_boutons, map_objets, liste_joueuses[i])
                         map_boutons["bouton_choix_carte"].afficher(fenetre)
                         if event.type == pygame.MOUSEBUTTONUP:
-                            choix_carte = []
-                            indice_carte = -1
-                            etat = 2
+                            pass
+                            # choix_carte = []    # bloqué tant que les cartes ne seront pas correctement implémentées 
+                            # indice_carte = -1
+                            # etat = 2
                     elif map_boutons["bouton_choix_rien"].rect.collidepoint(event.pos):
                         map_boutons["bouton_choix_rien"].clic(event, map_boutons, map_objets, liste_joueuses[i])
                         map_boutons["bouton_choix_rien"].afficher(fenetre)

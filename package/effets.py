@@ -13,6 +13,7 @@ class Merabet(Carte):
     def use(self, joueuse):
         joueuse.setToursRestantsBonusCapital(3)
         joueuse.setBonusTemporaire(2)
+        message_generique(201, None, [joueuse.getCapital(), joueuse.getTourRestantsBonusCapital()], None, console_phrase)
 
 
 
@@ -23,17 +24,15 @@ class Bannour(Carte):
 
     def use(self, map_boutons, nb_zones):
         demander_zone(map_boutons, nb_zones, 2)
-        print("1")
 
     def use2(self, liste_des_joueuses, zone1, zone2):
         for joueuse in liste_des_joueuses:
             for membre in joueuse.getMembres():
-                print("555")
-                if membre.zone_courante_courante == zone1:
+                if membre.zone_courante == zone1:
                     membre.deplacer(zone2)
                     print([membre.id, zone1, zone2])
                     message_generique(202, joueuse, [membre.id, zone1, zone2], None, console_phrase)
-                elif membre.zone_courante_courante == zone2:
+                elif membre.zone_courante == zone2:
                     membre.deplacer(zone1)
                     print([membre.id, zone2, zone1])
                     message_generique(202, joueuse, [membre.id, zone2, zone1], None, console_phrase)
