@@ -10,7 +10,7 @@ import threading
 
 import pygame
 
-current_dir = os.path.dirname(os.path.abspath(sys.argv[0]))+"\package"
+current_dir = os.path.dirname(os.path.abspath(sys.argv[0]))+"/package"
 sys.path.insert(0, current_dir)
 print(current_dir)
 os.chdir(current_dir)
