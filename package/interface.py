@@ -21,8 +21,8 @@ print(current_dir)
 # Fenêtre
 ##==============================================================================================
 
-largeur = 1080
-longueur = 1920
+largeur = pygame.display.Info().current_h
+longueur = pygame.display.Info().current_w
 pygame.display.set_caption("Jeu de la survie des IIENS")
 fenetre = pygame.display.set_mode((longueur, largeur))
 couleur_fond = (200, 200, 200)
