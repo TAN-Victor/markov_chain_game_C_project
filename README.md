@@ -8,6 +8,8 @@ Description: Vous trouverez dans ce git, à la branche lot_b :
 * le dossier *headers* qui contiendra les fichiers .h, 
 * le fichier *Gantt_group_8.gan* qui contiendra le diagramme de Gantt,
 * le fichier *Rapport_group_8* qui contiendra le rapport du projet,
+* le fichier *Makefile*,
+* un fichier *valgrind.txt*,
 * ce fichier *readme.md*.
 
 
@@ -16,4 +18,5 @@ Description: Vous trouverez dans ce git, à la branche lot_b :
 
 ## Execution du programme
 
-En cours de développement...
+Il suffit de lancer l'exécutable sans argument.
+
