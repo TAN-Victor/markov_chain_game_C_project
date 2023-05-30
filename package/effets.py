@@ -11,8 +11,8 @@ class Merabet(Carte):
     def __init__(self):
         super().__init__("Merabet", "Pendant vos 3 prochains tours, votre capital augmente de 2.")
     def use(self, joueuse):
+        joueuse.setCapital(joueuse.getCapital()+2)
         joueuse.setToursRestantsBonusCapital(3)
-        joueuse.setBonusTemporaire(2)
         message_generique(201, None, [joueuse.getCapital(), joueuse.getTourRestantsBonusCapital()], None, console_phrase)
 
 
@@ -50,11 +50,13 @@ class Honore(Carte):
         liste_des_monstres.setToursRestantsJouer(3)
         for i in range(3):
             for monstre in liste_des_monstres:
+                monstre.deplacer(liste_des_zones.trouveZone(liste_des_zones.prochaineZone(monstre.zone_courante)))
                 for joueuse in liste_des_joueuses:
                     for membre in joueuse.getMembres():
                         if membre.zone_courante == monstre.zone_courante:
                             membre.statut=0
-    
+        for monstre in liste_des_monstres:
+            monstre.peut_se_deplacer = False
 
 
 
@@ -79,7 +81,8 @@ class Rioboo(Carte):
                 zone3 = random.choice(zones.getTabZones())
             zones.modifierZone(zone1.numero, zone2.numero, adversaire.getProbaParCapital(),1)
             zones.modifierZone(zone1.numero, zone3.numero, adversaire.getProbaParCapital(),0)
-            adversaire.setCapital(adversaire.getCapital()-capital)
+            adversaire.utiliserCapital(capital)
+
         
 
 
@@ -89,7 +92,7 @@ class Goilard(Carte):
         super().__init__("Goilard", "Lors du prochain tour et du suivant, c'est vous qui jouez. Lors des deux tours suivant, c'est la joueuse adverse qui joue.")
 
     def use(self, joueuse, adversaire):
-        joueuse.setToursRestantsJouer(2)
+        joueuse.setToursRestantsJouer(joueuse.getToursRestants()+2)
         adversaire.setToursRestantsJouer(2)
 
 
@@ -138,8 +141,8 @@ class Munante(Carte):
         for monstre in liste_des_monstres:
             for joueuse in liste_des_joueuses:
                 for membre in joueuse.getMembres():
-                    if membre.zone_courante == monstre.zone_courante:
-                        membre.statut = 0
+                    if membre.zone_courante == monstre.zone_precedente and membre.statut == 1 or membre.statut == 3:
+                        membre.estMange()
 
 class Benezet(Carte):
     def __init__(self):
@@ -189,8 +192,8 @@ class Dembele_Cabot(Carte):
     def use(self):
         demander_membre()
 
-    def use(self, joueuse, num_membre):
-        joueuse.liste_membres.remove(joueuse.liste_membres[num_membre])
+    def use2(self, joueuse, num_membre):
+        joueuse.getMembres()[num_membre].estMange()
         joueuse.setCapital(joueuse.getCapital()+15)
 
 
@@ -202,7 +205,7 @@ class Pacave(Carte):
     def use(self, joueuse, zones):
         zones.addZone()
         zones.setEstAutorise(zones.getTabZones()[zones.getMatrice().getTailleMatrice()-1], joueuse.getId())
-        zones.getMatrice().modifier_proba(zones.getTabZones()[zones.getMatrice().getTailleMatrice()-1], zones.getTabZones()[zones.getMatrice().getTailleMatrice()-1], 1)
+        zones.getMatrice().modiferProba(zones.getMatrice().getTailleMatrice()-1, zones.getMatrice().getTailleMatrice()-1, 1)
 
 
 
@@ -229,6 +232,7 @@ class Matias(Carte):
     def use(self, liste_des_monstres):
         for monstre in liste_des_monstres:
             monstre.nb_de_tour_disparu_restant = 3  #Les 2 prochains tours + le tour où la carte est jouée
+            monstre.id = -1
 
 
 
@@ -252,8 +256,9 @@ class Pulido_Nino(Carte):
     def use(self, zones, liste_des_monstres):
         matrice = zones.getMatrice()
         for monstre in liste_des_monstres:
+            j = monstre.zone_courante.numero
             for i in range(matrice.getTailleMatrice()):
-                matrice.modifier_proba(monstre.zone_courante.numero, i, 0)
+                matrice.modifier_proba(j, i, 0)
             matrice.modifier_proba(i,i,1)
 
 
@@ -308,5 +313,5 @@ class Prevel(Carte):
         super().__init__("Prével", "Pendant 4 tours, les membres de votre école ne peuvent être mangés par un monstre. S'ils sont sur sa zone à la fin du tour, rien ne se passe, ils restent sur cette case.")
 
     def use(self, joueuse):
-        joueuse.setToursRestantsImmune(4)
+        joueuse.setToursRestantsInvincibilite(4)
 
