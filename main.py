@@ -90,6 +90,7 @@ def main():
                     for objet in map_objets.values():
                         if isinstance(objet, ObjetPersonnage):
                             objet.montrer()
+                        map_objets["cadenas"].montrer()
             elif event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP:
                 x, y = pygame.mouse.get_pos()
                 print(f"Clic en ({x}, {y})")

@@ -118,7 +118,7 @@ def initialiser_objets(liste_joueuses, liste_zones):
     for i in range(0, 2):
         for j in range(0, 5):
             map_objets["carte_" + str(i+1) + "_" + str(j+1)] = ObjetCarte(longueur*(70 + i * 10)/100 + 25, 430 + j * 50, -30, "interface/images/" + liste_joueuses[i].liste_cartes[j].getNom() + "_" + str(i) + ".png", [j+1, i+1])
-    
+    map_objets["cadenas"] = ObjetFixe(250 + 1 * 420, 635, 400, "interface/images/cad.png")
     
     map_boutons["bouton_choix_capital"] = BoutonChoix((longueur*70/100 + 30, largeur*83/100 + 40), (longueur*10/100 - 20, largeur*10/100 - 10), "Utiliser capital", (140, 215, 140), (0, 0, 0))
     map_boutons["bouton_choix_carte"] = BoutonChoix((longueur*80/100 + 30, largeur*83/100 + 40), (longueur*10/100 - 20, largeur*10/100 - 10), "Utiliser carte", (140, 215, 140), (0, 0, 0))
@@ -519,7 +519,7 @@ def info_joueuse_hover_afficher(joueuse: Joueuse):
 
 def info_zones(zones: Zones, map_bouton: Bouton, map_objets: dict):
     """
-    Affiche les informations des zones et désaffiche les zones
+    Affiche les informations des zones et désaffiche les personnages et le cadenas
     """
     for bouton in map_bouton.values():
         if isinstance(bouton, BoutonZone):
@@ -527,6 +527,7 @@ def info_zones(zones: Zones, map_bouton: Bouton, map_objets: dict):
     for objet in map_objets.values():
         if isinstance(objet, ObjetPersonnage):
             objet.cacher()
+        map_objets["cadenas"].cacher()
     taille = zones.getMatrice().getTailleMatrice()
     x, y = (130, 30)
     font = pygame.font.SysFont("Source Sans Pro", 60)
