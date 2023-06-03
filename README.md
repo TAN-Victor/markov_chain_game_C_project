@@ -15,7 +15,22 @@ Description: Vous trouverez dans ce git, à la branche lot_c :
 
 ## Execution du programme
 
-Il suffit de lancer le main.py sans argument.
+ATTENTION: Le jeu a été principalement codé pour des écrans 1920 x 1080.
+Il détecte la taille de votre écran _principal_ si vous avez plusieurs écrans, pas celui actif.
+Il y a quelques problèmes de taille d'affichage pour les autres tailles d'écran.
+
+
+Il suffit de lancer le main.py sans argument si vous possédez la librairie pygame.
+Sinon, le jeu a été compilé avec pyinstaller pour ne plus avoir besoin de pygame.
+
+### Sous Windows
+
+Il est possible de lancer le main.exe, mais beaucoup d'antivirus peuvent bloquer l'application.
+Dans ce cas, un rendez-vous et une démonstration par visio serait peut-être plus pertinent.
+
+### Sous Linux
+
+Il faut avoir Glibc (ldd) en version 2.35. Les machines de l'école ne l'ont qu'en 2.31 et ne marcheront donc pas.
 
 ## Remarque
 
