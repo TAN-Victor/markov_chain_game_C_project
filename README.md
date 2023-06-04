@@ -7,6 +7,8 @@ Description: Vous trouverez dans ce git, à la branche lot_c :
     * les fichiers *carte.py*, *effets.py*, *joueuses.py*, *personnage.py*, *structures.py*, *zones.py* qui sont recopiés depuis le lot_b
     * le fichier *interface.py* qui crée les différents widgets comme les boutons ou les sprites,
 * le fichier *main.py* qui contient la boucle de jeu principale,
+* un fichier exécutable pour linux *main* (voir remarque plus bas),
+* un fichier exécutable pour windows *main.exe* (voir remarque plus bas),
 * ce fichier *readme.md*.
 
 
@@ -28,6 +30,7 @@ Sinon, le jeu a été compilé avec pyinstaller pour ne plus avoir besoin de pyg
 
 Il est possible de lancer le main.exe, mais beaucoup d'antivirus peuvent bloquer l'application.
 Dans ce cas, un rendez-vous et une démonstration par visio serait peut-être plus pertinent.
+Lancer en mode administrateur marche parfois.
 
 ### Sous Linux
 
