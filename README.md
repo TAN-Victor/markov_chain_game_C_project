@@ -17,10 +17,11 @@ Description: Vous trouverez dans ce git, à la branche lot_c :
 
 ATTENTION: Le jeu a été principalement codé pour des écrans 1920 x 1080.
 Il détecte la taille de votre écran _principal_ si vous avez plusieurs écrans, pas celui actif.
-Il y a quelques problèmes de taille d'affichage pour les autres tailles d'écran.
+Il y a quelques problèmes de taille d'affichage pour les tailles d'écran upscalé (Dans les paramètres de la machine, il faut être à 100% et pas 125% ou 150%).
 
 
 Il suffit de lancer le main.py sans argument si vous possédez la librairie pygame.
+Par contre, à chaque lancement du main.py, des fichiers dans \_pycache\_ sont modifiés.
 Sinon, le jeu a été compilé avec pyinstaller pour ne plus avoir besoin de pygame.
 
 ### Sous Windows
