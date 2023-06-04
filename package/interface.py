@@ -39,7 +39,7 @@ def zones_jeu():
     Taille: 70% de la longueur et 80% de la largeur de l'écran (en 1080p par défaut)
     Couleur de fond: (200, 200, 200) Gris clair
     """
-    pygame.draw.rect(fenetre, couleur_fond, (10, 10, longueur*70/100, largeur*80/100))
+    pygame.draw.rect(fenetre, couleur_fond, (10* largeur/1080, 10* largeur/1080, longueur*70/100, largeur*80/100))
 
 # Joueuses
 def joueuses():
@@ -51,16 +51,16 @@ def joueuses():
     Nombre de personnages par joueuse au maximum: 7
     Nombre de cartes par joueuse au maximum: 5
     """
-    pygame.draw.rect(fenetre, couleur_fond, (longueur*70/100 + 20, 10, longueur*30/100 - 30, largeur*80/100))
+    pygame.draw.rect(fenetre, couleur_fond, (longueur*70/100 + 20* largeur/1080, 10* largeur/1080, longueur*30/100 - 30* largeur/1080, largeur*80/100))
     for i in range(1, 3):
-        pygame.draw.line(fenetre, (0, 0, 0), (longueur*(70 + i * 10)/100 + 20, 10), (longueur*(70 + i * 10)/100 + 20, largeur*80/100 + 9), 3) # Séparation des joueuses
+        pygame.draw.line(fenetre, (0, 0, 0), (longueur*(70 + i * 10)/100 + 20* largeur/1080, 10* largeur/1080), (longueur*(70 + i * 10)/100 + 20, largeur*80/100 + 9), 3) # Séparation des joueuses
     pygame.draw.line(fenetre, (0, 0, 0), (longueur*70/100 + 20, 70), (longueur - 11, 70), 5)
     for i in range(1, 13):
-        pygame.draw.line(fenetre, (0, 0, 0), (longueur*70/100 + 20, 70 + i * 50), (longueur - 11, 70 + i * 50), 3) # Séparation des personnages et des cartes
+        pygame.draw.line(fenetre, (0, 0, 0), (longueur*70/100 + 20, 70 + i * 50* largeur/1080), (longueur - 11, 70 + i * 50* largeur/1080), 3) # Séparation des personnages et des cartes
     liste_des_joueuses = ["Joueuse n°1", "Joueuse n°2", "Monstres"]
     for i in range(3):
-        texte = pygame.font.SysFont("Source Sans Pro", 30).render(liste_des_joueuses[i], True, (0, 0, 0))
-        fenetre.blit(texte, (longueur*(70 + i * 10)/100 + 50, 30))
+        texte = pygame.font.SysFont("Source Sans Pro", int(30* largeur/1080)).render(liste_des_joueuses[i], True, (0, 0, 0))
+        fenetre.blit(texte, (longueur*(70 + i * 10)/100 + 50* largeur/1080, 30* largeur/1080))
 
 # Actions
 def actions():
@@ -88,7 +88,7 @@ def probabilites():
     Couleur de fond: (200, 200, 200) Gris clair
     """
     pygame.draw.rect(fenetre, couleur_fond, (longueur*50/100 + 20, largeur*80/100 + 20, longueur*20/100 -10, largeur*20/100 - 30))
-    texte = pygame.font.SysFont("Source Sans Pro", 30).render("Voir les probabilités", True, (0, 0, 0))
+    texte = pygame.font.SysFont("Source Sans Pro", int(30* largeur/1080)).render("Voir les probabilités", True, (0, 0, 0))
     fenetre.blit(texte, (longueur*54/100 + 30, largeur*86/100 + 30))
 
 
@@ -108,17 +108,17 @@ console_phrase = []
 def initialiser_objets(liste_joueuses, liste_zones):
     for i in range (0, 3):
         for j in range(0, 6):
-            map_objets["personnage_" + str(i+1) + "_" + str(j+1) + "liste"] = (ObjetPersonnageListe(longueur*(70 + i * 10)/100 + 25, 65 + j * 50, 50, "interface/images/" + str(i) + "_" + str(j+1) + ".png", [j+1, "Joueuse n°" + str(i+1)]))
-            map_objets["statut_" + str(i+1) + "_" + str(j+1) + "liste"] = (ObjetStatut(longueur*(70 + i * 10)/100 + 85, 75 + j * 50, 100, "interface/images/" + "En vie" + "_" + str(i) + ".png", [j+1, "Joueuse n°" + str(i+1), "En vie"]))
+            map_objets["personnage_" + str(i+1) + "_" + str(j+1) + "liste"] = (ObjetPersonnageListe(longueur*(70 + i * 10)/100 + 25, 65 + j * 50* largeur/1080, 50* largeur/1080, "interface/images/" + str(i) + "_" + str(j+1) + ".png", [j+1, "Joueuse n°" + str(i+1)]))
+            map_objets["statut_" + str(i+1) + "_" + str(j+1) + "liste"] = (ObjetStatut(longueur*(70 + i * 10)/100 + 85, 75 + j * 50* largeur/1080, 100* largeur/1080, "interface/images/" + "En vie" + "_" + str(i) + ".png", [j+1, "Joueuse n°" + str(i+1), "En vie"]))
             if (j == 5 or (i == 2 and j != 0)):
                 map_objets["personnage_" + str(i+1) + "_" + str(j+1) + "liste"].cacher()
                 map_objets["statut_" + str(i+1) + "_" + str(j+1) + "liste"].cacher()
-    map_objets["tour"] = (ObjetFixe(longueur*(70)/100 + 25, 10, longueur*10/100 -20, None))
+    map_objets["tour"] = (ObjetFixe(longueur*(70)/100 + 25* largeur/1080, 10* largeur/1080, longueur*10/100 -20* largeur/1080, None))
     
     for i in range(0, 2):
         for j in range(0, 5):
-            map_objets["carte_" + str(i+1) + "_" + str(j+1)] = ObjetCarte(longueur*(70 + i * 10)/100 + 25, 430 + j * 50, -30, "interface/images/" + liste_joueuses[i].liste_cartes[j].getNom() + "_" + str(i) + ".png", [j+1, i+1])
-    map_objets["cadenas"] = ObjetFixe(250 + 1 * 420, 635, 400, "interface/images/cad.png")
+            map_objets["carte_" + str(i+1) + "_" + str(j+1)] = ObjetCarte(longueur*(70 + i * 10)/100 + 25* largeur/1080, 430* largeur/1080 + j * 50* largeur/1080, -30* largeur/1080, "interface/images/" + liste_joueuses[i].liste_cartes[j].getNom() + "_" + str(i) + ".png", [j+1, i+1])
+    map_objets["cadenas"] = ObjetFixe(250* largeur/1080 + 1 * 420* largeur/1080, 635* largeur/1080, 400* largeur/1080, "interface/images/cad.png")
     
     map_boutons["bouton_choix_capital"] = BoutonChoix((longueur*70/100 + 30, largeur*83/100 + 40), (longueur*10/100 - 20, largeur*10/100 - 10), "Utiliser capital", (140, 215, 140), (0, 0, 0))
     map_boutons["bouton_choix_carte"] = BoutonChoix((longueur*80/100 + 30, largeur*83/100 + 40), (longueur*10/100 - 20, largeur*10/100 - 10), "Utiliser carte", (140, 215, 140), (0, 0, 0))
@@ -136,9 +136,9 @@ def initialiser_objets(liste_joueuses, liste_zones):
     couleurs_zones = [(230, 138, 143), (180, 205, 147), (163, 181, 204), (237, 210, 136), (190, 149, 170), (177, 214, 206), (217, 183, 139), (199, 203, 178), (210, 178, 200), (174, 207, 169), (216, 170, 185)]
     for i in range(0, 3):
         for j in range(0, 3):
-            map_boutons["zone_" + str(i+3*j+1)] = BoutonZone((40 + i * 420, 40 +j *200), (400, 180), "Zone n°" + str(i+3*j+1), couleurs_zones[i+3*j], (0, 0, 0), "haut_centre", 0, True)
+            map_boutons["zone_" + str(i+3*j+1)] = BoutonZone((40 + i * 420* largeur/1080, 40 +j *200* largeur/1080), (400* largeur/1080, 180* largeur/1080), "Zone n°" + str(i+3*j+1), couleurs_zones[i+3*j], (0, 0, 0), "haut_centre", 0, True)
     for i in range(0, 2):
-        map_boutons["zone_" + str(i+10)] = BoutonZone((250 + i * 420, 640), (400, 180), "Zone n°" + str(i+10), couleurs_zones[i+9], (0, 0, 0), "haut_centre", 0, True)
+        map_boutons["zone_" + str(i+10)] = BoutonZone((250* largeur/1080 + i * 420* largeur/1080, 640* largeur/1080), (400* largeur/1080, 180* largeur/1080), "Zone n°" + str(i+10), couleurs_zones[i+9], (0, 0, 0), "haut_centre", 0, True)
 
 
     
@@ -149,7 +149,7 @@ def initialiser_objets(liste_joueuses, liste_zones):
         for nb in range(0, 3):
             for j in range(liste_joueuses[nb].taille):
                 if liste_joueuses[nb].getMembres()[j].zone_courante == i:
-                    map_objets["personnage_" + str(nb) + "_" + str(j+1)] = ObjetPersonnage(40 + i%3 * 420 + liste_compteur[i] * 60, 60 + i//3 * 200, 75, "interface/images/" + str(nb) + "_" + str(j+1) + ".png", [j+1, "Joueuse n°" + str(nb + 1)], i, liste_compteur[i])
+                    map_objets["personnage_" + str(nb) + "_" + str(j+1)] = ObjetPersonnage(40* largeur/1080 + i%3 * 420* largeur/1080 + liste_compteur[i] * 60* largeur/1080, 60 + i//3 * 200* largeur/1080, 75* largeur/1080, "interface/images/" + str(nb) + "_" + str(j+1) + ".png", [j+1, "Joueuse n°" + str(nb + 1)], i, liste_compteur[i])
                     liste_compteur[i] += 1
 
     
@@ -332,7 +332,7 @@ class Bouton:
             else:
                 pygame.draw.rect(fenetre, self.couleur, self.rect)
                 pygame.draw.rect(fenetre, (0, 0, 0), self.rect, 3)
-            texte = pygame.font.SysFont("Source Sans Pro", 30).render(str(self.texte), True, self.couleur_texte)
+            texte = pygame.font.SysFont("Source Sans Pro", int(30* largeur/1080)).render(str(self.texte), True, self.couleur_texte)
             if self.alignement == "centre":
                 fenetre.blit(texte, texte.get_rect(center=self.rect.center))
             if self.alignement == "haut_centre":
@@ -476,46 +476,46 @@ def info_joueuse(joueuse: Joueuse):
     """
     Affiche les informations principales de la joueuse
     """
-    x, y = (longueur*(70 + (joueuse.getId() - 1) * 10)/100 + 20, 75 + 12 * 50)
-    font = pygame.font.SysFont("Source Sans Pro", 24)
+    x, y = (longueur*(70 + (joueuse.getId() - 1) * 10)/100 + 20* largeur/1080, 75* largeur/1080 + 12 * 50* largeur/1080)
+    font = pygame.font.SysFont("Source Sans Pro", int(24* largeur/1080))
     texte = font.render("Capital: {}".format(joueuse.capital), True, (0, 0, 0))
     fenetre.blit(texte, (x, y))
     texte = font.render("Nombre personnages: {}".format(joueuse.taille), True, (0, 0, 0))
-    fenetre.blit(texte, (x, y + 20))
+    fenetre.blit(texte, (x, y + 20* largeur/1080))
     texte = font.render("Tours restants à jouer: {}".format(joueuse.getToursRestantsJouer()), True, (0, 0, 0))
-    fenetre.blit(texte, (x, y + 40))
+    fenetre.blit(texte, (x, y + 40* largeur/1080))
     texte = font.render("Proba par capital: {}".format(joueuse.getProbaParCapital()), True, (0, 0, 0))
-    fenetre.blit(texte, (x, y + 60))
+    fenetre.blit(texte, (x, y + 60* largeur/1080))
     invincibilite = joueuse.getInvincibilite()
     if invincibilite:
         texte = font.render("Invincibilité: Oui", True, (0, 0, 0))
     else:
         texte = font.render("Invincibilité: Non", True, (0, 0, 0))
-    fenetre.blit(texte, (x, y + 80))
+    fenetre.blit(texte, (x, y + 80* largeur/1080))
     texte = font.render("    BONUS", True, (0, 0, 0))
-    fenetre.blit(texte, (x, y + 140))    
+    fenetre.blit(texte, (x, y + 140* largeur/1080))    
 
 def info_joueuse_hover_afficher(joueuse: Joueuse):
     """
     Affiche les informations bonus de la joueuse
     """
-    x, y = (longueur*(60 + (joueuse.getId() - 1) * 10)/100 + 20, 75 + 13 * 50)
+    x, y = (longueur*(60 + (joueuse.getId() - 1) * 10)/100 + 20* largeur/1080, 75* largeur/1080 + 13 * 50* largeur/1080)
     pygame.draw.rect(fenetre, couleur_fond, (x-20, y-20, 500, 200))
     pygame.draw.rect(fenetre, (0, 0, 0), (x-20, y-20, 500, 200), 2)
     
-    font = pygame.font.SysFont("Source Sans Pro", 24)
+    font = pygame.font.SysFont("Source Sans Pro", int(24* largeur/1080))
     texte = font.render("Tours restants Bonus Capital: {} tour(s)".format(joueuse.getTourRestantsBonusCapital()), True, (0, 0, 0))
     fenetre.blit(texte, (x, y))
     texte = font.render("Tours restants Bonus Invincibilité: {} tour(s)".format(joueuse.getToursRestantsInvincibilite()), True, (0, 0, 0))
-    fenetre.blit(texte, (x, y + 20))
+    fenetre.blit(texte, (x, y + 20* largeur/1080))
     texte = font.render("Tours restants Bonus Probabilité par Capital: {} tour(s)".format(joueuse.getToursRestantsBonusProbaParCapital()), True, (0, 0, 0))
-    fenetre.blit(texte, (x, y + 40))
+    fenetre.blit(texte, (x, y + 40* largeur/1080))
     texte = font.render("Bonus temporaire de capital: {}".format(joueuse.getBonusTemporaire()), True, (0, 0, 0))
-    fenetre.blit(texte, (x, y + 60))
+    fenetre.blit(texte, (x, y + 60* largeur/1080))
     texte = font.render("Tour: {}".format(joueuse.getTour()), True, (0, 0, 0))
-    fenetre.blit(texte, (x, y + 80))
+    fenetre.blit(texte, (x, y + 80* largeur/1080))
     texte = font.render("Statuts: {}".format([joueuse.getMembres()[i].statut for i in range(joueuse.getTaille())]), True, (0, 0, 0))
-    fenetre.blit(texte, (x, y + 100))
+    fenetre.blit(texte, (x, y + 100* largeur/1080))
 
 def info_zones(zones: Zones, map_bouton: Bouton, map_objets: dict):
     """
@@ -529,17 +529,17 @@ def info_zones(zones: Zones, map_bouton: Bouton, map_objets: dict):
             objet.cacher()
         map_objets["cadenas"].cacher()
     taille = zones.getMatrice().getTailleMatrice()
-    x, y = (130, 30)
-    font = pygame.font.SysFont("Source Sans Pro", 60)
+    x, y = (130* largeur/1080, 30* largeur/1080)
+    font = pygame.font.SysFont("Source Sans Pro", int(60* largeur/1080))
     for i in range(taille):
         texte = font.render(str(i+1), True, (0, 0, 0))
-        fenetre.blit(texte, (x + i*100, y))
+        fenetre.blit(texte, (x + i*100* largeur/1080, y))
         texte = font.render(str(i+1), True, (0, 0, 0))
-        fenetre.blit(texte, (x - 100, y + (i+1)*60))
+        fenetre.blit(texte, (x - 100* largeur/1080, y + (i+1)*60* largeur/1080))
         for j in range(taille):
             val = round(zones.getMatrice().lecture_probas(j, i), 1)
             texte = font.render(str(val), True, (0, 0, 0))
-            fenetre.blit(texte, (x + i*100, y + (j+1)*60))
+            fenetre.blit(texte, (x + i*100* largeur/1080, y + (j+1)*60* largeur/1080))
 
 
 def fin(map_objets: dict, map_boutons: dict, message: str):
@@ -777,10 +777,10 @@ def message_generique(n: int, joueuse: ListePNJ, option: list, option2: Carte, c
         afficher_console_phrase(console_phrase)
 
 def afficher_console_phrase(console_phrase: list):
-    font = pygame.font.SysFont("Source Sans Pro", 25)
+    font = pygame.font.SysFont("Source Sans Pro", int(25* largeur/1080))
     x, y = 20, largeur*80/100 + 30,
     if len(console_phrase) > 7:
         console_phrase.pop(0)
     for i in range(len(console_phrase)):
         texte = font.render(console_phrase[i], True, (0, 0, 0))
-        fenetre.blit(texte, (x, y + 23*i))
+        fenetre.blit(texte, (x, y + 23* largeur/1080*i))
