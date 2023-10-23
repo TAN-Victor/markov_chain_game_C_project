@@ -14,6 +14,10 @@ Branch B completes Part A of the project. It allows for a functional game that c
 
 Branch C represents the rewriting of Part B in the Python language. This step makes the game more accessible, with a graphic interface, to a broader audience by using a popular programming language like Python.
 
+## Branch Maths
+
+Branch Maths represents a mathematical modeling of the Markov Chains.
+
 ---
 ## Rules
 
